@@ -23,7 +23,8 @@ public class main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        try {
+        json.json_parser.getInstance().parseObject(new Testklasse());
+        /*try {
             PreparedStatement p = DBController.getConnection().prepareStatement("SELECT * FROM tbl_user");
             ResultSet rs = DBController.executeQuery(p);
 
@@ -32,7 +33,7 @@ public class main {
             System.out.println(new Date(rs.getLong("birthdate")));
         } catch (SQLException e) {
             log(LogEnum.ERROR, e.getMessage(), e);
-        }
+        }*/
         VerleihServer.getInstance().start();
     }
 
