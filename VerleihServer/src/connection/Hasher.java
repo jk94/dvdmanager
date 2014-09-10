@@ -1,3 +1,5 @@
+package connection;
+
 
 import Enumerators.LogEnum;
 import java.io.UnsupportedEncodingException;

@@ -5,6 +5,7 @@
  */
 package verleihserver;
 
+import connection.VerleihServer;
 import Enumerators.LogEnum;
 import java.sql.Date;
 import java.sql.PreparedStatement;
