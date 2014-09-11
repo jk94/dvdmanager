@@ -1,0 +1,66 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.scroll-base {
+    -fx-background-color:transparent;
+}
+
+.page-base {
+    -fx-background-color: #1C1C1C;
+    
+}
+
+.imgbtn {
+    -fx-background-color: #2E2E2E;
+    }
+
+.header {
+    -fx-background-color: #2E2E2E;
+    -fx-border-color: #1C1C1C;
+    -fx-border-width: 5px;
+}
+
+.menu-base {
+    -fx-background-color: #2E2E2E;
+    -fx-border-color: #1C1C1C;
+    -fx-border-width: 5px;
+}
+
+.content-base {
+    -fx-background-color: #1C1C1C;
+    -fx-border-color: #1C1C1C;
+    -fx-border-width: 5px;
+}
+
+.content-back {
+    -fx-background-color: #1C1C1C;
+}
+
+.menu-space {
+    -fx-background-color: #1C1C1C;
+}
+.menu-label {
+    -fx-background-color: #B43104;
+    -fx-text-fill: #1C1C1C;
+    -fx-padding: 5px;
+}
+
+.menu-btn {
+    -fx-background-color: #2E2E2E;
+    -fx-text-fill: #B43104;
+ }
+ 
+ .titel-text {
+     -fx-background-color: #2E2E2E;
+     -fx-text-fill: #B43104;
+     -fx-font-size: 14px;
+     -fx-font-family: "Courier";
+}
+
+.search-box {
+    -fx-background-color: #B43104;
+    -fx-text-fill: #2E2E2E;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font: cursive;
+}
