@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package verleihclient;
 
 import java.io.BufferedReader;
@@ -20,11 +19,12 @@ import java.util.logging.Logger;
  * @author Jan
  */
 public class ClientThread {
+
     private BufferedReader reader;
     private PrintWriter writer;
 
     public ClientThread() {
-            
+
     }
 
     private void neueVerbindung(String addresse, int port, String name) {
@@ -34,7 +34,6 @@ public class ClientThread {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(socket.getOutputStream());
 
-            writer.append(name + "\n").flush();
         } catch (UnknownHostException ex) {
             Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -54,4 +53,5 @@ public class ClientThread {
                 }
             }
         }).start();
+    }
 }
