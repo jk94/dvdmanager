@@ -21,8 +21,8 @@ public final class DBController {
 
     private static final DBController dbcontroller = new DBController();
     private static Connection connection;
-    private static final String DB_PATH = new File("C:/Users/Jan/Documents/owncloud/codekings.ddns/Fallstudie/dvd_verleih.db").getAbsolutePath();            //System.getProperty("user.home") + "/" + "testdb.db";
-
+    private final String DB_PATH = new File("../dvd_verleih.db").getAbsolutePath();            //System.getProperty("user.home") + "/" + "testdb.db";
+    
     static {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -49,6 +49,7 @@ public final class DBController {
             if (connection != null) {
                 return;
             }
+            System.out.println("Pfad: " +DB_PATH);
             if (new File(DB_PATH).exists()) {
                 main.log(LogEnum.INFO, "Connect to Database...", this);
                 connection = DriverManager.getConnection("jdbc:sqlite:" + DB_PATH);

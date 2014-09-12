@@ -5,6 +5,7 @@
  */
 package contents;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,9 +23,23 @@ public class Film {
     private double d_preis = 0.0;
     private Date release_date;
     private final ArrayList<String> li_actors = new ArrayList<>(), li_awards = new ArrayList<>();
+    private final ArrayList<String> li_genre = new ArrayList<>();
+    private BufferedImage cover;
 
     public Film(int fid) {
         FILMID = fid;
+    }
+
+    public BufferedImage getCover() {
+        return cover;
+    }
+
+    public void setCover(BufferedImage cover) {
+        this.cover = cover;
+    }
+
+    public ArrayList<String> getLi_genre() {
+        return li_genre;
     }
 
     public int getFILMID() {
@@ -38,7 +53,7 @@ public class Film {
     public void setS_FSK(String s_FSK) {
         this.s_FSK = s_FSK;
     }
-    
+
     public String getS_regie() {
         return s_regie;
     }

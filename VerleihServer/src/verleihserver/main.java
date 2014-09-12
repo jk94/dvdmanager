@@ -5,8 +5,12 @@
  */
 package verleihserver;
 
+import Enumerators.LogEnum;
 import connection.VerleihServer;
-import java.io.File;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -19,12 +23,12 @@ public class main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        json.json_parser.getInstance().parseObjectOut(new Testklasse());
-        Testklasse t;
-        t = json.json_parser.getInstance().parseObjectIn(new File("C:/Users/Jan/Desktop/test.txt"), Testklasse.class);
-        System.out.println(t.getA());
-        System.out.println(t.getImgb().length);
-        /*try {
+        new Testklasse();
+        //json.json_parser.getInstance().parseObjectOut(new Testklasse());
+        //Testklasse t;
+        //t = json.json_parser.getInstance().parseObjectIn(new File("C:/Users/Jan/Desktop/test.txt"), Testklasse.class);
+        
+        try {
             PreparedStatement p = DBController.getConnection().prepareStatement("SELECT * FROM tbl_user");
             ResultSet rs = DBController.executeQuery(p);
 
@@ -33,7 +37,7 @@ public class main {
             System.out.println(new Date(rs.getLong("birthdate")));
         } catch (SQLException e) {
             log(LogEnum.ERROR, e.getMessage(), e);
-        }*/
+        }
         VerleihServer.getInstance().start();
     }
 

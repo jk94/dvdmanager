@@ -6,6 +6,8 @@ import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.filechooser.FileSystemView;
+import json.json_parser;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,18 +25,30 @@ public class Testklasse {
     char c = 'c';
     double d = 25.14;
     //BufferedImage img = null;
-    byte[] imgb;
+    //byte[] imgb;
+    bild bil = new bild(new File("C:\\Users\\Jan\\Pictures\\2014-08-18 16_04_33-Fortschritt - DerQuaelgeist - Battlelog _ Battlefield 3.png"));
+
+    private class bild {
+
+        String type, imageAsString;
+
+        public bild(File f) {
+            try {
+                BufferedImage b = ImageIO.read(f);
+                FileSystemView view = FileSystemView.getFileSystemView();
+                type = view.getSystemTypeDescription(f);
+                type = "png";
+                System.out.println(type);
+                imageAsString = json_parser.encodeToString(b, type);
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+
+    }
 
     public Testklasse() {
-        try {
-            //img = ImageIO.read(new File(a));
-            imgb = extractBytes(new File(a).getAbsolutePath());
-            System.out.println(imgb.length);
-            /*for(int i=0; i<imgb.length;i++){
-                System.out.println(imgb[i]);
-            }*/
-        } catch (IOException e) {
-        }
+        
     }
 
     public final byte[] extractBytes(String ImageName) throws IOException {
@@ -49,14 +63,6 @@ public class Testklasse {
         return (data.getData());
     }
 
-    public byte[] getImgb() {
-        return imgb;
-    }
-
-    public void setImgb(byte[] imgb) {
-        this.imgb = imgb;
-    }
-    
     public String getA() {
         return a;
     }
