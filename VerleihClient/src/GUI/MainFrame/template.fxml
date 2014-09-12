@@ -62,14 +62,14 @@
          <children>
             <Button fx:id="head_btn_home" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
                <graphic>
-                  <ImageView fx:id="head_btn_home_img" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="head_btn_home_img" fitHeight="20.0" fitWidth="20.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Elements/homebutton.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
+            <Button fx:id="head_btn_back" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
                <graphic>
                   <ImageView fx:id="head_btn_back_img" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -78,7 +78,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="41.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
+            <Button fx:id="head_btn_forward" layoutX="41.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
                <graphic>
                   <ImageView fx:id="head_btn_forward_img" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>

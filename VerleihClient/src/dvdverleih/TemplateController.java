@@ -3,13 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package dvdverleih;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.SubScene;
@@ -17,8 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -26,26 +23,13 @@ import javafx.scene.layout.VBox;
  * @author Jan
  */
 public class TemplateController implements Initializable {
-    @FXML
-    private VBox master_base;
-    @FXML
-    private AnchorPane header_base;
-    @FXML
-    private ImageView head_backbtn;
-    @FXML
-    private ImageView head_forwardbtn;
+
     @FXML
     private TextField head_title;
-    @FXML
-    private Button search_icon;
     @FXML
     private ImageView head_searchicon;
     @FXML
     private TextField head_searchbox;
-    @FXML
-    private AnchorPane body_base;
-    @FXML
-    private AnchorPane menu_base;
     @FXML
     private Label label_katalog;
     @FXML
@@ -69,13 +53,21 @@ public class TemplateController implements Initializable {
     @FXML
     private Button btn_bewertung;
     @FXML
-    private AnchorPane content_base;
-    @FXML
     private SubScene subscene_content;
     @FXML
-    private ImageView head_homebtn;
-    @FXML
     private Button head_btn_home;
+    @FXML
+    private ImageView head_btn_home_img;
+    @FXML
+    private ImageView head_btn_back_img;
+    @FXML
+    private ImageView head_btn_forward_img;
+    @FXML
+    private Button btn_search;
+    @FXML
+    private Button head_btn_back;
+    @FXML
+    private Button head_btn_forward;
 
     /**
      * Initializes the controller class.
@@ -89,7 +81,12 @@ public class TemplateController implements Initializable {
         head_btn_home.setOnAction((ActionEvent event) -> {
             System.out.println("Ausgabe head home");
         });
-        
-    }    
-    
+        head_btn_home.setOnMouseEntered((MouseEvent event) -> {
+            head_btn_back.setDisable(true);
+        });
+        head_btn_home.setOnMouseExited((MouseEvent event) -> {
+            head_btn_back.setDisable(false);
+        });
+
+    }
 }
