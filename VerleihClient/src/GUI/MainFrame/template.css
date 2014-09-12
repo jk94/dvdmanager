@@ -55,12 +55,12 @@
      -fx-background-color: #2E2E2E;
      -fx-text-fill: #B43104;
      -fx-font-size: 14px;
-     -fx-font-family: "Courier";
+     //-fx-font-family: "Courier";
 }
 
 .search-box {
     -fx-background-color: #B43104;
     -fx-text-fill: #2E2E2E;
     -fx-alignment: CENTER_LEFT;
-    -fx-font: cursive;
+    //-fx-font: cursive;
 }

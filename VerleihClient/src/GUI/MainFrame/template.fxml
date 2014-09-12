@@ -9,14 +9,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dvdverleih.TemplateController">
    <center>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" styleClass="content-base" stylesheets="@template.css" BorderPane.alignment="CENTER">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="451.0" prefWidth="552.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="451.0" prefWidth="552.0" styleClass="content-base" stylesheets="@template.css">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox prefHeight="200.0" prefWidth="100.0" styleClass="content-base">
                      <children>
                         <SubScene fx:id="subscene_content" fill="#2e2e2e" height="540.0" width="814.0">
                           <root>
@@ -31,7 +30,7 @@
       </ScrollPane>
    </center>
    <left>
-      <VBox prefHeight="550.0" prefWidth="200.0" stylesheets="@template.css" BorderPane.alignment="CENTER">
+      <VBox prefHeight="550.0" prefWidth="200.0" styleClass="menu-base" stylesheets="@template.css" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="label_katalog" prefHeight="20.0" prefWidth="190.0" styleClass="menu-label" stylesheets="@template.css" text="DVD Katalog" />
             <Region prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
@@ -59,7 +58,7 @@
       </VBox>
    </left>
    <top>
-      <HBox prefHeight="40.0" prefWidth="1014.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="40.0" prefWidth="1014.0" styleClass="header" stylesheets="@template.css" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="head_btn_home" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
                <graphic>
