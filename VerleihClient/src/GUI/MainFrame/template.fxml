@@ -9,105 +9,99 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="master_base" alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" styleClass="page-base" stylesheets="@template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dvdverleih.TemplateController">
-   <children>
-      <AnchorPane fx:id="header_base" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="1024.0" styleClass="header" stylesheets="@template.css">
-         <children>
-            <HBox layoutX="14.0" layoutY="13.0" prefHeight="40.0" prefWidth="1014.0">
+
+<BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dvdverleih.TemplateController">
+   <center>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="451.0" prefWidth="552.0">
                <children>
-                  <Button fx:id="head_btn_home" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
-                     <graphic>
-                        <ImageView fx:id="head_btn_home_img" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Elements/homebutton.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
-                     <graphic>
-                        <ImageView fx:id="head_btn_back_img" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Elements/arrowleft.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button layoutX="41.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
-                     <graphic>
-                        <ImageView fx:id="head_btn_forward_img" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Elements/arrowright.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Region prefHeight="40.0" prefWidth="100.0" />
-                  <TextField fx:id="head_title" prefHeight="20.0" prefWidth="200.0" styleClass="titel-text" stylesheets="@template.css" text="CODEKINGS DVD Collection" />
-                  <Region layoutX="106.0" layoutY="10.0" prefHeight="40.0" prefWidth="454.0" />
-                  <Button fx:id="btn_search" layoutX="46.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
-                     <graphic>
-                        <ImageView fx:id="head_searchicon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Elements/searchicon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <TextField fx:id="head_searchbox" alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="100.0" styleClass="search-box" stylesheets="@template.css" text="Titelsuche..." />
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <SubScene fx:id="subscene_content" fill="#2e2e2e" height="540.0" width="814.0">
+                          <root>
+                            <Region />
+                          </root>
+                        </SubScene>
+                     </children>
+                  </VBox>
                </children>
-            </HBox>
-         </children></AnchorPane>
-      <AnchorPane fx:id="body_base" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1024.0" styleClass="page-base" stylesheets="@template.css">
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </center>
+   <left>
+      <VBox prefHeight="550.0" prefWidth="200.0" stylesheets="@template.css" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="550.0" prefWidth="1024.0" styleClass="page-base" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <AnchorPane fx:id="menu_base" prefHeight="550.0" prefWidth="200.0" styleClass="menu-base">
-                     <children>
-                        <VBox prefHeight="550.0" prefWidth="200.0" stylesheets="@template.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <Label fx:id="label_katalog" prefHeight="20.0" prefWidth="190.0" styleClass="menu-label" stylesheets="@template.css" text="DVD Katalog" />
-                              <Region prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-                              <Button fx:id="btn_start" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Start" />
-                              <Region prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-                              <Button fx:id="btn_titelsuche" layoutX="10.0" layoutY="30.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Titelsuche" />
-                              <Region layoutX="10.0" layoutY="67.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-                              <Button fx:id="btn_genresuche" layoutX="10.0" layoutY="77.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Genresuche" />
-                              <Region layoutX="10.0" layoutY="67.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-                              <Button fx:id="btn_neuheiten" layoutX="10.0" layoutY="57.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Neuheiten" />
-                              <Region prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-                              <Label fx:id="label_kundenbereich" layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="190.0" styleClass="menu-label" stylesheets="@template.css" text="Kundenbereich" />
-                              <Region layoutX="10.0" layoutY="157.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-                              <Button fx:id="btn_uebersicht" layoutX="10.0" layoutY="97.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Übersicht" />
-                              <Region layoutX="10.0" layoutY="189.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-                              <Button fx:id="btn_ausleihen" layoutX="10.0" layoutY="194.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Artikel ausleihen" />
-                              <Region layoutX="10.0" layoutY="219.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-                              <Button fx:id="btn_entliehen" layoutX="10.0" layoutY="224.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Entliehene Artikel" />
-                              <Region layoutX="10.0" layoutY="249.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-                              <Button fx:id="btn_kontoverwaltung" layoutX="10.0" layoutY="254.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Kontoverwaltung" />
-                              <Region layoutX="10.0" layoutY="279.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-                              <Button fx:id="btn_bewertung" layoutX="10.0" layoutY="284.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Bewertung abgeben" />
-                              <Region layoutX="10.0" layoutY="309.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="content_base" prefHeight="550.0" prefWidth="824.0" styleClass="content-base">
-                     <children>
-                        <StackPane prefHeight="550.0" prefWidth="824.0" styleClass="content-back" stylesheets="@template.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <SubScene fx:id="subscene_content" fill="#2e2e2e" height="540.0" width="814.0">
-                                <root>
-                                  <Region />
-                                </root>
-                              </SubScene>
-                           </children>
-                        </StackPane>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </HBox>
+            <Label fx:id="label_katalog" prefHeight="20.0" prefWidth="190.0" styleClass="menu-label" stylesheets="@template.css" text="DVD Katalog" />
+            <Region prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
+            <Button fx:id="btn_start" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Start" />
+            <Region prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
+            <Button fx:id="btn_titelsuche" layoutX="10.0" layoutY="30.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Titelsuche" />
+            <Region layoutX="10.0" layoutY="67.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
+            <Button fx:id="btn_genresuche" layoutX="10.0" layoutY="77.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Genresuche" />
+            <Region layoutX="10.0" layoutY="67.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
+            <Button fx:id="btn_neuheiten" layoutX="10.0" layoutY="57.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Neuheiten" />
+            <Region prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
+            <Label fx:id="label_kundenbereich" layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="190.0" styleClass="menu-label" stylesheets="@template.css" text="Kundenbereich" />
+            <Region layoutX="10.0" layoutY="157.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
+            <Button fx:id="btn_uebersicht" layoutX="10.0" layoutY="97.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Übersicht" />
+            <Region layoutX="10.0" layoutY="189.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
+            <Button fx:id="btn_ausleihen" layoutX="10.0" layoutY="194.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Artikel ausleihen" />
+            <Region layoutX="10.0" layoutY="219.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
+            <Button fx:id="btn_entliehen" layoutX="10.0" layoutY="224.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Entliehene Artikel" />
+            <Region layoutX="10.0" layoutY="249.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
+            <Button fx:id="btn_kontoverwaltung" layoutX="10.0" layoutY="254.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Kontoverwaltung" />
+            <Region layoutX="10.0" layoutY="279.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
+            <Button fx:id="btn_bewertung" layoutX="10.0" layoutY="284.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Bewertung abgeben" />
+            <Region layoutX="10.0" layoutY="309.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
          </children>
-      </AnchorPane>
-   </children>
-</VBox>
+      </VBox>
+   </left>
+   <top>
+      <HBox prefHeight="40.0" prefWidth="1014.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="head_btn_home" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
+               <graphic>
+                  <ImageView fx:id="head_btn_home_img" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Elements/homebutton.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
+               <graphic>
+                  <ImageView fx:id="head_btn_back_img" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Elements/arrowleft.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="41.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
+               <graphic>
+                  <ImageView fx:id="head_btn_forward_img" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Elements/arrowright.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Region prefHeight="40.0" prefWidth="100.0" />
+            <TextField fx:id="head_title" prefHeight="20.0" prefWidth="200.0" styleClass="titel-text" stylesheets="@template.css" text="CODEKINGS DVD Collection" />
+            <Region layoutX="106.0" layoutY="10.0" prefHeight="40.0" prefWidth="454.0" />
+            <Button fx:id="btn_search" layoutX="46.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
+               <graphic>
+                  <ImageView fx:id="head_searchicon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Elements/searchicon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <TextField fx:id="head_searchbox" alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="100.0" styleClass="search-box" stylesheets="@template.css" text="Titelsuche..." />
+         </children>
+      </HBox>
+   </top>
+</BorderPane>
