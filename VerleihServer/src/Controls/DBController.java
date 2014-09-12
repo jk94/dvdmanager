@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package verleihserver;
+package Controls;
 
 import Enumerators.LogEnum;
 import java.io.File;
@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import verleihserver.main;
 
 /**
  *

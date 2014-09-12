@@ -7,10 +7,11 @@ package verleihserver;
 
 import Enumerators.LogEnum;
 import connection.VerleihServer;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import contents.Film;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -27,18 +28,6 @@ public class main {
         //json.json_parser.getInstance().parseObjectOut(new Testklasse());
         //Testklasse t;
         //t = json.json_parser.getInstance().parseObjectIn(new File("C:/Users/Jan/Desktop/test.txt"), Testklasse.class);
-        
-        try {
-            PreparedStatement p = DBController.getConnection().prepareStatement("SELECT * FROM tbl_user");
-            ResultSet rs = DBController.executeQuery(p);
-
-            System.out.println(rs.getString("surname"));
-            System.out.println(rs.getString("name"));
-            System.out.println(new Date(rs.getLong("birthdate")));
-        } catch (SQLException e) {
-            log(LogEnum.ERROR, e.getMessage(), e);
-        }
-        VerleihServer.getInstance().start();
     }
 
     public static void log(Enumerators.LogEnum e, String s, Object o) {
