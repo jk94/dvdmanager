@@ -31,8 +31,8 @@ public class json_parser {
     public void parseObjectOut(Testklasse o) {
         System.out.println("parsing started");
         try {
-            //System.out.println(om.writeValueAsString(o));
-            om.writeValue(new File("C:/Users/Jan/Desktop/test.txt"), o);
+            System.out.println(om.writeValueAsString(o));
+            //om.writeValue(new File("C:/Users/Jan/Desktop/test.txt"), o);
         } catch (Exception ex) {
             main.log(LogEnum.ERROR, ex.getMessage(), getInstance());
         }

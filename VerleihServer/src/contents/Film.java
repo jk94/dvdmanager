@@ -7,6 +7,7 @@ package contents;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  *
@@ -15,14 +16,43 @@ import java.util.Date;
 public class Film {
 
     private final int FILMID;
-    private String s_titel = "", s_subtitel = "", s_description = "", s_trailer = "", s_regie;
-    private int i_rating = -1, i_duration = -1;
+    private String s_titel = "", s_subtitel = "", s_description = "";
+    private String s_trailer = "", s_regie = "", s_FSK = "";
+    private int i_rating = -1, i_duration = -1, i_fsk = 0;
     private double d_preis = 0.0;
     private Date release_date;
     private final ArrayList<String> li_actors = new ArrayList<>(), li_awards = new ArrayList<>();
 
     public Film(int fid) {
         FILMID = fid;
+    }
+
+    public int getFILMID() {
+        return FILMID;
+    }
+
+    public String getS_FSK() {
+        return s_FSK;
+    }
+
+    public void setS_FSK(String s_FSK) {
+        this.s_FSK = s_FSK;
+    }
+    
+    public String getS_regie() {
+        return s_regie;
+    }
+
+    public void setS_regie(String s_regie) {
+        this.s_regie = s_regie;
+    }
+
+    public int getI_fsk() {
+        return i_fsk;
+    }
+
+    public void setI_fsk(int i_fsk) {
+        this.i_fsk = i_fsk;
     }
 
     public ArrayList<String> getActors() {

@@ -12,7 +12,7 @@ package contents;
 public class DVD {
 
     private final int DVDID;
-    private String s_artikelnr = "", s_notiz;
+    private String s_artikelnr = "", s_notiz = "", s_lastedit = "", s_lasteditdate = "";
     private Film film;
     private boolean ausgeliehen;
 
@@ -20,6 +20,25 @@ public class DVD {
         DVDID = id;
     }
 
+    public int getDVDID() {
+        return DVDID;
+    }
+    
+    public String getS_lastedit() {
+        return s_lastedit;
+    }
+
+    public void setS_lastedit(String s_lastedit) {
+        this.s_lastedit = s_lastedit;
+    }
+
+    public String getS_lasteditdate() {
+        return s_lasteditdate;
+    }
+
+    public void setS_lasteditdate(String s_lasteditdate) {
+        this.s_lasteditdate = s_lasteditdate;
+    }
     public String getS_artikelnr() {
         return s_artikelnr;
     }

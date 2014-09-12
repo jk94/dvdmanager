@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
  */
 public class Testklasse {
 
-    String a = "C:/Users/Jan/Pictures/mc/maxresdefault.jpg";
+    String a = "C:\\Users\\Jan\\Pictures\\PiConnect\\Prinzip1.png";
     int b = 1;
     char c = 'c';
     double d = 25.14;
