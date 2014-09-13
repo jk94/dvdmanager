@@ -29,34 +29,6 @@
         </content>
       </ScrollPane>
    </center>
-   <left>
-      <VBox prefHeight="550.0" prefWidth="200.0" styleClass="menu-base" stylesheets="@template.css" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="label_katalog" prefHeight="20.0" prefWidth="190.0" styleClass="menu-label" stylesheets="@template.css" text="DVD Katalog" />
-            <Region prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-            <Button fx:id="btn_start" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Start" />
-            <Region prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-            <Button fx:id="btn_titelsuche" layoutX="10.0" layoutY="30.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Titelsuche" />
-            <Region layoutX="10.0" layoutY="67.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-            <Button fx:id="btn_genresuche" layoutX="10.0" layoutY="77.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Genresuche" />
-            <Region layoutX="10.0" layoutY="67.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-            <Button fx:id="btn_neuheiten" layoutX="10.0" layoutY="57.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Neuheiten" />
-            <Region prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-            <Label fx:id="label_kundenbereich" layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="190.0" styleClass="menu-label" stylesheets="@template.css" text="Kundenbereich" />
-            <Region layoutX="10.0" layoutY="157.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-            <Button fx:id="btn_uebersicht" layoutX="10.0" layoutY="97.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Übersicht" />
-            <Region layoutX="10.0" layoutY="189.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-            <Button fx:id="btn_ausleihen" layoutX="10.0" layoutY="194.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Artikel ausleihen" />
-            <Region layoutX="10.0" layoutY="219.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-            <Button fx:id="btn_entliehen" layoutX="10.0" layoutY="224.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Entliehene Artikel" />
-            <Region layoutX="10.0" layoutY="249.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-            <Button fx:id="btn_kontoverwaltung" layoutX="10.0" layoutY="254.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Kontoverwaltung" />
-            <Region layoutX="10.0" layoutY="279.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-            <Button fx:id="btn_bewertung" layoutX="10.0" layoutY="284.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Bewertung abgeben" />
-            <Region layoutX="10.0" layoutY="309.0" prefHeight="5.0" prefWidth="200.0" styleClass="menu-space" stylesheets="@template.css" />
-         </children>
-      </VBox>
-   </left>
    <top>
       <HBox prefHeight="40.0" prefWidth="1014.0" styleClass="header" stylesheets="@template.css" BorderPane.alignment="CENTER">
          <children>
@@ -103,4 +75,48 @@
          </children>
       </HBox>
    </top>
+   <left>
+      <Accordion fx:id="menu_accordion" styleClass="menu-accordion" stylesheets="@template.css" BorderPane.alignment="CENTER">
+        <panes>
+          <TitledPane animated="false" text="DVD Katalog">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Button fx:id="btn_start" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Start" />
+                              <Button fx:id="btn_titelsuche" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Titelsuche" />
+                              <Button fx:id="btn_genresuche" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Genresuche" />
+                              <Button fx:id="btn_neuheiten" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Neuheiten" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Kundenbereich">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Button fx:id="btn_uebersicht" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Übersicht" />
+                              <Button fx:id="btn_ausleihen" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Artikel ausleihen" />
+                              <Button fx:id="btn_entliehen" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Entliehene Artikel" />
+                              <Button fx:id="btn_bewertung" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Bewertung abgeben" />
+                              <Button fx:id="btn_kontoverwaltung" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Kontoverwaltung" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Mitarbeiterbereich">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="menu-accordion" stylesheets="@template.css" />
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
+   </left>
 </BorderPane>

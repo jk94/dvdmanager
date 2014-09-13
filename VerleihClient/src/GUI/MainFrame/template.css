@@ -2,9 +2,6 @@
  * Empty Stylesheet file.
  */
 
-.scroll-base {
-    -fx-background-color:transparent;
-}
 
 .page-base {
     -fx-background-color: #1C1C1C;
@@ -51,16 +48,56 @@
     -fx-text-fill: #B43104;
  }
  
- .titel-text {
-     -fx-background-color: #2E2E2E;
-     -fx-text-fill: #B43104;
-     -fx-font-size: 14px;
-     //-fx-font-family: "Courier";
-}
-
+ /*.menu-accordion {
+	-fx-background-color: #2E2E2E;
+	-fx-border-color: #1C1C1C;
+	-fx-border-width: 5px;
+	 }
+*/
+ 
 .search-box {
     -fx-background-color: #B43104;
     -fx-text-fill: #2E2E2E;
     -fx-alignment: CENTER_LEFT;
     //-fx-font: cursive;
+}
+
+.scroll-base {
+    -fx-background-color:transparent;
+}
+
+ .titel-text {
+     -fx-background-color: #2E2E2E;
+     -fx-text-fill: #B43104;
+     -fx-font-size: 14px;
+     
+}
+
+ .titled-pane .title {
+	-fx-background-color: #B43104;
+	-fx-text-fill: #1C1C1C;
+	-fx-border-radius: 3px;
+ }
+ 
+.titled-pane > .title > .arrow-button .arrow 
+{
+-fx-background-color: #1C1C1C;
+-fx-mark-highlight-color, 
+-fx-mark-color;
+
+}
+
+.titled-pane:collapsed > .title > .arrow-button .arrow 
+{
+-fx-rotate: -90;
+}
+
+.titled-pane > *.content 
+{
+-fx-background-color: #1C1C1C;
+ }
+
+.titled-pane:focused > .title > .arrow-button .arrow 
+{
+-fx-background-color: #2E2E2E;
 }
