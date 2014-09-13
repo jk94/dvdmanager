@@ -5,6 +5,7 @@
  */
 package contents;
 
+import Enumerators.ClassType;
 import Enumerators.LogEnum;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -20,9 +21,9 @@ import verleihserver.main;
  *
  * @author Jan
  */
-public class Film {
+public class Film extends Sendable{
 
-    private final int FILMID;
+    private final int FILMID = 1;
     private String s_titel = "", s_subtitel = "", s_description = "";
     private String s_trailer = "", s_regie = "", s_FSK = "";
     private int i_rating = -1, i_duration = -1, i_fsk = 0;
@@ -33,8 +34,15 @@ public class Film {
     private BufferedImage cover;
 
     public Film(int fid) {
-        FILMID = fid;
+        //FILMID = fid;
     }
+
+    @Override
+    public ClassType getClassType() {
+        return ClassType.T_FILM;
+    }
+    
+    
 
     public BufferedImage getCover() {
         return cover;

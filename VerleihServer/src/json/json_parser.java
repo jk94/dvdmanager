@@ -15,7 +15,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
-import verleihserver.Testklasse;
 import verleihserver.main;
 
 /**
@@ -34,7 +33,7 @@ public class json_parser {
     public static json_parser getInstance() {
         return jp;
     }
-
+    
     public static BufferedImage decodeToImage(String imageString) {
 
         BufferedImage image = null;
@@ -65,6 +64,7 @@ public class json_parser {
         try {
             ImageIO.write(image, type, bos);
             byte[] imageBytes = bos.toByteArray();
+
             BASE64Encoder encoder = new BASE64Encoder();
             imageString = encoder.encode(imageBytes);
 
@@ -75,19 +75,18 @@ public class json_parser {
         return imageString;
     }
 
-    public void parseObjectOut(Testklasse o) {
+    public String parseObjectOut(Object o) {
         System.out.println("parsing started");
         try {
-            System.out.println(om.writeValueAsString(o));
-            //om.writeValue(new File("C:/Users/Jan/Desktop/test.txt"), o);
+            return om.writeValueAsString(o);
         } catch (Exception ex) {
             main.log(LogEnum.ERROR, ex.getMessage(), getInstance());
         }
         System.out.println("parsing ended");
-
+        return "";
     }
 
-    public Testklasse parseObjectIn(File f, Class<Testklasse> c) {
+    public Object parseObjectIn(File f, Class<?> c) {
         System.out.println("start");
         try {
             return om.readValue(f, c);

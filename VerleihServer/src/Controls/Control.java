@@ -5,14 +5,9 @@
  */
 package Controls;
 
-import Enumerators.LogEnum;
 import contents.Film;
-import java.io.File;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
-import verleihserver.main;
 
 /**
  *
@@ -23,10 +18,14 @@ public class Control {
     private static final Control theControl = new Control();
 
     public Control() {
-
+        getFilms();
+    }
+    
+    public static Control getInstance(){
+        return theControl;
     }
 
-    public void getFilms() {
+    public final void getFilms() {
         try {
             ArrayList<Film> films = new ArrayList<>();
             ResultSet rs = DBSQL_Control.GetALLFilmsFromDB();
@@ -46,7 +45,7 @@ public class Control {
                 }
                 films.add(f);
             }
-            json.json_parser.getInstance();
+            System.out.println(json.json_parser.getInstance().parseObjectOut(films));
         } catch (Exception ex) {
 
         }

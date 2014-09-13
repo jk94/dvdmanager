@@ -5,11 +5,13 @@
  */
 package contents;
 
+import Enumerators.ClassType;
+
 /**
  *
  * @author Jan
  */
-public class DVD {
+public class DVD extends Sendable {
 
     private final int DVDID;
     private String s_artikelnr = "", s_notiz = "", s_lastedit = "", s_lasteditdate = "";
@@ -20,10 +22,15 @@ public class DVD {
         DVDID = id;
     }
 
+    @Override
+    public ClassType getClassType() {
+        return ClassType.T_DVD;
+    }
+
     public int getDVDID() {
         return DVDID;
     }
-    
+
     public String getS_lastedit() {
         return s_lastedit;
     }
@@ -39,6 +46,7 @@ public class DVD {
     public void setS_lasteditdate(String s_lasteditdate) {
         this.s_lasteditdate = s_lasteditdate;
     }
+
     public String getS_artikelnr() {
         return s_artikelnr;
     }
@@ -70,6 +78,5 @@ public class DVD {
     public void setAusgeliehen(boolean ausgeliehen) {
         this.ausgeliehen = ausgeliehen;
     }
-    
-    
+
 }

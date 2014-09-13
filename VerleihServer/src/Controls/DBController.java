@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import verleihserver.main;
 
 /**
@@ -93,6 +94,21 @@ public final class DBController {
                 getInstance().initDBConnection();
             }
             ergebnisRS = pst.executeQuery();
+            connection.close();
+        } catch (SQLException ex) {
+            main.log(LogEnum.ERROR, ex.getMessage(), DBController.getInstance());
+        }
+        return ergebnisRS;
+    }
+    
+    public static ResultSet executeQuery(String sql){
+        ResultSet ergebnisRS = null;
+        try {
+            if (!(connection != null) || connection.isClosed()) {
+                getInstance().initDBConnection();
+            }
+            Statement stmt = connection.createStatement();
+            ergebnisRS = stmt.executeQuery(sql);
             connection.close();
         } catch (SQLException ex) {
             main.log(LogEnum.ERROR, ex.getMessage(), DBController.getInstance());

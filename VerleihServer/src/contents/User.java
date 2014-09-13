@@ -63,19 +63,19 @@ public abstract class User {
         this.ort = ort;
     }
 
-    public String getPasswort() {
+    public final String getPasswort() {
         return passwort;
     }
 
-    public void setPasswort(String passwort) {
+    public final void setPasswort(String passwort) {
         this.passwort = passwort;
     }
 
-    public String getEmail() {
+    public final String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public final void setEmail(String email) {
         this.email = email;
     }
 

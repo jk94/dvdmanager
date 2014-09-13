@@ -24,10 +24,11 @@ public class main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        new Testklasse();
         //json.json_parser.getInstance().parseObjectOut(new Testklasse());
         //Testklasse t;
         //t = json.json_parser.getInstance().parseObjectIn(new File("C:/Users/Jan/Desktop/test.txt"), Testklasse.class);
+        VerleihServer.getInstance().start();
+        new Controls.Control();
     }
 
     public static void log(Enumerators.LogEnum e, String s, Object o) {
