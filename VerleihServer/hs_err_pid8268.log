@@ -1,0 +1,247 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x000000006a6059a8, pid=8268, tid=4980
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_20-b26) (build 1.8.0_20-b26)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.20-b23 mixed mode windows-amd64 compressed oops)
+# Problematic frame:
+# C  [sqlite-3.8.51-amd64-sqlitejdbc.dll+0x59a8]
+#
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00000000023fe800):  JavaThread "main" [_thread_in_native, id=4980, stack(0x00000000025e0000,0x00000000026e0000)]
+
+siginfo: ExceptionCode=0xc0000005, reading address 0x0000000000000000
+
+Registers:
+RAX=0x000000006a602330, RBX=0x00000000023fe9e8, RCX=0x0000000000000000, RDX=0x0000000000000000
+RSP=0x00000000026de660, RBP=0x00000000026de780, RSI=0x000000000056e46e, RDI=0x00000000029b7a2d
+R8 =0x000000006a6228a0, R9 =0x0000000000000000, R10=0x00000000029c664b, R11=0x000000005c4a14f0
+R12=0x0000000000000000, R13=0x0000000019881ec8, R14=0x00000000026de7b8, R15=0x00000000023fe800
+RIP=0x000000006a6059a8, EFLAGS=0x0000000000010206
+
+Top of Stack: (sp=0x00000000026de660)
+0x00000000026de660:   0000001c00000001 0000000000000000
+0x00000000026de670:   0000000000000000 000000005c3adf1c
+0x00000000026de680:   00000000198c73b8 00000000023fe800
+0x00000000026de690:   00000000023f9360 00000000023fe9e8
+0x00000000026de6a0:   000000000056e46e 00000000029b7a2d
+0x00000000026de6b0:   00000000026de780 000000006a602343
+0x00000000026de6c0:   00000000000000b6 00000000198c73b8
+0x00000000026de6d0:   00000000023fe800 000000001987e830
+0x00000000026de6e0:   0000000019881ec8 00000000029c6677
+0x00000000026de6f0:   00000000026debc8 00000000026de788
+0x00000000026de700:   000000000056e46e 00000000198c73b8
+0x00000000026de710:   00000000023fe800 00000000029c0feb
+0x00000000026de720:   00000000023fe800 00000000023fe800
+0x00000000026de730:   0000000000000001 0000000780a72658
+0x00000000026de740:   00000000026de730 0000000000000000
+0x00000000026de750:   00000000026de7b8 000000001989e678 
+
+Instructions: (pc=0x000000006a6059a8)
+0x000000006a605988:   83 79 28 00 74 07 0f b7 81 88 00 00 00 f3 c3 66
+0x000000006a605998:   0f 1f 84 00 00 00 00 00 55 57 56 53 48 83 ec 38
+0x000000006a6059a8:   48 8b 31 0f b7 81 88 00 00 00 85 d2 48 89 cb 4c
+0x000000006a6059b8:   89 c7 78 74 39 c2 7d 70 44 89 cd 48 8b 4e 18 0f 
+
+
+Register to memory mapping:
+
+RAX=0x000000006a602330 is an unknown value
+RBX=0x00000000023fe9e8 is an unknown value
+RCX=0x0000000000000000 is an unknown value
+RDX=0x0000000000000000 is an unknown value
+RSP=0x00000000026de660 is pointing into the stack for thread: 0x00000000023fe800
+RBP=0x00000000026de780 is pointing into the stack for thread: 0x00000000023fe800
+RSI=0x000000000056e46e is an unknown value
+RDI=0x00000000029b7a2d is at code_begin+2093 in an Interpreter codelet
+invoke return entry points  [0x00000000029b7200, 0x00000000029b7b00]  2304 bytes
+R8 =0x000000006a6228a0 is an unknown value
+R9 =0x0000000000000000 is an unknown value
+R10=0x00000000029c664b is at code_begin+1227 in an Interpreter codelet
+method entry point (kind = native_synchronized)  [0x00000000029c6180, 0x00000000029c6c60]  2784 bytes
+R11=0x000000005c4a14f0 is an unknown value
+R12=0x0000000000000000 is an unknown value
+R13={method} {0x0000000019881ed0} 'column_name' '(JI)Ljava/lang/String;' in 'org/sqlite/core/NativeDB'
+R14=0x00000000026de7b8 is pointing into the stack for thread: 0x00000000023fe800
+R15=0x00000000023fe800 is a thread
+
+
+Stack: [0x00000000025e0000,0x00000000026e0000],  sp=0x00000000026de660,  free space=1017k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [sqlite-3.8.51-amd64-sqlitejdbc.dll+0x59a8]
+C  [sqlite-3.8.51-amd64-sqlitejdbc.dll+0x2343]
+C  0x00000000029c6677
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  org.sqlite.core.NativeDB.column_name(JI)Ljava/lang/String;+0
+j  org.sqlite.jdbc3.JDBC3ResultSet.getColumnName(I)Ljava/lang/String;+16
+j  org.sqlite.jdbc3.JDBC3ResultSet.getColumnLabel(I)Ljava/lang/String;+2
+j  Controls.Control.getFilms()V+32
+j  Controls.Control.<init>()V+5
+j  Controls.Control.<clinit>()V+4
+v  ~StubRoutines::call_stub
+j  verleihserver.main.main([Ljava/lang/String;)V+6
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x000000001b248000 JavaThread "Thread-0" [_thread_in_native, id=3184, stack(0x000000001bf50000,0x000000001c050000)]
+  0x000000001b1ce800 JavaThread "Service Thread" daemon [_thread_blocked, id=2764, stack(0x000000001aec0000,0x000000001afc0000)]
+  0x000000001b169800 JavaThread "C1 CompilerThread2" daemon [_thread_blocked, id=8336, stack(0x000000001ba50000,0x000000001bb50000)]
+  0x000000001b167800 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=7964, stack(0x000000001b920000,0x000000001ba20000)]
+  0x000000001b162000 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=8832, stack(0x000000001b560000,0x000000001b660000)]
+  0x000000001b160800 JavaThread "Attach Listener" daemon [_thread_blocked, id=4880, stack(0x000000001b7a0000,0x000000001b8a0000)]
+  0x0000000019e63000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=1940, stack(0x000000001b6a0000,0x000000001b7a0000)]
+  0x0000000019e05800 JavaThread "Finalizer" daemon [_thread_blocked, id=8104, stack(0x000000001b060000,0x000000001b160000)]
+  0x0000000019dfc800 JavaThread "Reference Handler" daemon [_thread_blocked, id=9200, stack(0x000000001adc0000,0x000000001aec0000)]
+=>0x00000000023fe800 JavaThread "main" [_thread_in_native, id=4980, stack(0x00000000025e0000,0x00000000026e0000)]
+
+Other Threads:
+  0x0000000019df7000 VMThread [stack: 0x000000001ac60000,0x000000001ad60000] [id=9124]
+  0x000000001b1ea000 WatcherThread [stack: 0x000000001bba0000,0x000000001bca0000] [id=8788]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap:
+ PSYoungGen      total 57344K, used 5898K [0x0000000780580000, 0x0000000784580000, 0x00000007c0000000)
+  eden space 49152K, 12% used [0x0000000780580000,0x0000000780b42a40,0x0000000783580000)
+  from space 8192K, 0% used [0x0000000783d80000,0x0000000783d80000,0x0000000784580000)
+  to   space 8192K, 0% used [0x0000000783580000,0x0000000783580000,0x0000000783d80000)
+ ParOldGen       total 131072K, used 0K [0x0000000701000000, 0x0000000709000000, 0x0000000780580000)
+  object space 131072K, 0% used [0x0000000701000000,0x0000000701000000,0x0000000709000000)
+ Metaspace       used 4759K, capacity 5068K, committed 5248K, reserved 1056768K
+  class space    used 526K, capacity 564K, committed 640K, reserved 1048576K
+
+Card table byte_map: [0x0000000011d70000,0x0000000012370000] byte_map_base: 0x000000000e568000
+
+Marking Bits: (ParMarkBitMap*) 0x000000005ca6b460
+ Begin Bits: [0x0000000012ef0000, 0x0000000015eb0000)
+ End Bits:   [0x0000000015eb0000, 0x0000000018e70000)
+
+Polling page: 0x0000000000230000
+
+CodeCache: size=245760Kb used=1432Kb max_used=1436Kb free=244327Kb
+ bounds [0x00000000029b0000, 0x0000000002c20000, 0x00000000119b0000]
+ total_blobs=444 nmethods=173 adapters=185
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 0.186 Thread 0x000000001b162000 nmethod 167 0x0000000002b12dd0 code [0x0000000002b12f40, 0x0000000002b13388]
+Event: 0.187 Thread 0x000000001b167800 nmethod 168% 0x0000000002b16790 code [0x0000000002b16960, 0x0000000002b16d10]
+Event: 0.187 Thread 0x000000001b162000  169   !   4       org.sqlite.SQLiteJDBCLoader::md5sum (104 bytes)
+Event: 0.192 Thread 0x000000001b162000 nmethod 169 0x0000000002b14610 code [0x0000000002b14800, 0x0000000002b14d90]
+Event: 0.206 Thread 0x000000001b169800  170       3       java.lang.String::substring (56 bytes)
+Event: 0.206 Thread 0x000000001b169800 nmethod 170 0x0000000002b13f50 code [0x0000000002b140e0, 0x0000000002b14488]
+Event: 0.208 Thread 0x000000001b169800  171       1       java.net.URL::getPort (5 bytes)
+Event: 0.208 Thread 0x000000001b169800 nmethod 171 0x0000000002b12b10 code [0x0000000002b12c60, 0x0000000002b12d70]
+Event: 0.212 Thread 0x000000001b169800  172       3       java.util.concurrent.ConcurrentHashMap::addCount (292 bytes)
+Event: 0.213 Thread 0x000000001b169800 nmethod 172 0x0000000002b15690 code [0x0000000002b158a0, 0x0000000002b163c8]
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (2 events):
+Event: 0.181 Thread 0x00000000023fe800 Uncommon trap: reason=unloaded action=reinterpret pc=0x0000000002b053e4 method=org.sqlite.SQLiteJDBCLoader.md5sum(Ljava/io/InputStream;)Ljava/lang/String; @ 35
+Event: 0.181 Thread 0x00000000023fe800 Uncommon trap: reason=unreached action=reinterpret pc=0x0000000002b01178 method=sun.security.provider.DigestBase.engineUpdate(B)V @ 4
+
+Internal exceptions (10 events):
+Event: 0.208 Thread 0x00000000023fe800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000780a70730) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u20\1074\hotspot\src\share\vm\prims\jvm.cpp, line 1275]
+Event: 0.208 Thread 0x00000000023fe800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000780a736f8) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u20\1074\hotspot\src\share\vm\prims\jvm.cpp, line 1275]
+Event: 0.209 Thread 0x00000000023fe800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000780a76700) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u20\1074\hotspot\src\share\vm\prims\jvm.cpp, line 1275]
+Event: 0.209 Thread 0x00000000023fe800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000780a80060) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u20\1074\hotspot\src\share\vm\prims\jvm.cpp, line 1275]
+Event: 0.210 Thread 0x00000000023fe800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000780a83bd0) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u20\1074\hotspot\src\share\vm\prims\jvm.cpp, line 1275]
+Event: 0.210 Thread 0x00000000023fe800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000780a877e8) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u20\1074\hotspot\src\share\vm\prims\jvm.cpp, line 1275]
+Event: 0.211 Thread 0x00000000023fe800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000780a98608) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u20\1074\hotspot\src\share\vm\prims\jvm.cpp, line 1275]
+Event: 0.214 Thread 0x00000000023fe800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000780aad770) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u20\1074\hotspot\src\share\vm\prims\jvm.cpp, line 1275]
+Event: 0.214 Thread 0x00000000023fe800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000780ab1618) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u20\1074\hotspot\src\share\vm\prims\jvm.cpp, line 1275]
+Event: 0.215 Thread 0x00000000023fe800 Exception <a 'java/security/PrivilegedActionException'> (0x0000000780abb988) thrown at [D:\re\workspace\8-2-build-windows-amd64-cygwin\jdk8u20\1074\hotspot\src\share\vm\prims\jvm.cpp, line 1275]
+
+Events (10 events):
+Event: 0.215 loading class org/sqlite/core/CorePreparedStatement
+Event: 0.215 loading class org/sqlite/core/CorePreparedStatement done
+Event: 0.215 loading class java/sql/Date
+Event: 0.215 loading class java/sql/Date done
+Event: 0.217 loading class java/util/HashMap$EntrySet
+Event: 0.217 loading class java/util/HashMap$EntrySet done
+Event: 0.217 loading class java/util/HashMap$EntryIterator
+Event: 0.217 loading class java/util/HashMap$HashIterator
+Event: 0.217 loading class java/util/HashMap$HashIterator done
+Event: 0.217 loading class java/util/HashMap$EntryIterator done
+
+
+Dynamic libraries:
+0x000000013f380000 - 0x000000013f3b4000 	C:\Program Files\Java\jdk1.8.0_20\bin\java.exe
+0x0000000077000000 - 0x00000000771a9000 	C:\Windows\SYSTEM32\ntdll.dll
+0x0000000076de0000 - 0x0000000076eff000 	C:\Windows\system32\kernel32.dll
+0x000007fefcfa0000 - 0x000007fefd00c000 	C:\Windows\system32\KERNELBASE.dll
+0x000007fefee30000 - 0x000007fefef0b000 	C:\Windows\system32\ADVAPI32.dll
+0x000007fefe830000 - 0x000007fefe8cf000 	C:\Windows\system32\msvcrt.dll
+0x000007fefe920000 - 0x000007fefe93f000 	C:\Windows\SYSTEM32\sechost.dll
+0x000007fefef10000 - 0x000007feff03d000 	C:\Windows\system32\RPCRT4.dll
+0x0000000076f00000 - 0x0000000076ffa000 	C:\Windows\system32\USER32.dll
+0x000007fefd1d0000 - 0x000007fefd237000 	C:\Windows\system32\GDI32.dll
+0x000007feff280000 - 0x000007feff28e000 	C:\Windows\system32\LPK.dll
+0x000007feff040000 - 0x000007feff109000 	C:\Windows\system32\USP10.dll
+0x000007fefb440000 - 0x000007fefb634000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.17514_none_fa396087175ac9ac\COMCTL32.dll
+0x000007feff290000 - 0x000007feff301000 	C:\Windows\system32\SHLWAPI.dll
+0x000007feff110000 - 0x000007feff13e000 	C:\Windows\system32\IMM32.DLL
+0x000007fefe330000 - 0x000007fefe439000 	C:\Windows\system32\MSCTF.dll
+0x00000000640e0000 - 0x00000000641b2000 	C:\Program Files\Java\jdk1.8.0_20\jre\bin\msvcr100.dll
+0x000000005c290000 - 0x000000005cae8000 	C:\Program Files\Java\jdk1.8.0_20\jre\bin\server\jvm.dll
+0x000007fee84c0000 - 0x000007fee84c9000 	C:\Windows\system32\WSOCK32.dll
+0x000007fefe8d0000 - 0x000007fefe91d000 	C:\Windows\system32\WS2_32.dll
+0x000007fefe320000 - 0x000007fefe328000 	C:\Windows\system32\NSI.dll
+0x000007fef98b0000 - 0x000007fef98eb000 	C:\Windows\system32\WINMM.dll
+0x00000000771d0000 - 0x00000000771d7000 	C:\Windows\system32\PSAPI.DLL
+0x00000000738d0000 - 0x00000000738df000 	C:\Program Files\Java\jdk1.8.0_20\jre\bin\verify.dll
+0x0000000070060000 - 0x0000000070088000 	C:\Program Files\Java\jdk1.8.0_20\jre\bin\java.dll
+0x0000000071ec0000 - 0x0000000071ed6000 	C:\Program Files\Java\jdk1.8.0_20\jre\bin\zip.dll
+0x000007fefd240000 - 0x000007fefdfc8000 	C:\Windows\system32\SHELL32.dll
+0x000007fefe580000 - 0x000007fefe783000 	C:\Windows\system32\ole32.dll
+0x000007fefce10000 - 0x000007fefce1f000 	C:\Windows\system32\profapi.dll
+0x000000006f5c0000 - 0x000000006f5da000 	C:\Program Files\Java\jdk1.8.0_20\jre\bin\net.dll
+0x000007fefc5b0000 - 0x000007fefc605000 	C:\Windows\system32\mswsock.dll
+0x000007fefc5a0000 - 0x000007fefc5a7000 	C:\Windows\System32\wship6.dll
+0x000000006a600000 - 0x000000006a6b5000 	C:\Users\Jan\AppData\Local\Temp\sqlite-3.8.51-amd64-sqlitejdbc.dll
+0x000007fef7060000 - 0x000007fef7185000 	C:\Windows\system32\dbghelp.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=UTF-8 
+java_command: verleihserver.main
+java_class_path (initial): C:\Users\Jan\Documents\GIT\dvdverleih\VerleihServer\external libs\jackson-core-2.4.2.jar;C:\Users\Jan\Documents\GIT\dvdverleih\VerleihServer\external libs\jackson-databind-2.4.2.jar;C:\Users\Jan\Documents\GIT\dvdverleih\VerleihServer\external libs\sqlite-jdbc-3.8.5-pre1.jar;C:\Users\Jan\Documents\GIT\dvdverleih\VerleihServer\external libs\jackson-annotations-2.4.0.jar;C:\Users\Jan\Documents\GIT\dvdverleih\VerleihServer\build\classes
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files (x86)\Common Files\Microsoft Shared\Windows Live;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\VSShell\Common7\IDE\;C:\Program Files (x86)\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files (x86)\PROGRAMME\TeXstudio\MiKTeX 2.9\miktex\bin\x64\;C:\Program Files\FileBot\;C:\Program Files (x86)\PROGRAMME\Nmap
+USERNAME=Jan
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 58 Stepping 9, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 , 64 bit Build 7601 Service Pack 1
+
+CPU:total 4 (4 cores per cpu, 1 threads per core) family 6 model 58 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, clmul, erms, tsc, tscinvbit, tscinv
+
+Memory: 4k page, physical 12516288k(6684296k free), swap 25030712k(17887336k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (25.20-b23) for windows-amd64 JRE (1.8.0_20-b26), built on Jul 30 2014 13:51:23 by "java_re" with MS VC++ 10.0 (VS2010)
+
+time: Sat Sep 13 12:05:31 2014
+elapsed time: 0 seconds (0d 0h 0m 0s)
+

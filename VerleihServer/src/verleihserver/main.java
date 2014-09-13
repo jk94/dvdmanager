@@ -5,6 +5,7 @@
  */
 package verleihserver;
 
+import Controls.Control;
 import Enumerators.LogEnum;
 import connection.VerleihServer;
 import contents.Film;
@@ -28,7 +29,7 @@ public class main {
         //Testklasse t;
         //t = json.json_parser.getInstance().parseObjectIn(new File("C:/Users/Jan/Desktop/test.txt"), Testklasse.class);
         VerleihServer.getInstance().start();
-        new Controls.Control();
+        Control.getInstance();
     }
 
     public static void log(Enumerators.LogEnum e, String s, Object o) {

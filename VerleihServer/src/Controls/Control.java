@@ -7,6 +7,8 @@ package Controls;
 
 import contents.Film;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -20,17 +22,19 @@ public class Control {
     public Control() {
         getFilms();
     }
-    
-    public static Control getInstance(){
+
+    public static Control getInstance() {
         return theControl;
     }
 
     public final void getFilms() {
+        ArrayList<Film> films = new ArrayList<>();
+        ResultSet rs = DBSQL_Control.GetALLFilmsFromDB();
         try {
-            ArrayList<Film> films = new ArrayList<>();
-            ResultSet rs = DBSQL_Control.GetALLFilmsFromDB();
+
             while (rs.next()) {
                 Film f = new Film(rs.getInt("FI_ID"));
+                System.out.println(f.getFILMID());
                 boolean vorhanden = false;
                 for (Film fi : films) {
                     if (fi.getFILMID() == f.getFILMID()) {
@@ -44,10 +48,13 @@ public class Control {
                     continue;
                 }
                 films.add(f);
+                f.loadFilmFromDatabase(rs);
             }
             System.out.println(json.json_parser.getInstance().parseObjectOut(films));
+            rs.close();
         } catch (Exception ex) {
-
+            
         }
+        
     }
 }

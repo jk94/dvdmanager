@@ -49,9 +49,10 @@ public final class DBController {
     public void initDBConnection() {
         try {
             if (connection != null) {
-                return;
+                connection.close();
+                //return;
             }
-            System.out.println("Pfad: " +DB_PATH);
+            
             if (new File(DB_PATH).exists()) {
                 main.log(LogEnum.INFO, "Connect to Database...", this);
                 connection = DriverManager.getConnection("jdbc:sqlite:" + DB_PATH);
