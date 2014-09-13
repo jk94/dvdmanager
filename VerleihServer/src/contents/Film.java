@@ -23,7 +23,7 @@ import verleihserver.main;
  */
 public class Film extends Sendable{
 
-    private final int FILMID = 1;
+    private final int FILMID;
     private String s_titel = "", s_subtitel = "", s_description = "";
     private String s_trailer = "", s_regie = "", s_FSK = "";
     private int i_rating = -1, i_duration = -1, i_fsk = 0;
@@ -34,7 +34,7 @@ public class Film extends Sendable{
     private BufferedImage cover;
 
     public Film(int fid) {
-        //FILMID = fid;
+        FILMID = fid;
     }
 
     @Override
@@ -201,15 +201,17 @@ public class Film extends Sendable{
 
     public boolean loadFilmFromDatabase(ResultSet rs) {
         try {
-            setS_titel(rs.getString("title"));
+            setS_titel(rs.getString(1));
             setS_subtitel(rs.getString("subtitle"));
             setS_description(rs.getString("desc"));
             setS_trailer(rs.getString("trailer"));
-            setS_FSK(rs.getString("bez"));
-            setI_fsk(rs.getInt("alter"));
+            //setS_FSK(rs.getString("bez"));
+            //setI_fsk(rs.getInt("alter"));
 
             try {
-                setCover(ImageIO.read(new File("../covers/" + rs.getString("cover"))));
+                File cover = new File("../covers/" + rs.getString("cover"));
+                System.out.println(cover.getAbsoluteFile());
+                setCover(ImageIO.read(cover));
             } catch (IOException ex) {
                 main.log(LogEnum.ERROR, ex.getMessage(), main.class);
             }
