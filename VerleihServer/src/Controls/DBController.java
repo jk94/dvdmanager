@@ -95,7 +95,7 @@ public final class DBController {
                 getInstance().initDBConnection();
             }
             ergebnisRS = pst.executeQuery();
-            connection.close();
+            
         } catch (SQLException ex) {
             main.log(LogEnum.ERROR, ex.getMessage(), DBController.getInstance());
         }
@@ -110,7 +110,7 @@ public final class DBController {
             }
             Statement stmt = connection.createStatement();
             ergebnisRS = stmt.executeQuery(sql);
-            connection.close();
+            
         } catch (SQLException ex) {
             main.log(LogEnum.ERROR, ex.getMessage(), DBController.getInstance());
         }
