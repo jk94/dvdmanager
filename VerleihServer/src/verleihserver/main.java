@@ -6,13 +6,7 @@
 package verleihserver;
 
 import Controls.Control;
-import Enumerators.LogEnum;
 import connection.VerleihServer;
-import contents.Film;
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-import javax.imageio.ImageIO;
 
 /**
  *

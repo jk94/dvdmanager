@@ -5,19 +5,22 @@
  */
 package json;
 
-import Enumerators.LogEnum;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
-import verleihserver.main;
 
 /**
  *
@@ -25,9 +28,10 @@ import verleihserver.main;
  */
 public class json_parser {
 
-    private static final Logger log = Logger.getLogger(json_parser.class.getSimpleName());
     private static final json_parser jp = new json_parser();
     private static ObjectMapper om;
+
+    private static final Logger log = Logger.getLogger(json_parser.class.getSimpleName());
 
     private json_parser() {
         om = new ObjectMapper();
@@ -36,7 +40,7 @@ public class json_parser {
     public static json_parser getInstance() {
         return jp;
     }
-    
+
     public static BufferedImage decodeToImage(String imageString) {
 
         BufferedImage image = null;
@@ -48,7 +52,7 @@ public class json_parser {
             image = ImageIO.read(bis);
             bis.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, e.getMessage());
         }
         return image;
     }
@@ -73,30 +77,29 @@ public class json_parser {
 
             bos.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, e.getMessage());
         }
         return imageString;
     }
 
     public String parseObjectOut(Object o) {
-        System.out.println("parsing started");
         try {
+            log.log(Level.INFO, "Parse from String to Object {0}", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
             return om.writeValueAsString(o);
-        } catch (Exception ex) {
+        } catch (JsonProcessingException ex) {
             log.log(Level.SEVERE, ex.getMessage());
         }
-        System.out.println("parsing ended");
         return "";
     }
 
     public Object parseObjectIn(File f, Class<?> c) {
-        System.out.println("start");
         try {
+            log.log(Level.INFO, "Parse from String to Object {0}", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
             return om.readValue(f, c);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            log.log(Level.SEVERE, ex.getMessage());
         }
-        System.out.println("end");
+        log.log(Level.INFO, "Parsing ended");
         return null;
     }
 
