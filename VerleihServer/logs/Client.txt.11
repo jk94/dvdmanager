@@ -1,7 +1,0 @@
-17.09.2014 07:02:26.981 - [connection.ClientThread.run] - [INFO] - /127.0.0.1 wrote: hi
-17.09.2014 07:03:33.266 - [connection.ClientThread.run] - [INFO] - /127.0.0.1 wrote: exit
-17.09.2014 07:03:33.271 - [connection.ClientThread.run] - [INFO] - User /127.0.0.1 disconnected!
-17.09.2014 07:03:34.263 - [connection.ClientThread.run] - [INFO] - /127.0.0.1 wrote: exit
-17.09.2014 07:03:34.267 - [connection.ClientThread.run] - [INFO] - User /127.0.0.1 disconnected!
-17.09.2014 07:05:23.256 - [connection.ClientThread.run] - [INFO] - /127.0.0.1 wrote: fuck
-17.09.2014 07:06:40.356 - [connection.ClientThread.run] - [INFO] - /127.0.0.1 wrote: shutdown

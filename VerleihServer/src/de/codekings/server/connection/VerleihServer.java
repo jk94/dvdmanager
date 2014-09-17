@@ -22,7 +22,7 @@ public class VerleihServer extends Thread {
     private static final ArrayList<ClientThread> clientThreads = new ArrayList<>();
     private static final VerleihServer verServer = new VerleihServer(1234);
     private static ServerSocket server;
-    private static final Logger log = Logger.getLogger(VerleihServer.class.getSimpleName());
+    private final Logger log = Logger.getLogger(VerleihServer.class.getSimpleName());
 
     private VerleihServer(int port) {
         LogInitialiser.initialiseLog(log, "VerleihServer");

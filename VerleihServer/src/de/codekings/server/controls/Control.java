@@ -5,11 +5,16 @@
  */
 package de.codekings.server.controls;
 
+import de.codekings.common.config.ConfigManager;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.json.JSON_Parser;
+import de.codekings.common.log.LogInitialiser;
 import java.io.File;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,9 +23,30 @@ import java.util.ArrayList;
 public class Control {
 
     private static final Control theControl = new Control();
+    private final Logger log = Logger.getLogger(Control.class.getSimpleName());
+    private final ConfigManager cfgManager;
 
     public Control() {
         //getFilms();
+        cfgManager = new ConfigManager();
+        LogInitialiser.initialiseLog(log, "Control");
+        File f = new File("DB.conf.properties");
+        if(f.exists()){
+            Properties p = cfgManager.readConfig(f.getPath());
+            DBController.getInstance().setDbHost(p.getProperty("dbHost"));
+            DBController.getInstance().setDbName(p.getProperty("dbDatabase"));
+            DBController.getInstance().setDbPass(p.getProperty("dbPassword"));
+            DBController.getInstance().setDbPort(p.getProperty("dbPort"));
+            DBController.getInstance().setDbUser(p.getProperty("dbUser"));
+            
+            DBController.getInstance().initDBConnection();
+        }else{
+            cfgManager.writeDefaultDBConfig();
+            log.log(Level.WARNING, "DB Config Datei nicht gefunden.\n"
+                    + "Default Nachricht erstellt.\n"
+                    + "Bitte Server neu starten!");
+            System.exit(0);
+        }
     }
 
     public static Control getInstance() {
@@ -29,9 +55,9 @@ public class Control {
 
     public void readDBConfig(String path) {
         File f = new File(path);
-        if(f.exists()){
+        if (f.exists()) {
             JSON_Parser.getInstance().parseStringToObject(path, DBConfig.class);
-        }else{
+        } else {
             System.err.println("Keine Konfigurationsdatei der Datenbank vorhanden.");
             System.err.println("Server wird beendet!");
             System.exit(0);
@@ -68,11 +94,11 @@ public class Control {
         }
 
     }
-    
-    private class DBConfig{
+
+    private class DBConfig {
 
         private String dbHost, dbPort, dbName, dbUser, dbPass;
-        
+
         public DBConfig() {
         }
 
@@ -115,8 +141,6 @@ public class Control {
         public void setDbPass(String dbPass) {
             this.dbPass = dbPass;
         }
-        
-        
-        
+
     }
 }
