@@ -25,8 +25,4 @@ public class main {
         VerleihServer.getInstance().start();
         Control.getInstance();
     }
-
-    public static void log(Enumerators.LogEnum e, String s, Object o) {
-        System.out.println("[" + e.name() + "] " + o.getClass() + ": " + s);
-    }
 }

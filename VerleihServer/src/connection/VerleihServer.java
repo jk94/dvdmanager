@@ -5,7 +5,6 @@
  */
 package connection;
 
-import Enumerators.LogEnum;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,27 +17,27 @@ import verleihserver.main;
  *
  * @author Jan
  */
-public class VerleihServer extends Thread{
+public class VerleihServer extends Thread {
 
     private static ArrayList<ClientThread> clientThreads = new ArrayList<>();
     private static final VerleihServer verServer = new VerleihServer(1234);
     private static ServerSocket server;
+    private static final Logger log = Logger.getLogger(VerleihServer.class.getSimpleName());
+
     private VerleihServer(int port) {
         server = null;
         try {
             server = new ServerSocket(port);
         } catch (IOException ex) {
-            Logger.getLogger(VerleihServer.class.getName()).log(Level.SEVERE, null, ex);
+            log.log(Level.SEVERE, ex.getMessage());
         }
-        main.log(LogEnum.INFO, "Server wurde gestartet..", this);
+        log.log(Level.INFO, "Server wurde gestartet..");
     }
-    
-    
+
     public static void writeToAll(String name, String s) {
-        for (ClientThread clientThread : clientThreads) {
+        clientThreads.stream().forEach((clientThread) -> {
             clientThread.write(s);
-        }
-        //main.log(name + ": " + s);
+        });
     }
 
     @Override
@@ -47,16 +46,16 @@ public class VerleihServer extends Thread{
             try {
                 Socket socket = server.accept();
 
-                main.log(Enumerators.LogEnum.INFO, "Verbindung wurde von " + socket.getInetAddress() + " hergestellt", this);
+                log.log(Level.INFO, "Verbindung wurde von {0} hergestellt", socket.getInetAddress());
 
                 ClientThread client = new ClientThread(socket);
                 client.start();
                 clientThreads.add(client);
 
             } catch (IOException ex) {
-                Logger.getLogger(VerleihServer.class.getName()).log(Level.SEVERE, null, ex);
+                log.log(Level.SEVERE, ex.getMessage());
             }
-            main.log(LogEnum.INFO, String.valueOf(clientThreads.size()), this);
+            log.log(Level.INFO, String.valueOf(clientThreads.size()));
         }
     }
 

@@ -1,13 +1,11 @@
-package connection;
+package Connection;
 
 
-import Enumerators.LogEnum;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import verleihserver.main;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,8 +17,9 @@ import verleihserver.main;
  * @author Jan
  */
 public class Hasher {
-
-    private static Hasher thishasher = new Hasher();
+    
+    private static final Logger log = Logger.getLogger(Hasher.class.getSimpleName());
+    private static final Hasher thishasher = new Hasher();
 
     private Hasher() {
     }
@@ -44,7 +43,7 @@ public class Hasher {
             digest = sb.toString();
 
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
-            main.log(LogEnum.ERROR, ex.getMessage(), thishasher);
+            log.log(Level.SEVERE, ex.getMessage());
         }
         return digest;
     }

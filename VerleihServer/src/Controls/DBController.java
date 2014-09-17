@@ -5,7 +5,6 @@
  */
 package Controls;
 
-import Enumerators.LogEnum;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import verleihserver.main;
 
 /**
@@ -24,13 +25,15 @@ public final class DBController {
     private static final DBController dbcontroller = new DBController();
     private static Connection connection;
     private final String DB_PATH = new File("../dvd_verleih.db").getAbsolutePath();            //System.getProperty("user.home") + "/" + "testdb.db";
+    private static final Logger log = Logger.getLogger(DBController.class.getSimpleName());
+    
     
     static {
         try {
-            Class.forName("org.sqlite.JDBC");
+            Class.forName("org.mysql.jdbc");
         } catch (ClassNotFoundException e) {
-            System.err.println("Fehler beim Laden des JDBC-Treibers");
-            e.printStackTrace();
+            log.log(Level.INFO, "Fehler beim Laden des JDBC-Treibers");
+            log.log(Level.SEVERE, e.getMessage());
         }
     }
 
@@ -54,10 +57,11 @@ public final class DBController {
             }
             
             if (new File(DB_PATH).exists()) {
-                main.log(LogEnum.INFO, "Connect to Database...", this);
-                connection = DriverManager.getConnection("jdbc:sqlite:" + DB_PATH);
+                log.log(Level.INFO, "Connect to Database...");
+                //TODO Connection!!!!
+                connection = DriverManager.getConnection("jdbc:mysql:" + DB_PATH);
                 if (!connection.isClosed()) {
-                    main.log(LogEnum.INFO, "...Connected", this);
+                    log.log(Level.INFO, "...Connected");
                 }
             }
         } catch (SQLException e) {
@@ -70,11 +74,11 @@ public final class DBController {
                     if (!connection.isClosed() && connection != null) {
                         connection.close();
                         if (connection.isClosed()) {
-                            main.log(LogEnum.INFO, "Connection to Database closed", this);
+                            log.log(Level.WARNING, "Connection to Database closed");
                         }
                     }
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    log.log(Level.SEVERE, e.getMessage());
                 }
             }
         });
@@ -97,7 +101,7 @@ public final class DBController {
             ergebnisRS = pst.executeQuery();
             
         } catch (SQLException ex) {
-            main.log(LogEnum.ERROR, ex.getMessage(), DBController.getInstance());
+            log.log(Level.SEVERE, ex.getMessage());
         }
         return ergebnisRS;
     }
@@ -112,7 +116,7 @@ public final class DBController {
             ergebnisRS = stmt.executeQuery(sql);
             
         } catch (SQLException ex) {
-            main.log(LogEnum.ERROR, ex.getMessage(), DBController.getInstance());
+            log.log(Level.SEVERE, ex.getMessage());
         }
         return ergebnisRS;
     }
@@ -125,10 +129,14 @@ public final class DBController {
             connection.setAutoCommit(true);
             pst.executeBatch();
             connection.setAutoCommit(false);
-            connection.close();
         } catch (SQLException e) {
-            main.log(LogEnum.ERROR, "Couldn't execute SQL-Statement. " + e.getMessage(), DBController.getInstance());
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Couldn't execute SQL-Statement. {0}", e.getMessage());
+        }
+    }
+    
+    public void closeConnection() throws SQLException{
+        if(connection!=null && !connection.isClosed()){
+            connection.close();
         }
     }
 

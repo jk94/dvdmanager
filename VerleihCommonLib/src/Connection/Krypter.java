@@ -1,4 +1,4 @@
-package connection;
+package Connection;
 
 
 import java.io.InputStream;
