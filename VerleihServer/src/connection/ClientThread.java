@@ -5,11 +5,16 @@
  */
 package connection;
 
+import de.jan.common.log.LogInitialiser;
+import de.jan.common.log.VerleihCostumHandler;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,10 +26,16 @@ class ClientThread extends Thread {
 
     private BufferedReader reader;
     private PrintWriter writer;
-    private Socket socket;
-    private static final Logger log = Logger.getLogger(ClientThread.class.getSimpleName());
+    private final Socket socket;
+    private static Logger log; 
 
     public ClientThread(Socket s) {
+        if(log!=null){
+            
+        }else{
+            log = Logger.getLogger(ClientThread.class.getSimpleName());
+            LogInitialiser.initialiseLog(log, "ClientThread");
+        }
         this.socket = s;
         try {
             this.reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -40,23 +51,31 @@ class ClientThread extends Thread {
             String s = "";
             while ((s = reader.readLine()) != null) {
                 //TODO Auslesen!
-                if(this.socket.isConnected()){
-                log.log(Level.INFO, "{0} wrote: {1}", new Object[]{this.socket.getInetAddress().toString(), s});
-                if(s.equalsIgnoreCase("exit")){
-                    this.socket.close();
-                }
-                }else{
-                    log.log(Level.SEVERE, "User {0} disconnected!", this.socket.getInetAddress());
+                if (this.socket.isConnected()) {
+                    log.log(Level.INFO, "{0} wrote: {1}", new Object[]{this.socket.getInetAddress().toString(), s});
+                    if (s.equalsIgnoreCase("exit")) {
+                        this.socket.close();
+                    }
+                    if (s.equals("shutdown")){
+                        //main.stopServer();
+                        VerleihServer.getInstance().closeSessions();
+                    }
+                } else {
+                    log.log(Level.INFO, "User {0} disconnected!", this.socket.getInetAddress());
                     break;
                 }
             }
         } catch (IOException ex) {
-            log.log(Level.SEVERE, "User {0} disconnected!", socket.getInetAddress());
+            log.log(Level.INFO, "User {0} disconnected!", socket.getInetAddress());
         }
     }
 
     public void write(String s) {
         writer.append(s + "\n").flush();
+    }
+    
+    public void closeConnection() throws IOException{
+        this.socket.close();
     }
 
 }

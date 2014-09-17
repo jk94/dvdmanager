@@ -1,5 +1,6 @@
 package verleihserver;
 
+import de.jan.common.json.json_parser;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
@@ -7,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.filechooser.FileSystemView;
-import json.json_parser;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

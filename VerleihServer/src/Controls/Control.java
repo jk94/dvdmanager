@@ -5,10 +5,9 @@
  */
 package Controls;
 
-import contents.Film;
+import de.jan.common.contents.Film;
+import de.jan.common.json.json_parser;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +19,7 @@ public class Control {
     private static final Control theControl = new Control();
 
     public Control() {
-        getFilms();
+        //getFilms();
     }
 
     public static Control getInstance() {
@@ -50,7 +49,7 @@ public class Control {
                 films.add(f);
                 f.loadFilmFromDatabase(rs);
             }
-            System.out.println(json.json_parser.getInstance().parseObjectOut(films));
+            System.out.println(json_parser.getInstance().parseObjectOut(films));
             rs.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

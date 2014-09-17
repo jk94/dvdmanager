@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package contents;
+package de.jan.common.contents;
 
-import Enumerators.ClassType;
+import de.jan.common.Enumerators.ClassType;
+import de.jan.common.json.json_parser;
 import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -212,7 +213,7 @@ public class Film extends Sendable{
             try {
                 File coverfile = new File("../covers/" + rs.getString("cover"));
                 
-                setCover(json.json_parser.encodeToString(ImageIO.read(coverfile), "png"));
+                setCover(json_parser.encodeToString(ImageIO.read(coverfile), "png"));
             } catch (IOException ex) {
                 log.log(Level.SEVERE, ex.getMessage());
             }

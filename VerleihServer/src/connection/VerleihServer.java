@@ -5,13 +5,13 @@
  */
 package connection;
 
+import de.jan.common.log.LogInitialiser;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import verleihserver.main;
 
 /**
  *
@@ -19,12 +19,13 @@ import verleihserver.main;
  */
 public class VerleihServer extends Thread {
 
-    private static ArrayList<ClientThread> clientThreads = new ArrayList<>();
+    private static final ArrayList<ClientThread> clientThreads = new ArrayList<>();
     private static final VerleihServer verServer = new VerleihServer(1234);
     private static ServerSocket server;
     private static final Logger log = Logger.getLogger(VerleihServer.class.getSimpleName());
 
     private VerleihServer(int port) {
+        LogInitialiser.initialiseLog(log, "VerleihServer");
         server = null;
         try {
             server = new ServerSocket(port);
@@ -38,6 +39,25 @@ public class VerleihServer extends Thread {
         clientThreads.stream().forEach((clientThread) -> {
             clientThread.write(s);
         });
+    }
+
+    public void closeSessions() {
+        clientThreads.stream().forEach((clientThread) -> {
+            try {
+                clientThread.write("Connection will be closed now!");
+                sleep(1000l);
+                clientThread.closeConnection();
+                clientThreads.remove(clientThread);
+            } catch (IOException | InterruptedException e) {
+                log.log(Level.SEVERE, e.getMessage());
+            }
+        });
+    }
+    
+    public void removeClientThread(ClientThread c){
+        if(clientThreads.contains(c)){
+            clientThreads.remove(c);
+        }
     }
 
     @Override

@@ -23,6 +23,11 @@ public class main {
         //Testklasse t;
         //t = json.json_parser.getInstance().parseObjectIn(new File("C:/Users/Jan/Desktop/test.txt"), Testklasse.class);
         VerleihServer.getInstance().start();
+        //VerleihServer.getInstance().addLogHandler();
         Control.getInstance();
+    }
+    
+    public static void stopServer(){
+        System.exit(0);
     }
 }

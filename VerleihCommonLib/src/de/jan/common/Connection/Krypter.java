@@ -1,4 +1,4 @@
-package Connection;
+package de.jan.common.Connection;
 
 
 import java.io.InputStream;
