@@ -87,8 +87,8 @@
 .titled-pane > .title > .arrow-button .arrow 
 {
 -fx-background-color: #1C1C1C;
--fx-mark-highlight-color;
--fx-mark-color;
+-fx-mark-highlight-color: #111111;
+-fx-mark-color: #111111;
 
 }
 
