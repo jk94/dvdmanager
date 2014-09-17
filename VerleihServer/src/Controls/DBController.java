@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import verleihserver.main;
 
 /**
  *
@@ -134,8 +133,8 @@ public final class DBController {
         }
     }
     
-    public void closeConnection() throws SQLException{
-        if(connection!=null && !connection.isClosed()){
+    public void closeConnection() throws SQLException {
+        if (connection != null && !connection.isClosed()) {
             connection.close();
         }
     }
