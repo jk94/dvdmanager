@@ -82,7 +82,12 @@ public class JSON_Parser {
         return imageString;
     }
 
-    public String parseObjectOut(Object o) {
+    /**
+     *
+     * @param o Objekt das in einen String geparsed werden soll
+     * @return Objekt als String
+     */
+    public String parseObjectToString(Object o) {
         try {
             log.log(Level.INFO, "Parse from String to Object {0}", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
             return om.writeValueAsString(o);
@@ -92,10 +97,16 @@ public class JSON_Parser {
         return "";
     }
 
-    public Object parseObjectIn(File f, Class<?> c) {
+    /**
+     *
+     * @param parsingString JASON-String der in ein Objekt geparsed werden soll.
+     * @param c Klasse, welche aus String erstellt werden soll.
+     * @return gibt das Objekt des Typs von c zurück.
+     */
+    public Object parseStringToObject(String parsingString, Class<?> c) {
         try {
             log.log(Level.INFO, "Parse from String to Object {0}", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
-            return om.readValue(f, c);
+            return om.readValue(parsingString, c);
         } catch (IOException ex) {
             log.log(Level.SEVERE, ex.getMessage());
         }
