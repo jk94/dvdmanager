@@ -34,7 +34,7 @@ public class Control {
 
             while (rs.next()) {
                 Film f = new Film(rs.getInt("FI_ID"));
-                System.out.println(f.getFILMID());
+                
                 boolean vorhanden = false;
                 for (Film fi : films) {
                     if (fi.getFILMID() == f.getFILMID()) {
@@ -53,7 +53,7 @@ public class Control {
             System.out.println(json.json_parser.getInstance().parseObjectOut(films));
             rs.close();
         } catch (Exception ex) {
-            
+            System.out.println(ex.getMessage());
         }
         
     }

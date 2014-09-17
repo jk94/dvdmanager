@@ -31,7 +31,7 @@ public class Film extends Sendable{
     private Date release_date;
     private final ArrayList<String> li_actors = new ArrayList<>(), li_awards = new ArrayList<>();
     private final ArrayList<String> li_genre = new ArrayList<>();
-    private BufferedImage cover;
+    private String cover;
 
     public Film(int fid) {
         FILMID = fid;
@@ -44,11 +44,11 @@ public class Film extends Sendable{
     
     
 
-    public BufferedImage getCover() {
+    public String getCover() {
         return cover;
     }
 
-    public void setCover(BufferedImage cover) {
+    public void setCover(String cover) {
         this.cover = cover;
     }
 
@@ -209,9 +209,9 @@ public class Film extends Sendable{
             //setI_fsk(rs.getInt("alter"));
 
             try {
-                File cover = new File("../covers/" + rs.getString("cover"));
-                System.out.println(cover.getAbsoluteFile());
-                setCover(ImageIO.read(cover));
+                File coverfile = new File("../covers/" + rs.getString("cover"));
+                
+                setCover(json.json_parser.encodeToString(ImageIO.read(coverfile), "png"));
             } catch (IOException ex) {
                 main.log(LogEnum.ERROR, ex.getMessage(), main.class);
             }
