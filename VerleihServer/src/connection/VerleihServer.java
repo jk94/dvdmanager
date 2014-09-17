@@ -54,6 +54,10 @@ public class VerleihServer extends Thread {
         });
     }
     
+    /**
+     *
+     * @param c Der @ClientThread, der aus der Liste gelöscht werden soll.
+     */
     public void removeClientThread(ClientThread c){
         if(clientThreads.contains(c)){
             clientThreads.remove(c);
