@@ -6,6 +6,7 @@
 package de.codekings.server.controls;
 
 import de.codekings.common.log.LogInitialiser;
+import de.codekings.server.connection.VerleihServer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,38 +22,26 @@ import java.util.logging.Logger;
  */
 public final class DBController {
 
-    private static final DBController dbcontroller = new DBController();
-    private static Connection connection;
+    private Connection connection;
     private String dbHost, dbPort, dbName, dbUser, dbPass;
-    private static final Logger log = Logger.getLogger(DBController.class.getSimpleName());
+    private final Logger log;
 
-    static {
-        LogInitialiser.initialiseLog(log, "DBController");
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            log.log(Level.INFO, "Fehler beim Laden des JDBC-Treibers");
-            log.log(Level.SEVERE, e.getMessage());
-        }
-    }
-
-    public DBController(String dbHost, String dbPort, String dbName, String dbUser, String dbPass) {
+    public DBController(String dbHost, String dbPort, String dbName, String dbUser, String dbPass, Logger log) {
         this.dbHost = dbHost;
         this.dbPort = dbPort;
         this.dbName = dbName;
         this.dbUser = dbUser;
         this.dbPass = dbPass;
+        this.log = log;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            this.log.log(Level.INFO, "Fehler beim Laden des JDBC-Treibers");
+            this.log.log(Level.SEVERE, e.getMessage());
+        }
     }
 
-    private DBController() {
-
-    }
-
-    public static DBController getInstance() {
-        return dbcontroller;
-    }
-
-    public static Connection getConnection() {
+    public Connection getConnection() {
         return connection;
     }
 
@@ -62,6 +51,7 @@ public final class DBController {
 
     public void setDbHost(String dbHost) {
         this.dbHost = dbHost;
+        System.out.println(log.toString());
     }
 
     public String getDbPort() {
@@ -132,11 +122,11 @@ public final class DBController {
 
     }
 
-    public static ResultSet executeQuery(PreparedStatement pst) {
+    public ResultSet executeQuery(PreparedStatement pst) {
         ResultSet ergebnisRS = null;
         try {
             if (!(connection != null) || connection.isClosed()) {
-                getInstance().initDBConnection();
+                this.initDBConnection();
             }
             ergebnisRS = pst.executeQuery();
 
@@ -146,11 +136,11 @@ public final class DBController {
         return ergebnisRS;
     }
 
-    public static ResultSet executeQuery(String sql) {
+    public ResultSet executeQuery(String sql) {
         ResultSet ergebnisRS = null;
         try {
             if (!(connection != null) || connection.isClosed()) {
-                getInstance().initDBConnection();
+                this.initDBConnection();
             }
             Statement stmt = connection.createStatement();
             ergebnisRS = stmt.executeQuery(sql);
@@ -161,10 +151,10 @@ public final class DBController {
         return ergebnisRS;
     }
 
-    public static void executeBatch(PreparedStatement pst) {
+    public void executeBatch(PreparedStatement pst) {
         try {
             if (connection.isClosed()) {
-                getInstance().initDBConnection();
+                this.initDBConnection();
             }
             connection.setAutoCommit(true);
             pst.executeBatch();

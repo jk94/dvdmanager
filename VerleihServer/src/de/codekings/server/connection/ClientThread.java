@@ -6,6 +6,7 @@
 package de.codekings.server.connection;
 
 import de.codekings.common.log.LogInitialiser;
+import de.codekings.server.controls.Control;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,14 +24,13 @@ class ClientThread extends Thread {
     private BufferedReader reader;
     private PrintWriter writer;
     private final Socket socket;
-    private static Logger log; 
+    private static Logger log = Control.getInstance().getLogger();
 
     public ClientThread(Socket s) {
-        if(log!=null){
-            
-        }else{
-            log = Logger.getLogger(ClientThread.class.getSimpleName());
-            LogInitialiser.initialiseLog(log, "ClientThread");
+        if (log != null) {
+
+        } else {
+
         }
         this.socket = s;
         try {
@@ -52,7 +52,7 @@ class ClientThread extends Thread {
                     if (s.equalsIgnoreCase("exit")) {
                         this.socket.close();
                     }
-                    if (s.equals("shutdown")){
+                    if (s.equals("shutdown")) {
                         //main.stopServer();
                         VerleihServer.getInstance().closeSessions();
                     }
@@ -69,8 +69,8 @@ class ClientThread extends Thread {
     public void write(String s) {
         writer.append(s + "\n").flush();
     }
-    
-    public void closeConnection() throws IOException{
+
+    public void closeConnection() throws IOException {
         this.socket.close();
     }
 

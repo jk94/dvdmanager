@@ -6,6 +6,7 @@
 package de.codekings.server.connection;
 
 import de.codekings.common.log.LogInitialiser;
+import de.codekings.server.controls.Control;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,10 +23,9 @@ public class VerleihServer extends Thread {
     private static final ArrayList<ClientThread> clientThreads = new ArrayList<>();
     private static final VerleihServer verServer = new VerleihServer(1234);
     private static ServerSocket server;
-    private final Logger log = Logger.getLogger(VerleihServer.class.getSimpleName());
+    private final Logger log = Control.getInstance().getLogger();
 
     private VerleihServer(int port) {
-        LogInitialiser.initialiseLog(log, "VerleihServer");
         server = null;
         try {
             server = new ServerSocket(port);
@@ -33,6 +33,7 @@ public class VerleihServer extends Thread {
             log.log(Level.SEVERE, ex.getMessage());
         }
         log.log(Level.INFO, "Server wurde gestartet..");
+        System.out.println(log.toString());
     }
 
     public static void writeToAll(String name, String s) {

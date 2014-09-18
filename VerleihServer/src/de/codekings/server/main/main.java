@@ -14,20 +14,19 @@ import de.codekings.server.connection.VerleihServer;
  */
 public class main {
 
+    private static Control c;
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        //json.json_parser.getInstance().parseObjectOut(new Testklasse());
-        //Testklasse t;
-        //t = json.json_parser.getInstance().parseObjectIn(new File("C:/Users/Jan/Desktop/test.txt"), Testklasse.class);
+        c = new Control();
+        c.setControl(c);
         VerleihServer.getInstance().start();
-        //VerleihServer.getInstance().addLogHandler();
-        Control.getInstance();
     }
-    
-    public static void stopServer(){
+
+    public static void stopServer() {
         System.exit(0);
     }
 }

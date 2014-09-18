@@ -35,7 +35,7 @@ public class DBSQL_Control {
         try {
             //PreparedStatement p = DBController.getConnection().prepareStatement(sql);
             //rs = DBController.executeQuery(p);
-            rs = DBController.executeQuery(sql);
+            //rs = DBController.executeQuery(sql);
         } catch (Exception e) {
 
         }
