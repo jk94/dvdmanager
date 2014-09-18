@@ -9,8 +9,6 @@ import de.codekings.client.connection.ClientThread;
 import de.codekings.common.config.ConfigManager;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -22,16 +20,16 @@ public class Control {
 
     public Control() {
         try {
-            File config = new File("./configs/client.cfg");
-
+            File config = new File("./config/client.cfg");
+            
             cfgManager = new ConfigManager(config);
-            //cfgManager.readConfig(config);
 
             new ClientThread().HeartBeat(cfgManager.getConfigs().getProperty("ip"),
                     Integer.parseInt(cfgManager.getConfigs().getProperty("port")));
 
         } catch (FileNotFoundException ex) {
-            cfgManager.writeDefaultServerConfig();
+            cfgManager = new ConfigManager();
+            cfgManager.writeDefaultClientConfig();
             System.err.println("DB Config Datei nicht gefunden.\n"
                     + "Default Nachricht erstellt.\n"
                     + "Bitte Server neu starten!");

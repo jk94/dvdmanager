@@ -43,9 +43,8 @@ public class ClientThread {
             try {
                 String s;
                 while ((s = reader.readLine()) != null) {
-                    System.out.println((s + "\n"));
+                    //TODO Annahme der Daten
                 }
-                //sSystem.out.println("3");
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
             }
@@ -55,12 +54,15 @@ public class ClientThread {
     public boolean HeartBeat(String host, int port) {
         Socket socket = null;
         PrintWriter p = null;
+        boolean isConnected = false;
         try {
             socket = new Socket(host, port);
             p = new PrintWriter(socket.getOutputStream());
             p.write("heartbeat\n");
             p.flush();
-            return socket.isConnected();
+            isConnected = socket.isConnected();
+            socket.close();
+            System.out.println(socket.isClosed());
         } catch (UnknownHostException ex) {
             System.out.println(ex.getMessage());
         } catch (IOException ex) {
@@ -75,6 +77,6 @@ public class ClientThread {
                 }
             }
         }
-        return false;
+        return isConnected;
     }
 }

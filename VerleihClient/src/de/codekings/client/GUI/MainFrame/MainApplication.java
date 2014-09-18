@@ -5,6 +5,7 @@
  */
 package de.codekings.client.GUI.MainFrame;
 
+import de.codekings.client.main.Control;
 import java.io.IOException;
 import java.util.Arrays;
 import javafx.application.Application;
@@ -19,9 +20,11 @@ import javafx.stage.Stage;
  */
 public class MainApplication extends Application {
 
+    Control c;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root=null;
+        Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("template.fxml"));
         } catch (IOException e) {
@@ -29,17 +32,12 @@ public class MainApplication extends Application {
             System.out.println(Arrays.toString(e.getSuppressed()));
         }
 
-        Scene scene = new Scene(root, 300, 300);
+        Scene scene = new Scene(root);
         primaryStage.setTitle("DVD Verleih");
         primaryStage.setScene(scene);
         primaryStage.show();
+        c = new Control();
+
     }
 
-    /*public void main(String[] args){
-     try {
-     start(new Stage());
-     } catch (Exception ex) {
-     Logger.getLogger(MainApplication.class.getName()).log(Level.SEVERE, null, ex);
-     }
-     }*/
 }
