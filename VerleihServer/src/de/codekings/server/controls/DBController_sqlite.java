@@ -5,7 +5,6 @@
  */
 package de.codekings.server.controls;
 
-import de.codekings.common.log.LogInitialiser;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,15 +24,15 @@ public final class DBController_sqlite {
     private static final DBController_sqlite dbcontroller = new DBController_sqlite();
     private static Connection connection;
     private final String DB_PATH = new File("../dvd_verleih.db").getAbsolutePath();            //System.getProperty("user.home") + "/" + "testdb.db";
-    private static final Logger log = Logger.getLogger(DBController.class.getSimpleName());
+    private Logger log = Logger.getLogger(DBController.class.getSimpleName());
 
     static {
-        LogInitialiser.initialiseLog(log, "DBController_sqlite");
+
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
-            log.log(Level.INFO, "Fehler beim Laden des JDBC-Treibers");
-            log.log(Level.SEVERE, e.getMessage());
+            //log.log(Level.INFO, "Fehler beim Laden des JDBC-Treibers");
+            //log.log(Level.SEVERE, e.getMessage());
         }
     }
 
@@ -91,7 +90,7 @@ public final class DBController_sqlite {
          */
     }
 
-    public static ResultSet executeQuery(PreparedStatement pst) {
+    public ResultSet executeQuery(PreparedStatement pst) {
         ResultSet ergebnisRS = null;
         try {
             if (!(connection != null) || connection.isClosed()) {
@@ -105,7 +104,7 @@ public final class DBController_sqlite {
         return ergebnisRS;
     }
 
-    public static ResultSet executeQuery(String sql) {
+    public ResultSet executeQuery(String sql) {
         ResultSet ergebnisRS = null;
         try {
             if (!(connection != null) || connection.isClosed()) {
@@ -120,7 +119,7 @@ public final class DBController_sqlite {
         return ergebnisRS;
     }
 
-    public static void executeBatch(PreparedStatement pst) {
+    public void executeBatch(PreparedStatement pst) {
         try {
             if (connection.isClosed()) {
                 getInstance().initDBConnection();

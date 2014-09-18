@@ -27,4 +27,12 @@ public class MainApplication extends Application {
         primaryStage.show();
     }
 
+    /*public void main(String[] args){
+        try {
+            start(new Stage());
+        } catch (Exception ex) {
+            Logger.getLogger(MainApplication.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }*/
+    
 }

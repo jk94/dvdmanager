@@ -32,7 +32,7 @@ public class JSON_Parser {
     private static final Logger log = Logger.getLogger(JSON_Parser.class.getSimpleName());
 
     private JSON_Parser() {
-        LogInitialiser.initialiseLog(log, "JSON_Parser");
+        LogInitialiser.initialiseLog(log, "./logs/", "JSON_Parser");
         om = new ObjectMapper();
     }
 

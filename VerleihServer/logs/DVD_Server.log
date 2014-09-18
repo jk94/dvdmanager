@@ -1,0 +1,13 @@
+18.09.2014 11:24:56.048 - [de.codekings.server.connection.VerleihServer.<init>] - [INFO] - Server wurde gestartet..
+18.09.2014 11:25:21.070 - [de.codekings.server.connection.VerleihServer.run] - [INFO] - Verbindung wurde von /127.0.0.1 hergestellt
+18.09.2014 11:25:21.076 - [de.codekings.server.connection.VerleihServer.run] - [INFO] - 1
+18.09.2014 11:25:27.559 - [de.codekings.server.connection.ClientThread.run] - [INFO] - /127.0.0.1 wrote: hallo
+18.09.2014 11:25:30.794 - [de.codekings.server.connection.ClientThread.run] - [INFO] - /127.0.0.1 wrote: wow
+18.09.2014 11:25:33.024 - [de.codekings.server.connection.ClientThread.run] - [INFO] - /127.0.0.1 wrote: cool
+18.09.2014 11:25:36.610 - [de.codekings.server.connection.ClientThread.run] - [INFO] - /127.0.0.1 wrote: yeah
+18.09.2014 11:25:38.917 - [de.codekings.server.connection.ClientThread.run] - [INFO] - /127.0.0.1 wrote: exit
+18.09.2014 11:25:38.918 - [de.codekings.server.connection.ClientThread.run] - [INFO] - User /127.0.0.1 disconnected!
+18.09.2014 11:25:43.500 - [de.codekings.server.connection.VerleihServer.run] - [INFO] - Verbindung wurde von /127.0.0.1 hergestellt
+18.09.2014 11:25:43.504 - [de.codekings.server.connection.VerleihServer.run] - [INFO] - 2
+18.09.2014 11:25:47.064 - [de.codekings.server.connection.ClientThread.run] - [INFO] - /127.0.0.1 wrote: shutdown
+18.09.2014 11:25:48.155 - [de.codekings.server.connection.VerleihServer.lambda$closeSessions$1] - [SEVERE] - null

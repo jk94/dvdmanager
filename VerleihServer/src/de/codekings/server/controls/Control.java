@@ -25,40 +25,39 @@ public class Control {
 
     private static Control theControl;
     private static Logger log;
-    private final ConfigManager cfgManager;
-    private final DBController dbManager;
+    private ConfigManager cfgManager;
+    private DBController dbManager;
 
     public Control() {
-        
+        //Initialisiere Log für alle!
+        log = Logger.getLogger(Control.class.getSimpleName());
+
         //Einlesen der Konfigurationsdatei
         File f = new File("./config/server.cfg");
 
         //Initialisiere ConfigManager
-        cfgManager = new ConfigManager(f);
-        
-        //Initialisiere Log für alle!
-        log = Logger.getLogger(Control.class.getSimpleName());
-        if (f.exists()) {
+        try {
+            cfgManager = new ConfigManager(f);
             Properties p = cfgManager.getConfigs();
 
             //DatenbankManager wird initialisiert
             dbManager = new DBController(p.getProperty("dbHost"), p.getProperty("dbPort"), p.getProperty("dbDatabase"),
                     p.getProperty("dbUser"), p.getProperty("dbPassword"), log);
-            
+
             //Verbindung zur Datenbank öffnen (testen)
             dbManager.initDBConnection();
 
-        } else {
-            dbManager = null;
-            cfgManager.writeDefaultConfig();
+        } catch (FileNotFoundException e) {
+            cfgManager = new ConfigManager();
+            cfgManager.writeDefaultServerConfig();
             log.log(Level.WARNING, "DB Config Datei nicht gefunden.\n"
-                    + "Default Nachricht erstellt.\n"
+                    + "Default Nachricht in '/configs/' erstellt.\n"
                     + "Bitte Server neu starten!");
             System.exit(0);
         }
 
         //Log benutzerdefinieren
-        LogInitialiser.initialiseLog(log, "DVD_Server");
+        LogInitialiser.initialiseLog(log, cfgManager.getConfigs().getProperty("logpath"), "DVD_Server");
     }
 
     public static Control getInstance() {

@@ -26,15 +26,15 @@ public class ConfigManager {
     private final Properties einstellungen = new Properties();
     private final Logger log = Logger.getLogger(ConfigManager.class.getSimpleName());
 
-    public ConfigManager(File f) {
+    public ConfigManager(File f) throws FileNotFoundException{
         try {
             readConfig(f);
         } catch (FileNotFoundException e) {
-            log.log(Level.WARNING, e.getMessage());
+            throw e;
         }
     }
 
-    public ConfigManager() {
+    public ConfigManager(){
     }
 
     public final Properties readConfig(File f) throws FileNotFoundException {
@@ -88,7 +88,7 @@ public class ConfigManager {
         }
     }
 
-    public void writeDefaultConfig() {
+    public void writeDefaultServerConfig() {
         Properties property = new Properties();
         property.put("dbHost", "localhost");
         property.put("dbPort", "3306");
@@ -98,6 +98,14 @@ public class ConfigManager {
         property.put("logpath", "./logs/");
 
         writeConfig(property, "server.cfg");
+    }
+    
+    public void writeDefaultClientConfig(){
+        Properties property = new Properties();
+        property.put("ip", "127.0.0.1");
+        property.put("port", "1234");
+        
+        writeConfig(property, "client.cfg");
     }
 
     public Properties getConfigs() {

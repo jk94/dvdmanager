@@ -33,7 +33,6 @@ public class VerleihServer extends Thread {
             log.log(Level.SEVERE, ex.getMessage());
         }
         log.log(Level.INFO, "Server wurde gestartet..");
-        System.out.println(log.toString());
     }
 
     public static void writeToAll(String name, String s) {
