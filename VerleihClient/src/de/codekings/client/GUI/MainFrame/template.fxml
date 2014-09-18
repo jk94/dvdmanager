@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainFrame.TemplateController">
+<BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.MainFrame.TemplateController">
     <center>
         <ScrollPane fx:id="scrollpane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="content-base" stylesheets="@template.css" BorderPane.alignment="CENTER">
             <content>
