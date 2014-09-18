@@ -2,22 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih/VerleihServer/src/de/codekings/server/controls/Control.java</file>
-            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih/VerleihServer/src/de/codekings/server/main/main.java</file>
-            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih/VerleihServer/src/de/codekings/server/connection/VerleihServer.java</file>
-            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih/VerleihServer/src/de/codekings/server/controls/DBController.java</file>
-=======
-            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih/VerleihServer/src/contents/DVD.java</file>
-            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih/VerleihServer/src/contents/Sendable.java</file>
-            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih/VerleihServer/src/json/json_parser.java</file>
-            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih/VerleihServer/src/verleihserver/main.java</file>
-            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih/VerleihServer/src/contents/Film.java</file>
-            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih/VerleihServer/src/contents/User.java</file>
-            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih/VerleihServer/src/Controls/Control.java</file>
-            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih/VerleihServer/src/Controls/DBSQL_Control.java</file>
->>>>>>> 72f66a05e40748072532dbdeb720ce120b02aef4
-        </group>
+        <group/>
     </open-files>
 </project-private>

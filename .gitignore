@@ -2,6 +2,7 @@
 /VerleihClient/build/
 /VerleihClient/dist/
 /VerleihServer/dist/
+/VerleihServer/logs/
 /DVDsCommonLib/nbproject/private/
 /DVDsCommonLib/build/
 /DVDsCommonLib/dist/
