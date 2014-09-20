@@ -23,7 +23,7 @@ public class Hasher {
     private static final Hasher thishasher = new Hasher();
 
     private Hasher() {
-        LogInitialiser.initialiseLog(log, "Hasher");
+        //LogInitialiser.initialiseLog(log, "Hasher");
     }
     
     public static Hasher getInstance(){

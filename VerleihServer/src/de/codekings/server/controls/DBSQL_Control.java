@@ -13,6 +13,12 @@ import java.sql.ResultSet;
  */
 public class DBSQL_Control {
 
+    private final DBController DBConnector;
+    
+    public DBSQL_Control(DBController connector){
+        this.DBConnector = connector;
+    }
+    
     public static final ResultSet GetALLFilmsFromDB() {
         ResultSet rs = null;
 

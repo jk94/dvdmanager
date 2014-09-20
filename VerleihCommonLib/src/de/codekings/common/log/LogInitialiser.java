@@ -19,9 +19,12 @@ import java.util.logging.Logger;
  */
 public class LogInitialiser {
     
-    public static final void initialiseLog(Logger log, String name){
+    public static final void initialiseLog(Logger log, String path, String name){
         try {
-            Handler handler = new FileHandler("./logs/"+ name + ".log");
+            for(Handler h: log.getHandlers()){
+                log.removeHandler(h);
+            }
+            Handler handler = new FileHandler("./" + path + "/"+ name + ".log");
             handler.setLevel(Level.FINE);
             handler.setFormatter(new VerleihCostumHandler());
             log.addHandler(handler);
