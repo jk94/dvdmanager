@@ -25,9 +25,9 @@
 }
 
 .content-base {
-    -fx-background-color: #1C1C1C;
+    -fx-background-color: #2E2E2E;
     -fx-border-color: #1C1C1C;
-    /*-fx-border-width: 5px;*/
+    -fx-border-width: 5px;
 }
 
 .content-back {
