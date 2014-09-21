@@ -9,6 +9,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<<<<<<< HEAD
+<BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainFrame.TemplateController">
+=======
 <BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.MainFrame.TemplateController">
     <center>
         <ScrollPane fx:id="scrollpane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" styleClass="content-base" stylesheets="@template.css" BorderPane.alignment="CENTER">
@@ -19,6 +22,7 @@
             </content>
         </ScrollPane>
     </center>
+>>>>>>> 785442ac192129127338426fb60e2b3419a0e4a2
     <top>
         <HBox prefHeight="40.0" prefWidth="1014.0" styleClass="header" stylesheets="@template.css" BorderPane.alignment="CENTER">
             <children>
@@ -66,7 +70,7 @@
         </HBox>
     </top>
     <left>
-        <Accordion fx:id="menu_accordion" style="-fx-background-color: #1C1C1C;" styleClass="menu-accordion" stylesheets="@template.css" BorderPane.alignment="CENTER">
+        <Accordion fx:id="menu_accordion" prefHeight="550.0" prefWidth="180.0" style="-fx-background-color: #1C1C1C;" styleClass="menu-accordion" stylesheets="@template.css" BorderPane.alignment="CENTER">
             <panes>
                 <TitledPane animated="false" text="DVD Katalog">
                     <content>
@@ -109,4 +113,11 @@
             </panes>
         </Accordion>
     </left>
+   <center>
+      <ScrollPane prefHeight="550.0" prefWidth="824.0" styleClass="content-base" stylesheets="@template.css" BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane prefHeight="550.0" prefWidth="824.0" styleClass="content-base" stylesheets="@template.css" />
+        </content>
+      </ScrollPane>
+   </center>
 </BorderPane>
