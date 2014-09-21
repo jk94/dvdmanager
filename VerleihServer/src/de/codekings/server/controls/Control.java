@@ -5,6 +5,7 @@
  */
 package de.codekings.server.controls;
 
+import de.codekings.common.Connection.Krypter;
 import de.codekings.common.config.ConfigManager;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.json.JSON_Parser;
@@ -27,41 +28,37 @@ public class Control {
     private static Logger log;
     private ConfigManager cfgManager;
     private DBController dbManager;
+    private Krypter krypter;
 
     public Control() {
         //Initialisiere Log für alle!
         log = Logger.getLogger(Control.class.getSimpleName());
-
-        //Einlesen der Konfigurationsdatei
-        File f = new File("./config/server.cfg");
-
-        //Initialisiere ConfigManager
-        try {
-            cfgManager = new ConfigManager(f);
-            Properties p = cfgManager.getConfigs();
-
-            //DatenbankManager wird initialisiert
-            dbManager = new DBController(p.getProperty("dbHost"), p.getProperty("dbPort"), p.getProperty("dbDatabase"),
-                    p.getProperty("dbUser"), p.getProperty("dbPassword"), log);
-
-            //Verbindung zur Datenbank öffnen (testen)
-            dbManager.initDBConnection();
-
-        } catch (FileNotFoundException e) {
-            cfgManager = new ConfigManager();
-            cfgManager.writeDefaultServerConfig();
-            log.log(Level.WARNING, "DB Config Datei nicht gefunden.\n"
-                    + "Default Nachricht in '/configs/' erstellt.\n"
-                    + "Bitte Server neu starten!");
-            System.exit(0);
-        }
+        loadConfig();
 
         //Log benutzerdefinieren
         LogInitialiser.initialiseLog(log, cfgManager.getConfigs().getProperty("logpath"), "DVD_Server");
+
+        //Initialisiere Datenbankverbindung
+        loadDatabase();
+
+        //Initialisiere Keys für Verschlüsselung
+        loadKrypter();
     }
 
     public static Control getInstance() {
         return theControl;
+    }
+
+    public ConfigManager getCfgManager() {
+        return cfgManager;
+    }
+
+    public DBController getDbManager() {
+        return dbManager;
+    }
+
+    public Krypter getKrypter() {
+        return krypter;
     }
 
     public void setControl(Control c) {
@@ -72,14 +69,52 @@ public class Control {
         return log;
     }
 
-    public void readDBConfig(String path) {
-        File f = new File(path);
-        if (f.exists()) {
-            JSON_Parser.getInstance().parseStringToObject(path, DBConfig.class);
-        } else {
-            System.err.println("Keine Konfigurationsdatei der Datenbank vorhanden.");
-            System.err.println("Server wird beendet!");
+    public final void loadKrypter() {
+        krypter = new Krypter();
+        if (cfgManager.getConfigs().containsKey("generatenewkeys")) {
+            boolean generate = Boolean.parseBoolean(cfgManager.getConfigs().getProperty("generatenewkeys"));
+            if (generate) {
+                krypter.generateKeyPair();
+            } else {
+                if (!krypter.loadKeyPair()) {
+                    log.log(Level.WARNING, "Laden der KeyPairs fehlgeschlagen. Erzeuge neue Keys!");
+                    krypter.generateKeyPair();
+                }
+            }
+        }
+    }
+
+    public final void loadConfig() {
+        //Initialisiere ConfigManager
+        try {
+
+            //Einlesen der Konfigurationsdatei
+            File f = new File("./config/server.cfg");
+            cfgManager = new ConfigManager(f);
+
+        } catch (FileNotFoundException e) {
+            cfgManager = new ConfigManager();
+            cfgManager.writeDefaultServerConfig();
+            log.log(Level.WARNING, "DB Config Datei nicht gefunden.\n"
+                    + "Default Nachricht in '/configs/' erstellt.\n"
+                    + "Bitte Server neu starten!");
             System.exit(0);
+        }
+    }
+
+    public final void loadDatabase() {
+        Properties p = cfgManager.getConfigs();
+
+        //DatenbankManager wird initialisiert
+        dbManager = new DBController(p.getProperty("dbHost"), p.getProperty("dbPort"), p.getProperty("dbDatabase"),
+                p.getProperty("dbUser"), p.getProperty("dbPassword"), log);
+
+        //Verbindung zur Datenbank öffnen (testen)
+        try {
+            dbManager.initDBConnection();
+        } catch (RuntimeException e) {
+            System.out.println("Verbindung zur Datenbank nicht möglich. "
+                    + "Überprüfen Sie die Konfigurationsdatei: 'config/server.cfg'");
         }
     }
 

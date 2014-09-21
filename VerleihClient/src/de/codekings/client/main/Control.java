@@ -6,6 +6,7 @@
 package de.codekings.client.main;
 
 import de.codekings.client.connection.ClientThread;
+import de.codekings.common.Connection.Krypter;
 import de.codekings.common.config.ConfigManager;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,11 +18,18 @@ import java.io.FileNotFoundException;
 public class Control {
 
     private ConfigManager cfgManager;
+    private Krypter krypter;
 
     public Control() {
+        loadConfig();
+        
+
+    }
+
+    public final void loadConfig() {
         try {
             File config = new File("./config/client.cfg");
-            
+
             cfgManager = new ConfigManager(config);
 
             new ClientThread().HeartBeat(cfgManager.getConfigs().getProperty("ip"),
@@ -37,4 +45,20 @@ public class Control {
         }
     }
 
+    public final void loadKrypter(){
+        krypter = new Krypter();
+        if(cfgManager.getConfigs().containsKey("generatenewkeys")){
+            boolean generate = Boolean.parseBoolean(cfgManager.getConfigs().getProperty("generatenewkeys"));
+            if(generate){
+                krypter.generateKeyPair();
+            }else{
+                if(!krypter.loadKeyPair()){
+                    System.out.println("Laden der KeyPairs fehlgeschlagen. Erzeuge neue Keys!");
+                    krypter.generateKeyPair();
+                }
+            }
+        }
+    }
+    
+    
 }

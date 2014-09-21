@@ -66,11 +66,11 @@ public class ConfigManager {
      *
      * @param dateiname DateiNAME der zu speichernden Datei
      */
-    public void writeConfig(String dateiname) {
-        writeConfig(einstellungen, dateiname);
+    public void writeConfig(String dateiname, String comments) {
+        writeConfig(einstellungen, dateiname, comments);
     }
 
-    private void writeConfig(Properties p, String dateiname) {
+    private void writeConfig(Properties p, String dateiname, String comments) {
         try {
             File ordner = new File("./config/");
             if (ordner.exists() && ordner.isDirectory()) {
@@ -80,7 +80,7 @@ public class ConfigManager {
                 }
             } else {
                 if (ordner.mkdir()) {
-                    writeConfig(p, dateiname);
+                    writeConfig(p, dateiname, comments);
                 }
             }
         } catch (IOException e) {
@@ -96,16 +96,21 @@ public class ConfigManager {
         property.put("dbUser", "ckdbuser");
         property.put("dbPassword", "test123");
         property.put("logpath", "./logs/");
+        property.put("generatenewkeys", "true");
 
-        writeConfig(property, "server.cfg");
+        
+        writeConfig(property, "server.cfg", "Server-Konfiguration\n\nHier lassen sich ein"
+                + " paar Einstellungen für den Server festlegen!");
     }
     
     public void writeDefaultClientConfig(){
         Properties property = new Properties();
         property.put("ip", "127.0.0.1");
         property.put("port", "1234");
+        property.put("generatenewkeys", "false");
         
-        writeConfig(property, "client.cfg");
+        writeConfig(property, "client.cfg", "Client-Konfiguration\n\nHier lassen sich ein"
+                + " paar Einstellungen für den Client festlegen!");
     }
 
     public Properties getConfigs() {

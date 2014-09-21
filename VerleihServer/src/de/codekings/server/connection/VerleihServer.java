@@ -72,7 +72,7 @@ public class VerleihServer extends Thread {
 
                 log.log(Level.INFO, "Verbindung wurde von {0} hergestellt", socket.getInetAddress());
 
-                ClientThread client = new ClientThread(socket);
+                ClientThread client = new ClientThread(socket, Control.getInstance().getKrypter());
                 client.start();
                 clientThreads.add(client);
 

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package de.codekings.common.log;
 
 import java.text.DateFormat;
@@ -17,16 +16,17 @@ import java.util.logging.LogRecord;
  *
  * @author Jan
  */
-public class VerleihCostumHandler extends Formatter{
+public class VerleihCostumHandler extends Formatter {
 
     private static final DateFormat df = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss.SSS");
-    
+
     @Override
     public String format(LogRecord lr) {
         StringBuilder builder = new StringBuilder(1000);
         builder.append(df.format(new Date(lr.getMillis())));
         builder.append(" - ");
-        builder.append("[").append(lr.getSourceClassName());
+        String[] klassenname = lr.getSourceClassName().split(".", 3);
+        builder.append(klassenname[klassenname.length-1]);
         builder.append(".");
         builder.append(lr.getSourceMethodName()).append("] - ");
         builder.append("[").append(lr.getLevel()).append("] - ");
@@ -49,7 +49,5 @@ public class VerleihCostumHandler extends Formatter{
     public String getHead(Handler hndlr) {
         return super.getHead(hndlr);
     }
-    
-    
-    
+
 }

@@ -13,19 +13,6 @@ import de.codekings.common.Enumerators.ClassType;
  */
 public abstract class Sendable {
 
-    protected String cmd = "";
-
     public abstract ClassType getClassType();
 
-    public String getProtocolCommand() {
-        return cmd;
-    }
-
-    /**
-     *
-     * @param cmd
-     */
-    public void setProtocolCommand(String cmd) {
-        this.cmd = cmd;
-    }
 }
