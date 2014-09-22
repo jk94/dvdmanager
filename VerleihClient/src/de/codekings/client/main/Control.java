@@ -32,7 +32,7 @@ public class Control {
 
             cfgManager = new ConfigManager(config);
 
-            new ClientThread().HeartBeat(cfgManager.getConfigs().getProperty("ip"),
+            new ClientThread(null).HeartBeat(cfgManager.getConfigs().getProperty("ip"),
                     Integer.parseInt(cfgManager.getConfigs().getProperty("port")));
 
         } catch (FileNotFoundException ex) {
@@ -58,6 +58,8 @@ public class Control {
                 }
             }
         }
+        ClientThread c = new ClientThread(krypter);
+        
     }
     
     

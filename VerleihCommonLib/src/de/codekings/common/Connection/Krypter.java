@@ -34,6 +34,7 @@ import javax.crypto.KeyGenerator;
 public class Krypter {
 
     private KeyPair keys;
+    private PublicKey foreignPubkey;
 
     public Krypter() {
 
@@ -110,6 +111,14 @@ public class Krypter {
 
     public KeyPair getKeys() {
         return keys;
+    }
+    
+    public PublicKey getForeignPublicKey(){
+        return foreignPubkey;
+    }
+    
+    public void setForeignPublicKey(PublicKey key){
+        this.foreignPubkey = key;
     }
 
     public static OutputStream encryptOutputStream(OutputStream os, PublicKey publicKey) throws Exception {

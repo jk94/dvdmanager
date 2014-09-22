@@ -3,12 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.codekings.common.Enumerators;
+
+package de.codekings.common.exceptions;
 
 /**
  *
  * @author Jan
  */
-public enum ClassType {
-    T_FILM, T_DVD, T_KUNDE, T_MITARBEITER, T_PUBLICKEY;
+public class PublicKeyNotFoundException extends Exception{
+
+    @Override
+    public String getMessage() {
+        return "PublicKey not Found";
+    }
+    
+    
+    
 }

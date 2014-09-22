@@ -24,6 +24,7 @@ public class main {
         c = new Control();
         c.setControl(c);
         VerleihServer.getInstance().start();
+        //t = json.json_parser.getInstance().parseObjectIn(new File("C:/Users/Jan/Desktop/test.txt"), Testklasse.class);
     }
 
     public static void stopServer() {

@@ -6,7 +6,7 @@
 package de.codekings.server.connection;
 
 import de.codekings.common.Connection.Krypter;
-import de.codekings.common.datacontents.Sendable;
+import de.codekings.common.Connection.Message;
 import de.codekings.common.json.JSON_Parser;
 import de.codekings.server.controls.Control;
 import java.io.BufferedReader;
@@ -58,12 +58,8 @@ class ClientThread extends Thread {
                     } else {
                         //NORMALER/UNVERSCHLÜSSELTER BEREICH
                         if (s.startsWith("ck://")) {
-                            String[] s2 = s.split("//");
-                            if (s2[1].startsWith("list")) {
-
-                            } else {
-                                Sendable inbox = JSON_Parser.getInstance().parseStringToObject(s, Sendable.class);
-                            }
+                            String[] s2 = s.split("//", 1);
+                                Message inbox = (Message) JSON_Parser.getInstance().parseStringToObject(s2[1], Message.class);
 
                         } else {
                             //BEREICH FÜR VERSCHIEDENE COMMANDS   
