@@ -23,7 +23,6 @@ public class main {
         // TODO code application logic here
         c = new Control();
         c.setControl(c);
-        VerleihServer.getInstance().start();
         //t = json.json_parser.getInstance().parseObjectIn(new File("C:/Users/Jan/Desktop/test.txt"), Testklasse.class);
     }
 

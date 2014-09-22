@@ -17,16 +17,12 @@ public class CKPublicKey extends Sendable {
     private final PublicKey pubKey;
 
     public CKPublicKey(PublicKey p) {
+        super(ClassType.T_PUBLICKEY);
         this.pubKey = p;
     }
 
     public PublicKey getPublicKey() {
         return pubKey;
-    }
-
-    @Override
-    public ClassType getClassType() {
-        return ClassType.T_PUBLICKEY;
     }
 
 }

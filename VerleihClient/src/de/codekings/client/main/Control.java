@@ -22,8 +22,12 @@ public class Control {
 
     public Control() {
         loadConfig();
-        
+        loadKrypter();
 
+        ClientThread c = new ClientThread(krypter);
+        c.getPubKeyFromServer(cfgManager.getConfigs().getProperty("ip"),
+                Integer.parseInt(cfgManager.getConfigs().getProperty("standardport")));
+        System.out.println(krypter.getForeignPublicKey());
     }
 
     public final void loadConfig() {
@@ -32,9 +36,8 @@ public class Control {
 
             cfgManager = new ConfigManager(config);
 
-            new ClientThread(null).HeartBeat(cfgManager.getConfigs().getProperty("ip"),
-                    Integer.parseInt(cfgManager.getConfigs().getProperty("port")));
-
+            /*new ClientThread(null).HeartBeat(cfgManager.getConfigs().getProperty("ip"),
+             Integer.parseInt(cfgManager.getConfigs().getProperty("standardport")));*/
         } catch (FileNotFoundException ex) {
             cfgManager = new ConfigManager();
             cfgManager.writeDefaultClientConfig();
@@ -45,22 +48,20 @@ public class Control {
         }
     }
 
-    public final void loadKrypter(){
+    public final void loadKrypter() {
         krypter = new Krypter();
-        if(cfgManager.getConfigs().containsKey("generatenewkeys")){
+        if (cfgManager.getConfigs().containsKey("generatenewkeys")) {
             boolean generate = Boolean.parseBoolean(cfgManager.getConfigs().getProperty("generatenewkeys"));
-            if(generate){
+            if (generate) {
                 krypter.generateKeyPair();
-            }else{
-                if(!krypter.loadKeyPair()){
+            } else {
+                if (!krypter.loadKeyPair()) {
                     System.out.println("Laden der KeyPairs fehlgeschlagen. Erzeuge neue Keys!");
                     krypter.generateKeyPair();
                 }
             }
         }
-        ClientThread c = new ClientThread(krypter);
-        
+
     }
-    
-    
+
 }

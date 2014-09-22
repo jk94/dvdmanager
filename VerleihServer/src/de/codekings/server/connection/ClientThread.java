@@ -7,6 +7,8 @@ package de.codekings.server.connection;
 
 import de.codekings.common.Connection.Krypter;
 import de.codekings.common.Connection.Message;
+import de.codekings.common.datacontents.CKPublicKey;
+import de.codekings.common.exceptions.PublicKeyNotFoundException;
 import de.codekings.common.json.JSON_Parser;
 import de.codekings.server.controls.Control;
 import java.io.BufferedReader;
@@ -29,12 +31,21 @@ class ClientThread extends Thread {
     private static Logger log = Control.getInstance().getLogger();
     private Krypter krypter;
 
-    public ClientThread(Socket s, Krypter k) {
+    public ClientThread(Socket s, Krypter k, boolean secure) {
         this.krypter = k;
         this.socket = s;
         try {
-            this.reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            this.writer = new PrintWriter(s.getOutputStream());
+            if (secure) {
+                try {
+                    writer = new PrintWriter(Krypter.encryptOutputStream(socket.getOutputStream(), k.getForeignPublicKey()));
+                    reader = new BufferedReader(new InputStreamReader(Krypter.decryptInputStream(socket.getInputStream(), k.getKeys().getPrivate())));
+                } catch (Exception e) {
+                    log.log(Level.SEVERE, e.getMessage());
+                }
+            } else {
+                this.reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                this.writer = new PrintWriter(s.getOutputStream());
+            }
         } catch (IOException ex) {
             log.log(Level.SEVERE, ex.getMessage());
         }
@@ -47,36 +58,54 @@ class ClientThread extends Thread {
             while ((s = reader.readLine()) != null) {
                 //TODO Auslesen!
                 if (this.socket.isConnected()) {
-                    log.log(Level.INFO, "{0} wrote: {1}", new Object[]{this.socket.getInetAddress().toString(), s});
-                    if (s.equalsIgnoreCase("exit")) {
-                        this.socket.close();
-                    }
-
-                    //SICHERER/VERSCHLÜSSELTER BEREICH
-                    if (s.startsWith("cks://")) {
-
+                    Message m = (Message) JSON_Parser.getInstance().parseStringToObject(s, Message.class);
+                    if (MessageAuswertung(m)) {
+                        break;
                     } else {
-                        //NORMALER/UNVERSCHLÜSSELTER BEREICH
-                        if (s.startsWith("ck://")) {
-                            String[] s2 = s.split("//", 1);
-                                Message inbox = (Message) JSON_Parser.getInstance().parseStringToObject(s2[1], Message.class);
-
-                        } else {
-                            //BEREICH FÜR VERSCHIEDENE COMMANDS   
-                        }
                     }
                 } else {
-                    log.log(Level.INFO, "User {0} disconnected!", this.socket.getInetAddress());
+                    log.log(Level.INFO, "Client {0} disconnected!", this.socket.getInetAddress());
                     break;
                 }
             }
         } catch (IOException ex) {
-            log.log(Level.INFO, "User {0} disconnected!", socket.getInetAddress());
+            log.log(Level.INFO, "Client {0} disconnected!", socket.getInetAddress());
         }
     }
 
-    public void write(String s) {
-        writer.append(s + "\n").flush();
+    private void write(String s) throws PublicKeyNotFoundException {
+        try {
+            if (krypter.getForeignPublicKey() != null) {
+                throw new PublicKeyNotFoundException();
+            }
+            writer.append(s + "\n");
+            writer.flush();
+        } catch (PublicKeyNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private boolean MessageAuswertung(Message m) {
+        boolean beenden = false;
+        //GET PUBLIC KEY
+        if (m.getCommand().equalsIgnoreCase("getPublicKey")) {
+            Message answer = new Message("returnPublicKey");
+            answer.addSendable(new CKPublicKey(krypter.getKeys().getPublic()));
+            try {
+                write(JSON_Parser.getInstance().parseObjectToString(m));
+            } catch (PublicKeyNotFoundException e) {
+                log.log(Level.WARNING, e.getMessage());
+                beenden = true;
+            }
+
+            //RETURN FILMS
+            if (m.getCommand().equalsIgnoreCase("returnFilms")) {
+                int startindex = Integer.parseInt(m.getAdditionalparameter().get("startindex"));
+                int howmany = Integer.parseInt(m.getAdditionalparameter().get("anzahl"));
+
+            }
+        }
+        return beenden;
     }
 
     public void closeConnection() throws IOException {

@@ -5,13 +5,14 @@
  */
 package de.codekings.common.datacontents;
 
+import de.codekings.common.Enumerators.ClassType;
 import java.util.Date;
 
 /**
  *
  * @author Jan
  */
-public abstract class User {
+public abstract class User extends Sendable{
     
     private final int U_ID;
     private String name, vorname, strasse, plz, ort;
@@ -19,7 +20,8 @@ public abstract class User {
     private int hausnr;
     private Date geburtsdatum;
       
-    public User(int uid){
+    public User(int uid, ClassType t){
+        super(t);
         this.U_ID = uid;
     }
 

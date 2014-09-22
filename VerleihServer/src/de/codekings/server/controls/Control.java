@@ -10,6 +10,7 @@ import de.codekings.common.config.ConfigManager;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.json.JSON_Parser;
 import de.codekings.common.log.LogInitialiser;
+import de.codekings.server.connection.VerleihServer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.ResultSet;
@@ -29,6 +30,7 @@ public class Control {
     private ConfigManager cfgManager;
     private DBController dbManager;
     private Krypter krypter;
+    private VerleihServer secureVerleihserver, unsecureVerleihserver;
 
     public Control() {
         //Initialisiere Log für alle!
@@ -43,6 +45,9 @@ public class Control {
 
         //Initialisiere Keys für Verschlüsselung
         loadKrypter();
+        
+        //Initialisiere verschlüsselten und unverschlüsselten Server und starte sie.
+        runServer();
     }
 
     public static Control getInstance() {
@@ -149,52 +154,11 @@ public class Control {
 
     }
 
-    private class DBConfig {
-
-        private String dbHost, dbPort, dbName, dbUser, dbPass;
-
-        public DBConfig() {
-        }
-
-        public String getDbHost() {
-            return dbHost;
-        }
-
-        public void setDbHost(String dbHost) {
-            this.dbHost = dbHost;
-        }
-
-        public String getDbPort() {
-            return dbPort;
-        }
-
-        public void setDbPort(String dbPort) {
-            this.dbPort = dbPort;
-        }
-
-        public String getDbName() {
-            return dbName;
-        }
-
-        public void setDbName(String dbName) {
-            this.dbName = dbName;
-        }
-
-        public String getDbUser() {
-            return dbUser;
-        }
-
-        public void setDbUser(String dbUser) {
-            this.dbUser = dbUser;
-        }
-
-        public String getDbPass() {
-            return dbPass;
-        }
-
-        public void setDbPass(String dbPass) {
-            this.dbPass = dbPass;
-        }
-
+    private void runServer() {
+        secureVerleihserver = new VerleihServer(Integer.parseInt(cfgManager.getConfigs().getProperty("secureport")), true);
+        secureVerleihserver.start();
+        unsecureVerleihserver = new VerleihServer(Integer.parseInt(cfgManager.getConfigs().getProperty("standardport")), false);
+        unsecureVerleihserver.start();
     }
+
 }

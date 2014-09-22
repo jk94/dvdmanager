@@ -19,12 +19,8 @@ public class DVD extends Sendable {
     private boolean ausgeliehen;
 
     public DVD(int id) {
+        super(ClassType.T_DVD);
         DVDID = id;
-    }
-
-    @Override
-    public ClassType getClassType() {
-        return ClassType.T_DVD;
     }
 
     public int getDVDID() {

@@ -5,7 +5,6 @@
  */
 package de.codekings.server.connection;
 
-import de.codekings.common.log.LogInitialiser;
 import de.codekings.server.controls.Control;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -21,12 +20,13 @@ import java.util.logging.Logger;
 public class VerleihServer extends Thread {
 
     private static final ArrayList<ClientThread> clientThreads = new ArrayList<>();
-    private static final VerleihServer verServer = new VerleihServer(1234);
     private static ServerSocket server;
-    private final Logger log = Control.getInstance().getLogger();
+    private final Logger log = Logger.getLogger(Control.class.getSimpleName());
+    private final boolean secure;
 
-    private VerleihServer(int port) {
+    public VerleihServer(int port, boolean secure) {
         server = null;
+        this.secure = secure;
         try {
             server = new ServerSocket(port);
         } catch (IOException ex) {
@@ -35,13 +35,11 @@ public class VerleihServer extends Thread {
         log.log(Level.INFO, "Server wurde gestartet..");
     }
 
-    public static void writeToAll(String name, String s) {
-        clientThreads.stream().forEach((clientThread) -> {
-            clientThread.write(s);
-        });
+    public boolean isSecure() {
+        return secure;
     }
 
-    public void closeSessions() {
+    /*public void closeSessions() {
         clientThreads.stream().forEach((clientThread) -> {
             try {
                 clientThread.write("Connection will be closed now!");
@@ -52,7 +50,7 @@ public class VerleihServer extends Thread {
                 log.log(Level.SEVERE, e.getMessage());
             }
         });
-    }
+    }*/
     
     /**
      *
@@ -72,7 +70,7 @@ public class VerleihServer extends Thread {
 
                 log.log(Level.INFO, "Verbindung wurde von {0} hergestellt", socket.getInetAddress());
 
-                ClientThread client = new ClientThread(socket, Control.getInstance().getKrypter());
+                ClientThread client = new ClientThread(socket, Control.getInstance().getKrypter(), secure);
                 client.start();
                 clientThreads.add(client);
 
@@ -81,19 +79,6 @@ public class VerleihServer extends Thread {
             }
             log.log(Level.INFO, String.valueOf(clientThreads.size()));
         }
-    }
-
-    public static String whoIsOnline() {
-        String s = "Clients connected: " + String.valueOf(clientThreads.size());
-
-        /*for (int i = 0; i < clientThreads.size(); i++) {
-         s += clientThreads.get(i).getClientName() + ", ";
-         }*/
-        return s;
-    }
-
-    public static VerleihServer getInstance() {
-        return verServer;
     }
 
 }

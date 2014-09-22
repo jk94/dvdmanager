@@ -36,16 +36,10 @@ public class Film extends Sendable{
     private static final Logger log = Logger.getLogger(Film.class.getSimpleName());
     
     public Film(int fid) {
+        super(ClassType.T_FILM);
         FILMID = fid;
     }
-
-    @Override
-    public ClassType getClassType() {
-        return ClassType.T_FILM;
-    }
     
-    
-
     public String getCover() {
         return cover;
     }

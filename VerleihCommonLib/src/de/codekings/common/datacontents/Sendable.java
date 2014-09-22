@@ -13,6 +13,13 @@ import de.codekings.common.Enumerators.ClassType;
  */
 public abstract class Sendable {
 
-    public abstract ClassType getClassType();
+    private final ClassType cltype;
+    
+    public final ClassType getClassType(){
+        return  cltype;
+    }
 
+    public Sendable(ClassType t){
+        this.cltype = t;
+    }
 }
