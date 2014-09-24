@@ -34,42 +34,43 @@ public class ClientThread {
     }
 
     private void neueVerbindung(String addresse, int port, boolean secure) {
-        if (socket != null) {
+
+        try {
+            socket = new Socket(addresse, port);
             try {
-                socket = new Socket(addresse, port);
-                try {
-                    if (secure) {
-                        writer = new PrintWriter(Krypter.encryptOutputStream(socket.getOutputStream(), k.getForeignPublicKey()));
-                        reader = new BufferedReader(new InputStreamReader(Krypter.decryptInputStream(socket.getInputStream(), k.getKeys().getPrivate())));
-                    } else {
-                        this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        this.writer = new PrintWriter(socket.getOutputStream());
+                if (secure) {
+                    writer = new PrintWriter(Krypter.encryptOutputStream(socket.getOutputStream(), k.getForeignPublicKey()));
+                    reader = new BufferedReader(new InputStreamReader(Krypter.decryptInputStream(socket.getInputStream(), k.getKeys().getPrivate())));
+                } else {
+                    this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    this.writer = new PrintWriter(socket.getOutputStream());
+                }
+            } catch (Exception e) {
+
+            }
+
+        } catch (UnknownHostException ex) {
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        new Thread(() -> {
+            try {
+                String s;
+                JSON_Parser j = new JSON_Parser();
+                while ((s = reader.readLine()) != null) {
+                    //TODO Annahme der Daten
+                    Message m = (Message) j.parseStringToObject(s, Message.class);
+                    if (MessageAuswertung(m)) {
+                        break;
                     }
-                } catch (Exception e) {
 
                 }
-
-            } catch (UnknownHostException ex) {
-                System.out.println(ex.getMessage());
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
             }
-            new Thread(() -> {
-                try {
-                    String s;
-                    while ((s = reader.readLine()) != null) {
-                        //TODO Annahme der Daten
-                        Message m = (Message) JSON_Parser.getInstance().parseStringToObject(s, Message.class);
-                        if (MessageAuswertung(m)) {
-                            break;
-                        }
+        }).start();
 
-                    }
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
-            }).start();
-        }
     }
 
     private boolean MessageAuswertung(Message m) {
@@ -84,12 +85,12 @@ public class ClientThread {
             } catch (PublicKeyNotFoundException e) {
             }
         }
-        
+
         //RETURN PUBLIC KEY
-        if(m.getCommand().equalsIgnoreCase("returnPublicKey")){
+        if (m.getCommand().equalsIgnoreCase("returnPublicKey")) {
             CKPublicKey ckpk = new CKPublicKey(null);
-            for(Sendable send: m.getContent()){
-                if(send instanceof CKPublicKey){
+            for (Sendable send : m.getContent()) {
+                if (send instanceof CKPublicKey) {
                     ckpk = (CKPublicKey) send;
                     break;
                 }
@@ -102,7 +103,7 @@ public class ClientThread {
         if (m.getCommand().equalsIgnoreCase("returnFilms")) {
             int startindex = Integer.parseInt(m.getAdditionalparameter().get("startindex"));
             int howmany = Integer.parseInt(m.getAdditionalparameter().get("anzahl"));
-            
+
         }
 
         return beenden;
@@ -114,7 +115,14 @@ public class ClientThread {
                 throw new PublicKeyNotFoundException();
             }
             m.addSendable(new CKPublicKey(k.getKeys().getPublic()));
-            String s = JSON_Parser.getInstance().parseObjectToString(m);
+            String s = "";
+            try {
+                JSON_Parser j = new JSON_Parser();
+                s = j.parseObjectToString(m);
+            } catch (ExceptionInInitializerError a) {
+                System.out.println(a.getMessage());
+            }
+            System.out.println(s);
             writer.append(s + "\n");
             writer.flush();
         } catch (PublicKeyNotFoundException e) {
@@ -122,7 +130,7 @@ public class ClientThread {
         }
     }
 
-    public CKPublicKey getPubKeyFromServer(String host, int port) {
+    public void requestForPubKeyFromServer(String host, int port) {
         CKPublicKey erg = null;
 
         neueVerbindung(host, port, false);
@@ -132,7 +140,6 @@ public class ClientThread {
         } catch (PublicKeyNotFoundException e) {
 
         }
-        return erg;
     }
 
     public boolean HeartBeat(String host, int port) {

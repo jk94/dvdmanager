@@ -21,6 +21,12 @@ public class CKPublicKey extends Sendable {
         this.pubKey = p;
     }
 
+    public CKPublicKey(PublicKey pubKey, ClassType t) {
+        super(t);
+        this.pubKey = pubKey;
+    }
+    
+
     public PublicKey getPublicKey() {
         return pubKey;
     }

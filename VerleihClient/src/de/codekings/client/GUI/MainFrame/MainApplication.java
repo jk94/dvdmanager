@@ -5,6 +5,7 @@
  */
 package de.codekings.client.GUI.MainFrame;
 
+import de.codekings.client.connection.ClientThread;
 import de.codekings.client.main.Control;
 import java.io.IOException;
 import java.util.Arrays;
@@ -37,7 +38,8 @@ public class MainApplication extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         c = new Control();
-
+        c.setControl(c);
+        
     }
 
 }

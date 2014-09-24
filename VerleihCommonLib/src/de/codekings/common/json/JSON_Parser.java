@@ -7,6 +7,7 @@ package de.codekings.common.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import de.codekings.common.log.LogInitialiser;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -26,18 +27,13 @@ import sun.misc.BASE64Encoder;
  */
 public class JSON_Parser {
 
-    private static final JSON_Parser jp = new JSON_Parser();
-    private static ObjectMapper om;
-
+    private ObjectMapper om;
     private static final Logger log = Logger.getLogger(JSON_Parser.class.getSimpleName());
 
-    private JSON_Parser() {
+    public JSON_Parser() {
         LogInitialiser.initialiseLog(log, "./logs/", "JSON_Parser");
         om = new ObjectMapper();
-    }
-
-    public static JSON_Parser getInstance() {
-        return jp;
+        om.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
     }
 
     public static BufferedImage decodeToImage(String imageString) {

@@ -23,6 +23,12 @@ public class Kunde extends User{
         super(uid, t);
     }
 
+    public Kunde(Date joiningDate, double accountbalance, int uid, ClassType t) {
+        super(uid, t);
+        this.joiningDate = joiningDate;
+        this.accountbalance = accountbalance;
+    }
+
     public Date getJoiningDate() {
         return joiningDate;
     }

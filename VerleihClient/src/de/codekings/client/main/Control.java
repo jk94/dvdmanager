@@ -19,15 +19,11 @@ public class Control {
 
     private ConfigManager cfgManager;
     private Krypter krypter;
+    private static Control control;
 
     public Control() {
         loadConfig();
         loadKrypter();
-
-        ClientThread c = new ClientThread(krypter);
-        c.getPubKeyFromServer(cfgManager.getConfigs().getProperty("ip"),
-                Integer.parseInt(cfgManager.getConfigs().getProperty("standardport")));
-        System.out.println(krypter.getForeignPublicKey());
     }
 
     public final void loadConfig() {
@@ -64,4 +60,26 @@ public class Control {
 
     }
 
+    public ConfigManager getCfgManager() {
+        return cfgManager;
+    }
+
+    public Krypter getKrypter() {
+        return krypter;
+    }
+
+    public static final void setControl(Control c){
+        control = c;
+    }
+    
+    public static final Control getControl(){
+        return control;
+    }
+    
+    public final void getPublicKey(){
+        ClientThread c = new ClientThread(krypter);
+        c.requestForPubKeyFromServer(cfgManager.getConfigs().getProperty("ip"),
+                Integer.parseInt(cfgManager.getConfigs().getProperty("standardport")));
+    }
+    
 }

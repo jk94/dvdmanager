@@ -9,7 +9,6 @@ package de.codekings.common.Connection;
 import de.codekings.common.datacontents.Sendable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  *
@@ -24,6 +23,12 @@ public class Message {
     public Message(String command){
         content = new ArrayList<>();
         this.command = command;
+    }
+    
+    public Message(String command, ArrayList<Sendable> c, HashMap<String, String> a){
+        content = c;
+        this.command = command;
+        this.additionalparameter = a;
     }
 
     public ArrayList<Sendable> getContent() {
@@ -71,6 +76,7 @@ public class Message {
             content.remove(s);
         }
     }
+    
     
     
 }

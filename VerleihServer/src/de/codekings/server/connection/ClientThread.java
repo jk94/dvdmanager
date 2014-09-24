@@ -55,10 +55,12 @@ class ClientThread extends Thread {
     public void run() {
         try {
             String s = "";
+            JSON_Parser j = new JSON_Parser();
             while ((s = reader.readLine()) != null) {
                 //TODO Auslesen!
                 if (this.socket.isConnected()) {
-                    Message m = (Message) JSON_Parser.getInstance().parseStringToObject(s, Message.class);
+                    Message m = (Message) j.parseStringToObject(s, Message.class);
+                    System.out.println(m.getCommand());
                     if (MessageAuswertung(m)) {
                         break;
                     } else {
@@ -87,12 +89,14 @@ class ClientThread extends Thread {
 
     private boolean MessageAuswertung(Message m) {
         boolean beenden = false;
+        System.out.println(m.getCommand());
         //GET PUBLIC KEY
         if (m.getCommand().equalsIgnoreCase("getPublicKey")) {
             Message answer = new Message("returnPublicKey");
             answer.addSendable(new CKPublicKey(krypter.getKeys().getPublic()));
+            JSON_Parser j = new JSON_Parser();
             try {
-                write(JSON_Parser.getInstance().parseObjectToString(m));
+                write(j.parseObjectToString(m));
             } catch (PublicKeyNotFoundException e) {
                 log.log(Level.WARNING, e.getMessage());
                 beenden = true;

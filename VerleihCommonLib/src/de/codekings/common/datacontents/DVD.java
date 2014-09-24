@@ -23,6 +23,17 @@ public class DVD extends Sendable {
         DVDID = id;
     }
 
+    public DVD(int DVDID, Film film, boolean ausgeliehen, ClassType t, String artnr, String notiz, String le, String sled) {
+        super(t);
+        this.DVDID = DVDID;
+        this.film = film;
+        this.ausgeliehen = ausgeliehen;
+        this.s_artikelnr = artnr;
+        this.s_lastedit = le;
+        this.s_lasteditdate = sled;
+        this.s_notiz = notiz;
+    }
+    
     public int getDVDID() {
         return DVDID;
     }

@@ -5,6 +5,7 @@
  */
 package de.codekings.client.GUI.MainFrame;
 
+import de.codekings.client.main.Control;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -76,6 +77,9 @@ public class TemplateController implements Initializable {
         btn_start.setOnAction((ActionEvent event) -> {
             System.out.println("Ausgabe Start:");
         });
+        btn_start.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getPublicKey();
+        });
         head_btn_home.setOnAction((ActionEvent event) -> {
             System.out.println("Ausgabe head home");
         });
@@ -85,6 +89,6 @@ public class TemplateController implements Initializable {
         head_btn_home.setOnMouseExited((MouseEvent event) -> {
             head_btn_back.setDisable(false);
         });
-
+        
     }
 }
