@@ -5,6 +5,7 @@
  */
 package de.codekings.common.datacontents;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.codekings.common.Enumerators.ClassType;
 import de.codekings.common.json.JSON_Parser;
 import java.io.File;
@@ -21,16 +22,17 @@ import javax.imageio.ImageIO;
  *
  * @author Jan
  */
+@JsonDeserialize(as=Film.class)
 public class Film extends Sendable {
 
-    private final int FILMID;
+    private int FILMID;
     private String s_titel = "", s_subtitel = "", s_description = "";
     private String s_trailer = "", s_regie = "", s_FSK = "";
     private int i_rating = -1, i_duration = -1, i_fsk = 0;
     private double d_preis = 0.0;
     private Date release_date;
-    private final ArrayList<String> li_actors, li_awards;
-    private final ArrayList<String> li_genre;
+    private ArrayList<String> li_actors, li_awards;
+    private ArrayList<String> li_genre;
     private String cover;
 
     private static final Logger log = Logger.getLogger(Film.class.getSimpleName());
@@ -41,6 +43,10 @@ public class Film extends Sendable {
         li_actors = new ArrayList<>();
         li_awards = new ArrayList<>();
         li_genre = new ArrayList<>();
+    }
+    
+    public Film(){
+        super(ClassType.T_FILM);
     }
 
     public Film(int FILMID, Date release_date, ArrayList<String> li_actors, ArrayList<String> li_awards,

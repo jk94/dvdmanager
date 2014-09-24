@@ -34,6 +34,7 @@ public class JSON_Parser {
         LogInitialiser.initialiseLog(log, "./logs/", "JSON_Parser");
         om = new ObjectMapper();
         om.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        om.enableDefaultTyping();
     }
 
     public static BufferedImage decodeToImage(String imageString) {

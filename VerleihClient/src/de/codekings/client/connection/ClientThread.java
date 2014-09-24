@@ -64,7 +64,6 @@ public class ClientThread {
                     if (MessageAuswertung(m)) {
                         break;
                     }
-
                 }
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());

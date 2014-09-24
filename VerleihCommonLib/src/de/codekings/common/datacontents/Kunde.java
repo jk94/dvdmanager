@@ -6,6 +6,7 @@
 
 package de.codekings.common.datacontents;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.codekings.common.Enumerators.ClassType;
 import java.util.Date;
 
@@ -13,6 +14,7 @@ import java.util.Date;
  *
  * @author Jan
  */
+@JsonDeserialize(as=Kunde.class)
 public class Kunde extends User{
 
     private Date joiningDate;
@@ -23,8 +25,12 @@ public class Kunde extends User{
         super(uid, t);
     }
 
-    public Kunde(Date joiningDate, double accountbalance, int uid, ClassType t) {
-        super(uid, t);
+    public Kunde(){
+        super(ClassType.T_KUNDE);
+    }
+    
+    public Kunde(int uid, String name, String vorname, String strasse, String plz, String ort, String pw, String email, String accnr, int hausnr, Date birthdate, Date joiningDate, double accountbalance,  ClassType t) {
+        super(uid, "", vorname, strasse, plz, ort, pw, email, accnr, hausnr, birthdate, t);
         this.joiningDate = joiningDate;
         this.accountbalance = accountbalance;
     }

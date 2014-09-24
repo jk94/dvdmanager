@@ -25,10 +25,14 @@ public class Message {
         this.command = command;
     }
     
-    public Message(String command, ArrayList<Sendable> c, HashMap<String, String> a){
-        content = c;
+    public Message(){
+        
+    }
+    
+    public Message(String command, ArrayList<Sendable> content, HashMap<String, String> additionalparameter){
+        this.content = content;
         this.command = command;
-        this.additionalparameter = a;
+        this.additionalparameter = additionalparameter;
     }
 
     public ArrayList<Sendable> getContent() {

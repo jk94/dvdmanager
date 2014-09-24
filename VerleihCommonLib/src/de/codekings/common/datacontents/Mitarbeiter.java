@@ -6,12 +6,14 @@
 
 package de.codekings.common.datacontents;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.codekings.common.Enumerators.ClassType;
 
 /**
  *
  * @author Jan
  */
+@JsonDeserialize(as=Mitarbeiter.class)
 public class Mitarbeiter extends User{
     
     private int ma_id;
@@ -19,6 +21,10 @@ public class Mitarbeiter extends User{
     
     public Mitarbeiter(int u_id){
         super(u_id, ClassType.T_MITARBEITER);
+    }
+    
+    public Mitarbeiter(){
+        super(ClassType.T_MITARBEITER);
     }
 
     public Mitarbeiter(int ma_id, int permission, int uid, ClassType t) {

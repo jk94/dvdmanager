@@ -5,15 +5,17 @@
  */
 package de.codekings.common.datacontents;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.codekings.common.Enumerators.ClassType;
 
 /**
  *
  * @author Jan
  */
+@JsonDeserialize(as=DVD.class)
 public class DVD extends Sendable {
 
-    private final int DVDID;
+    private int DVDID;
     private String s_artikelnr = "", s_notiz = "", s_lastedit = "", s_lasteditdate = "";
     private Film film;
     private boolean ausgeliehen;
@@ -22,7 +24,11 @@ public class DVD extends Sendable {
         super(ClassType.T_DVD);
         DVDID = id;
     }
-
+    
+    public DVD(){
+        super(ClassType.T_DVD);
+    }
+    
     public DVD(int DVDID, Film film, boolean ausgeliehen, ClassType t, String artnr, String notiz, String le, String sled) {
         super(t);
         this.DVDID = DVDID;

@@ -5,6 +5,7 @@
  */
 package de.codekings.common.datacontents;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import de.codekings.common.Enumerators.ClassType;
 import java.util.Date;
 
@@ -12,9 +13,10 @@ import java.util.Date;
  *
  * @author Jan
  */
+
 public abstract class User extends Sendable{
     
-    private final int U_ID;
+    private int U_ID;
     private String name, vorname, strasse, plz, ort;
     private String passwort, email, accountnummer;
     private int hausnr;
@@ -25,6 +27,10 @@ public abstract class User extends Sendable{
         this.U_ID = uid;
     }
 
+    public User(ClassType t){
+        super(t);
+    }
+    
     public User(int U_ID, String name, String vorname, String strasse, String plz, String ort, String passwort, String email, String accountnummer, int hausnr, Date geburtsdatum, ClassType t) {
         super(t);
         this.U_ID = U_ID;
