@@ -13,21 +13,22 @@ import java.security.PublicKey;
  *
  * @author Jan
  */
-@JsonDeserialize(as=CKPublicKey.class)
-public class CKPublicKey extends Sendable {
+@JsonDeserialize(as = SendablePublicKey.class)
+public class SendablePublicKey extends Sendable{
 
     private PublicKey pubKey;
 
-    public CKPublicKey(PublicKey p) {
+    public SendablePublicKey(PublicKey p) {
         super(ClassType.T_PUBLICKEY);
         this.pubKey = p;
     }
 
-    public CKPublicKey(){
+    public SendablePublicKey() {
         super(ClassType.T_PUBLICKEY);
     }
-    
-    public CKPublicKey(PublicKey pubKey, ClassType t) {
+
+
+    public SendablePublicKey(PublicKey pubKey, ClassType t) {
         super(t);
         this.pubKey = pubKey;
     }
@@ -39,7 +40,7 @@ public class CKPublicKey extends Sendable {
     public void setPubKey(PublicKey pubKey) {
         this.pubKey = pubKey;
     }
-    
+
     public PublicKey getPublicKey() {
         return pubKey;
     }

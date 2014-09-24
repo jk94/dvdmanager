@@ -129,6 +129,10 @@ public abstract class User extends Sendable{
     public int getU_ID() {
         return U_ID;
     }
+
+    public void setU_ID(int U_ID) {
+        this.U_ID = U_ID;
+    }
     
     public boolean authUser(String email, String pw){
         if(email.equalsIgnoreCase(this.email)){

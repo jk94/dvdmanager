@@ -7,7 +7,7 @@ package de.codekings.client.connection;
 
 import de.codekings.common.Connection.Krypter;
 import de.codekings.common.Connection.Message;
-import de.codekings.common.datacontents.CKPublicKey;
+import de.codekings.common.datacontents.SendablePublicKey;
 import de.codekings.common.datacontents.Sendable;
 import de.codekings.common.exceptions.PublicKeyNotFoundException;
 import de.codekings.common.json.JSON_Parser;
@@ -77,7 +77,7 @@ public class ClientThread {
         //GET PUBLIC KEY
         if (m.getCommand().equalsIgnoreCase("getPublicKey")) {
             Message answer = new Message("returnPublicKey");
-            answer.addSendable(new CKPublicKey(k.getKeys().getPublic()));
+            answer.addSendable(new SendablePublicKey(k.getKeys().getPublic()));
             try {
                 write(m);
                 beenden = true;
@@ -87,10 +87,10 @@ public class ClientThread {
 
         //RETURN PUBLIC KEY
         if (m.getCommand().equalsIgnoreCase("returnPublicKey")) {
-            CKPublicKey ckpk = new CKPublicKey(null);
+            SendablePublicKey ckpk = new SendablePublicKey(null);
             for (Sendable send : m.getContent()) {
-                if (send instanceof CKPublicKey) {
-                    ckpk = (CKPublicKey) send;
+                if (send instanceof SendablePublicKey) {
+                    ckpk = (SendablePublicKey) send;
                     break;
                 }
             }
@@ -113,7 +113,7 @@ public class ClientThread {
             if (k.getForeignPublicKey() != null) {
                 throw new PublicKeyNotFoundException();
             }
-            m.addSendable(new CKPublicKey(k.getKeys().getPublic()));
+            m.addSendable(new SendablePublicKey(k.getKeys().getPublic()));
             String s = "";
             try {
                 JSON_Parser j = new JSON_Parser();
@@ -130,7 +130,7 @@ public class ClientThread {
     }
 
     public void requestForPubKeyFromServer(String host, int port) {
-        CKPublicKey erg = null;
+        SendablePublicKey erg = null;
 
         neueVerbindung(host, port, false);
         Message m = new Message("getPublicKey");
