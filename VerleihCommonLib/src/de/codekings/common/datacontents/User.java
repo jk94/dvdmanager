@@ -25,6 +25,21 @@ public abstract class User extends Sendable{
         this.U_ID = uid;
     }
 
+    public User(int U_ID, String name, String vorname, String strasse, String plz, String ort, String passwort, String email, String accountnummer, int hausnr, Date geburtsdatum, ClassType t) {
+        super(t);
+        this.U_ID = U_ID;
+        this.name = name;
+        this.vorname = vorname;
+        this.strasse = strasse;
+        this.plz = plz;
+        this.ort = ort;
+        this.passwort = passwort;
+        this.email = email;
+        this.accountnummer = accountnummer;
+        this.hausnr = hausnr;
+        this.geburtsdatum = geburtsdatum;
+    }
+
     public String getName() {
         return name;
     }

@@ -21,6 +21,12 @@ public class Mitarbeiter extends User{
         super(u_id, ClassType.T_MITARBEITER);
     }
 
+    public Mitarbeiter(int ma_id, int permission, int uid, ClassType t) {
+        super(uid, t);
+        this.ma_id = ma_id;
+        this.permission = permission;
+    }
+
     public int getMa_id() {
         return ma_id;
     }
