@@ -7,18 +7,22 @@ package de.codekings.common.datacontents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.codekings.common.Enumerators.ClassType;
+import java.security.InvalidKeyException;
 import java.security.PublicKey;
+import java.security.interfaces.RSAPublicKey;
+import java.util.Arrays;
+import sun.security.rsa.RSAPublicKeyImpl;
 
 /**
  *
  * @author Jan
  */
 @JsonDeserialize(as = SendablePublicKey.class)
-public class SendablePublicKey extends Sendable{
+public class SendablePublicKey extends Sendable {
 
-    private PublicKey pubKey;
+    private byte[] pubKey;
 
-    public SendablePublicKey(PublicKey p) {
+    public SendablePublicKey(byte[] p) {
         super(ClassType.T_PUBLICKEY);
         this.pubKey = p;
     }
@@ -27,22 +31,30 @@ public class SendablePublicKey extends Sendable{
         super(ClassType.T_PUBLICKEY);
     }
 
-
-    public SendablePublicKey(PublicKey pubKey, ClassType t) {
+    public SendablePublicKey(byte[] pubKey, ClassType t) {
         super(t);
         this.pubKey = pubKey;
     }
 
-    public PublicKey getPubKey() {
+    public byte[] getPubKey() {
         return pubKey;
     }
 
-    public void setPubKey(PublicKey pubKey) {
+    public PublicKey generatePublicKey() {
+        try {
+            RSAPublicKeyImpl r = new RSAPublicKeyImpl(pubKey);
+            return r;
+        } catch (InvalidKeyException e) {
+            return null;
+        }
+    }
+
+    public void setPubKey(byte[] pubKey) {
         this.pubKey = pubKey;
     }
 
-    public PublicKey getPublicKey() {
-        return pubKey;
+    public void insertPublicKey(PublicKey p) {
+        byte[] b = p.getEncoded();
+        this.pubKey = b;
     }
-
 }

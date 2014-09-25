@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class VerleihServer extends Thread {
 
-    private static final ArrayList<ClientThread> clientThreads = new ArrayList<>();
+    private static final ArrayList<ServerThread> clientThreads = new ArrayList<>();
     private static ServerSocket server;
     private final Logger log = Logger.getLogger(Control.class.getSimpleName());
     private final boolean secure;
@@ -54,9 +54,9 @@ public class VerleihServer extends Thread {
     
     /**
      *
-     * @param c Der @ClientThread, der aus der Liste gelöscht werden soll.
+     * @param c Der @ServerThread, der aus der Liste gelöscht werden soll.
      */
-    public void removeClientThread(ClientThread c){
+    public void removeClientThread(ServerThread c){
         if(clientThreads.contains(c)){
             clientThreads.remove(c);
         }
@@ -70,7 +70,7 @@ public class VerleihServer extends Thread {
 
                 log.log(Level.INFO, "Verbindung wurde von {0} hergestellt", socket.getInetAddress());
 
-                ClientThread client = new ClientThread(socket, Control.getInstance().getKrypter(), secure);
+                ServerThread client = new ServerThread(socket, Control.getInstance().getKrypter(), secure);
                 client.start();
                 clientThreads.add(client);
 

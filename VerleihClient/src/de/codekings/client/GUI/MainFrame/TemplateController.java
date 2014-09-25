@@ -9,8 +9,10 @@ import de.codekings.client.main.Control;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.Enumerators.ClassType;
 import de.codekings.common.datacontents.Kunde;
+import de.codekings.common.datacontents.SendablePublicKey;
 import de.codekings.common.json.JSON_Parser;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -80,17 +82,10 @@ public class TemplateController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         btn_start.setOnAction((ActionEvent event) -> {
-            System.out.println("Ausgabe Start:");
+            
         });
         btn_start.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getPublicKey();
-            /*Message m = new Message("getPublicKey");
-            m.addSendable(new Kunde(1, "Koschke", "Jan", "Test", "adf", "kasldf", "ajdksfa", "jadk.dajk@dkla.de", "0117", 26, new Date(), new Date(), 15.0, ClassType.T_KUNDE));
-            JSON_Parser j = new JSON_Parser();
-            String s_m = j.parseObjectToString(m);
-            System.out.println(s_m);
-            Message m2 = (Message) j.parseStringToObject(s_m, Message.class);
-            System.out.println(m2.getCommand());*/
         });
         head_btn_home.setOnAction((ActionEvent event) -> {
             System.out.println("Ausgabe head home");

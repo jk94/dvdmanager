@@ -2,6 +2,9 @@
  * Stylesheet file.
  */
 
+.borderpane {
+    -fx-font: 'Helvetica';
+}
 
 .page-base {
     -fx-background-color: #1C1C1C;
@@ -16,6 +19,7 @@
     -fx-background-color: #2E2E2E;
     -fx-border-color: #1C1C1C;
     -fx-border-width: 5px;
+    -fx-scale-x: 1;
 }
 
 .menu-base {
@@ -47,6 +51,7 @@
     -fx-background-color: #2E2E2E;
     -fx-text-fill: #B43104;
     -fx-font-size: 14px;
+    -fx-margin: 3px;
 }
 
 .menu-btn:hover{
@@ -68,9 +73,11 @@
 
 .search-box {
     -fx-background-color: #B43104;
-    -fx-alignment: RIGHT;
+    //-fx-alignment: RIGHT;
     -fx-text-fill: #2E2E2E;
-    -fx-text-alignment: CENTER_LEFT;
+    -fx-font-family: 'Helvetica', cursive;
+    //-fx-text-alignment: CENTER_LEFT;
+    //-fx-alignment: BASELINE_RIGHT;
 
 }
 
@@ -90,7 +97,7 @@
     -fx-text-fill: #1C1C1C;
     -fx-border-radius: 3px;
     -fx-font-size: 14px;
-
+    -fx-font-weight: bold;
 }
 
 .titled-pane > .title > .arrow-button .arrow 
