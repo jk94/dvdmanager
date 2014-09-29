@@ -5,8 +5,6 @@
  */
 package de.codekings.server.controls;
 
-import de.codekings.common.log.LogInitialiser;
-import de.codekings.server.connection.VerleihServer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -99,6 +97,7 @@ public final class DBController {
             }
 
         } catch (SQLException e) {
+            log.log(Level.SEVERE, e.getMessage());
             throw new RuntimeException(e);
         }
 

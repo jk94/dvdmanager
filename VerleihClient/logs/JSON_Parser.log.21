@@ -1,0 +1,5 @@
+24.09.2014 12:39:40.266 - .codekings.common.json.JSON_Parser.parseObjectToString] - [INFO] - Parse from String to Object 2014-09-24T12:39:40.253
+24.09.2014 12:39:40.304 - .codekings.common.json.JSON_Parser.parseStringToObject] - [INFO] - Parse from String to Object 2014-09-24T12:39:40.304
+24.09.2014 12:39:40.333 - .codekings.common.json.JSON_Parser.parseStringToObject] - [SEVERE] - No suitable constructor found for type [simple type, class de.codekings.common.Connection.Message]: can not instantiate from JSON object (need to add/enable type information?)
+ at [Source: {"content":[],"command":"getPublicKey","additionalparameter":null}; line: 1, column: 2]
+24.09.2014 12:39:40.334 - .codekings.common.json.JSON_Parser.parseStringToObject] - [INFO] - Parsing ended

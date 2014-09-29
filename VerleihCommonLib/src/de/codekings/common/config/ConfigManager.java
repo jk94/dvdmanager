@@ -12,9 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Iterator;
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -65,12 +63,13 @@ public class ConfigManager {
      * Speichert die geladenen Einstellungen.
      *
      * @param dateiname DateiNAME der zu speichernden Datei
+     * @param comments Kommentare für die Properties
      */
-    public void writeConfig(String dateiname) {
-        writeConfig(einstellungen, dateiname);
+    public void writeConfig(String dateiname, String comments) {
+        writeConfig(einstellungen, dateiname, comments);
     }
 
-    private void writeConfig(Properties p, String dateiname) {
+    private void writeConfig(Properties p, String dateiname, String comments) {
         try {
             File ordner = new File("./config/");
             if (ordner.exists() && ordner.isDirectory()) {
@@ -80,7 +79,7 @@ public class ConfigManager {
                 }
             } else {
                 if (ordner.mkdir()) {
-                    writeConfig(p, dateiname);
+                    writeConfig(p, dateiname, comments);
                 }
             }
         } catch (IOException e) {
@@ -96,16 +95,24 @@ public class ConfigManager {
         property.put("dbUser", "ckdbuser");
         property.put("dbPassword", "test123");
         property.put("logpath", "./logs/");
+        property.put("generatenewkeys", "true");
+        property.put("secureport", "2704");
+        property.put("standardport", "1994");
 
-        writeConfig(property, "server.cfg");
+        
+        writeConfig(property, "server.cfg", "Server-Konfiguration\n\nHier lassen sich ein"
+                + " paar Einstellungen für den Server festlegen!");
     }
     
     public void writeDefaultClientConfig(){
         Properties property = new Properties();
         property.put("ip", "127.0.0.1");
-        property.put("port", "1234");
+        property.put("secureport", "2704");
+        property.put("standardport", "1994");
+        property.put("generatenewkeys", "false");
         
-        writeConfig(property, "client.cfg");
+        writeConfig(property, "client.cfg", "Client-Konfiguration\n\nHier lassen sich ein"
+                + " paar Einstellungen für den Client festlegen!");
     }
 
     public Properties getConfigs() {

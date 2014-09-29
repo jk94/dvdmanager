@@ -5,6 +5,7 @@
  */
 package de.codekings.common.datacontents;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.codekings.common.Enumerators.ClassType;
 import de.codekings.common.json.JSON_Parser;
 import java.io.File;
@@ -21,30 +22,53 @@ import javax.imageio.ImageIO;
  *
  * @author Jan
  */
-public class Film extends Sendable{
+@JsonDeserialize(as=Film.class)
+public class Film extends Sendable {
 
-    private final int FILMID;
+    private int FILMID;
     private String s_titel = "", s_subtitel = "", s_description = "";
     private String s_trailer = "", s_regie = "", s_FSK = "";
     private int i_rating = -1, i_duration = -1, i_fsk = 0;
     private double d_preis = 0.0;
     private Date release_date;
-    private final ArrayList<String> li_actors = new ArrayList<>(), li_awards = new ArrayList<>();
-    private final ArrayList<String> li_genre = new ArrayList<>();
+    private ArrayList<String> li_actors, li_awards;
+    private ArrayList<String> li_genre;
     private String cover;
-    
+
     private static final Logger log = Logger.getLogger(Film.class.getSimpleName());
-    
+
     public Film(int fid) {
+        super(ClassType.T_FILM);
         FILMID = fid;
+        li_actors = new ArrayList<>();
+        li_awards = new ArrayList<>();
+        li_genre = new ArrayList<>();
+    }
+    
+    public Film(){
+        super(ClassType.T_FILM);
     }
 
-    @Override
-    public ClassType getClassType() {
-        return ClassType.T_FILM;
+    public Film(int FILMID, Date release_date, ArrayList<String> li_actors, ArrayList<String> li_awards,
+            ArrayList<String> li_genre, String cover, String ti, String suti, String des, String tr,
+            String re, String fsk, int rat, int dur, int fsk_i, double p, ClassType t) {
+        super(t);
+        this.FILMID = FILMID;
+        this.release_date = release_date;
+        this.li_actors = li_actors;
+        this.li_awards = li_awards;
+        this.li_genre = li_genre;
+        this.cover = cover;
+        this.s_trailer = tr;
+        this.s_titel = ti;
+        this.s_FSK = fsk;
+        this.s_description = des;
+        this.s_regie = re;
+        this.s_subtitel = suti;
+        this.i_duration = dur;
+        this.i_fsk = fsk_i;
+        this.i_rating = rat;
     }
-    
-    
 
     public String getCover() {
         return cover;
@@ -212,7 +236,7 @@ public class Film extends Sendable{
 
             try {
                 File coverfile = new File("../covers/" + rs.getString("cover"));
-                
+
                 setCover(JSON_Parser.encodeToString(ImageIO.read(coverfile), "png"));
             } catch (IOException ex) {
                 log.log(Level.SEVERE, ex.getMessage());

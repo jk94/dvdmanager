@@ -5,22 +5,45 @@
  */
 package de.codekings.common.datacontents;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import de.codekings.common.Enumerators.ClassType;
 import java.util.Date;
 
 /**
  *
  * @author Jan
  */
-public abstract class User {
+
+public abstract class User extends Sendable{
     
-    private final int U_ID;
+    private int U_ID;
     private String name, vorname, strasse, plz, ort;
     private String passwort, email, accountnummer;
     private int hausnr;
     private Date geburtsdatum;
       
-    public User(int uid){
+    public User(int uid, ClassType t){
+        super(t);
         this.U_ID = uid;
+    }
+
+    public User(ClassType t){
+        super(t);
+    }
+    
+    public User(int U_ID, String name, String vorname, String strasse, String plz, String ort, String passwort, String email, String accountnummer, int hausnr, Date geburtsdatum, ClassType t) {
+        super(t);
+        this.U_ID = U_ID;
+        this.name = name;
+        this.vorname = vorname;
+        this.strasse = strasse;
+        this.plz = plz;
+        this.ort = ort;
+        this.passwort = passwort;
+        this.email = email;
+        this.accountnummer = accountnummer;
+        this.hausnr = hausnr;
+        this.geburtsdatum = geburtsdatum;
     }
 
     public String getName() {
@@ -105,6 +128,10 @@ public abstract class User {
 
     public int getU_ID() {
         return U_ID;
+    }
+
+    public void setU_ID(int U_ID) {
+        this.U_ID = U_ID;
     }
     
     public boolean authUser(String email, String pw){

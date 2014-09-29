@@ -5,7 +5,15 @@
  */
 package de.codekings.client.GUI.MainFrame;
 
+import de.codekings.client.main.Control;
+import de.codekings.common.Connection.Message;
+import de.codekings.common.Enumerators.ClassType;
+import de.codekings.common.datacontents.Kunde;
+import de.codekings.common.datacontents.SendablePublicKey;
+import de.codekings.common.json.JSON_Parser;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -74,7 +82,10 @@ public class TemplateController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         btn_start.setOnAction((ActionEvent event) -> {
-            System.out.println("Ausgabe Start:");
+            
+        });
+        btn_start.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getPublicKey();
         });
         head_btn_home.setOnAction((ActionEvent event) -> {
             System.out.println("Ausgabe head home");

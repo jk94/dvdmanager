@@ -1,182 +1,158 @@
-package de.codekings.common.Connection;
-
-
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.security.Key;
-import javax.crypto.Cipher;
-import javax.crypto.CipherInputStream;
-import javax.crypto.CipherOutputStream;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package de.codekings.common.Connection;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.SecureRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.Cipher;
+import javax.crypto.CipherInputStream;
+import javax.crypto.CipherOutputStream;
+import javax.crypto.KeyGenerator;
 
 /**
  *
  * @author Jan
  */
 public class Krypter {
-    private Key key = null;
-    private String verfahren = null;
 
-    /**
-     *     * @param Key verwendeter Schluessel     * @param verfahren bestimmt
-     * das verwendete Verschluesselungsverfahren "RSA", "AES", ....     
-     *
-     *
-     * @throws Exception     
-     */
-    public Krypter(Key k, String verfahren) throws Exception {
-        this.key = k;
-        this.verfahren = verfahren;
+    private KeyPair keys;
+    private PublicKey foreignPubkey;
+
+    public Krypter() {
+
     }
 
-    /**
-     * Verschluesselt einen Outputstream     * @param os Klartext-Outputstream
-     *     * @return verschluesselter Outputstream     * @throws Exception     
-     */
-    public OutputStream encryptOutputStream(OutputStream os) throws Exception {
-// integritaet pruefen
+    public void generateKeyPair() {
+        try {
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+            kpg.initialize(2048);
+            keys = kpg.generateKeyPair();
+        } catch (NoSuchAlgorithmException e) {
+        }
+    }
 
-        valid();
-// eigentliche Nachricht mit RSA verschluesseln
-        Cipher cipher = Cipher.getInstance(verfahren);
+    public void saveKeyPair() {
+        if (keys != null) {
+            File configOrdner = new File("config");
+            if (configOrdner.exists()) {
+                if (configOrdner.isDirectory()) {
+                    File publicKey = new File("config/public.key");
+                    File privateKey = new File("config/private.key");
+                    try {
+                        ObjectOutputStream oospublic = new ObjectOutputStream(new FileOutputStream(publicKey));
+                        ObjectOutputStream oosprivate = new ObjectOutputStream(new FileOutputStream(privateKey));
 
+                        oospublic.writeObject(keys.getPublic());
+                        oosprivate.writeObject(keys.getPrivate());
+
+                        oosprivate.close();
+                        oospublic.close();
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            } else {
+                configOrdner.mkdir();
+                saveKeyPair();
+            }
+        }
+    }
+
+    public boolean loadKeyPair() {
+        File configOrdner = new File("config");
+        if (configOrdner.exists()) {
+            if (configOrdner.isDirectory()) {
+                File publicKey = new File("config/public.key");
+                File privateKey = new File("config/private.key");
+                try {
+                    ObjectInputStream inputPublic = new ObjectInputStream(new FileInputStream(publicKey));
+                    ObjectInputStream inputPrivate = new ObjectInputStream(new FileInputStream(privateKey));
+
+                    PublicKey pk = (PublicKey) inputPublic.readObject();
+                    PrivateKey prk = (PrivateKey) inputPrivate.readObject();
+
+                    inputPublic.close();
+                    inputPrivate.close();
+
+                    keys = new KeyPair(pk, prk);
+                    System.out.println(pk.toString());
+                    System.out.println(prk.toString());
+                } catch (IOException | ClassNotFoundException e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
+                return true;
+            }
+        } else {
+            Logger log = Logger.getLogger("Krypter");
+            log.log(Level.WARNING, "Ordner 'config' oder die Dateien für "
+                    + "Private und Public Key wurden nicht gefunden!");
+        }
+        return false;
+    }
+
+    public KeyPair getKeys() {
+        return keys;
+    }
+    
+    public PublicKey getForeignPublicKey(){
+        return foreignPubkey;
+    }
+    
+    public void setForeignPublicKey(PublicKey key){
+        this.foreignPubkey = key;
+    }
+
+    public static OutputStream encryptOutputStream(OutputStream os, PublicKey publicKey) throws Exception {
+        System.out.println("Create session key...");
+        KeyGenerator kg = KeyGenerator.getInstance("AES");
+        kg.init(new SecureRandom());
+        Key key = kg.generateKey();
+
+        System.out.println("Crypt session key...");
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.WRAP_MODE, publicKey);
+
+        byte[] wKey = cipher.wrap(key);
+        os.write(wKey);
+
+        cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE, key);
 
-        os = new CipherOutputStream(os, cipher);
-
-        return os;
-
+        return new CipherOutputStream(os, cipher);
     }
 
-    /**
-     * Entschluesselt einen Inputstream     * @param is verschluesselter
-     * Inputstream     * @return Klartext-Inputstream     * @throws Exception
-     *     
-     */
-    public InputStream decryptInputStream(InputStream is) throws Exception {
-        // integritaet pruefen
+    public static InputStream decryptInputStream(InputStream is, PrivateKey privateKey) throws Exception {
+        System.out.println("Read crypted session key...");
+        byte[] wKey = new byte[256];
+        Cipher cipher = Cipher.getInstance("RSA");
+        is.read(wKey, 0, 256);
 
-        valid();
+        System.out.println("Decrypt session key...");
+        cipher.init(Cipher.UNWRAP_MODE, privateKey);
+        Key key = cipher.unwrap(wKey, "AES", Cipher.SECRET_KEY);
 
-// Daten mit AES entschluesseln
-        Cipher cipher = Cipher.getInstance(verfahren);
-
+        cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.DECRYPT_MODE, key);
-
-        is = new CipherInputStream(is, cipher);
-
-        return is;
-
+        return new CipherInputStream(is, cipher);
     }
 
-/** Verschluesselt einen Text in BASE64
-    * @param text Klartext
-    * @return BASE64 String
-    * @throws Exception
-    */
-public String encrypt(String text) throws Exception {
-        // integritaet pruefen
-
-        valid();
-
-// Verschluesseln
-        Cipher cipher = Cipher.getInstance(verfahren);
-
-        cipher.init(Cipher.ENCRYPT_MODE, key);
-
-        byte[] encrypted = cipher.doFinal(text.getBytes());
-
-// bytes zu Base64-String konvertieren
-        BASE64Encoder myEncoder = new BASE64Encoder();
-
-        String geheim = myEncoder.encode(encrypted);
-
-        return geheim;
-
-    }
-
-    /**
-     * Entschluesselt einen BASE64 kodierten Text     * @param geheim BASE64
-     * kodierter Text     * @return Klartext     * @throws Exception     
-     */
-    public String decrypt(String geheim) throws Exception {
-        // integritaet pruefen
-        valid();
-
-// BASE64 String zu Byte-Array
-        BASE64Decoder myDecoder = new BASE64Decoder();
-
-        byte[] crypted = myDecoder.decodeBuffer(geheim);
-
-// entschluesseln
-        Cipher cipher = Cipher.getInstance(verfahren);
-
-        cipher.init(Cipher.DECRYPT_MODE, key);
-
-        byte[] cipherData = cipher.doFinal(crypted);
-
-        return new String(cipherData);
-
-    }
-
-//
-// Validierung
-//++++++++++++++++++++++++++++++
-    private boolean valid() throws Exception {
-
-        if (verfahren == null) {
-
-            throw new NullPointerException("Kein Verfahren angegeben!");
-
-        }
-
-        if (key == null) {
-
-            throw new NullPointerException("Keinen Key angegeben!");
-
-        }
-
-        if (verfahren.isEmpty()) {
-
-            throw new NullPointerException("Kein Verfahren angegeben!");
-
-        }
-
-        return true;
-
-    }
-
-//++++++++++++++++++++++++++++++
-// Getter und Setter
-//++++++++++++++++++++++++++++++
-    public Key getKey() {
-
-        return key;
-
-    }
-
-    public void setKey(Key key) {
-
-        this.key = key;
-
-    }
-
-    public String getVerfahren() {
-
-        return verfahren;
-
-    }
-
-    public void setVerfahren(String verfahren) {
-
-        this.verfahren = verfahren;
-
-    }
 }
