@@ -3,41 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.codekings.client.GUI.MainFrame;
 
-import de.codekings.client.main.Control;
-import de.codekings.common.Connection.Message;
-import de.codekings.common.Enumerators.ClassType;
-import de.codekings.common.datacontents.Kunde;
-import de.codekings.common.datacontents.SendablePublicKey;
-import de.codekings.common.json.JSON_Parser;
+package dvdverleih;
+
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.SubScene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
  *
- * @author Jan
+ * @author User
  */
 public class TemplateController implements Initializable {
-
-    @FXML
-    private TextField head_title;
-    @FXML
-    private ImageView head_searchicon;
-    @FXML
-    private TextField head_searchbox;
     @FXML
     private Button btn_start;
     @FXML
@@ -49,6 +37,8 @@ public class TemplateController implements Initializable {
     @FXML
     private Button btn_uebersicht;
     @FXML
+    private TextField head_title;
+    @FXML
     private Button btn_ausleihen;
     @FXML
     private Button btn_entliehen;
@@ -57,23 +47,45 @@ public class TemplateController implements Initializable {
     @FXML
     private Button btn_bewertung;
     @FXML
+    private ImageView head_searchicon;
+    @FXML
     private Button head_btn_home;
     @FXML
     private ImageView head_btn_home_img;
     @FXML
+    private Button head_btn_back;
+    @FXML
     private ImageView head_btn_back_img;
+    @FXML
+    private Button head_btn_forward;
     @FXML
     private ImageView head_btn_forward_img;
     @FXML
     private Button btn_search;
     @FXML
-    private Button head_btn_back;
-    @FXML
-    private Button head_btn_forward;
-    @FXML
     private Accordion menu_accordion;
     @FXML
-    private ScrollPane scrollpane;
+    private TitledPane menu_dvdkatalog;
+    @FXML
+    private TitledPane menu_kundenbereich;
+    @FXML
+    private TitledPane menu_mitarbeiterbereich;
+    @FXML
+    private Button btn_uebersicht2;
+    @FXML
+    private Button btn_ausleihen2;
+    @FXML
+    private Button btn_entliehen2;
+    @FXML
+    private Button btn_bewertung2;
+    @FXML
+    private Button btn_kontoverwaltung2;
+    @FXML
+    private TitledPane menu_adminbereich;
+    @FXML
+    private Button btn_uebersicht21;
+    @FXML
+    private Button btn_ausleihen21;
 
     /**
      * Initializes the controller class.
@@ -81,21 +93,6 @@ public class TemplateController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        btn_start.setOnAction((ActionEvent event) -> {
-            
-        });
-        btn_start.setOnMouseClicked((MouseEvent event) -> {
-            Control.getControl().getPublicKey();
-        });
-        head_btn_home.setOnAction((ActionEvent event) -> {
-            System.out.println("Ausgabe head home");
-        });
-        head_btn_home.setOnMouseEntered((MouseEvent event) -> {
-            head_btn_back.setDisable(true);
-        });
-        head_btn_home.setOnMouseExited((MouseEvent event) -> {
-            head_btn_back.setDisable(false);
-        });
-
-    }
+    }    
+    
 }

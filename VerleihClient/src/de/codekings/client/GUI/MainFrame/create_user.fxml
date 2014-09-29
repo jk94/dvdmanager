@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="800.0" styleClass="content-base" stylesheets="@template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="user_name" layoutX="128.0" layoutY="79.0" prefHeight="25.0" prefWidth="242.0" text="Benutzername" />
+      <PasswordField fx:id="user_passwort" layoutX="128.0" layoutY="128.0" prefHeight="25.0" prefWidth="242.0" text="passwort" />
+      <PasswordField fx:id="user_passwort_check" layoutX="128.0" layoutY="169.0" prefHeight="25.0" prefWidth="242.0" text="passwort " />
+      <TextField fx:id="user_email" layoutX="128.0" layoutY="215.0" prefHeight="25.0" prefWidth="242.0" text="email" />
+      <Button fx:id="user_btnspeichern" layoutX="290.0" layoutY="430.0" mnemonicParsing="false" text="Speichern" />
+      <DatePicker fx:id="user_datum" layoutX="128.0" layoutY="258.0" prefHeight="25.0" prefWidth="242.0" />
+      <ListView fx:id="user_list" layoutX="530.0" layoutY="34.0" prefHeight="475.0" prefWidth="200.0" />
+      <RadioButton fx:id="user_btnkunde" layoutX="129.0" layoutY="316.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="Kunde" />
+      <RadioButton fx:id="user_btnma" layoutX="129.0" layoutY="348.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="Mitarbeiter" />
+      <RadioButton fx:id="user_btnadmin" layoutX="129.0" layoutY="380.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="Admin" />
+   </children>
+</AnchorPane>

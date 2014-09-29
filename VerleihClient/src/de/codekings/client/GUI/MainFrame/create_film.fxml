@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane fx:id="create_anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="800.0" styleClass="content-base" stylesheets="@template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="create_btn" layoutX="590.0" layoutY="455.0" mnemonicParsing="false" text="Erstellen" />
+      <TextField fx:id="creeate_titel" layoutX="104.0" layoutY="58.0" prefHeight="25.0" prefWidth="346.0" text="Titel" />
+      <TextField fx:id="create_genre" layoutX="500.0" layoutY="58.0" text="Genre" />
+      <TextArea fx:id="create_beschreibung" layoutX="104.0" layoutY="99.0" prefHeight="200.0" prefWidth="547.0" text="Beschreibung" />
+      <RadioButton fx:id="create_fsk6" layoutX="124.0" layoutY="378.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" styleClass="content-radiobtn" stylesheets="@template.css" text="FSK 6" />
+      <RadioButton fx:id="create_fsk12" layoutX="210.0" layoutY="378.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="FSK 12" />
+      <RadioButton fx:id="create_fsk16" layoutX="302.0" layoutY="378.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="FSK 16" />
+      <RadioButton fx:id="create_fsk18" layoutX="378.0" layoutY="378.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="FSK 18" />
+      <TextField fx:id="create_trailer" layoutX="104.0" layoutY="414.0" prefHeight="25.0" prefWidth="547.0" text="Trailer" />
+      <TextField fx:id="create_schauspieler" layoutX="104.0" layoutY="329.0" prefHeight="25.0" prefWidth="255.0" text="Schauspieler" />
+      <TextField fx:id="create_regisseur" layoutX="394.0" layoutY="329.0" prefHeight="25.0" prefWidth="255.0" text="Regisseur" />
+   </children>
+</AnchorPane>

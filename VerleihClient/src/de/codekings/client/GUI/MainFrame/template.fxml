@@ -9,11 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<<<<<<< HEAD
 <BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dvdverleih.TemplateController">
-=======
-<BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.MainFrame.TemplateController">
->>>>>>> 3315e2885cb31a6d2f27559623d6e3b41a67c8aa
    <top>
       <HBox prefHeight="40.0" prefWidth="1014.0" styleClass="header" stylesheets="@template.css" BorderPane.alignment="CENTER">
          <children>
