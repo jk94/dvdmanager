@@ -1,4 +1,7 @@
+package de.codekings.client.Controls;
 
+
+import de.codekings.client.Enum.ContentPageType;
 import java.util.ArrayList;
 
 /*

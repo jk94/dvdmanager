@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -40,10 +41,14 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Region prefHeight="40.0" prefWidth="100.0" />
-            <TextField fx:id="head_title" prefHeight="30.0" prefWidth="234.0" styleClass="titel-text" stylesheets="@template.css" text="CODEKINGS DVD Collection" />
-            <Region layoutX="106.0" layoutY="10.0" prefWidth="500.0" />
-            <Button fx:id="btn_search" layoutX="46.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css">
+            <Region prefHeight="54.0" prefWidth="300.0" />
+            <Label alignment="CENTER" prefHeight="36.0" prefWidth="567.0" text="CODEKINGS DVD" textAlignment="CENTER" textFill="#b43104">
+               <font>
+                  <Font name="Stencil" size="45.0" />
+               </font>
+            </Label>
+            <Region layoutX="106.0" layoutY="10.0" />
+            <Button fx:id="btn_search" layoutX="46.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css" HBox.hgrow="ALWAYS">
                <graphic>
                   <ImageView fx:id="head_searchicon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -51,8 +56,14 @@
                      </image>
                   </ImageView>
                </graphic>
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
             </Button>
-            <TextField prefHeight="15.0" prefWidth="150.0" styleClass="search-box" stylesheets="@template.css" text="Titelsuche" />
+            <TextField maxWidth="150.0" minWidth="150.0" prefHeight="15.0" prefWidth="150.0" styleClass="search-box" stylesheets="@template.css" text="Titelsuche" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin></TextField>
          </children>
       </HBox>
    </top>

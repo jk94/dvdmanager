@@ -91,22 +91,34 @@ public class TemplateController implements Initializable {
     @FXML
     private Pane content_pane;
 
+    private static TemplateController tc;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tc = this;
         // TODO
         btn_mab_registieren.setOnMouseClicked((javafx.scene.input.MouseEvent event) -> {
-            System.out.println("Start show createUser");
+            //Control.getControl().getContentManager().changeContent(ContentPageType.MA_KundeRegistrieren);
+            Parent p = null;
             try {
-                Parent p = FXMLLoader.load(getClass().getResource("create_user.fxml"));
-                content_pane.getChildren().clear();
-                content_pane.getChildren().add(p);
+                p = FXMLLoader.load(getClass().getResource("create_user.fxml"));
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+            content_pane.getChildren().clear();
+            content_pane.getChildren().add(p);
         });
+    }
+
+    public Pane getContentPane() {
+        return this.content_pane;
+    }
+
+    public static TemplateController getTemplateController() {
+        return tc;
     }
 
 }

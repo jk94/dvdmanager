@@ -5,6 +5,7 @@
  */
 package de.codekings.client.GUI.MainFrame;
 
+import de.codekings.client.main.Control;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,10 @@ public class MainApplication extends Application {
         Scene scene = new Scene(root);
         primaryStage.setTitle("DVD Verleih");
         primaryStage.setScene(scene);
+        
+        Control c = new Control();
+        Control.setControl(c);
+        
         primaryStage.show();
     }
 

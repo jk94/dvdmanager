@@ -5,11 +5,14 @@
  */
 package de.codekings.client.main;
 
+import de.codekings.client.Controls.ContentManager;
+import de.codekings.client.GUI.MainFrame.TemplateController;
 import de.codekings.client.connection.ClientThread;
 import de.codekings.common.Connection.Krypter;
 import de.codekings.common.config.ConfigManager;
 import java.io.File;
 import java.io.FileNotFoundException;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -19,11 +22,13 @@ public class Control {
 
     private ConfigManager cfgManager;
     private Krypter krypter;
+    private ContentManager contManager;
     private static Control control;
 
     public Control() {
         loadConfig();
         loadKrypter();
+        //loadContentManager(TemplateController.getTemplateController().getContentPane());
     }
 
     public final void loadConfig() {
@@ -81,5 +86,12 @@ public class Control {
         c.requestForPubKeyFromServer(cfgManager.getConfigs().getProperty("ip"),
                 Integer.parseInt(cfgManager.getConfigs().getProperty("standardport")));
     }
+
+    public final void loadContentManager(Pane p) {
+        this.contManager = new ContentManager(p);
+    }
     
+    public final ContentManager getContentManager(){
+        return this.contManager;
+    }
 }

@@ -40,6 +40,10 @@
 .content-back {
     //-fx-background-color: #1C1C1C;
     -fx-background-color: #2E2E2E;
+    -fx-background-image: url(../Elements/back_stamp.png);
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: auto;
+    -fx-background-position: center;
     }
 
 .menu-space {
@@ -61,6 +65,10 @@
      -fx-background-color: #3E3E3E;
  }
  
+ texfield:focused{
+     -fx-scale-x: 1.1;
+     -fx-scale-y: 1.1;
+ }
  .menu-accordion {
 	/*-fx-background-color: #2E2E2E;*/
 	-fx-border-color: #1C1C1C;
