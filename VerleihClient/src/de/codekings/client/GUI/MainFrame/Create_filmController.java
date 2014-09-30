@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package de.codekings.client.GUI.MainFrame;
 
 import java.net.URL;
@@ -10,42 +11,41 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
  *
-<<<<<<< HEAD
- * @author Jan
-=======
  * @author Simon
->>>>>>> 2029bd59d8ee9cd4c7598f08be7dc35e14732263
  */
-public class Create_userController implements Initializable {
+public class Create_filmController implements Initializable {
     @FXML
-    private TextField user_name;
+    private AnchorPane create_anchor;
     @FXML
-    private PasswordField user_passwort;
+    private Button create_btn;
     @FXML
-    private PasswordField user_passwort_check;
+    private TextField creeate_titel;
     @FXML
-    private TextField user_email;
+    private TextField create_genre;
     @FXML
-    private Button user_btnspeichern;
+    private TextArea create_beschreibung;
     @FXML
-    private DatePicker user_datum;
+    private RadioButton create_fsk6;
     @FXML
-    private ListView<?> user_list;
+    private RadioButton create_fsk12;
     @FXML
-    private RadioButton user_btnkunde;
+    private RadioButton create_fsk16;
     @FXML
-    private RadioButton user_btnma;
+    private RadioButton create_fsk18;
     @FXML
-    private RadioButton user_btnadmin;
+    private TextField create_trailer;
+    @FXML
+    private TextField create_schauspieler;
+    @FXML
+    private TextField create_regisseur;
 
     /**
      * Initializes the controller class.

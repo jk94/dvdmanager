@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane fx:id="create_anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="800.0" styleClass="content-base" stylesheets="@template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="create_anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="800.0" styleClass="content-base" stylesheets="@template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.MainFrame.Create_filmController">
    <children>
       <Button fx:id="create_btn" layoutX="590.0" layoutY="455.0" mnemonicParsing="false" text="Erstellen" />
       <TextField fx:id="creeate_titel" layoutX="104.0" layoutY="58.0" prefHeight="25.0" prefWidth="346.0" text="Titel" />
