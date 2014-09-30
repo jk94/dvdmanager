@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package de.codekings.client.GUI.MainFrame;
 
 import java.net.URL;
@@ -20,7 +19,11 @@ import javafx.scene.control.TextField;
 /**
  * FXML Controller class
  *
+<<<<<<< HEAD
+ * @author Jan
+=======
  * @author Simon
+>>>>>>> 2029bd59d8ee9cd4c7598f08be7dc35e14732263
  */
 public class Create_userController implements Initializable {
     @FXML
