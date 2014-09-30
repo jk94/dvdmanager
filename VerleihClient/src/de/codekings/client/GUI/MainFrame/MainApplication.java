@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI.MainFrame;
+package de.codekings.client.GUI.MainFrame;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,8 +20,12 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("template.fxml"));
-
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("template.fxml"));
+        } catch (IOException e) {
+            System.out.println("loading failed");
+        }
         Scene scene = new Scene(root);
         primaryStage.setTitle("DVD Verleih");
         primaryStage.setScene(scene);

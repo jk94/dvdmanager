@@ -3,22 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package dvdverleih;
+package de.codekings.client.GUI.MainFrame;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.SubScene;
+import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -26,6 +25,7 @@ import javafx.scene.layout.VBox;
  * @author User
  */
 public class TemplateController implements Initializable {
+
     @FXML
     private Button btn_start;
     @FXML
@@ -77,8 +77,6 @@ public class TemplateController implements Initializable {
     @FXML
     private Button btn_entliehen2;
     @FXML
-    private Button btn_bewertung2;
-    @FXML
     private Button btn_kontoverwaltung2;
     @FXML
     private TitledPane menu_adminbereich;
@@ -86,6 +84,12 @@ public class TemplateController implements Initializable {
     private Button btn_uebersicht21;
     @FXML
     private Button btn_ausleihen21;
+    @FXML
+    private Button btn_mab_registieren;
+    @FXML
+    private ScrollPane content_base;
+    @FXML
+    private Pane content_pane;
 
     /**
      * Initializes the controller class.
@@ -93,6 +97,16 @@ public class TemplateController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+        btn_mab_registieren.setOnMouseClicked((javafx.scene.input.MouseEvent event) -> {
+            System.out.println("Start show createUser");
+            try {
+                Parent p = FXMLLoader.load(getClass().getResource("create_user.fxml"));
+                content_pane.getChildren().clear();
+                content_pane.getChildren().add(p);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        });
+    }
+
 }
