@@ -5,18 +5,19 @@
  */
 package de.codekings.client.GUI.MainFrame;
 
+import de.codekings.client.Controls.ContentManager;
+import de.codekings.client.Enum.ContentPageType;
+import de.codekings.client.main.Control;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 /**
@@ -36,8 +37,6 @@ public class TemplateController implements Initializable {
     private Button btn_neuheiten;
     @FXML
     private Button btn_uebersicht;
-    @FXML
-    private TextField head_title;
     @FXML
     private Button btn_ausleihen;
     @FXML
@@ -71,10 +70,6 @@ public class TemplateController implements Initializable {
     @FXML
     private TitledPane menu_mitarbeiterbereich;
     @FXML
-    private Button btn_uebersicht2;
-    @FXML
-    private Button btn_ausleihen2;
-    @FXML
     private Button btn_entliehen2;
     @FXML
     private Button btn_kontoverwaltung2;
@@ -92,6 +87,8 @@ public class TemplateController implements Initializable {
     private Pane content_pane;
 
     private static TemplateController tc;
+    @FXML
+    private Button btn_mab_katalogpflege;
 
     /**
      * Initializes the controller class.
@@ -99,17 +96,29 @@ public class TemplateController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tc = this;
+        //Control.getControl().getContentManager().changeContent(content_pane, ContentPageType.MA_KundeRegistrieren);
+        //head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
+        //head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
         // TODO
-        btn_mab_registieren.setOnMouseClicked((javafx.scene.input.MouseEvent event) -> {
-            //Control.getControl().getContentManager().changeContent(ContentPageType.MA_KundeRegistrieren);
-            Parent p = null;
-            try {
-                p = FXMLLoader.load(getClass().getResource("create_user.fxml"));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-            content_pane.getChildren().clear();
-            content_pane.getChildren().add(p);
+        btn_mab_registieren.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.MA_KundeRegistrieren);
+            head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
+            head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
+        });
+        btn_mab_katalogpflege.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.MA_CreateFilm);
+            head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
+            head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
+        });
+        head_btn_back.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.BACK);
+            head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
+            head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
+        });
+        head_btn_forward.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.FORWARD);
+            head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
+            head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
         });
     }
 

@@ -5,17 +5,20 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" styleClass="content-back" stylesheets="@template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.Create_userController">
+<AnchorPane styleClass="content-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.Create_userController">
     <children>
-        <TextField fx:id="user_name" layoutX="128.0" layoutY="79.0" prefHeight="25.0" prefWidth="242.0" text="Benutzername" />
-        <PasswordField fx:id="user_passwort" layoutX="128.0" layoutY="128.0" prefHeight="25.0" prefWidth="242.0" text="passwort" />
-        <PasswordField fx:id="user_passwort_check" layoutX="128.0" layoutY="169.0" prefHeight="25.0" prefWidth="242.0" text="passwort " />
-        <TextField fx:id="user_email" layoutX="128.0" layoutY="215.0" prefHeight="25.0" prefWidth="242.0" text="email" />
-        <Button fx:id="user_btnspeichern" layoutX="290.0" layoutY="430.0" mnemonicParsing="false" text="Speichern" />
-        <DatePicker fx:id="user_datum" layoutX="128.0" layoutY="258.0" prefHeight="25.0" prefWidth="242.0" />
-        <ListView fx:id="user_list" layoutX="530.0" layoutY="34.0" prefHeight="475.0" prefWidth="200.0" />
-        <RadioButton fx:id="user_btnkunde" layoutX="129.0" layoutY="316.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="Kunde" />
-        <RadioButton fx:id="user_btnma" layoutX="129.0" layoutY="348.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="Mitarbeiter" />
-        <RadioButton fx:id="user_btnadmin" layoutX="129.0" layoutY="380.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="Admin" />
+        <TextField fx:id="user_name" layoutX="93.0" layoutY="53.0" prefHeight="25.0" prefWidth="242.0" text="Benutzername" />
+        <PasswordField fx:id="user_passwort" layoutX="93.0" layoutY="102.0" prefHeight="25.0" prefWidth="242.0" text="passwort" />
+        <PasswordField fx:id="user_passwort_check" layoutX="93.0" layoutY="143.0" prefHeight="25.0" prefWidth="242.0" text="passwort " />
+        <TextField fx:id="user_email" layoutX="93.0" layoutY="189.0" prefHeight="25.0" prefWidth="242.0" text="email" />
+        <Button fx:id="user_btnspeichern" layoutX="314.0" layoutY="361.0" mnemonicParsing="false" text="Neu Anlegen" />
+        <DatePicker fx:id="user_datum" layoutX="93.0" layoutY="232.0" prefHeight="25.0" prefWidth="242.0" />
+        <ListView fx:id="user_list" layoutX="504.0" layoutY="77.0" prefHeight="309.0" prefWidth="200.0" />
+      <CheckBox layoutX="93.0" layoutY="283.0" mnemonicParsing="false" selected="true" styleClass="content-radiobtn" text="Kunde" />
+      <CheckBox layoutX="161.0" layoutY="283.0" mnemonicParsing="false" styleClass="content-radiobtn" text="Mitarbeiter" />
+      <CheckBox layoutX="250.0" layoutY="283.0" mnemonicParsing="false" styleClass="content-radiobtn" text="Administrator" />
+      <Button fx:id="user_btnspeichern1" layoutX="161.0" layoutY="361.0" mnemonicParsing="false" text="Änderungen speichern" />
+      <Button fx:id="user_btnspeichern11" layoutX="78.0" layoutY="361.0" mnemonicParsing="false" text="Verwerfen" />
+      <TextField layoutX="504.0" layoutY="53.0" prefHeight="25.0" prefWidth="200.0" />
     </children>
 </AnchorPane>

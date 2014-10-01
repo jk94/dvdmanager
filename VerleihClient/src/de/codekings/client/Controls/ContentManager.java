@@ -1,10 +1,12 @@
 package de.codekings.client.Controls;
 
-import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import de.codekings.client.Enum.ContentPageType;
+import static de.codekings.client.Enum.ContentPageType.BACK;
+import static de.codekings.client.Enum.ContentPageType.FORWARD;
+import javafx.scene.control.ScrollPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,13 +19,27 @@ import de.codekings.client.Enum.ContentPageType;
  */
 public class ContentManager {
 
-    private Pane contentPane;
+    private static Verlaufsmanager verlManager;
 
-    public ContentManager(Pane cp) {
-        this.contentPane = cp;
+    public ContentManager() {
+        Verlaufsmanager v = new Verlaufsmanager();
+        setVerlaufsManager(v);
     }
 
-    public void changeContent(ContentPageType t) {
+    public static void setVerlaufsManager(Verlaufsmanager vlm) {
+        verlManager = vlm;
+    }
+
+    public static Verlaufsmanager getVerlaufsManager() {
+        return verlManager;
+    }
+
+    public boolean changeContent(ScrollPane contpane, ContentPageType t) {
+        if (verlManager.getPage() != null) {
+            if (verlManager.getPage().equals(t)) {
+                return false;
+            }
+        }
         Parent p = null;
         switch (t) {
             case Katalog_Start:
@@ -32,14 +48,39 @@ public class ContentManager {
                 break;
             case MA_KundeRegistrieren:
                 try {
-                    p = FXMLLoader.load(getClass().getResource("../GUI/MainFrame/create_user.fxml"));
+                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Mitarbeiter/create_user.fxml"));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 break;
+            case MA_CreateFilm:
+                try {
+                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Mitarbeiter/create_film.fxml"));
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case BACK:
+                if (verlManager.canBack()) {
+                    changeContent(contpane, verlManager.backPage());
+                    verlManager.decreaseIndex();
+                    return true;
+                }
+                break;
+            case FORWARD:
+                if (verlManager.canNext()) {
+                    changeContent(contpane, verlManager.nextPage(t));
+                    verlManager.increaseIndex();
+                    return true;
+                }
+                break;
+            default:
         }
-        contentPane.getChildren().clear();
-        contentPane.getChildren().add(p);
+        //if (!t.equals(BACK) && !t.equals(FORWARD)) {
+        verlManager.addPage(t);
+        //}
+        contpane.setContent(p);
+        return true;
     }
 
 }
