@@ -107,6 +107,19 @@
 	-fx-border-width: 1px;
 }
 
+.standard-btn {
+    -fx-background-color: #3E3E3E;
+    -fx-border-color: #B43104;
+    -fx-border-width: 2px;
+    -fx-text-fill: #B43104;
+    -fx-font-size: 14px;
+}
+
+.standard-text {
+    -fx-text-fill: #B43104;
+    -fx-font-size: 14px;    
+}
+
  .titel-text {
      -fx-background-color: #2E2E2E;
      -fx-text-fill: #B43104;

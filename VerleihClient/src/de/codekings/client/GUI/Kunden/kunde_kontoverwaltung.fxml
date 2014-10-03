@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="de.codekings.client.GUI.Kunden.Kunde_kontoverwaltungController">
+   <children>
+      <Label layoutX="57.0" layoutY="39.0" prefHeight="17.0" prefWidth="163.0" styleClass="standard_text" text="Deine aktuellen Daten sind:" />
+      <Label fx:id="kunde_konto_name" layoutX="57.0" layoutY="102.0" prefHeight="17.0" prefWidth="149.0" styleClass="standard_text" text="Name" />
+      <TextField fx:id="kunde_konto_email_neu" layoutX="57.0" layoutY="188.0" prefHeight="25.0" prefWidth="228.0" text="neue email..." />
+      <TextField fx:id="kunde_konto_name_neu" layoutX="57.0" layoutY="126.0" text="Name..." />
+      <Label fx:id="kunde_konto_email" layoutX="57.0" layoutY="163.0" prefHeight="17.0" prefWidth="149.0" styleClass="standard_text" text="email@email.de" />
+      <Label layoutX="57.0" layoutY="223.0" prefHeight="17.0" prefWidth="149.0" styleClass="standard_text" text="Passwort ändern:" />
+      <TextField fx:id="kunde_konto_pass_neu" layoutX="57.0" layoutY="248.0" prefHeight="25.0" prefWidth="228.0" />
+      <TextField fx:id="kunde_konto_pass_neu_contr" layoutX="57.0" layoutY="285.0" prefHeight="25.0" prefWidth="228.0" />
+      <Button fx:id="kunde_konto_verwerfen" layoutX="416.0" layoutY="339.0" mnemonicParsing="false" styleClass="standard_btn" text="Verwerfen" />
+      <Button fx:id="kunde_konto_aendern" layoutX="510.0" layoutY="339.0" mnemonicParsing="false" styleClass="standard_btn" text="Ändern" />
+      <TextField fx:id="kunde_konto_pass_akt" layoutX="337.0" layoutY="285.0" prefHeight="25.0" prefWidth="228.0" />
+      <Label layoutX="337.0" layoutY="265.0" styleClass="standard_text" text="Zum Ändern aktuelles Passwort eingeben:" />
+   </children>
+</AnchorPane>
