@@ -28,7 +28,7 @@ public class Control {
     public Control() {
         loadConfig();
         loadKrypter();
-        //loadContentManager(TemplateController.getTemplateController().getContentPane());
+        loadContentManager();
     }
 
     public final void loadConfig() {
@@ -87,8 +87,8 @@ public class Control {
                 Integer.parseInt(cfgManager.getConfigs().getProperty("standardport")));
     }
 
-    public final void loadContentManager(Pane p) {
-        this.contManager = new ContentManager(p);
+    public final void loadContentManager() {
+        this.contManager = new ContentManager();
     }
     
     public final ContentManager getContentManager(){

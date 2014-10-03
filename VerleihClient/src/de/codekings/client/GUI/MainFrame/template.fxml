@@ -110,8 +110,7 @@
                      <children>
                         <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Button fx:id="btn_uebersicht2" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Start" />
-                              <Button fx:id="btn_ausleihen2" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Katalog pflegen" />
+                              <Button fx:id="btn_mab_katalogpflege" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Katalog pflegen" />
                               <Button fx:id="btn_entliehen2" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Artikel zurückgeben" />
                               <Button fx:id="btn_mab_registieren" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Kunde registrieren" />
                               <Button fx:id="btn_kontoverwaltung2" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" stylesheets="@template.css" text="Kontoverwaltung" />
@@ -139,10 +138,6 @@
       </Accordion>
    </left>
    <center>
-      <ScrollPane fx:id="content_base" styleClass="content-base" stylesheets="@template.css" BorderPane.alignment="CENTER">
-         <content>
-            <Pane fx:id="content_pane" styleClass="content-back" stylesheets="@template.css" />
-         </content>
-      </ScrollPane>
+      <ScrollPane fx:id="content_base" fitToHeight="true" fitToWidth="true" pannable="true" styleClass="content-base" stylesheets="@template.css" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

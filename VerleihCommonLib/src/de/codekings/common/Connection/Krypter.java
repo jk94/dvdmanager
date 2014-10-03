@@ -112,22 +112,20 @@ public class Krypter {
     public KeyPair getKeys() {
         return keys;
     }
-    
-    public PublicKey getForeignPublicKey(){
+
+    public PublicKey getForeignPublicKey() {
         return foreignPubkey;
     }
-    
-    public void setForeignPublicKey(PublicKey key){
+
+    public void setForeignPublicKey(PublicKey key) {
         this.foreignPubkey = key;
     }
 
     public static OutputStream encryptOutputStream(OutputStream os, PublicKey publicKey) throws Exception {
-        System.out.println("Create session key...");
         KeyGenerator kg = KeyGenerator.getInstance("AES");
         kg.init(new SecureRandom());
         Key key = kg.generateKey();
 
-        System.out.println("Crypt session key...");
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.WRAP_MODE, publicKey);
 
@@ -141,12 +139,10 @@ public class Krypter {
     }
 
     public static InputStream decryptInputStream(InputStream is, PrivateKey privateKey) throws Exception {
-        System.out.println("Read crypted session key...");
         byte[] wKey = new byte[256];
         Cipher cipher = Cipher.getInstance("RSA");
         is.read(wKey, 0, 256);
 
-        System.out.println("Decrypt session key...");
         cipher.init(Cipher.UNWRAP_MODE, privateKey);
         Key key = cipher.unwrap(wKey, "AES", Cipher.SECRET_KEY);
 

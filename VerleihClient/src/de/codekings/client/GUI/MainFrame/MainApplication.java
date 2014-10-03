@@ -19,8 +19,12 @@ import javafx.stage.Stage;
  */
 public class MainApplication extends Application {
 
+    Control c;
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
+        c = new Control();
+        Control.setControl(c);
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("template.fxml"));
@@ -30,9 +34,6 @@ public class MainApplication extends Application {
         Scene scene = new Scene(root);
         primaryStage.setTitle("DVD Verleih");
         primaryStage.setScene(scene);
-        
-        Control c = new Control();
-        Control.setControl(c);
         
         primaryStage.show();
     }

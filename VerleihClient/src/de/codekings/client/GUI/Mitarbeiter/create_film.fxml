@@ -4,19 +4,29 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane fx:id="create_anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="800.0" styleClass="content-base" stylesheets="@template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.Create_filmController">
-   <children>
-      <Button fx:id="create_btn" layoutX="590.0" layoutY="455.0" mnemonicParsing="false" text="Erstellen" />
-      <TextField fx:id="creeate_titel" layoutX="104.0" layoutY="58.0" prefHeight="25.0" prefWidth="346.0" text="Titel" />
-      <TextField fx:id="create_genre" layoutX="500.0" layoutY="58.0" text="Genre" />
-      <TextArea fx:id="create_beschreibung" layoutX="104.0" layoutY="99.0" prefHeight="200.0" prefWidth="547.0" text="Beschreibung" />
-      <RadioButton fx:id="create_fsk6" layoutX="124.0" layoutY="378.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" styleClass="content-radiobtn" stylesheets="@template.css" text="FSK 6" />
-      <RadioButton fx:id="create_fsk12" layoutX="210.0" layoutY="378.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="FSK 12" />
-      <RadioButton fx:id="create_fsk16" layoutX="302.0" layoutY="378.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="FSK 16" />
-      <RadioButton fx:id="create_fsk18" layoutX="378.0" layoutY="378.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="FSK 18" />
-      <TextField fx:id="create_trailer" layoutX="104.0" layoutY="414.0" prefHeight="25.0" prefWidth="547.0" text="Trailer" />
-      <TextField fx:id="create_schauspieler" layoutX="104.0" layoutY="329.0" prefHeight="25.0" prefWidth="255.0" text="Schauspieler" />
-      <TextField fx:id="create_regisseur" layoutX="394.0" layoutY="329.0" prefHeight="25.0" prefWidth="255.0" text="Regisseur" />
-   </children>
+<AnchorPane fx:id="create_anchor" minHeight="-Infinity" minWidth="-Infinity" styleClass="content-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.Create_filmController">
+    <children>
+        <Button fx:id="create_btn" layoutX="619.0" layoutY="422.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="74.0" text="Erstellen" />
+        <TextField fx:id="txf_titel" layoutX="32.0" layoutY="34.0" prefHeight="25.0" prefWidth="463.0" text="Titel" />
+        <TextArea fx:id="txf_beschreibung" layoutX="32.0" layoutY="108.0" prefHeight="167.0" prefWidth="463.0" text="Beschreibung" />
+      <RadioButton fx:id="rbtn_fsk0" layoutX="32.0" layoutY="355.0" mnemonicParsing="false" selected="true" style="-fx-text-fill: #B43104;" styleClass="content-radiobtn" text="kein FSK">
+         <toggleGroup>
+            <ToggleGroup fx:id="fskbuttons" />
+         </toggleGroup>
+      </RadioButton>
+        <RadioButton fx:id="rbtn_fsk6" layoutX="117.0" layoutY="355.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" styleClass="content-radiobtn" text="FSK 6" toggleGroup="$fskbuttons" />
+        <RadioButton fx:id="rbtn_fsk12" layoutX="203.0" layoutY="355.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="FSK 12" toggleGroup="$fskbuttons" />
+        <RadioButton fx:id="rbtn_fsk16" layoutX="295.0" layoutY="355.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="FSK 16" toggleGroup="$fskbuttons" />
+        <RadioButton fx:id="rbtn_fsk18" layoutX="371.0" layoutY="355.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="FSK 18" toggleGroup="$fskbuttons" />
+        <TextField fx:id="txf_trailer" layoutX="32.0" layoutY="390.0" prefHeight="25.0" prefWidth="463.0" text="Trailer" />
+        <TextField fx:id="txf_schauspieler" layoutX="32.0" layoutY="305.0" prefHeight="25.0" prefWidth="245.0" text="Schauspieler" />
+        <TextField fx:id="txf_regisseur" layoutX="295.0" layoutY="305.0" prefHeight="25.0" prefWidth="201.0" text="Regisseur" />
+      <TextField fx:id="txf_subtitel" layoutX="32.0" layoutY="66.0" prefHeight="25.0" prefWidth="463.0" text="Subtitel" />
+      <TableView layoutX="506.0" layoutY="34.0" prefHeight="381.0" prefWidth="187.0">
+        <columns>
+          <TableColumn fx:id="tblc_genre" maxWidth="190.0" minWidth="190.0" prefWidth="190.0" resizable="false" sortable="false" text="Genre" />
+        </columns>
+      </TableView>
+      <Button fx:id="create_btn1" layoutX="533.0" layoutY="422.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="74.0" text="Verwerfen" />
+    </children>
 </AnchorPane>
