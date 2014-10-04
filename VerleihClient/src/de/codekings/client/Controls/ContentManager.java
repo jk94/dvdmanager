@@ -34,7 +34,7 @@ public class ContentManager {
         return verlManager;
     }
 
-    public boolean changeContent(ScrollPane contpane, ContentPageType t) {
+    public boolean changeContent(ScrollPane contpane, ContentPageType t, boolean fwORbw) {
         if (verlManager.getPage() != null) {
             if (verlManager.getPage().equals(t)) {
                 return false;
@@ -43,8 +43,38 @@ public class ContentManager {
         Parent p = null;
         switch (t) {
             case Katalog_Start:
+
                 break;
             case Katalog_Titelsuche:
+                break;
+
+            case Kunde_Start:
+                try {
+                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Kunden/kunde_start.fxml"));
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case Kunde_Ausleihen:
+                try {
+                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Kunden/kunde_ausleihen.fxml"));
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case Kunde_EntlieheneArt:
+                try {
+                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Kunden/kunde_entliehen.fxml"));
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case Kunde_Verwaltung:
+                try {
+                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Kunden/kunde_kontoverwaltung.fxml"));
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case MA_KundeRegistrieren:
                 try {
@@ -62,23 +92,23 @@ public class ContentManager {
                 break;
             case BACK:
                 if (verlManager.canBack()) {
-                    changeContent(contpane, verlManager.backPage());
+                    changeContent(contpane, verlManager.backPage(), true);
                     verlManager.decreaseIndex();
                     return true;
                 }
                 break;
             case FORWARD:
                 if (verlManager.canNext()) {
-                    changeContent(contpane, verlManager.nextPage(t));
+                    changeContent(contpane, verlManager.nextPage(t), true);
                     verlManager.increaseIndex();
                     return true;
                 }
                 break;
             default:
         }
-        //if (!t.equals(BACK) && !t.equals(FORWARD)) {
-        verlManager.addPage(t);
-        //}
+        if (!t.equals(BACK) && !t.equals(FORWARD) && !fwORbw) {
+            verlManager.addPage(t);
+        }
         contpane.setContent(p);
         return true;
     }

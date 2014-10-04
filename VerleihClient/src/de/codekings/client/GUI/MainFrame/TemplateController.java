@@ -101,42 +101,42 @@ public class TemplateController implements Initializable {
         // TODO,
         
         kunde_btn_start.setOnMouseClicked((MouseEvent event) -> {
-            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.Kunde_Start);
+            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.Kunde_Start, false);
             head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
         });
         kunde_btn_ausleihen.setOnMouseClicked((MouseEvent event) -> {
-            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.Kunde_Ausleihen);
+            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.Kunde_Ausleihen, false);
             head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
         });
         kunde_btn_entliehen.setOnMouseClicked((MouseEvent event) -> {
-            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.Kunde_EntlieheneArt);
+            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.Kunde_EntlieheneArt, false);
             head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
         });
         kunde_btn_kontoverwaltung.setOnMouseClicked((MouseEvent event) -> {
-            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.Kunde_Verwaltung);
+            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.Kunde_Verwaltung, false);
             head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
         });
         btn_mab_registieren.setOnMouseClicked((MouseEvent event) -> {
-            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.MA_KundeRegistrieren);
+            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.MA_KundeRegistrieren, false);
             head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
         });
         btn_mab_katalogpflege.setOnMouseClicked((MouseEvent event) -> {
-            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.MA_CreateFilm);
+            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.MA_CreateFilm, false);
             head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
         });
         head_btn_back.setOnMouseClicked((MouseEvent event) -> {
-            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.BACK);
+            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.BACK, true);
             head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
         });
         head_btn_forward.setOnMouseClicked((MouseEvent event) -> {
-            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.FORWARD);
+            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.FORWARD, true);
             head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
         });
