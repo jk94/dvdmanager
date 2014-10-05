@@ -5,12 +5,12 @@
 
 .page-base {
     -fx-background-color: #1C1C1C;
-    
+
 }
 
 .imgbtn {
     -fx-background-color: #2E2E2E;
-    }
+}
 
 .header {
     -fx-background-color: #2E2E2E;
@@ -26,7 +26,7 @@
 
 .content-image {
     -fx-border-color: #B43104;
-    
+
 }
 .content-radiobtn {
     -fx-text-fill: #B43104;
@@ -44,7 +44,39 @@
     -fx-background-repeat: no-repeat;
     -fx-background-size: auto;
     -fx-background-position: center;
-    }
+}
+
+.content-katalog-item-back{
+    -fx-background-color: #2E2E2E;
+    -fx-border-color: #1C1C1C;
+    -fx-border-width: 5px;
+}
+
+.content-katalog-title {
+    -fx-font-size: 18pt;
+    -fx-text-fill: #B43104;
+    -fx-font-family: 'Comic Sans MS';
+    -fx-font-weight: bold;
+
+}
+
+.content-katalog-subtitle{
+    -fx-font-size: 12pt;
+    -fx-text-fill: #a14a2d;
+    -fx-font-family: 'Comic Sans MS';
+}
+
+.content-katalog-description{
+    -fx-font-size: 11pt;
+    -fx-text-fill: #1C1C1C;
+    -fx-font-family: 'Calibri';
+}
+
+.content-katalog-additional{
+    -fx-font-size: 11pt;
+    -fx-text-fill: #B43104;
+    -fx-font-family: 'Calibri';
+}
 
 .menu-space {
     -fx-background-color: #1C1C1C;
@@ -58,53 +90,53 @@
 .menu-btn {
     -fx-background-color: #2E2E2E;
     -fx-text-fill: #B43104;
-	-fx-font-size: 14px;
- }
- 
- .menu-btn:hover{
-     -fx-background-color: #3E3E3E;
- }
- 
- texfield:focused{
-     -fx-scale-x: 1.1;
-     -fx-scale-y: 1.1;
- }
- .menu-accordion {
-	/*-fx-background-color: #2E2E2E;*/
-	-fx-border-color: #1C1C1C;
-	-fx-border-width: 5px;
-	-font-size: 14px;
-	 }
+    -fx-font-size: 14px;
+}
 
- 
+.menu-btn:hover{
+    -fx-background-color: #3E3E3E;
+}
+
+texfield:focused{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+.menu-accordion {
+    /*-fx-background-color: #2E2E2E;*/
+    -fx-border-color: #1C1C1C;
+    -fx-border-width: 5px;
+    -font-size: 14px;
+}
+
+
 .search-box {
     -fx-background-color: #B43104;
     -fx-text-fill: #2E2E2E;
-    
+
 }
 
 .scroll-base {
     -fx-background-color:transparent;
 }
 .katalog-background {
-	-fx-background-color: #2E2E2E;
+    -fx-background-color: #2E2E2E;
 }
 .katalog-item {
-	-fx-background-color: #1C1C1C;
-	-fx-border-color: #B43104;
-	-fx-border-width: 2px;
+    -fx-background-color: #1C1C1C;
+    -fx-border-color: #B43104;
+    -fx-border-width: 2px;
 }
 .katalog-textfield {
-	-fx-background-color: #B43104;
+    -fx-background-color: #B43104;
     -fx-text-fill: #2E2E2E;
 }
 .katalog-titel {
-	-fx-background-color: #B43104;
+    -fx-background-color: #B43104;
     -fx-text-fill: #2E2E2E;
 }
 .katalog-image {
-	-fx-border-color: #B43104;
-	-fx-border-width: 1px;
+    -fx-border-color: #B43104;
+    -fx-border-width: 1px;
 }
 
 .standard-btn {
@@ -120,41 +152,41 @@
     -fx-font-size: 14px;    
 }
 
- .titel-text {
-     -fx-background-color: #2E2E2E;
-     -fx-text-fill: #B43104;
-     -fx-font-size: 14px;
-     }
+.titel-text {
+    -fx-background-color: #2E2E2E;
+    -fx-text-fill: #B43104;
+    -fx-font-size: 14px;
+}
 
- .titled-pane .title {
-	-fx-background-color: #B43104;
-	-fx-text-fill: #1C1C1C;
-	-fx-border-radius: 3px;
-	-fx-font-size: 14px;
-	
- }
- 
+.titled-pane .title {
+    -fx-background-color: #B43104;
+    -fx-text-fill: #1C1C1C;
+    -fx-border-radius: 3px;
+    -fx-font-size: 14px;
+
+}
+
 .titled-pane > .title > .arrow-button .arrow 
 {
--fx-background-color: #1C1C1C;
--fx-mark-highlight-color: #111111;
--fx-mark-color: #111111;
+    -fx-background-color: #1C1C1C;
+    -fx-mark-highlight-color: #111111;
+    -fx-mark-color: #111111;
 
 }
 
 .titled-pane:collapsed > .title > .arrow-button .arrow 
 {
--fx-rotate: -90;
+    -fx-rotate: -90;
 }
 
 .titled-pane > *.content 
 {
--fx-background-color: #1C1C1C;
--fx-border-color: #B43104;
--fx-font-size: 14px;
- }
+    -fx-background-color: #1C1C1C;
+    -fx-border-color: #B43104;
+    -fx-font-size: 14px;
+}
 
 .titled-pane:focused > .title > .arrow-button .arrow 
 {
--fx-background-color: #2E2E2E;
+    -fx-background-color: #2E2E2E;
 }

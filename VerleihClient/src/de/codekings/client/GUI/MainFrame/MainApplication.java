@@ -5,6 +5,7 @@
  */
 package de.codekings.client.GUI.MainFrame;
 
+import de.codekings.client.Katalog.CoverFlowAnzeige;
 import de.codekings.client.main.Control;
 import java.io.IOException;
 import javafx.application.Application;
@@ -36,6 +37,8 @@ public class MainApplication extends Application {
         primaryStage.setScene(scene);
         
         primaryStage.show();
+        CoverFlowAnzeige ca = new CoverFlowAnzeige();
+        ca.start(new Stage());
     }
 
 }
