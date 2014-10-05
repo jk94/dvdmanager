@@ -13,6 +13,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -58,7 +59,36 @@ public class Katalog_itemController implements Initializable {
         katalog_cover.setImage(img);
     }
     
-    public void changeDirection(){
-        
+    public void setSubtitle(String subtitle){
+        this.katalog_subtitle.setText(subtitle);
+    }
+    
+    public void setDescription(String desc){
+        this.katalog_desc.setText(desc);
+    }
+    
+    public void setGenre(String genre){
+        this.katalog_genre.setText(genre);
+    }
+    
+    public void setJahr(String jahr){
+        this.katalog_jahr.setText(jahr);
+    }
+    
+    public void setLaufzeit(String laufzeit){
+        this.katalog_laufzeit.setText(laufzeit);
+    }
+    
+    public void setVerfuegbar(boolean v){
+        if(v){
+            this.katalog_lbl_verfuegbar.setTextFill(Color.web("#FFFF00"));
+            this.katalog_lbl_verfuegbar.setText("verfügbar");
+            Image img = new Image(getClass().getClassLoader().getResource("de/codekings/client/GUI/Elements/verfuegbar.png").toExternalForm(),false);
+        }else{
+            this.katalog_lbl_verfuegbar.setTextFill(Color.web("#FF0000"));
+            this.katalog_lbl_verfuegbar.setText("nicht verfügbar");
+            Image img = new Image(getClass().getClassLoader().getResource("de/codekings/client/GUI/Elements/nverfuegbar.png").toExternalForm(),false);
+            
+        }
     }
 }

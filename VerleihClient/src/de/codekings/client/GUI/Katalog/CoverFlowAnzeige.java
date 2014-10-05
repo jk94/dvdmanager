@@ -52,8 +52,8 @@ import javafx.util.Duration;
  * @resource cover4.jpg
  */
 public class CoverFlowAnzeige extends Application {
-    //private static final double WIDTH = 695, HEIGHT = 600;
-    private static final double  WIDTH = 890, HEIGHT = 768;
+    private static final double WIDTH = 695, HEIGHT = 600;
+    //private static final double  WIDTH = 890, HEIGHT = 768;
     private void init(Stage primaryStage) {
         Group root = new Group();
         primaryStage.setResizable(false);

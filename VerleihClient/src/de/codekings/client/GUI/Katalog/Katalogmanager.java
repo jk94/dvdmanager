@@ -64,6 +64,11 @@ public class Katalogmanager {
                 Katalog_itemController kic = (Katalog_itemController) fxmlLoader.getController();
                 kic.setTitel("Crank " + i);
                 kic.setCover(new Image( CoverFlowAnzeige.class.getResource("cover"+i+".png").toExternalForm(),false));
+                if(i%2==0){
+                    kic.setVerfuegbar(true);
+                }else{
+                    kic.setVerfuegbar(false);
+                }
             } catch (IOException e) {
                 System.out.println(e.getCause());
             }
