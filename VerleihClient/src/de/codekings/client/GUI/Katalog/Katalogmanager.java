@@ -3,10 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.codekings.client.Katalog;
+package de.codekings.client.GUI.Katalog;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Orientation;
 import javafx.scene.Parent;
+import javafx.scene.control.Separator;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -47,9 +54,23 @@ public class Katalogmanager {
     }
 
     public Parent getContentView() {
-        Parent p = new Parent() {
-        };
-        
+        VBox p = new VBox();
+        for (int i = 1; i < 5; i++) {
+            Pane pa = null;
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                pa = fxmlLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Katalog/katalog_item.fxml").openStream());
+
+                Katalog_itemController kic = (Katalog_itemController) fxmlLoader.getController();
+                kic.setTitel("Crank " + i);
+                kic.setCover(new Image( CoverFlowAnzeige.class.getResource("cover"+i+".png").toExternalForm(),false));
+            } catch (IOException e) {
+                System.out.println(e.getCause());
+            }
+            p.getChildren().add(pa);
+            
+        }
+        p.autosize();
         
         return p;
     }

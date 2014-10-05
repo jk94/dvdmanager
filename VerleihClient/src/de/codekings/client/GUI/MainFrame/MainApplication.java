@@ -5,7 +5,7 @@
  */
 package de.codekings.client.GUI.MainFrame;
 
-import de.codekings.client.Katalog.CoverFlowAnzeige;
+import de.codekings.client.GUI.Katalog.CoverFlowAnzeige;
 import de.codekings.client.main.Control;
 import java.io.IOException;
 import javafx.application.Application;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.codekings.client.Katalog;
+package de.codekings.client.GUI.Katalog;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;

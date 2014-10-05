@@ -99,7 +99,11 @@ public class TemplateController implements Initializable {
         //head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
         //head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
         // TODO,
-        
+        btn_start.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getContentManager().changeContent(content_base, ContentPageType.Katalog_Start, false);
+            head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
+            head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
+        });
         kunde_btn_start.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentManager().changeContent(content_base, ContentPageType.Kunde_Start, false);
             head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());

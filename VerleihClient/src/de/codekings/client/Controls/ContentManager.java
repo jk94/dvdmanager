@@ -6,6 +6,8 @@ import javafx.scene.layout.Pane;
 import de.codekings.client.Enum.ContentPageType;
 import static de.codekings.client.Enum.ContentPageType.BACK;
 import static de.codekings.client.Enum.ContentPageType.FORWARD;
+import de.codekings.client.GUI.Katalog.Katalogmanager;
+import java.io.IOException;
 import javafx.scene.control.ScrollPane;
 
 /*
@@ -43,7 +45,13 @@ public class ContentManager {
         Parent p = null;
         switch (t) {
             case Katalog_Start:
-
+                Katalogmanager k = new Katalogmanager();
+                p = k.getContentView();
+                /*try{
+                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Katalog/katalog_item.fxml"));
+                }catch(IOException e){
+                    System.out.println(e.getMessage());
+                }*/
                 break;
             case Katalog_Titelsuche:
                 break;
