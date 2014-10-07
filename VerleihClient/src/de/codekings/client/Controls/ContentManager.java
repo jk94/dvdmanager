@@ -46,13 +46,12 @@ public class ContentManager {
         switch (t) {
             case Katalog_Start:
                 Katalogmanager k = new Katalogmanager();
+                while (k.waitForContent()) {
+                }
+
                 p = k.getContentView();
-                /*try{
-                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Katalog/katalog_item.fxml"));
-                }catch(IOException e){
-                    System.out.println(e.getMessage());
-                }*/
                 break;
+
             case Katalog_Titelsuche:
                 break;
 
@@ -114,10 +113,13 @@ public class ContentManager {
                 break;
             default:
         }
-        if (!t.equals(BACK) && !t.equals(FORWARD) && !fwORbw) {
+        if (!t.equals(BACK)
+                && !t.equals(FORWARD) && !fwORbw) {
             verlManager.addPage(t);
         }
+
         contpane.setContent(p);
+
         return true;
     }
 

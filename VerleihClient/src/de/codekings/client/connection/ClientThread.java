@@ -7,9 +7,6 @@ package de.codekings.client.connection;
 
 import de.codekings.common.Connection.Krypter;
 import de.codekings.common.Connection.Message;
-import de.codekings.common.datacontents.SendablePublicKey;
-import de.codekings.common.datacontents.Sendable;
-import de.codekings.common.exceptions.PublicKeyNotFoundException;
 import de.codekings.common.json.JSON_Parser;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,39 +19,37 @@ import java.rmi.UnknownHostException;
  *
  * @author Jan
  */
-public class ClientThread {
+public class ClientThread extends Thread {
 
-    private BufferedReader reader;
-    private PrintWriter writer;
-    private Socket socket;
-    private Krypter k;
+    private Krypter krypter;
     private boolean secured;
+    private String host;
+    private int port;
+    PrintWriter writer = null;
+    BufferedReader reader = null;
+    MessageReturn mr;
 
-    public ClientThread(Krypter ownKrypter) {
-        this.k = ownKrypter;
+    public ClientThread(MessageReturn mr, String host, int port, Krypter krypter) {
+        this.mr = mr;
+        this.krypter = krypter;
+        this.host = host;
+        this.port = port;
     }
 
-    private void neueVerbindung(String addresse, int port, boolean secure) {
-        this.secured = secure;
+    public void requestToServer(Message m, boolean secured) {
+        Socket conn = newConnection();
+
         try {
-            socket = new Socket(addresse, port);
-            try {
-                if (secure) {
-                    writer = new PrintWriter(Krypter.encryptOutputStream(socket.getOutputStream(), k.getForeignPublicKey()));
-                    reader = new BufferedReader(new InputStreamReader(Krypter.decryptInputStream(socket.getInputStream(), k.getKeys().getPrivate())));
-                } else {
-                    this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    this.writer = new PrintWriter(socket.getOutputStream());
-                }
-            } catch (Exception e) {
-
+            if (secured) {
+                writer = new PrintWriter(Krypter.encryptOutputStream(conn.getOutputStream(), krypter.getForeignPublicKey()));
+                reader = new BufferedReader(new InputStreamReader(Krypter.decryptInputStream(conn.getInputStream(), krypter.getKeys().getPrivate())));
+            } else {
+                reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                writer = new PrintWriter(conn.getOutputStream());
             }
-
-        } catch (UnknownHostException ex) {
-            System.out.println(ex.getMessage());
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+        } catch (Exception e) {
         }
+
         new Thread(() -> {
             try {
                 String s;
@@ -64,86 +59,26 @@ public class ClientThread {
                     s = s.trim();
                     if (s.equals("")) {
                     } else {
-                        Message m = (Message) j.parseStringToObject(s, Message.class);
-                        if (MessageAuswertung(m)) {
-                            break;
-                        }
+                        Message m1 = (Message) j.parseStringToObject(s, Message.class);
+                        mr.returnedMessage(m1);
+                        
                     }
                 }
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
             }
         }).start();
-
     }
 
-    private boolean MessageAuswertung(Message m) {
-        boolean beenden = false;
-        //GET PUBLIC KEY
-        if (m.getCommand().equalsIgnoreCase("getPublicKey")) {
-            Message answer = new Message("returnPublicKey");
-            answer.addSendable(new SendablePublicKey(k.getKeys().getPublic().getEncoded()));
-            try {
-                write(m);
-                beenden = true;
-            } catch (PublicKeyNotFoundException e) {
-            }
-        }
-
-        //RETURN PUBLIC KEY
-        if (m.getCommand().equalsIgnoreCase("returnPublicKey")) {
-            SendablePublicKey ckpk = new SendablePublicKey();
-            for (Sendable send : m.getContent()) {
-                if (send instanceof SendablePublicKey) {
-                    ckpk = (SendablePublicKey) send;
-                    break;
-                }
-            }
-            k.setForeignPublicKey(ckpk.generatePublicKey());
-            beenden = true;
-        }
-
-        //RETURN FILMS
-        if (m.getCommand().equalsIgnoreCase("returnFilms")) {
-            int startindex = Integer.parseInt(m.getAdditionalparameter().get("startindex"));
-            int howmany = Integer.parseInt(m.getAdditionalparameter().get("anzahl"));
-
-        }
-
-        return beenden;
-    }
-
-    public void write(Message m) throws PublicKeyNotFoundException {
+    private Socket newConnection() {
+        Socket socket = null;
         try {
-            if (secured) {
-                if (k.getKeys().getPublic() != null) {
-                    m.addSendable(new SendablePublicKey(k.getKeys().getPublic().getEncoded()));
-                } else {
-                    throw new PublicKeyNotFoundException();
-                }
-
-            }
-            String s;
-
-            JSON_Parser j = new JSON_Parser();
-            s = j.parseObjectToString(m);
-
-            writer.append(s + "\n");
-            writer.flush();
-        } catch (PublicKeyNotFoundException e) {
-            System.out.println(e.getMessage());
+            socket = new Socket(this.host, this.port);
+        } catch (UnknownHostException ex) {
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
-    }
-
-    public void requestForPubKeyFromServer(String host, int port) {
-        SendablePublicKey erg = null;
-
-        neueVerbindung(host, port, false);
-        Message m = new Message("getPublicKey");
-        try {
-            write(m);
-        } catch (PublicKeyNotFoundException e) {
-
-        }
+        return socket;
     }
 }

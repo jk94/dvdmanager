@@ -23,10 +23,12 @@ public class Message {
     public Message(String command){
         content = new ArrayList<>();
         this.command = command;
+         additionalparameter = new HashMap<>();
     }
     
     public Message(){
-        
+        content = new ArrayList<>();
+        additionalparameter = new HashMap<>();
     }
     
     public Message(String command, ArrayList<Sendable> content, HashMap<String, String> additionalparameter){

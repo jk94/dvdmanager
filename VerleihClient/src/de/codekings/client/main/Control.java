@@ -6,13 +6,11 @@
 package de.codekings.client.main;
 
 import de.codekings.client.Controls.ContentManager;
-import de.codekings.client.GUI.MainFrame.TemplateController;
-import de.codekings.client.connection.ClientThread;
+import de.codekings.client.connection.ClientThread_2;
 import de.codekings.common.Connection.Krypter;
 import de.codekings.common.config.ConfigManager;
 import java.io.File;
 import java.io.FileNotFoundException;
-import javafx.scene.layout.Pane;
 
 /**
  *
@@ -29,6 +27,8 @@ public class Control {
         loadConfig();
         loadKrypter();
         loadContentManager();
+        //getPublicKey();
+
     }
 
     public final void loadConfig() {
@@ -73,16 +73,16 @@ public class Control {
         return krypter;
     }
 
-    public static final void setControl(Control c){
+    public static final void setControl(Control c) {
         control = c;
     }
-    
-    public static final Control getControl(){
+
+    public static final Control getControl() {
         return control;
     }
-    
-    public final void getPublicKey(){
-        ClientThread c = new ClientThread(krypter);
+
+    public final void getPublicKey() {
+        ClientThread_2 c = new ClientThread_2(krypter);
         c.requestForPubKeyFromServer(cfgManager.getConfigs().getProperty("ip"),
                 Integer.parseInt(cfgManager.getConfigs().getProperty("standardport")));
     }
@@ -90,8 +90,8 @@ public class Control {
     public final void loadContentManager() {
         this.contManager = new ContentManager();
     }
-    
-    public final ContentManager getContentManager(){
+
+    public final ContentManager getContentManager() {
         return this.contManager;
     }
 }

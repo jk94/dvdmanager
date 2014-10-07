@@ -8,12 +8,11 @@ package de.codekings.server.controls;
 import de.codekings.common.Connection.Krypter;
 import de.codekings.common.config.ConfigManager;
 import de.codekings.common.datacontents.Film;
-import de.codekings.common.json.JSON_Parser;
+import de.codekings.common.datacontents.Genre;
 import de.codekings.common.log.LogInitialiser;
 import de.codekings.server.connection.VerleihServer;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -45,9 +44,12 @@ public class Control {
 
         //Initialisiere Keys für Verschlüsselung
         loadKrypter();
-        
+
         //Initialisiere verschlüsselten und unverschlüsselten Server und starte sie.
         runServer();
+
+        theControl = this;
+
     }
 
     public static Control getInstance() {
@@ -121,37 +123,6 @@ public class Control {
             System.out.println("Verbindung zur Datenbank nicht möglich. "
                     + "Überprüfen Sie die Konfigurationsdatei: 'config/server.cfg'");
         }
-    }
-
-    public final void getFilms() {
-        ArrayList<Film> films = new ArrayList<>();
-        ResultSet rs = DBSQL_Control.GetALLFilmsFromDB();
-        try {
-
-            while (rs.next()) {
-                Film f = new Film(rs.getInt("FI_ID"));
-
-                boolean vorhanden = false;
-                for (Film fi : films) {
-                    if (fi.getFILMID() == f.getFILMID()) {
-                        vorhanden = true;
-                        f = fi;
-                        break;
-                    }
-                }
-                if (vorhanden) {
-                    f.addGenre(rs.getString("genrename"));
-                    continue;
-                }
-                films.add(f);
-                f.loadFilmFromDatabase(rs);
-            }
-            //System.out.println(JSON_Parser.getInstance().parseObjectOut(films));
-            rs.close();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-
     }
 
     private void runServer() {
