@@ -94,6 +94,10 @@ public class Film extends Sendable {
     public ArrayList<String> getActors() {
         return li_actors;
     }
+    
+    public void setActors(ArrayList<String> actors) {
+        this.li_actors = actors;
+    }
 
     public String getActor(int i) {
         if (i < li_actors.size() && i >= 0) {
@@ -129,6 +133,30 @@ public class Film extends Sendable {
         return li_awards;
     }
 
+    public void setFILMID(int FILMID) {
+        this.FILMID = FILMID;
+    }
+
+    public void setLi_actors(ArrayList<String> li_actors) {
+        this.li_actors = li_actors;
+    }
+
+    public void setLi_awards(ArrayList<String> li_awards) {
+        this.li_awards = li_awards;
+    }
+
+    public void setLi_genre(ArrayList<Genre> li_genre) {
+        this.li_genre = li_genre;
+    }
+
+    public ArrayList<String> getLi_actors() {
+        return li_actors;
+    }
+
+    public ArrayList<String> getLi_awards() {
+        return li_awards;
+    }
+    
     public String getAward(int i) {
         if (i < li_awards.size() && i >= 0) {
             return li_awards.get(i);

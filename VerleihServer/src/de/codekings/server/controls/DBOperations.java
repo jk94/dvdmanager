@@ -85,10 +85,10 @@ public class DBOperations {
                     actors = actorsunsplitted.split(";");
                 }
                 for (String actor : actors) {
-                    neuerFilm.addActor(actor);
+                    neuerFilm.addActor(actor.trim());
                 }
                 for (String award : awards) {
-                    neuerFilm.addActor(award);
+                    neuerFilm.addActor(award.trim());
                 }
                 liste.add(neuerFilm);
             }

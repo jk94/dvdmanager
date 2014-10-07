@@ -19,8 +19,8 @@ import java.util.logging.Logger;
  */
 public class VerleihServer extends Thread {
 
-    private static final ArrayList<ServerThread> clientThreads = new ArrayList<>();
-    private static ServerSocket server;
+    private final ArrayList<ServerThread> clientThreads = new ArrayList<>();
+    private ServerSocket server;
     private final Logger log = Logger.getLogger(Control.class.getSimpleName());
     private final boolean secure;
 

@@ -64,6 +64,7 @@ class ServerThread extends Thread {
             while ((s = reader.readLine()) != null) {
                 //TODO Auslesen!
                 s = s.trim();
+                System.out.println(s);
                 if (s.equals("")) {
                 } else {
                     Message m = (Message) j.parseStringToObject(s, Message.class);
@@ -109,9 +110,6 @@ class ServerThread extends Thread {
         }
         //RETURN FILMS
         if (m.getCommand().equalsIgnoreCase("getFilms")) {
-            int startindex = Integer.parseInt(m.getAdditionalparameter().get("startindex"));
-            int howmany = Integer.parseInt(m.getAdditionalparameter().get("count"));
-
             Message returnMessage = new Message("returnFilms");
 
             ArrayList<Film> liste = DBOperations.getFilme();

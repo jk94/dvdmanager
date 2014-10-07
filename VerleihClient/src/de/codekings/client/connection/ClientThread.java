@@ -38,7 +38,7 @@ public class ClientThread extends Thread {
 
     public void requestToServer(Message m, boolean secured) {
         Socket conn = newConnection();
-
+        JSON_Parser jwriter = new JSON_Parser();
         try {
             if (secured) {
                 writer = new PrintWriter(Krypter.encryptOutputStream(conn.getOutputStream(), krypter.getForeignPublicKey()));
@@ -53,13 +53,14 @@ public class ClientThread extends Thread {
         new Thread(() -> {
             try {
                 String s;
-                JSON_Parser j = new JSON_Parser();
+                JSON_Parser jreader = new JSON_Parser();
                 while ((s = reader.readLine()) != null) {
+                    System.out.println(s);
                     //TODO Annahme der Daten
                     s = s.trim();
                     if (s.equals("")) {
                     } else {
-                        Message m1 = (Message) j.parseStringToObject(s, Message.class);
+                        Message m1 = (Message) jreader.parseStringToObject(s, Message.class);
                         mr.returnedMessage(m1);
                         
                     }
@@ -68,6 +69,8 @@ public class ClientThread extends Thread {
                 System.out.println(ex.getMessage());
             }
         }).start();
+         writer.append(jwriter.parseObjectToString(m) + "\n");
+        writer.flush();
     }
 
     private Socket newConnection() {

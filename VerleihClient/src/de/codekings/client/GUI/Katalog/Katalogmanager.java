@@ -27,6 +27,7 @@ public class Katalogmanager implements MessageReturn {
 
     private ArrayList<Katalogeintrag> li_eintraege;
     private boolean contentready = false;
+    private VBox content = new VBox();
 
     public Katalogmanager() {
         li_eintraege = new ArrayList<>();
@@ -37,8 +38,6 @@ public class Katalogmanager implements MessageReturn {
         ClientThread clth = new ClientThread(this, host, port, c.getKrypter());
 
         Message m = new Message("getFilms");
-        m.addAdditionalParameter("startindex", "0");
-        m.addAdditionalParameter("count", "15");
         clth.requestToServer(m, false);
     }
 
@@ -63,7 +62,7 @@ public class Katalogmanager implements MessageReturn {
                     //kic.setCover((Image) f.getCoverImage());
                     //TODO Cover!!
                     kic.setDescription(f.getS_description());
-                    kic.setJahr("" + f.getRelease_date().getYear());
+                    //kic.setJahr("" + f.getRelease_date().getYear());
                     kic.setLaufzeit("" + f.getI_duration() + " min");
                     kic.setSubtitle(f.getS_subtitel());
 
@@ -75,11 +74,12 @@ public class Katalogmanager implements MessageReturn {
                     System.out.println(e.getCause());
                 }
             }
+            content = vboxliste;
             contentready = true;
         }
     }
-    
-    public boolean waitForContent(){
+
+    public boolean waitForContent() {
         return !contentready;
     }
 
@@ -110,30 +110,7 @@ public class Katalogmanager implements MessageReturn {
     }
 
     public Parent getContentView() {
-        VBox p = new VBox();
-        for (int i = 1; i < 5; i++) {
-            Pane pa = null;
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                pa = fxmlLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Katalog/katalog_item.fxml").openStream());
-
-                Katalog_itemController kic = (Katalog_itemController) fxmlLoader.getController();
-                kic.setTitel("Crank " + i);
-                kic.setCover(new Image(CoverFlowAnzeige.class.getResource("cover" + i + ".png").toExternalForm(), false));
-                if (i % 2 == 0) {
-                    kic.setVerfuegbar(true);
-                } else {
-                    kic.setVerfuegbar(false);
-                }
-            } catch (IOException e) {
-                System.out.println(e.getCause());
-            }
-            p.getChildren().add(pa);
-
-        }
-        p.autosize();
-
-        return p;
+        return content;
     }
 
 }

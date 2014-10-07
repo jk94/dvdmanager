@@ -104,6 +104,7 @@ public class JSON_Parser {
             log.log(Level.INFO, "Parse from String to Object {0}", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
             return om.readValue(parsingString, c);
         } catch (IOException ex) {
+            ex.printStackTrace();
             log.log(Level.SEVERE, ex.getMessage());
         }
         log.log(Level.INFO, "Parsing ended");
