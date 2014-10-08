@@ -5,10 +5,46 @@
  */
 package de.codekings.client.GUI.Katalog;
 
+import de.codekings.common.datacontents.Film;
+import javafx.scene.Parent;
+
 /**
  *
  * @author Jan
  */
-public class Katalogeintrag {
-    
+class Katalogeintrag {
+
+    private Parent content;
+    private Katalog_itemController contentcontroller;
+    private Film film;
+
+    public Katalogeintrag(Parent c, Katalog_itemController cc, Film f) {
+        this.content = c;
+        this.contentcontroller = cc;
+    }
+
+    public Parent getContent() {
+        return content;
+    }
+
+    public void setContent(Parent content) {
+        this.content = content;
+    }
+
+    public Katalog_itemController getContentcontroller() {
+        return contentcontroller;
+    }
+
+    public void setContentcontroller(Katalog_itemController contentcontroller) {
+        this.contentcontroller = contentcontroller;
+    }
+
+    public Film getFilm() {
+        return film;
+    }
+
+    public void setFilm(Film film) {
+        this.film = film;
+    }
+
 }

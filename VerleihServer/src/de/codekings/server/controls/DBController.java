@@ -117,9 +117,6 @@ public final class DBController {
         });
     }
 
-    public static void createClearDataBase() {
-
-    }
 
     public ResultSet executeQuery(PreparedStatement pst) {
         ResultSet ergebnisRS = null;

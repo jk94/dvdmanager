@@ -7,16 +7,18 @@ package de.codekings.server.connection;
 
 import de.codekings.common.Connection.Krypter;
 import de.codekings.common.Connection.Message;
-import de.codekings.common.datacontents.CKPublicKey;
+import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.SendablePublicKey;
 import de.codekings.common.exceptions.PublicKeyNotFoundException;
 import de.codekings.common.json.JSON_Parser;
 import de.codekings.server.controls.Control;
+import de.codekings.server.controls.DBOperations;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -62,6 +64,7 @@ class ServerThread extends Thread {
             while ((s = reader.readLine()) != null) {
                 //TODO Auslesen!
                 s = s.trim();
+                System.out.println(s);
                 if (s.equals("")) {
                 } else {
                     Message m = (Message) j.parseStringToObject(s, Message.class);
@@ -92,24 +95,33 @@ class ServerThread extends Thread {
 
     private boolean MessageAuswertung(Message m) {
         boolean beenden = false;
+        JSON_Parser j = new JSON_Parser();
         //GET PUBLIC KEY
         if (m.getCommand().equalsIgnoreCase("getPublicKey")) {
             Message answer = new Message("returnPublicKey");
             answer.addSendable(new SendablePublicKey(krypter.getKeys().getPublic().getEncoded()));
-            JSON_Parser j = new JSON_Parser();
+
             try {
                 write(j.parseObjectToString(answer));
             } catch (PublicKeyNotFoundException e) {
                 log.log(Level.WARNING, e.getMessage());
                 beenden = true;
             }
+        }
+        //RETURN FILMS
+        if (m.getCommand().equalsIgnoreCase("getFilms")) {
+            Message returnMessage = new Message("returnFilms");
 
-            //RETURN FILMS
-            if (m.getCommand().equalsIgnoreCase("returnFilms")) {
-                int startindex = Integer.parseInt(m.getAdditionalparameter().get("startindex"));
-                int howmany = Integer.parseInt(m.getAdditionalparameter().get("anzahl"));
-
+            ArrayList<Film> liste = DBOperations.getFilme();
+            liste.stream().forEach((f) -> {
+                returnMessage.addSendable(f);
+            });
+            String sMessage = j.parseObjectToString(returnMessage);
+            try {
+                write(sMessage);
+            } catch (PublicKeyNotFoundException e) {
             }
+
         }
         return beenden;
     }

@@ -7,22 +7,15 @@ package de.codekings.common.datacontents;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.codekings.common.Enumerators.ClassType;
-import de.codekings.common.json.JSON_Parser;
-import java.io.File;
-import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 /**
  *
  * @author Jan
  */
-@JsonDeserialize(as=Film.class)
+@JsonDeserialize(as = Film.class)
 public class Film extends Sendable {
 
     private int FILMID;
@@ -32,10 +25,7 @@ public class Film extends Sendable {
     private double d_preis = 0.0;
     private Date release_date;
     private ArrayList<String> li_actors, li_awards;
-    private ArrayList<String> li_genre;
-    private String cover;
-
-    private static final Logger log = Logger.getLogger(Film.class.getSimpleName());
+    private ArrayList<Genre> li_genre;
 
     public Film(int fid) {
         super(ClassType.T_FILM);
@@ -44,13 +34,13 @@ public class Film extends Sendable {
         li_awards = new ArrayList<>();
         li_genre = new ArrayList<>();
     }
-    
-    public Film(){
+
+    public Film() {
         super(ClassType.T_FILM);
     }
 
     public Film(int FILMID, Date release_date, ArrayList<String> li_actors, ArrayList<String> li_awards,
-            ArrayList<String> li_genre, String cover, String ti, String suti, String des, String tr,
+            ArrayList<Genre> li_genre, String cover, String ti, String suti, String des, String tr,
             String re, String fsk, int rat, int dur, int fsk_i, double p, ClassType t) {
         super(t);
         this.FILMID = FILMID;
@@ -58,7 +48,6 @@ public class Film extends Sendable {
         this.li_actors = li_actors;
         this.li_awards = li_awards;
         this.li_genre = li_genre;
-        this.cover = cover;
         this.s_trailer = tr;
         this.s_titel = ti;
         this.s_FSK = fsk;
@@ -70,15 +59,7 @@ public class Film extends Sendable {
         this.i_rating = rat;
     }
 
-    public String getCover() {
-        return cover;
-    }
-
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-
-    public ArrayList<String> getLi_genre() {
+    public ArrayList<Genre> getLi_genre() {
         return li_genre;
     }
 
@@ -113,6 +94,10 @@ public class Film extends Sendable {
     public ArrayList<String> getActors() {
         return li_actors;
     }
+    
+    public void setActors(ArrayList<String> actors) {
+        this.li_actors = actors;
+    }
 
     public String getActor(int i) {
         if (i < li_actors.size() && i >= 0) {
@@ -127,27 +112,51 @@ public class Film extends Sendable {
         }
     }
 
-    public void addGenre(String name) {
-        if (!li_genre.contains(name)) {
-            li_genre.add(name);
+    public void addGenre(Genre genre) {
+        if (!li_genre.contains(genre)) {
+            li_genre.add(genre);
         }
     }
 
-    public ArrayList<String> getGenres() {
+    public ArrayList<Genre> getGenres() {
         return li_genre;
     }
 
-    public String getGenre(int i) {
+    public Genre getGenre(int i) {
         if (i < li_genre.size() && i >= 0) {
             return li_genre.get(i);
         }
-        return "";
+        return null;
     }
 
     public ArrayList<String> getAwards() {
         return li_awards;
     }
 
+    public void setFILMID(int FILMID) {
+        this.FILMID = FILMID;
+    }
+
+    public void setLi_actors(ArrayList<String> li_actors) {
+        this.li_actors = li_actors;
+    }
+
+    public void setLi_awards(ArrayList<String> li_awards) {
+        this.li_awards = li_awards;
+    }
+
+    public void setLi_genre(ArrayList<Genre> li_genre) {
+        this.li_genre = li_genre;
+    }
+
+    public ArrayList<String> getLi_actors() {
+        return li_actors;
+    }
+
+    public ArrayList<String> getLi_awards() {
+        return li_awards;
+    }
+    
     public String getAward(int i) {
         if (i < li_awards.size() && i >= 0) {
             return li_awards.get(i);
@@ -225,27 +234,18 @@ public class Film extends Sendable {
         this.release_date = release_date;
     }
 
-    public boolean loadFilmFromDatabase(ResultSet rs) {
-        try {
-            setS_titel(rs.getString(1));
-            setS_subtitel(rs.getString("subtitle"));
-            setS_description(rs.getString("desc"));
-            setS_trailer(rs.getString("trailer"));
-            //setS_FSK(rs.getString("bez"));
-            //setI_fsk(rs.getInt("alter"));
+    /* public boolean loadFilmFromDatabase(ResultSet rs) {
+     try {
+     setS_titel(rs.getString(1));
+     setS_subtitel(rs.getString("subtitle"));
+     setS_description(rs.getString("desc"));
+     setS_trailer(rs.getString("trailer"));
+     //setS_FSK(rs.getString("bez"));
+     //setI_fsk(rs.getInt("alter"));
 
-            try {
-                File coverfile = new File("../covers/" + rs.getString("cover"));
-
-                setCover(JSON_Parser.encodeToString(ImageIO.read(coverfile), "png"));
-            } catch (IOException ex) {
-                log.log(Level.SEVERE, ex.getMessage());
-            }
-
-        } catch (SQLException ex) {
-            log.log(Level.SEVERE, ex.getMessage());
-        }
-        return true;
-    }
-
+     } catch (SQLException ex) {
+     log.log(Level.SEVERE, ex.getMessage());
+     }
+     return true;
+     }*/
 }
