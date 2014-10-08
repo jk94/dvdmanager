@@ -7,6 +7,7 @@ package de.codekings.server.connection;
 
 import de.codekings.common.Connection.Krypter;
 import de.codekings.common.Connection.Message;
+import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.SendablePublicKey;
 import de.codekings.common.exceptions.PublicKeyNotFoundException;
@@ -121,9 +122,28 @@ class ServerThread extends Thread {
                 write(sMessage);
             } catch (PublicKeyNotFoundException e) {
             }
+            beenden = true;
+        }
+        if (m.getCommand().equalsIgnoreCase("getCover")) {
+            Message returnMessage = new Message("returnCover");
 
+            Cover c = DBOperations.getCover(Integer.parseInt(m.getAdditionalparameter().get("FILM_ID")));
+            
+            returnMessage.addSendable(c);
+            returnMessage.addAdditionalParameter("FILM_ID", m.getAdditionalparameter().get("FILM_ID"));
+
+            if (c != null) {
+                String sMessage = j.parseObjectToString(returnMessage);
+                try {
+                    write(sMessage);
+                } catch (PublicKeyNotFoundException e) {
+
+                }
+            }
+            beenden = true;
         }
         return beenden;
+
     }
 
     public void closeConnection() throws IOException {

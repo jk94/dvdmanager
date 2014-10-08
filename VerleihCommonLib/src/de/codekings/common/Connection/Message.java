@@ -62,7 +62,7 @@ public class Message {
     }
     
     public void addAdditionalParameter(String key, String value){
-            additionalparameter.put(key, key);
+            additionalparameter.put(key, value);
     }
     
     public void removeAdditionalParameter(String key){

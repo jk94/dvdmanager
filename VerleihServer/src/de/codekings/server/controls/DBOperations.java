@@ -4,8 +4,6 @@ import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Genre;
 import de.codekings.common.json.JSON_Parser;
-import de.codekings.server.controls.Control;
-import de.codekings.server.controls.DBController;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
@@ -32,7 +30,7 @@ public class DBOperations {
 
         String sqlstatement = "SELECT * FROM tbl_film f, tbl_genre_zuordnung gz, "
                 + "tbl_genre g, tbl_fsk fk WHERE f.FI_ID = gz.FI_ID "
-                + "AND g.GE_ID = gz.GE_ID AND f.fsk = fk.FSK_ID ORDER BY f.title ASC";
+                + "AND g.GE_ID = gz.GE_ID AND f.fsk = fk.FSK_ID ORDER BY f.title, f.subtitle, f.FI_ID ASC";
 
         ResultSet rs = dbc.executeQuery(sqlstatement);
         try {
@@ -92,8 +90,9 @@ public class DBOperations {
                 }
                 liste.add(neuerFilm);
             }
-            dbc.closeConnection();
+            //dbc.closeConnection();
         } catch (SQLException e) {
+            e.printStackTrace();
         }
         return liste;
     }
@@ -114,7 +113,7 @@ public class DBOperations {
                 Genre g = new Genre(genre_id, bezeichnung);
                 liste.add(g);
             }
-            rs.close();
+            //rs.close();
         } catch (SQLException ex) {
         }
         return liste;
@@ -141,7 +140,7 @@ public class DBOperations {
                 } catch (IOException ex) {
                 }
             }
-            rs.close();
+            //rs.close();
         } catch (SQLException ex) {
         }
         return cover;

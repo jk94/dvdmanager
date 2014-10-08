@@ -21,6 +21,7 @@ class Katalogeintrag {
     public Katalogeintrag(Parent c, Katalog_itemController cc, Film f) {
         this.content = c;
         this.contentcontroller = cc;
+        this.film = f;
     }
 
     public Parent getContent() {

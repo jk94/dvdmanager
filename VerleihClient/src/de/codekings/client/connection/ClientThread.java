@@ -62,7 +62,7 @@ public class ClientThread extends Thread {
                     } else {
                         Message m1 = (Message) jreader.parseStringToObject(s, Message.class);
                         mr.returnedMessage(m1);
-                        
+                        break;
                     }
                 }
             } catch (IOException ex) {

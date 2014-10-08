@@ -5,6 +5,7 @@
  */
 package de.codekings.common.datacontents;
 
+import de.codekings.common.Enumerators.ClassType;
 import de.codekings.common.json.JSON_Parser;
 import java.awt.image.BufferedImage;
 import javafx.embed.swing.SwingFXUtils;
@@ -15,25 +16,31 @@ import javafx.scene.image.WritableImage;
  *
  * @author Jan
  */
-public class Cover {
+public class Cover extends Sendable {
 
     private int film_id;
     private String cover;
 
-    public Cover(){
-        
+    public Cover() {
+        super(ClassType.T_COVER);
+        cover = "";
     }
-    
-    public Cover(int film_id, String cover){
+
+    public Cover(int film_id, String cover) {
+        super(ClassType.T_COVER);
         this.film_id = film_id;
         this.cover = cover;
     }
-    
-    public Image getCoverImage() {
-        BufferedImage bi = JSON_Parser.decodeToImage(this.cover);
-        WritableImage returnIt = new WritableImage(bi.getWidth(), bi.getHeight());
-        SwingFXUtils.toFXImage(bi, returnIt);
-        return returnIt;
+
+    public Image gibCoverImage() {
+        if (!cover.equals("")) {
+            BufferedImage bi = JSON_Parser.decodeToImage(this.cover);
+            WritableImage returnIt = new WritableImage(bi.getWidth(), bi.getHeight());
+            SwingFXUtils.toFXImage(bi, returnIt);
+            return returnIt;
+        } else {
+            return null;
+        }
     }
 
     public String getCover() {
@@ -51,6 +58,5 @@ public class Cover {
     public void setFilm_id(int film_id) {
         this.film_id = film_id;
     }
-    
 
 }

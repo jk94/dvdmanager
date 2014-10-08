@@ -8,6 +8,8 @@ import static de.codekings.client.Enum.ContentPageType.BACK;
 import static de.codekings.client.Enum.ContentPageType.FORWARD;
 import de.codekings.client.GUI.Katalog.Katalogmanager;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ScrollPane;
 
 /*
@@ -46,8 +48,13 @@ public class ContentManager {
         switch (t) {
             case Katalog_Start:
                 Katalogmanager k = new Katalogmanager();
-                while (k.waitForContent()) {
-                }
+                do {
+                    try {
+                        Thread.sleep(1000l);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ContentManager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } while (k.waitForContent());
 
                 p = k.getContentView();
                 break;
