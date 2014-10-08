@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.codekings.common.Enumerators.ClassType;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Logger;
 
 /**
  *

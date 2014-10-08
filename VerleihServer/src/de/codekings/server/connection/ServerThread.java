@@ -63,7 +63,6 @@ class ServerThread extends Thread {
             String s = "";
             JSON_Parser j = new JSON_Parser();
             while ((s = reader.readLine()) != null) {
-                //TODO Auslesen!
                 s = s.trim();
                 System.out.println(s);
                 if (s.equals("")) {
