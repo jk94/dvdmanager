@@ -11,63 +11,6 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.MainFrame.TemplateController">
-   <top>
-      <HBox prefHeight="64.0" styleClass="header" stylesheets="@template.css" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="head_btn_home" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="imgbtn" stylesheets="@template.css">
-               <graphic>
-                  <ImageView fx:id="head_btn_home_img" fitHeight="40.0" fitWidth="40.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Elements/homebutton.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="head_btn_back" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="imgbtn" stylesheets="@template.css">
-               <graphic>
-                  <ImageView fx:id="head_btn_back_img" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Elements/arrowleft.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="head_btn_forward" layoutX="41.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="imgbtn" stylesheets="@template.css">
-               <graphic>
-                  <ImageView fx:id="head_btn_forward_img" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Elements/arrowright.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Region prefHeight="56.0" prefWidth="188.0" />
-            <Label alignment="CENTER" prefHeight="36.0" prefWidth="567.0" text="CODEKINGS DVD" textAlignment="CENTER" textFill="#b43104">
-               <font>
-                  <Font name="Stencil" size="45.0" />
-               </font>
-            </Label>
-            <Region layoutX="106.0" layoutY="10.0" prefHeight="56.0" prefWidth="167.0" />
-            <Button fx:id="btn_search" layoutX="46.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css" HBox.hgrow="ALWAYS">
-               <graphic>
-                  <ImageView fx:id="head_searchicon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Elements/searchicon.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <HBox.margin>
-                  <Insets top="15.0" />
-               </HBox.margin>
-            </Button>
-            <TextField maxWidth="150.0" minWidth="150.0" prefHeight="15.0" prefWidth="150.0" styleClass="search-box" stylesheets="@template.css" text="Titelsuche" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets top="15.0" />
-               </HBox.margin></TextField>
-            <Region layoutX="844.0" layoutY="15.0" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
-         </children>
-      </HBox>
-   </top>
    <left>
       <Accordion fx:id="menu_accordion" style="-fx-background-color: #1C1C1C;" styleClass="menu-accordion" stylesheets="@template.css" BorderPane.alignment="CENTER">
         <panes>
@@ -140,4 +83,76 @@
    <center>
       <ScrollPane fx:id="content_base" fitToHeight="true" fitToWidth="true" pannable="true" styleClass="content-base" stylesheets="@template.css" BorderPane.alignment="CENTER" />
    </center>
+   <bottom>
+      <HBox prefHeight="64.0" styleClass="header" stylesheets="@template.css" BorderPane.alignment="CENTER">
+         <children>
+            <Region prefHeight="56.0" prefWidth="188.0" />
+            <Region layoutX="106.0" layoutY="10.0" prefHeight="56.0" prefWidth="167.0" />
+            <Region layoutX="844.0" layoutY="15.0" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <BorderPane prefHeight="72.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+         <left>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <Button fx:id="head_btn_home" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="imgbtn" stylesheets="@template.css" BorderPane.alignment="CENTER">
+                     <graphic>
+                        <ImageView fx:id="head_btn_home_img" fitHeight="40.0" fitWidth="40.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Elements/homebutton.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="head_btn_back" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="imgbtn" stylesheets="@template.css">
+                     <graphic>
+                        <ImageView fx:id="head_btn_back_img" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Elements/arrowleft.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="head_btn_forward" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="imgbtn" stylesheets="@template.css">
+                     <graphic>
+                        <ImageView fx:id="head_btn_forward_img" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Elements/arrowright.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </left>
+         <center>
+            <Label alignment="CENTER" prefHeight="36.0" prefWidth="567.0" text="CODEKINGS DVD" textAlignment="CENTER" textFill="#b43104" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Stencil" size="45.0" />
+               </font>
+            </Label>
+         </center>
+         <right>
+            <HBox alignment="CENTER_RIGHT">
+               <children>
+                  <Button fx:id="btn_search" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" stylesheets="@template.css" HBox.hgrow="ALWAYS">
+                     <graphic>
+                        <ImageView fx:id="head_searchicon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Elements/searchicon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </Button>
+                  <TextField maxWidth="150.0" minWidth="150.0" prefHeight="15.0" prefWidth="150.0" styleClass="search-box" stylesheets="@template.css" text="Titelsuche" BorderPane.alignment="CENTER" />
+               </children>
+            </HBox>
+         </right>
+      </BorderPane>
+   </top>
 </BorderPane>
