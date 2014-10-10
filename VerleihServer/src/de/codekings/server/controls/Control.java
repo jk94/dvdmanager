@@ -7,13 +7,10 @@ package de.codekings.server.controls;
 
 import de.codekings.common.Connection.Krypter;
 import de.codekings.common.config.ConfigManager;
-import de.codekings.common.datacontents.Film;
-import de.codekings.common.datacontents.Genre;
 import de.codekings.common.log.LogInitialiser;
 import de.codekings.server.connection.VerleihServer;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;

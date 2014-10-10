@@ -7,7 +7,8 @@ package de.codekings.client.GUI.Katalog;
 
 import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
-import de.codekings.client.main.Control;
+import de.codekings.client.GUI.ContentView;
+import de.codekings.client.Controls.Control;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
@@ -15,9 +16,7 @@ import de.codekings.common.datacontents.Sendable;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Orientation;
 import javafx.scene.Parent;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -25,7 +24,7 @@ import javafx.scene.layout.VBox;
  *
  * @author Jan
  */
-public class Katalogmanager implements MessageReturn {
+public class Katalogmanager implements MessageReturn, ContentView{
 
     private ArrayList<Katalogeintrag> li_eintraege;
     private boolean contentready = false;
@@ -72,11 +71,7 @@ public class Katalogmanager implements MessageReturn {
                     addEintrag(k);
 
                     vboxliste.getChildren().add(pa);
-                    //Separator sep = new Separator(Orientation.HORIZONTAL);
-                    //sep.setBorder(Border.);
-                    //sep.setId("katalog-seperator");
 
-                    //vboxliste.getChildren().add(sep);
                 } catch (IOException e) {
                     System.out.println(e.getCause());
                 }
@@ -149,6 +144,7 @@ public class Katalogmanager implements MessageReturn {
         }
     }
 
+    @Override
     public Parent getContentView() {
         return content;
     }

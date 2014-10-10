@@ -2,12 +2,10 @@ package de.codekings.client.Controls;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.layout.Pane;
 import de.codekings.client.Enum.ContentPageType;
 import static de.codekings.client.Enum.ContentPageType.BACK;
 import static de.codekings.client.Enum.ContentPageType.FORWARD;
 import de.codekings.client.GUI.Katalog.Katalogmanager;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.ScrollPane;
@@ -21,11 +19,11 @@ import javafx.scene.control.ScrollPane;
  *
  * @author Jan
  */
-public class ContentManager {
+public class ContentControl {
 
     private static Verlaufsmanager verlManager;
 
-    public ContentManager() {
+    public ContentControl() {
         Verlaufsmanager v = new Verlaufsmanager();
         setVerlaufsManager(v);
     }
@@ -52,7 +50,7 @@ public class ContentManager {
                     try {
                         Thread.sleep(1000l);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(ContentManager.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ContentControl.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } while (k.waitForContent());
 
@@ -64,14 +62,14 @@ public class ContentManager {
 
             case Kunde_Start:
                 try {
-                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Kunden/kunde_start.fxml"));
+                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/gui/kunden/kunde_start.fxml"));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 break;
             case Kunde_Ausleihen:
                 try {
-                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Kunden/kunde_ausleihen.fxml"));
+                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/gui/kunden/kunde_ausleihen.fxml"));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }

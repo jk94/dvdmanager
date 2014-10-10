@@ -6,7 +6,7 @@
 package de.codekings.client.GUI.MainFrame;
 
 import de.codekings.client.GUI.Katalog.CoverFlowAnzeige;
-import de.codekings.client.main.Control;
+import de.codekings.client.Controls.Control;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

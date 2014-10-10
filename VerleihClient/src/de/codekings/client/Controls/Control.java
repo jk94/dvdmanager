@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.codekings.client.main;
+package de.codekings.client.Controls;
 
-import de.codekings.client.Controls.ContentManager;
 import de.codekings.client.connection.ClientThread_2;
 import de.codekings.common.Connection.Krypter;
 import de.codekings.common.config.ConfigManager;
@@ -20,13 +19,13 @@ public class Control {
 
     private ConfigManager cfgManager;
     private Krypter krypter;
-    private ContentManager contManager;
+    private ContentControl contManager;
     private static Control control;
 
     public Control() {
         loadConfig();
         loadKrypter();
-        loadContentManager();
+        loadContentControl();
         //getPublicKey();
 
     }
@@ -87,11 +86,11 @@ public class Control {
                 Integer.parseInt(cfgManager.getConfigs().getProperty("standardport")));
     }
 
-    public final void loadContentManager() {
-        this.contManager = new ContentManager();
+    public final void loadContentControl() {
+        this.contManager = new ContentControl();
     }
 
-    public final ContentManager getContentManager() {
+    public final ContentControl getContentControl() {
         return this.contManager;
     }
 }
