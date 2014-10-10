@@ -18,6 +18,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 /**
@@ -88,6 +89,8 @@ public class TemplateController implements Initializable {
     private Button kunde_btn_bewertung;
     @FXML
     private Button kunde_btn_kontoverwaltung;
+    @FXML
+    private BorderPane bp_mainframe;
 
     /**
      * Initializes the controller class.
@@ -144,6 +147,8 @@ public class TemplateController implements Initializable {
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });
+        
+        
     }
 
     public Pane getContentPane() {

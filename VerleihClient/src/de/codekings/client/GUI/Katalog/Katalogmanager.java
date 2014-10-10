@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -24,7 +25,7 @@ import javafx.scene.layout.VBox;
  *
  * @author Jan
  */
-public class Katalogmanager implements MessageReturn, ContentView{
+public class Katalogmanager implements MessageReturn, ContentView {
 
     private ArrayList<Katalogeintrag> li_eintraege;
     private boolean contentready = false;
@@ -44,14 +45,23 @@ public class Katalogmanager implements MessageReturn, ContentView{
 
     @Override
     public void returnedMessage(Message m) {
-        System.out.println(m.getCommand());
         if (m.getCommand().equalsIgnoreCase("returnFilms")) {
+            VBox vboxliste = new VBox();
+            
+            Image[] images = new Image[4];
+            for (int i = 0; i < 4; i++) {
+                images[i] = new Image(CoverFlowAnzeige.class.getResource("cover" + (i + 1) + ".png").toExternalForm(), false);
+            }
+
+            CoverFlow displayShelf = new CoverFlow(images);
+            displayShelf.setPrefSize(395, 300);
+            vboxliste.getChildren().add(displayShelf);
             ArrayList<Film> filme = new ArrayList();
 
             m.getContent().stream().filter((s) -> (s instanceof Film)).forEach((s) -> {
                 filme.add((Film) s);
             });
-            VBox vboxliste = new VBox();
+
             for (Film f : filme) {
                 Pane pa = null;
                 try {
@@ -87,7 +97,7 @@ public class Katalogmanager implements MessageReturn, ContentView{
                 ClientThread getCoverThread = new ClientThread(this, host, port, c.getKrypter());
                 Message covermessage = new Message("getCover");
                 covermessage.addAdditionalParameter("FILM_ID", String.valueOf(ke.getFilm().getFILMID()));
-                getCoverThread.requestToServer(covermessage, false);
+                //getCoverThread.requestToServer(covermessage, false);
             }
 
         }

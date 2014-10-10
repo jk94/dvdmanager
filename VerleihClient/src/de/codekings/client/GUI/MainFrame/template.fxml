@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.MainFrame.TemplateController">
+<BorderPane fx:id="bp_mainframe" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.MainFrame.TemplateController">
    <top>
       <HBox prefHeight="64.0" styleClass="header" stylesheets="@template.css" BorderPane.alignment="CENTER">
          <children>

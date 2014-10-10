@@ -38,7 +38,7 @@ public class MainApplication extends Application {
         
         primaryStage.show();
         CoverFlowAnzeige ca = new CoverFlowAnzeige();
-        ca.start(new Stage());
+        //ca.start(new Stage());
     }
 
 }

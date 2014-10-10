@@ -127,5 +127,9 @@ public class ContentControl {
 
         return true;
     }
+    
+    public void formResized(){
+        
+    }
 
 }
