@@ -1,1 +1,0 @@
-INSERT INTO "tbl_user" ("U_ID", "name", "surname", "street", "street_nr", "zip_code", "location", "password", "birthdate", "email", "accountnumber") VALUES ('1', 'Koschke', 'Jan', 'Erbastraße', '26', '70736', 'Fellbach', 'start123', '767484000000', 'jankoschke@googlemail.com', '0000000027');

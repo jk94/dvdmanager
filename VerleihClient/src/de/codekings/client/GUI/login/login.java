@@ -27,10 +27,10 @@ public class login extends Application {
         try {
             root = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/gui/login/loginform.fxml"));
         } catch (IOException e) {
-
+            System.out.println(e.getMessage());
         }
 
-        Scene scene = new Scene(root, 300, 250);
+        Scene scene = new Scene(root, 450, 270);
 
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("");
