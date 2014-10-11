@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.codekings.client.gui.login;
+package de.codekings.client.GUI.Login;
 
 import java.net.URL;
 import java.util.ResourceBundle;
