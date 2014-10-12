@@ -5,6 +5,8 @@
  */
 package de.codekings.client.GUI.Login;
 
+import de.codekings.client.Controls.Control;
+import de.codekings.client.GUI.Katalog.Katalog_itemController;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,15 +21,23 @@ import javafx.stage.StageStyle;
  */
 public class login extends Application {
 
+    Control c;
+
     @Override
     public void start(Stage primaryStage) {
-
+        c = new Control();
+        Control.setControl(c);
         Parent root = null;
-
+        LoginFormController lfc = null;
         try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/gui/login/loginform.fxml"));
-        } catch (IOException e) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            root = fxmlLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Login/loginform.fxml").openStream());
+
+            lfc = (LoginFormController) fxmlLoader.getController();
+            //root = FXMLLoader.load(getClass().getResource("loginform.fxml"));
+        } catch (Exception e) {
             System.out.println(e.getMessage());
+            System.exit(0);
         }
 
         Scene scene = new Scene(root, 450, 270);

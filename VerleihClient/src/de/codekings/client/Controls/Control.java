@@ -5,9 +5,13 @@
  */
 package de.codekings.client.Controls;
 
-import de.codekings.client.connection.ClientThread_2;
+import de.codekings.client.connection.ClientThread;
+import de.codekings.client.connection.MessageReturn;
 import de.codekings.common.Connection.Krypter;
+import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
+import de.codekings.common.datacontents.Sendable;
+import de.codekings.common.datacontents.SendablePublicKey;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -15,12 +19,13 @@ import java.io.FileNotFoundException;
  *
  * @author Jan
  */
-public class Control {
+public class Control implements MessageReturn {
 
     private ConfigManager cfgManager;
     private Krypter krypter;
     private ContentControl contManager;
     private static Control control;
+    private boolean pubKeyEmpfangen = false;
 
     public Control() {
         loadConfig();
@@ -45,6 +50,15 @@ public class Control {
                     + "Default Nachricht erstellt.\n"
                     + "Bitte Server neu starten!");
             System.exit(0);
+        }
+    }
+
+    @Override
+    public void returnedMessage(Message m) {
+        if (m.getCommand().equalsIgnoreCase("returnPublicKey")) {
+            m.getContent().stream().filter((s) -> (s instanceof SendablePublicKey)).map((s) -> (SendablePublicKey) s).forEach((spk) -> {
+                krypter.setForeignPublicKey(spk.generatePublicKey());
+            });
         }
     }
 
@@ -80,10 +94,26 @@ public class Control {
         return control;
     }
 
-    public final void getPublicKey() {
-        ClientThread_2 c = new ClientThread_2(krypter);
-        c.requestForPubKeyFromServer(cfgManager.getConfigs().getProperty("ip"),
-                Integer.parseInt(cfgManager.getConfigs().getProperty("standardport")));
+    public final boolean getPublicKey() {
+        String host = cfgManager.getConfigs().getProperty("ip");
+        int port = Integer.parseInt(cfgManager.getConfigs().getProperty("standardport"));
+
+        Message pkrequest = new Message("getPublicKey");
+        ClientThread ct = new ClientThread(this, host, port, krypter);
+
+        pubKeyEmpfangen = false;
+        ct.requestToServer(pkrequest, false);
+
+        int counter = 0;
+        while (counter < 10 || !pubKeyEmpfangen) {
+            try {
+                counter++;
+                Thread.sleep(1000l);
+            } catch (InterruptedException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return pubKeyEmpfangen;
     }
 
     public final void loadContentControl() {
@@ -92,5 +122,21 @@ public class Control {
 
     public final ContentControl getContentControl() {
         return this.contManager;
+    }
+
+    public boolean login(String email, String passwort) {
+        if (krypter.hasForeignPublicKey()) {
+
+            return true;
+        } else {
+            /*if (getPublicKey()) {
+             } else {
+                
+             }
+             return false;*/
+
+        }
+
+        return false;
     }
 }
