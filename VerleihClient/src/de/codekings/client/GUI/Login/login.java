@@ -21,7 +21,7 @@ import javafx.stage.StageStyle;
  */
 public class login extends Application {
 
-    Control c;
+    private Control c;
 
     @Override
     public void start(Stage primaryStage) {
@@ -34,6 +34,7 @@ public class login extends Application {
             root = fxmlLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Login/loginform.fxml").openStream());
 
             lfc = (LoginFormController) fxmlLoader.getController();
+            lfc.setControl(c);
             //root = FXMLLoader.load(getClass().getResource("loginform.fxml"));
         } catch (Exception e) {
             System.out.println(e.getMessage());

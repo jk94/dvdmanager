@@ -5,12 +5,12 @@
  */
 package de.codekings.client.Controls;
 
+import de.codekings.client.GUI.Login.LoginSession;
 import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
 import de.codekings.common.Connection.Krypter;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
-import de.codekings.common.datacontents.Sendable;
 import de.codekings.common.datacontents.SendablePublicKey;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,6 +26,7 @@ public class Control implements MessageReturn {
     private ContentControl contManager;
     private static Control control;
     private boolean pubKeyEmpfangen = false;
+    private LoginSession session = new LoginSession("", "");
 
     public Control() {
         loadConfig();
@@ -59,6 +60,10 @@ public class Control implements MessageReturn {
             m.getContent().stream().filter((s) -> (s instanceof SendablePublicKey)).map((s) -> (SendablePublicKey) s).forEach((spk) -> {
                 krypter.setForeignPublicKey(spk.generatePublicKey());
             });
+        }
+        if (m.getCommand().equalsIgnoreCase("returnlogin")) {
+            boolean success = Boolean.getBoolean(m.getAdditionalparameter().get("success"));
+
         }
     }
 
@@ -94,7 +99,7 @@ public class Control implements MessageReturn {
         return control;
     }
 
-    public final boolean getPublicKey() {
+    public final boolean requestPublicKey() {
         String host = cfgManager.getConfigs().getProperty("ip");
         int port = Integer.parseInt(cfgManager.getConfigs().getProperty("standardport"));
 
@@ -125,15 +130,31 @@ public class Control implements MessageReturn {
     }
 
     public boolean login(String email, String passwort) {
+        String host = cfgManager.getConfigs().getProperty("ip");
+        int port = Integer.parseInt(cfgManager.getConfigs().getProperty("secureport"));
+
+        Message loginrequest = new Message("login");
+        loginrequest.addAdditionalParameter("email", email);
+        loginrequest.addAdditionalParameter("passwort", passwort);
+        int i = 1;
+        if (i > 0) {
+            return false;
+        }
+        ClientThread loginsession;
         if (krypter.hasForeignPublicKey()) {
 
-            return true;
+            loginsession = new ClientThread(this, host, port, krypter);
+            loginsession.requestToServer(loginrequest, true);
+
+            //return true;
         } else {
-            /*if (getPublicKey()) {
-             } else {
-                
-             }
-             return false;*/
+            if (requestPublicKey()) {
+                loginsession = new ClientThread(this, host, port, krypter);
+                loginsession.requestToServer(loginrequest, true);
+            } else {
+
+            }
+            return false;
 
         }
 

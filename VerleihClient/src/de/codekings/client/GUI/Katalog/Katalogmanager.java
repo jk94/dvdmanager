@@ -5,6 +5,8 @@
  */
 package de.codekings.client.GUI.Katalog;
 
+import de.codekings.client.GUI.Katalog.CoverFlow.CoverFlowAnzeige;
+import de.codekings.client.GUI.Katalog.CoverFlow.CoverFlow;
 import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
 import de.codekings.client.GUI.ContentView;

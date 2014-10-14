@@ -69,7 +69,7 @@ public class ClientThread extends Thread {
                 System.out.println(ex.getMessage());
             }
         }).start();
-         writer.append(jwriter.parseObjectToString(m) + "\n");
+        writer.append(jwriter.parseObjectToString(m) + "\n");
         writer.flush();
     }
 

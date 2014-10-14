@@ -5,8 +5,6 @@
  */
 package de.codekings.client.GUI.Katalog;
 
-import de.codekings.client.connection.ClientThread_2;
-import de.codekings.client.Controls.Control;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;

@@ -10,14 +10,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="450.0" styleClass="content-back" stylesheets="@../MainFrame/template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Login.LoginFormController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="450.0" styleClass="content-back" stylesheets="@./template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Login.LoginFormController">
    <top>
       <BorderPane prefHeight="123.0" prefWidth="450.0" BorderPane.alignment="CENTER">
          <center>
-            <ImageView fitHeight="115.0" fitWidth="410.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-               <image>
-                  <Image url="@../elements/cover.png" />
-               </image>
+            <ImageView fx:id="login_headerimg" fitHeight="115.0" fitWidth="410.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <effect>
                   <Bloom />
                </effect>

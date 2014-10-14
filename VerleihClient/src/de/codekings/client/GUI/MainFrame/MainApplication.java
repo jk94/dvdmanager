@@ -5,7 +5,7 @@
  */
 package de.codekings.client.GUI.MainFrame;
 
-import de.codekings.client.GUI.Katalog.CoverFlowAnzeige;
+import de.codekings.client.GUI.Katalog.CoverFlow.CoverFlowAnzeige;
 import de.codekings.client.Controls.Control;
 import java.io.IOException;
 import javafx.application.Application;
@@ -20,11 +20,10 @@ import javafx.stage.Stage;
  */
 public class MainApplication extends Application {
 
-    
-    
     @Override
     public void start(Stage primaryStage) throws Exception {
-        
+        Control c = new Control();
+        c.setControl(c);
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("template.fxml"));
@@ -34,10 +33,14 @@ public class MainApplication extends Application {
         Scene scene = new Scene(root);
         primaryStage.setTitle("DVD Verleih");
         primaryStage.setScene(scene);
-        
+
         primaryStage.show();
         CoverFlowAnzeige ca = new CoverFlowAnzeige();
         ca.start(new Stage());
+    }
+
+    public static void main(String[] args) {
+        MainApplication.launch(args);
     }
 
 }

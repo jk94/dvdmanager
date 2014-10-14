@@ -36,12 +36,18 @@ class ServerThread extends Thread {
     private Krypter krypter;
     private final boolean secured;
 
+    /**
+     * Neuer ServerThread -> Instanz von Server zur Verbindung eines Clients
+     * @param s Socket des Servers
+     * @param k Krypter (Wenn secure=false -> optional)
+     * @param secure Verschlüsselte Verbindung (bei true -> Krypter PFLICHT!)
+     */
     public ServerThread(Socket s, Krypter k, boolean secure) {
         this.krypter = k;
         this.socket = s;
         this.secured = secure;
         try {
-            if (secure) {
+            if (secure) { //Wenn verschlüsselt, dann den verschlüsselten Stream öffnen, ansonsten normalen.
                 try {
                     writer = new PrintWriter(Krypter.encryptOutputStream(socket.getOutputStream(), k.getForeignPublicKey()));
                     reader = new BufferedReader(new InputStreamReader(Krypter.decryptInputStream(socket.getInputStream(), k.getKeys().getPrivate())));
@@ -57,18 +63,24 @@ class ServerThread extends Thread {
         }
     }
 
+    
+    /**
+     * Socketlistener -> Liest die Nachrichten.
+     */
     @Override
     public void run() {
         try {
-            String s = "";
+            String s;
             JSON_Parser j = new JSON_Parser();
             while ((s = reader.readLine()) != null) {
                 s = s.trim();
-                System.out.println(s);
                 if (s.equals("")) {
                 } else {
-                    Message m = (Message) j.parseStringToObject(s, Message.class);
-                    if (MessageAuswertung(m)) {
+                    Message m = (Message) j.parseStringToObject(s, Message.class); //Konvertierung von JSON-String in Message
+                    if (MessageAuswertung(m)) { //Wenn MessageAuswertung = true, wird Verbindung getrennt.
+                        reader.close();
+                        writer.close();
+                        socket.close();
                         break;
                     } else {
                     }
@@ -79,6 +91,12 @@ class ServerThread extends Thread {
         }
     }
 
+    
+    /**
+     * Schickt eine is JSON-Format konvertierte Message
+     * @param s Message als JSON-String
+     * @throws PublicKeyNotFoundException 
+     */
     private void write(String s) throws PublicKeyNotFoundException {
         if (secured) {
             try {
@@ -93,10 +111,17 @@ class ServerThread extends Thread {
         writer.flush();
     }
 
+    /**
+     * Auswertung einer empfangenen Message. Führt entsprechende
+     * Operationen zur Bearbeitung dieser aus.
+     * @param m Message die ausgewertet und bearbeitet werden soll
+     * @return Ob Verbdindung zum Client getrennt werden kann
+     */
     private boolean MessageAuswertung(Message m) {
         boolean beenden = false;
         JSON_Parser j = new JSON_Parser();
-        //GET PUBLIC KEY
+        
+        // <editor-fold defaultstate="collapsed" desc="getPublicKey">
         if (m.getCommand().equalsIgnoreCase("getPublicKey")) {
             Message answer = new Message("returnPublicKey");
             answer.addSendable(new SendablePublicKey(krypter.getKeys().getPublic().getEncoded()));
@@ -107,8 +132,9 @@ class ServerThread extends Thread {
                 log.log(Level.WARNING, e.getMessage());
                 beenden = true;
             }
-        }
-        //RETURN FILMS
+        } //</editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="getFilms">
         if (m.getCommand().equalsIgnoreCase("getFilms")) {
             Message returnMessage = new Message("returnFilms");
 
@@ -122,12 +148,14 @@ class ServerThread extends Thread {
             } catch (PublicKeyNotFoundException e) {
             }
             beenden = true;
-        }
+        }//</editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="getCover">
         if (m.getCommand().equalsIgnoreCase("getCover")) {
             Message returnMessage = new Message("returnCover");
 
             Cover c = DBOperations.getCover(Integer.parseInt(m.getAdditionalparameter().get("FILM_ID")));
-            
+
             returnMessage.addSendable(c);
             returnMessage.addAdditionalParameter("FILM_ID", m.getAdditionalparameter().get("FILM_ID"));
 
@@ -140,13 +168,29 @@ class ServerThread extends Thread {
                 }
             }
             beenden = true;
-        }
+        }//</editor-fold>
+        // <editor-fold defaultstate="collapsed" desc="login">
+        if (m.getCommand().equalsIgnoreCase("login")) {
+
+        }//</editor-fold>
+
         return beenden;
 
     }
 
-    public void closeConnection() throws IOException {
-        this.socket.close();
+    
+    /**
+     * Schließt die Verbindung zum Client
+     * @throws IOException 
+     */
+    public void closeConnection() {
+        try {
+            this.reader.close();
+            this.writer.close();
+            this.socket.close();
+        } catch (IOException ex) {
+            log.log(Level.SEVERE, ex.getMessage());
+        }
     }
 
 }
