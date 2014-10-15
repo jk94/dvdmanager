@@ -59,11 +59,12 @@ public class Control implements MessageReturn {
         if (m.getCommand().equalsIgnoreCase("returnPublicKey")) {
             m.getContent().stream().filter((s) -> (s instanceof SendablePublicKey)).map((s) -> (SendablePublicKey) s).forEach((spk) -> {
                 krypter.setForeignPublicKey(spk.generatePublicKey());
+                pubKeyEmpfangen = true;
             });
         }
         if (m.getCommand().equalsIgnoreCase("returnlogin")) {
             boolean success = Boolean.getBoolean(m.getAdditionalparameter().get("success"));
-
+            
         }
     }
 
@@ -79,6 +80,8 @@ public class Control implements MessageReturn {
                     krypter.generateKeyPair();
                 }
             }
+        }else{
+            krypter.generateKeyPair();
         }
 
     }
