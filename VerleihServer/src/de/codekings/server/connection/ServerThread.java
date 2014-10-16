@@ -9,7 +9,9 @@ import de.codekings.common.Connection.Krypter;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
+import de.codekings.common.datacontents.Sendable;
 import de.codekings.common.datacontents.SendablePublicKey;
+import de.codekings.common.datacontents.User;
 import de.codekings.common.exceptions.PublicKeyNotFoundException;
 import de.codekings.common.json.JSON_Parser;
 import de.codekings.server.controls.Control;
@@ -38,6 +40,7 @@ class ServerThread extends Thread {
 
     /**
      * Neuer ServerThread -> Instanz von Server zur Verbindung eines Clients
+     *
      * @param s Socket des Servers
      * @param k Krypter (Wenn secure=false -> optional)
      * @param secure Verschlüsselte Verbindung (bei true -> Krypter PFLICHT!)
@@ -63,7 +66,6 @@ class ServerThread extends Thread {
         }
     }
 
-    
     /**
      * Socketlistener -> Liest die Nachrichten.
      */
@@ -91,11 +93,11 @@ class ServerThread extends Thread {
         }
     }
 
-    
     /**
      * Schickt eine is JSON-Format konvertierte Message
+     *
      * @param s Message als JSON-String
-     * @throws PublicKeyNotFoundException 
+     * @throws PublicKeyNotFoundException
      */
     private void write(String s) throws PublicKeyNotFoundException {
         if (secured) {
@@ -112,15 +114,16 @@ class ServerThread extends Thread {
     }
 
     /**
-     * Auswertung einer empfangenen Message. Führt entsprechende
-     * Operationen zur Bearbeitung dieser aus.
+     * Auswertung einer empfangenen Message. Führt entsprechende Operationen zur
+     * Bearbeitung dieser aus.
+     *
      * @param m Message die ausgewertet und bearbeitet werden soll
      * @return Ob Verbdindung zum Client getrennt werden kann
      */
     private boolean MessageAuswertung(Message m) {
         boolean beenden = false;
         JSON_Parser j = new JSON_Parser();
-        
+
         // <editor-fold defaultstate="collapsed" desc="getPublicKey">
         if (m.getCommand().equalsIgnoreCase("getPublicKey")) {
             Message answer = new Message("returnPublicKey");
@@ -133,7 +136,7 @@ class ServerThread extends Thread {
                 beenden = true;
             }
         } //</editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="getFilms">
         if (m.getCommand().equalsIgnoreCase("getFilms")) {
             Message returnMessage = new Message("returnFilms");
@@ -149,7 +152,7 @@ class ServerThread extends Thread {
             }
             beenden = true;
         }//</editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="getCover">
         if (m.getCommand().equalsIgnoreCase("getCover")) {
             Message returnMessage = new Message("returnCover");
@@ -171,17 +174,44 @@ class ServerThread extends Thread {
         }//</editor-fold>
         // <editor-fold defaultstate="collapsed" desc="login">
         if (m.getCommand().equalsIgnoreCase("login")) {
+            String email, hashedpw;
+            email = m.getAdditionalparameter().get("email");
+            hashedpw = m.getAdditionalparameter().get("passwort");
 
+            User u = DBOperations.getUser(email);
+
+            Message answer;
+            if (u.getPasswort().equals(hashedpw)) {
+                answer = new Message("loginresult"); //Hier wird eingeloggt
+                answer.addAdditionalParameter("result", "success");
+            } else {
+                answer = new Message("loginresult");
+                answer.addAdditionalParameter("result", "failed");
+            }
+            try {
+                for(Sendable s:m.getContent()){
+                    if(s instanceof SendablePublicKey){
+                        SendablePublicKey spk = (SendablePublicKey) s;
+                        krypter.setForeignPublicKey(spk.generatePublicKey());
+                        break;
+                    }
+                }
+                write(j.parseObjectToString(answer));
+            } catch (PublicKeyNotFoundException ex) {
+                log.log(Level.SEVERE, ex.getMessage());
+            }
+            
+            beenden = true;
         }//</editor-fold>
 
         return beenden;
 
     }
 
-    
     /**
      * Schließt die Verbindung zum Client
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     public void closeConnection() {
         try {

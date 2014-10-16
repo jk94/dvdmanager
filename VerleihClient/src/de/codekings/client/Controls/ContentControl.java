@@ -46,13 +46,15 @@ public class ContentControl {
         switch (t) {
             case Katalog_Start:
                 Katalogmanager k = new Katalogmanager();
+                int counter = 0;
                 do {
+                    counter++;
                     try {
                         Thread.sleep(1000l);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ContentControl.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } while (k.waitForContent());
+                } while (k.waitForContent() || counter>4);
 
                 p = k.getContentView();
                 break;

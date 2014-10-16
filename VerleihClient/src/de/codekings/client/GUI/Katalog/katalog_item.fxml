@@ -9,16 +9,6 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane maxHeight="810.0" maxWidth="1024.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" styleClass="content-katalog-item-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Katalog.Katalog_itemController">
-    <left>
-        <ImageView fx:id="katalog_cover" fitHeight="254.0" fitWidth="209.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-            <effect>
-                <Reflection fraction="0.11" topOpacity="0.4" />
-            </effect>
-         <BorderPane.margin>
-            <Insets bottom="20.0" left="5.0" right="5.0" top="5.0" />
-         </BorderPane.margin>
-        </ImageView>
-    </left>
     <center>
         <VBox styleClass="content" BorderPane.alignment="CENTER">
             <children>
@@ -104,4 +94,17 @@
          </children>
       </VBox>
    </bottom>
+   <left>
+      <Pane prefWidth="210.0" BorderPane.alignment="CENTER">
+         <children>
+              <ImageView fx:id="katalog_cover" fitHeight="230.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets left="5.0" right="5.0" />
+         </BorderPane.margin>
+      </Pane>
+   </left>
 </BorderPane>
