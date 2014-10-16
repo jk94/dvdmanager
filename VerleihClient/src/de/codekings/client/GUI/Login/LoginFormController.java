@@ -119,6 +119,8 @@ public class LoginFormController implements Initializable {
             boolean ergebnis = control.login(email, passwort);
             if (ergebnis) {
                 //Logged In
+                setHinweis("Angemeldet!");
+                setHinweisVisible(true);
             } else {
                 setHinweisVisible(true);
                 setHinweis("Anmeldung fehlgeschlagen.\nBitte erneut versuchen.");

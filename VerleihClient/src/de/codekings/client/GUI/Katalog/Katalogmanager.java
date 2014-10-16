@@ -40,9 +40,9 @@ public class Katalogmanager implements MessageReturn, ContentView {
         li_eintraege = new ArrayList<>();
         Control c = Control.getControl();
         String host = c.getCfgManager().getConfigs().getProperty("ip");
-        int port = Integer.parseInt(c.getCfgManager().getConfigs().getProperty("standardport"));
+        int port = Integer.parseInt(c.getCfgManager().getConfigs().getProperty("port"));
 
-        ClientThread clth = new ClientThread(this, host, port, c.getKrypter());
+        ClientThread clth = new ClientThread(this, host, port);
 
         Message m = new Message("getFilms");
         clth.requestToServer(m, false);
@@ -65,7 +65,7 @@ public class Katalogmanager implements MessageReturn, ContentView {
 
             String pfad = "de/codekings/client/GUI/Elements/loading.gif";
             InputStream is = LoginFormController.class.getClassLoader().getResourceAsStream(pfad);
-            Image img = new Image(is, 100.0, 100.0, true, true);
+            Image img = new Image(is, 200.0, 250.0, true, true);
 
             m.getContent().stream().filter((s) -> (s instanceof Film)).forEach((s) -> {
                 filme.add((Film) s);
@@ -101,10 +101,10 @@ public class Katalogmanager implements MessageReturn, ContentView {
 
             Control c = Control.getControl();
             String host = c.getCfgManager().getConfigs().getProperty("ip");
-            int port = Integer.parseInt(c.getCfgManager().getConfigs().getProperty("standardport"));
+            int port = Integer.parseInt(c.getCfgManager().getConfigs().getProperty("port"));
 
             for (Katalogeintrag ke : li_eintraege) {
-                ClientThread getCoverThread = new ClientThread(this, host, port, c.getKrypter());
+                ClientThread getCoverThread = new ClientThread(this, host, port);
                 Message covermessage = new Message("getCover");
                 covermessage.addAdditionalParameter("FILM_ID", String.valueOf(ke.getFilm().getFILMID()));
                 getCoverThread.requestToServer(covermessage, false);

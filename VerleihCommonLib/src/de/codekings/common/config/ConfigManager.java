@@ -107,9 +107,7 @@ public class ConfigManager {
     public void writeDefaultClientConfig(){
         Properties property = new Properties();
         property.put("ip", "127.0.0.1");
-        property.put("secureport", "2704");
-        property.put("standardport", "1994");
-        property.put("generatenewkeys", "false");
+        property.put("port", "1994");
         
         writeConfig(property, "client.cfg", "Client-Konfiguration\n\nHier lassen sich ein"
                 + " paar Einstellungen für den Client festlegen!");

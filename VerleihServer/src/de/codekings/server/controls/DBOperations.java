@@ -158,7 +158,7 @@ public class DBOperations {
             String sql = "SELECT * FROM tbl_user WHERE email = ?";
             PreparedStatement ps = dbc.getConnection().prepareStatement(sql);
 
-            ps.setString(0, email);
+            ps.setString(1, email);
 
             ResultSet rs = dbc.executeQuery(ps);
 
@@ -198,7 +198,7 @@ public class DBOperations {
             String sql = "SELECT * FROM tbl_user WHERE U_ID = ?";
             PreparedStatement ps = dbc.getConnection().prepareStatement(sql);
 
-            ps.setInt(0, u_id);
+            ps.setInt(1, u_id);
 
             ResultSet rs = dbc.executeQuery(ps);
 
@@ -240,7 +240,7 @@ public class DBOperations {
                 String sql = "SELECT * FROM tbl_mitarbeiter WHERE U_ID = ?";
                 PreparedStatement ps = dbc.getConnection().prepareStatement(sql);
 
-                ps.setInt(0, u.getU_ID());
+                ps.setInt(1, u.getU_ID());
 
                 ResultSet rs = dbc.executeQuery(ps);
 

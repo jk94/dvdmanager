@@ -5,15 +5,11 @@
  */
 package de.codekings.server.connection;
 
-import de.codekings.common.Connection.Krypter;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Mitarbeiter;
-import de.codekings.common.datacontents.Sendable;
-import de.codekings.common.datacontents.SendablePublicKey;
-import de.codekings.common.datacontents.User;
-import de.codekings.common.exceptions.PublicKeyNotFoundException;
+import de.codekings.common.datacontents.User;;
 import de.codekings.common.json.JSON_Parser;
 import de.codekings.server.controls.Control;
 import de.codekings.server.controls.DBOperations;
@@ -36,8 +32,6 @@ class ServerThread extends Thread {
     private PrintWriter writer;
     private final Socket socket;
     private static Logger log = Control.getInstance().getLogger();
-    private Krypter krypter;
-    private final boolean secured;
 
     /**
      * Neuer ServerThread -> Instanz von Server zur Verbindung eines Clients
@@ -46,22 +40,13 @@ class ServerThread extends Thread {
      * @param k Krypter (Wenn secure=false -> optional)
      * @param secure Verschlüsselte Verbindung (bei true -> Krypter PFLICHT!)
      */
-    public ServerThread(Socket s, Krypter k, boolean secure) {
-        this.krypter = k;
+    public ServerThread(Socket s) {
         this.socket = s;
-        this.secured = secure;
-        try {
-            if (secure) { //Wenn verschlüsselt, dann den verschlüsselten Stream öffnen, ansonsten normalen.
-                try {
-                    writer = new PrintWriter(Krypter.encryptOutputStream(socket.getOutputStream(), k.getForeignPublicKey()));
-                    reader = new BufferedReader(new InputStreamReader(Krypter.decryptInputStream(socket.getInputStream(), k.getKeys().getPrivate())));
-                } catch (Exception e) {
-                    log.log(Level.SEVERE, e.getMessage());
-                }
-            } else {
-                this.reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
-                this.writer = new PrintWriter(s.getOutputStream());
-            }
+         try {
+
+            this.reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            this.writer = new PrintWriter(s.getOutputStream());
+
         } catch (IOException ex) {
             log.log(Level.SEVERE, ex.getMessage());
         }
@@ -72,25 +57,30 @@ class ServerThread extends Thread {
      */
     @Override
     public void run() {
-        try {
-            String s;
-            JSON_Parser j = new JSON_Parser();
-            while ((s = reader.readLine()) != null) {
-                s = s.trim();
-                if (s.equals("")) {
-                } else {
-                    Message m = (Message) j.parseStringToObject(s, Message.class); //Konvertierung von JSON-String in Message
-                    if (MessageAuswertung(m)) { //Wenn MessageAuswertung = true, wird Verbindung getrennt.
-                        reader.close();
-                        writer.close();
-                        socket.close();
-                        break;
+        boolean ende = false;
+        while (!ende) {
+            try {
+                String s;
+                JSON_Parser j = new JSON_Parser();
+                while ((s = reader.readLine()) != null) {
+                    s = s.trim();
+                    if (s.equals("")) {
                     } else {
+                        Message m = (Message) j.parseStringToObject(s, Message.class); //Konvertierung von JSON-String in Message
+                        if (MessageAuswertung(m)) { //Wenn MessageAuswertung = true, wird Verbindung getrennt.
+                            reader.close();
+                            writer.close();
+                            socket.close();
+                            ende = true;
+                            break;
+                        } else {
+                        }
                     }
                 }
+            } catch (IOException ex) {
+                log.log(Level.INFO, "Client {0} disconnected!", socket.getInetAddress());
+                ende = true;
             }
-        } catch (IOException ex) {
-            log.log(Level.INFO, "Client {0} disconnected!", socket.getInetAddress());
         }
     }
 
@@ -100,16 +90,7 @@ class ServerThread extends Thread {
      * @param s Message als JSON-String
      * @throws PublicKeyNotFoundException
      */
-    private void write(String s) throws PublicKeyNotFoundException {
-        if (secured) {
-            try {
-                if (krypter.getForeignPublicKey() != null) {
-                    throw new PublicKeyNotFoundException();
-                }
-            } catch (PublicKeyNotFoundException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+    private void write(String s) {
         writer.append(s + "\n");
         writer.flush();
     }
@@ -125,20 +106,6 @@ class ServerThread extends Thread {
         boolean beenden = false;
         JSON_Parser j = new JSON_Parser();
 
-        // <editor-fold defaultstate="collapsed" desc="getPublicKey">
-        if (m.getCommand().equalsIgnoreCase("getPublicKey")) {
-            Message answer = new Message("returnPublicKey");
-            answer.addSendable(new SendablePublicKey(krypter.getKeys().getPublic().getEncoded()));
-
-            try {
-                write(j.parseObjectToString(answer));
-                System.out.println("Public Key sended!");
-            } catch (PublicKeyNotFoundException e) {
-                log.log(Level.WARNING, e.getMessage());
-                beenden = true;
-            }
-        } //</editor-fold>
-
         // <editor-fold defaultstate="collapsed" desc="getFilms">
         if (m.getCommand().equalsIgnoreCase("getFilms")) {
             Message returnMessage = new Message("returnFilms");
@@ -148,10 +115,9 @@ class ServerThread extends Thread {
                 returnMessage.addSendable(f);
             });
             String sMessage = j.parseObjectToString(returnMessage);
-            try {
-                write(sMessage);
-            } catch (PublicKeyNotFoundException e) {
-            }
+
+            write(sMessage);
+
             beenden = true;
         }//</editor-fold>
 
@@ -166,15 +132,12 @@ class ServerThread extends Thread {
 
             if (c != null) {
                 String sMessage = j.parseObjectToString(returnMessage);
-                try {
-                    write(sMessage);
-                } catch (PublicKeyNotFoundException e) {
 
-                }
+                write(sMessage);
             }
             beenden = true;
         }//</editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="login">
         if (m.getCommand().equalsIgnoreCase("login")) {
             String email, hashedpw;
@@ -183,32 +146,25 @@ class ServerThread extends Thread {
 
             User u = DBOperations.getUser(email);
 
-            Message answer;
-            if (u.getPasswort().equals(hashedpw)) {
-                answer = new Message("loginresult"); //Hier wird eingeloggt
-                answer.addAdditionalParameter("result", "success");
-                answer.addAdditionalParameter("email", email);
-                answer.addAdditionalParameter("passwort", hashedpw);
+            Message answer = new Message("loginresult");
+            if (u != null) {
+                if (u.getPasswort().equals(hashedpw)) {
+                    //Hier wird eingeloggt
+                    answer.addAdditionalParameter("result", "success");
+                    answer.addAdditionalParameter("email", email);
+                    answer.addAdditionalParameter("passwort", hashedpw);
+                } else {
+                    answer.addAdditionalParameter("result", "failed");
+                }
+
+                Mitarbeiter ma = DBOperations.getMitarbeiter(u.getU_ID());
+                answer.addAdditionalParameter("permission", String.valueOf(ma.getPermission()));
             } else {
-                answer = new Message("loginresult");
                 answer.addAdditionalParameter("result", "failed");
             }
-            Mitarbeiter ma = DBOperations.getMitarbeiter(u.getU_ID());
-            answer.addAdditionalParameter("permission", String.valueOf(ma.getPermission()));
-            
-            try {
-                for(Sendable s:m.getContent()){
-                    if(s instanceof SendablePublicKey){
-                        SendablePublicKey spk = (SendablePublicKey) s;
-                        krypter.setForeignPublicKey(spk.generatePublicKey());
-                        break;
-                    }
-                }
-                write(j.parseObjectToString(answer));
-            } catch (PublicKeyNotFoundException ex) {
-                log.log(Level.SEVERE, ex.getMessage());
-            }
-            
+
+            write(j.parseObjectToString(answer));
+
             beenden = true;
         }//</editor-fold>
 
