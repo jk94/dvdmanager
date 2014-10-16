@@ -13,6 +13,7 @@ import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
 import java.io.File;
 import java.io.FileNotFoundException;
+import javafx.application.Platform;
 
 /**
  *
@@ -23,12 +24,10 @@ public class Control implements MessageReturn {
     private ConfigManager cfgManager;
     private ContentControl contManager;
     private static Control control;
-    private boolean pubKeyEmpfangen = false;
     private boolean loginResultEmpfangen = false, loginResult = false;
     private LoginSession session = new LoginSession("", "");
 
     public Control() {
-        System.out.println(Hasher.getInstance().ToMD5("test123"));
         loadConfig();
         loadContentControl();
     }
@@ -51,17 +50,29 @@ public class Control implements MessageReturn {
 
     @Override
     public void returnedMessage(Message m) {
-        
         if (m.getCommand().equalsIgnoreCase("loginresult")) {
 
             if (m.getAdditionalparameter().get("result").equalsIgnoreCase("success")) {
-                String email = m.getAdditionalparameter().get("email");
-                String hashedpw = m.getAdditionalparameter().get("passwort");
-                int permission = Integer.parseInt(m.getAdditionalparameter().get("permission"));
-                loginResult = true;
-                loginResultEmpfangen = true;
-                session = new LoginSession(email, hashedpw);
-                session.setPermission(permission);
+
+                class SessionCreater implements Runnable {
+
+                    String email = m.getAdditionalparameter().get("email");
+                    String hashedpw = m.getAdditionalparameter().get("passwort");
+                    int permission = Integer.parseInt(m.getAdditionalparameter().get("permission"));
+
+                    
+                    
+                    @Override
+                    public void run() {
+                        loginResult = true;
+                        loginResultEmpfangen = true;
+                        session = new LoginSession(email, hashedpw);
+                        session.setPermission(permission);
+                    }
+
+                }
+
+                Platform.runLater(new SessionCreater());
             } else {
                 loginResultEmpfangen = true;
             }
