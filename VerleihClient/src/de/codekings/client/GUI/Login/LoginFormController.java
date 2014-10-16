@@ -54,6 +54,7 @@ public class LoginFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
         login_headerimg.setImage(new Image(LoginFormController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/cover.png")));
 
         login_exit.setOnMouseClicked((MouseEvent event) -> {

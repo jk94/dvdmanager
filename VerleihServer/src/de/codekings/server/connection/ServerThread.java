@@ -9,6 +9,7 @@ import de.codekings.common.Connection.Krypter;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
+import de.codekings.common.datacontents.Mitarbeiter;
 import de.codekings.common.datacontents.Sendable;
 import de.codekings.common.datacontents.SendablePublicKey;
 import de.codekings.common.datacontents.User;
@@ -131,6 +132,7 @@ class ServerThread extends Thread {
 
             try {
                 write(j.parseObjectToString(answer));
+                System.out.println("Public Key sended!");
             } catch (PublicKeyNotFoundException e) {
                 log.log(Level.WARNING, e.getMessage());
                 beenden = true;
@@ -172,6 +174,7 @@ class ServerThread extends Thread {
             }
             beenden = true;
         }//</editor-fold>
+        
         // <editor-fold defaultstate="collapsed" desc="login">
         if (m.getCommand().equalsIgnoreCase("login")) {
             String email, hashedpw;
@@ -184,10 +187,15 @@ class ServerThread extends Thread {
             if (u.getPasswort().equals(hashedpw)) {
                 answer = new Message("loginresult"); //Hier wird eingeloggt
                 answer.addAdditionalParameter("result", "success");
+                answer.addAdditionalParameter("email", email);
+                answer.addAdditionalParameter("passwort", hashedpw);
             } else {
                 answer = new Message("loginresult");
                 answer.addAdditionalParameter("result", "failed");
             }
+            Mitarbeiter ma = DBOperations.getMitarbeiter(u.getU_ID());
+            answer.addAdditionalParameter("permission", String.valueOf(ma.getPermission()));
+            
             try {
                 for(Sendable s:m.getContent()){
                     if(s instanceof SendablePublicKey){

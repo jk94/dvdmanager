@@ -8,6 +8,7 @@ package de.codekings.client.Controls;
 import de.codekings.client.GUI.Login.LoginSession;
 import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
+import de.codekings.common.Connection.Hasher;
 import de.codekings.common.Connection.Krypter;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
@@ -26,9 +27,11 @@ public class Control implements MessageReturn {
     private ContentControl contManager;
     private static Control control;
     private boolean pubKeyEmpfangen = false;
+    private boolean loginResultEmpfangen = false, loginResult = false;
     private LoginSession session = new LoginSession("", "");
 
     public Control() {
+        Hasher.getInstance().ToMD5("test123");
         loadConfig();
         loadKrypter();
         loadContentControl();
@@ -59,10 +62,23 @@ public class Control implements MessageReturn {
         if (m.getCommand().equalsIgnoreCase("returnPublicKey")) {
             m.getContent().stream().filter((s) -> (s instanceof SendablePublicKey)).map((s) -> (SendablePublicKey) s).forEach((spk) -> {
                 krypter.setForeignPublicKey(spk.generatePublicKey());
+                pubKeyEmpfangen = true;
+                System.out.println("Public Key empfangen!");
             });
         }
-        if (m.getCommand().equalsIgnoreCase("returnlogin")) {
-            boolean success = Boolean.getBoolean(m.getAdditionalparameter().get("success"));
+        if (m.getCommand().equalsIgnoreCase("loginresult")) {
+            boolean success;
+            if (m.getAdditionalparameter().get("result").equalsIgnoreCase("success")) {
+                String email = m.getAdditionalparameter().get("email");
+                String hashedpw = m.getAdditionalparameter().get("passwort");
+                int permission = Integer.parseInt(m.getAdditionalparameter().get("permission"));
+                loginResult = true;
+                loginResultEmpfangen = true;
+                session = new LoginSession(email, hashedpw);
+                session.setPermission(permission);
+            } else {
+                loginResultEmpfangen = true;
+            }
 
         }
     }
@@ -79,6 +95,8 @@ public class Control implements MessageReturn {
                     krypter.generateKeyPair();
                 }
             }
+        } else {
+            krypter.generateKeyPair();
         }
 
     }
@@ -110,7 +128,7 @@ public class Control implements MessageReturn {
         ct.requestToServer(pkrequest, false);
 
         int counter = 0;
-        while (counter < 10 || !pubKeyEmpfangen) {
+        while (counter < 5 || !pubKeyEmpfangen) {
             try {
                 counter++;
                 Thread.sleep(1000l);
@@ -136,28 +154,41 @@ public class Control implements MessageReturn {
         Message loginrequest = new Message("login");
         loginrequest.addAdditionalParameter("email", email);
         loginrequest.addAdditionalParameter("passwort", passwort);
-        int i = 1;
-        if (i > 0) {
-            return false;
-        }
+
         ClientThread loginsession;
         if (krypter.hasForeignPublicKey()) {
 
             loginsession = new ClientThread(this, host, port, krypter);
             loginsession.requestToServer(loginrequest, true);
 
-            //return true;
+            int counter = 0;
+            while (counter < 10 || !loginResultEmpfangen) //return true;
+            {
+                counter++;
+                try {
+                    Thread.sleep(500l);
+                } catch (InterruptedException e) {
+                }
+            }
+            return loginResult;
         } else {
             if (requestPublicKey()) {
                 loginsession = new ClientThread(this, host, port, krypter);
                 loginsession.requestToServer(loginrequest, true);
+
+                int counter = 0;
+                while (counter < 10 || !loginResultEmpfangen) //return true;
+                {
+                    counter++;
+                    try {
+                        Thread.sleep(500l);
+                    } catch (InterruptedException e) {
+                    }
+                }
+                return loginResult;
             } else {
-
+                return false;
             }
-            return false;
-
         }
-
-        return false;
     }
 }

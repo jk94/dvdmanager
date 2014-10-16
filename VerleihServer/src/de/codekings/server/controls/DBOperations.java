@@ -4,6 +4,7 @@ import de.codekings.common.Enumerators.ClassType;
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Genre;
+import de.codekings.common.datacontents.Mitarbeiter;
 import de.codekings.common.datacontents.User;
 import de.codekings.common.json.JSON_Parser;
 import java.io.File;
@@ -178,7 +179,7 @@ public class DBOperations {
 
                 Date dBirthdate = new Date(birthdate * 1000l);
 
-                ergUser = new User(u_id, name, vorname, strasse, plz, ort, pw, email, accnr, hausnr, dBirthdate, ClassType.T_DVD){
+                ergUser = new User(u_id, name, vorname, strasse, plz, ort, pw, email, accnr, hausnr, dBirthdate, ClassType.T_DVD) {
                 };
             }
 
@@ -187,6 +188,73 @@ public class DBOperations {
         }
 
         return ergUser;
+    }
+
+    public static User getUser(int u_id) {
+        User ergUser = null;
+
+        DBController dbc = Control.getInstance().getDbManager();
+        try {
+            String sql = "SELECT * FROM tbl_user WHERE U_ID = ?";
+            PreparedStatement ps = dbc.getConnection().prepareStatement(sql);
+
+            ps.setInt(0, u_id);
+
+            ResultSet rs = dbc.executeQuery(ps);
+
+            while (rs.next()) {
+                String name, vorname, strasse, plz, ort, pw, accnr, email;
+                name = rs.getString("name");
+                vorname = rs.getString("surname");
+                strasse = rs.getString("street");
+                plz = rs.getString("zip_code");
+                ort = rs.getString("location");
+                pw = rs.getString("password");
+                accnr = rs.getString("accountnumber");
+                email = rs.getString("email");
+
+                int hausnr, birthdate;
+                hausnr = rs.getInt("street_nr");
+                birthdate = rs.getInt("birthdate");
+
+                Date dBirthdate = new Date(birthdate * 1000l);
+
+                ergUser = new User(u_id, name, vorname, strasse, plz, ort, pw, email, accnr, hausnr, dBirthdate, ClassType.T_DVD) {
+                };
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return ergUser;
+    }
+
+    public static Mitarbeiter getMitarbeiter(int u_id) {
+        Mitarbeiter ma = null;
+        User u = getUser(u_id);
+
+        if (u != null) {
+            try {
+                DBController dbc = Control.getInstance().getDbManager();
+                String sql = "SELECT * FROM tbl_mitarbeiter WHERE U_ID = ?";
+                PreparedStatement ps = dbc.getConnection().prepareStatement(sql);
+
+                ps.setInt(0, u.getU_ID());
+
+                ResultSet rs = dbc.executeQuery(ps);
+
+                while (rs.next()) {
+                    int ma_id = rs.getInt("MA_ID");
+                    int perm = rs.getInt("permission");
+                    
+                    ma = new Mitarbeiter(u_id, u.getName(), u.getVorname(), u.getStrasse(), u.getPlz(), u.getOrt(), u.getPasswort(), 
+                            u.getEmail(), u.getAccountnummer(), u.getHausnr(), u.getGeburtsdatum(), ma_id, perm);
+                }
+            } catch (Exception e) {
+            }
+        }
+        return ma;
     }
 
 }
