@@ -138,6 +138,6 @@
       </Accordion>
    </left>
    <center>
-      <ScrollPane fx:id="content_base" fitToHeight="true" fitToWidth="true" pannable="true" styleClass="content-base" stylesheets="@template.css" BorderPane.alignment="CENTER" />
+      <ScrollPane fx:id="content_base" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" styleClass="content-base" stylesheets="@template.css" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

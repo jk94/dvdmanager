@@ -19,24 +19,18 @@ import java.util.logging.Logger;
  */
 public class VerleihServer extends Thread {
 
-    private final ArrayList<ServerThread> clientThreads = new ArrayList<>();
+    private final ArrayList<ServerThread> serverthreads = new ArrayList<>();
     private ServerSocket server;
     private final Logger log = Logger.getLogger(Control.class.getSimpleName());
-    private final boolean secure;
 
-    public VerleihServer(int port, boolean secure) {
+    public VerleihServer(int port) {
         server = null;
-        this.secure = secure;
         try {
             server = new ServerSocket(port);
         } catch (IOException ex) {
             log.log(Level.SEVERE, ex.getMessage());
         }
         log.log(Level.INFO, "Server wurde gestartet..");
-    }
-
-    public boolean isSecure() {
-        return secure;
     }
 
     /*public void closeSessions() {
@@ -53,12 +47,12 @@ public class VerleihServer extends Thread {
     }*/
     
     /**
-     *
+     * Löscht einen ServerThread aus der Liste, der offenen Connections
      * @param c Der @ServerThread, der aus der Liste gelöscht werden soll.
      */
-    public void removeClientThread(ServerThread c){
-        if(clientThreads.contains(c)){
-            clientThreads.remove(c);
+    public void removeConnection(ServerThread c){
+        if(serverthreads.contains(c)){
+            serverthreads.remove(c);
         }
     }
 
@@ -70,14 +64,13 @@ public class VerleihServer extends Thread {
 
                 log.log(Level.INFO, "Verbindung wurde von {0} hergestellt", socket.getInetAddress());
 
-                ServerThread client = new ServerThread(socket);
+                ServerThread client = new ServerThread(socket, this);
                 client.start();
-                clientThreads.add(client);
+                serverthreads.add(client);
 
             } catch (IOException ex) {
                 log.log(Level.SEVERE, ex.getMessage());
             }
-            log.log(Level.INFO, String.valueOf(clientThreads.size()));
         }
     }
 

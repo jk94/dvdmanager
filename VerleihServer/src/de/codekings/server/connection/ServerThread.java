@@ -31,6 +31,7 @@ class ServerThread extends Thread {
     private BufferedReader reader;
     private PrintWriter writer;
     private final Socket socket;
+    private final VerleihServer verleihserver;
     private static Logger log = Control.getInstance().getLogger();
 
     /**
@@ -40,8 +41,9 @@ class ServerThread extends Thread {
      * @param k Krypter (Wenn secure=false -> optional)
      * @param secure Verschlüsselte Verbindung (bei true -> Krypter PFLICHT!)
      */
-    public ServerThread(Socket s) {
+    public ServerThread(Socket s, VerleihServer vs) {
         this.socket = s;
+        this.verleihserver = vs;
          try {
 
             this.reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -71,6 +73,7 @@ class ServerThread extends Thread {
                             reader.close();
                             writer.close();
                             socket.close();
+                            verleihserver.removeConnection(this);
                             ende = true;
                             break;
                         } else {

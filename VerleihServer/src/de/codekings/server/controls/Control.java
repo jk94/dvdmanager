@@ -99,7 +99,7 @@ public class Control {
     }
 
     private void runServer() {
-        unsecureVerleihserver = new VerleihServer(Integer.parseInt(cfgManager.getConfigs().getProperty("port")), false);
+        unsecureVerleihserver = new VerleihServer(Integer.parseInt(cfgManager.getConfigs().getProperty("port")));
         unsecureVerleihserver.start();
     }
 

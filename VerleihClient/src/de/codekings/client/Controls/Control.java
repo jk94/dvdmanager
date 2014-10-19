@@ -8,12 +8,10 @@ package de.codekings.client.Controls;
 import de.codekings.client.GUI.Login.LoginSession;
 import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
-import de.codekings.common.Connection.Hasher;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
 import java.io.File;
 import java.io.FileNotFoundException;
-import javafx.application.Platform;
 
 /**
  *
@@ -53,6 +51,9 @@ public class Control implements MessageReturn {
         if (m.getCommand().equalsIgnoreCase("loginresult")) {
 
             if (m.getAdditionalparameter().get("result").equalsIgnoreCase("success")) {
+                String email = m.getAdditionalparameter().get("email");
+                String hashedpw = m.getAdditionalparameter().get("passwort");
+                int permission = Integer.parseInt(m.getAdditionalparameter().get("permission"));
 
                 class SessionCreater implements Runnable {
 
@@ -60,8 +61,6 @@ public class Control implements MessageReturn {
                     String hashedpw = m.getAdditionalparameter().get("passwort");
                     int permission = Integer.parseInt(m.getAdditionalparameter().get("permission"));
 
-                    
-                    
                     @Override
                     public void run() {
                         loginResult = true;
@@ -71,12 +70,14 @@ public class Control implements MessageReturn {
                     }
 
                 }
-
-                Platform.runLater(new SessionCreater());
+                loginResult = true;
+                loginResultEmpfangen = true;
+                session = new LoginSession(email, hashedpw);
+                session.setPermission(permission);
+                //Platform.runLater(new SessionCreater());
             } else {
                 loginResultEmpfangen = true;
             }
-
         }
     }
 
@@ -112,7 +113,7 @@ public class Control implements MessageReturn {
         loginsession.requestToServer(loginrequest, false);
 
         int counter = 0;
-        while (counter < 10 || !loginResultEmpfangen) //return true;
+        while (counter < 10 && !loginResultEmpfangen)
         {
             counter++;
             try {
