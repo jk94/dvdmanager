@@ -39,7 +39,7 @@ public class Film extends Sendable {
     }
 
     public Film(int FILMID, Date release_date, ArrayList<String> li_actors, ArrayList<String> li_awards,
-            ArrayList<Genre> li_genre, String cover, String ti, String suti, String des, String tr,
+            ArrayList<Genre> li_genre, String ti, String suti, String des, String tr,
             String re, String fsk, int rat, int dur, int fsk_i, double p, ClassType t) {
         super(t);
         this.FILMID = FILMID;

@@ -11,9 +11,13 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -27,25 +31,43 @@ public class Create_filmController implements Initializable {
     @FXML
     private Button create_btn;
     @FXML
-    private TextField creeate_titel;
+    private TextField txf_titel;
     @FXML
-    private TextField create_genre;
+    private TextArea txf_beschreibung;
     @FXML
-    private TextArea create_beschreibung;
+    private RadioButton rbtn_fsk0;
     @FXML
-    private RadioButton create_fsk6;
+    private ToggleGroup fskbuttons;
     @FXML
-    private RadioButton create_fsk12;
+    private RadioButton rbtn_fsk6;
     @FXML
-    private RadioButton create_fsk16;
+    private RadioButton rbtn_fsk12;
     @FXML
-    private RadioButton create_fsk18;
+    private RadioButton rbtn_fsk16;
     @FXML
-    private TextField create_trailer;
+    private RadioButton rbtn_fsk18;
     @FXML
-    private TextField create_schauspieler;
+    private TextField txf_trailer;
     @FXML
-    private TextField create_regisseur;
+    private TextField txf_schauspieler;
+    @FXML
+    private TextField txf_regisseur;
+    @FXML
+    private TextField txf_subtitel;
+    @FXML
+    private TableColumn<?, ?> tblc_filme;
+    @FXML
+    private Button create_btn1;
+    @FXML
+    private ComboBox<?> cb_genre;
+    @FXML
+    private ListView<?> li_genre_added;
+    @FXML
+    private Button btn_genre_add;
+    @FXML
+    private Button btn_genre_remove;
+    @FXML
+    private Button create_btn2;
 
     /**
      * Initializes the controller class.
