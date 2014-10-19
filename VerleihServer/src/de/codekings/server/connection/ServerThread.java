@@ -159,16 +159,17 @@ class ServerThread extends Thread {
                     answer.addAdditionalParameter("result", "success");
                     answer.addAdditionalParameter("email", email);
                     answer.addAdditionalParameter("passwort", hashedpw);
+
+                    Mitarbeiter ma = DBOperations.getMitarbeiter(u.getU_ID());
+                    if (ma != null) {
+                        answer.addAdditionalParameter("permission", String.valueOf(ma.getPermission()));
+                    } else {
+                        answer.addAdditionalParameter("permission", "1");
+                    }
                 } else {
                     answer.addAdditionalParameter("result", "failed");
                 }
 
-                Mitarbeiter ma = DBOperations.getMitarbeiter(u.getU_ID());
-                if (ma != null) {
-                    answer.addAdditionalParameter("permission", String.valueOf(ma.getPermission()));
-                } else {
-                    answer.addAdditionalParameter("permission", "1");
-                }
             } else {
                 answer.addAdditionalParameter("result", "failed");
             }
