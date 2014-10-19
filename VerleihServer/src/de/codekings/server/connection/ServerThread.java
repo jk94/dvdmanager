@@ -9,7 +9,8 @@ import de.codekings.common.Connection.Message;
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Mitarbeiter;
-import de.codekings.common.datacontents.User;;
+import de.codekings.common.datacontents.User;
+;
 import de.codekings.common.json.JSON_Parser;
 import de.codekings.server.controls.Control;
 import de.codekings.server.controls.DBOperations;
@@ -26,6 +27,8 @@ import java.util.logging.Logger;
  *
  * @author Jan
  */
+
+
 class ServerThread extends Thread {
 
     private BufferedReader reader;
@@ -44,7 +47,7 @@ class ServerThread extends Thread {
     public ServerThread(Socket s, VerleihServer vs) {
         this.socket = s;
         this.verleihserver = vs;
-         try {
+        try {
 
             this.reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             this.writer = new PrintWriter(s.getOutputStream());
@@ -161,7 +164,11 @@ class ServerThread extends Thread {
                 }
 
                 Mitarbeiter ma = DBOperations.getMitarbeiter(u.getU_ID());
-                answer.addAdditionalParameter("permission", String.valueOf(ma.getPermission()));
+                if (ma != null) {
+                    answer.addAdditionalParameter("permission", String.valueOf(ma.getPermission()));
+                } else {
+                    answer.addAdditionalParameter("permission", "1");
+                }
             } else {
                 answer.addAdditionalParameter("result", "failed");
             }
