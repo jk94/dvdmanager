@@ -5,7 +5,6 @@
  */
 package de.codekings.client.connection;
 
-import de.codekings.common.Connection.Krypter;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.json.JSON_Parser;
 import java.io.BufferedReader;
@@ -21,17 +20,14 @@ import java.rmi.UnknownHostException;
  */
 public class ClientThread extends Thread {
 
-    private Krypter krypter;
-    private boolean secured;
-    private String host;
-    private int port;
+    private final String host;
+    private final int port;
     PrintWriter writer = null;
     BufferedReader reader = null;
     MessageReturn mr;
 
-    public ClientThread(MessageReturn mr, String host, int port, Krypter krypter) {
+    public ClientThread(MessageReturn mr, String host, int port) {
         this.mr = mr;
-        this.krypter = krypter;
         this.host = host;
         this.port = port;
     }
@@ -40,13 +36,9 @@ public class ClientThread extends Thread {
         Socket conn = newConnection();
         JSON_Parser jwriter = new JSON_Parser();
         try {
-            if (secured) {
-                writer = new PrintWriter(Krypter.encryptOutputStream(conn.getOutputStream(), krypter.getForeignPublicKey()));
-                reader = new BufferedReader(new InputStreamReader(Krypter.decryptInputStream(conn.getInputStream(), krypter.getKeys().getPrivate())));
-            } else {
-                reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                writer = new PrintWriter(conn.getOutputStream());
-            }
+            reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            writer = new PrintWriter(conn.getOutputStream());
+
         } catch (Exception e) {
         }
 

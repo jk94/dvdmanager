@@ -11,12 +11,15 @@ import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
 import de.codekings.client.GUI.ContentView;
 import de.codekings.client.Controls.Control;
+import de.codekings.client.GUI.Login.LoginFormController;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Sendable;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -37,9 +40,9 @@ public class Katalogmanager implements MessageReturn, ContentView {
         li_eintraege = new ArrayList<>();
         Control c = Control.getControl();
         String host = c.getCfgManager().getConfigs().getProperty("ip");
-        int port = Integer.parseInt(c.getCfgManager().getConfigs().getProperty("standardport"));
+        int port = Integer.parseInt(c.getCfgManager().getConfigs().getProperty("port"));
 
-        ClientThread clth = new ClientThread(this, host, port, c.getKrypter());
+        ClientThread clth = new ClientThread(this, host, port);
 
         Message m = new Message("getFilms");
         clth.requestToServer(m, false);
@@ -49,7 +52,7 @@ public class Katalogmanager implements MessageReturn, ContentView {
     public void returnedMessage(Message m) {
         if (m.getCommand().equalsIgnoreCase("returnFilms")) {
             VBox vboxliste = new VBox();
-            
+
             Image[] images = new Image[4];
             for (int i = 0; i < 4; i++) {
                 images[i] = new Image(CoverFlowAnzeige.class.getResource("cover" + (i + 1) + ".png").toExternalForm(), false);
@@ -59,6 +62,10 @@ public class Katalogmanager implements MessageReturn, ContentView {
             displayShelf.setPrefSize(395, 300);
             vboxliste.getChildren().add(displayShelf);
             ArrayList<Film> filme = new ArrayList();
+
+            String pfad = "de/codekings/client/GUI/Elements/loading.gif";
+            InputStream is = LoginFormController.class.getClassLoader().getResourceAsStream(pfad);
+            Image img = new Image(is, 200.0, 250.0, true, true);
 
             m.getContent().stream().filter((s) -> (s instanceof Film)).forEach((s) -> {
                 filme.add((Film) s);
@@ -72,12 +79,13 @@ public class Katalogmanager implements MessageReturn, ContentView {
 
                     Katalog_itemController kic = (Katalog_itemController) fxmlLoader.getController();
                     kic.setTitel(f.getS_titel());
-                    //kic.setCover((Image) f.getCoverImage());
-                    //TODO Cover!!
+
                     kic.setDescription(f.getS_description());
                     //kic.setJahr("" + f.getRelease_date().getYear());
                     kic.setLaufzeit("" + f.getI_duration() + " min");
                     kic.setSubtitle(f.getS_subtitel());
+
+                    kic.setCover(img);
 
                     Katalogeintrag k = new Katalogeintrag(pa, kic, f);
                     addEintrag(k);
@@ -93,16 +101,17 @@ public class Katalogmanager implements MessageReturn, ContentView {
 
             Control c = Control.getControl();
             String host = c.getCfgManager().getConfigs().getProperty("ip");
-            int port = Integer.parseInt(c.getCfgManager().getConfigs().getProperty("standardport"));
+            int port = Integer.parseInt(c.getCfgManager().getConfigs().getProperty("port"));
 
             for (Katalogeintrag ke : li_eintraege) {
-                ClientThread getCoverThread = new ClientThread(this, host, port, c.getKrypter());
+                ClientThread getCoverThread = new ClientThread(this, host, port);
                 Message covermessage = new Message("getCover");
                 covermessage.addAdditionalParameter("FILM_ID", String.valueOf(ke.getFilm().getFILMID()));
-                //getCoverThread.requestToServer(covermessage, false);
+                getCoverThread.requestToServer(covermessage, false);
             }
 
         }
+
         if (m.getCommand().equalsIgnoreCase("returnCover")) {
             Cover c = null;
             for (Sendable s : m.getContent()) {
@@ -115,7 +124,24 @@ public class Katalogmanager implements MessageReturn, ContentView {
                     for (Katalogeintrag k : li_eintraege) {
                         try {
                             if (k.getFilm().getFILMID() == c.getFilm_id()) {
-                                k.getContentcontroller().setCover(c.gibCoverImage());
+                                class CoverIntegrator implements Runnable {
+
+                                    final Katalogeintrag k2;
+                                    final Cover c;
+
+                                    public CoverIntegrator(Katalogeintrag ke, Cover cover) {
+                                        this.c = cover;
+                                        this.k2 = ke;
+                                    }
+
+                                    @Override
+                                    public void run() {
+                                        k2.getContentcontroller().setCover(c.gibCoverImage());
+                                    }
+
+                                }
+                                Platform.runLater(new CoverIntegrator(k, c));
+
                             }
                         } catch (Exception e) {
                             System.out.println(e.getMessage());

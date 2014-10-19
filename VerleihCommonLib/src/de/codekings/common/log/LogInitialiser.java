@@ -34,7 +34,7 @@ public class LogInitialiser {
                 handler = new ConsoleHandler();
                 handler.setFormatter(new VerleihCostumHandler());
                 log.addHandler(handler);
-                log.setLevel(Level.OFF);
+                log.setLevel(Level.ALL);
             }
         } catch (IOException | SecurityException ex) {
             Logger.getLogger(LogInitialiser.class.getName()).log(Level.SEVERE, null, ex);

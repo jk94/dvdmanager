@@ -5,7 +5,6 @@
  */
 package de.codekings.server.controls;
 
-import de.codekings.common.Connection.Krypter;
 import de.codekings.common.config.ConfigManager;
 import de.codekings.common.log.LogInitialiser;
 import de.codekings.server.connection.VerleihServer;
@@ -25,7 +24,6 @@ public class Control {
     private static Logger log;
     private ConfigManager cfgManager;
     private DBController dbManager;
-    private Krypter krypter;
     private VerleihServer secureVerleihserver, unsecureVerleihserver;
 
     public Control() {
@@ -38,9 +36,6 @@ public class Control {
 
         //Initialisiere Datenbankverbindung
         loadDatabase();
-
-        //Initialisiere Keys für Verschlüsselung
-        loadKrypter();
 
         //Initialisiere verschlüsselten und unverschlüsselten Server und starte sie.
         runServer();
@@ -61,31 +56,12 @@ public class Control {
         return dbManager;
     }
 
-    public Krypter getKrypter() {
-        return krypter;
-    }
-
     public void setControl(Control c) {
         theControl = c;
     }
 
     public Logger getLogger() {
         return log;
-    }
-
-    public final void loadKrypter() {
-        krypter = new Krypter();
-        if (cfgManager.getConfigs().containsKey("generatenewkeys")) {
-            boolean generate = Boolean.parseBoolean(cfgManager.getConfigs().getProperty("generatenewkeys"));
-            if (generate) {
-                krypter.generateKeyPair();
-            } else {
-                if (!krypter.loadKeyPair()) {
-                    log.log(Level.WARNING, "Laden der KeyPairs fehlgeschlagen. Erzeuge neue Keys!");
-                    krypter.generateKeyPair();
-                }
-            }
-        }
     }
 
     public final void loadConfig() {
@@ -123,9 +99,7 @@ public class Control {
     }
 
     private void runServer() {
-        secureVerleihserver = new VerleihServer(Integer.parseInt(cfgManager.getConfigs().getProperty("secureport")), true);
-        secureVerleihserver.start();
-        unsecureVerleihserver = new VerleihServer(Integer.parseInt(cfgManager.getConfigs().getProperty("standardport")), false);
+        unsecureVerleihserver = new VerleihServer(Integer.parseInt(cfgManager.getConfigs().getProperty("port")), false);
         unsecureVerleihserver.start();
     }
 

@@ -5,7 +5,6 @@
  */
 package de.codekings.common.datacontents;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import de.codekings.common.Enumerators.ClassType;
 import java.util.Date;
 
