@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.codekings.client.GUI.Katalog;
+package de.codekings.client.GUI.Kunden;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -21,26 +20,28 @@ import javafx.scene.paint.Color;
  *
  * @author Jan
  */
-public class Filmbewerten_itemController implements Initializable {
+public class Kunde_bewerten_itemController implements Initializable {
 
+    @FXML
     private ImageView katalog_cover;
+    @FXML
     private Label katalog_titel;
+    @FXML
     private Label katalog_subtitle;
+    @FXML
     private Label katalog_desc;
+    @FXML
     private Label katalog_genre;
+    @FXML
     private Label katalog_jahr;
+    @FXML
     private Label katalog_laufzeit;
+    @FXML
+    private ImageView katalog_img_verfuegbar;
+    @FXML
     private Label katalog_lbl_verfuegbar;
     @FXML
-    private ImageView bewerten_cover;
-    @FXML
-    private Label empfehlen_titel;
-    @FXML
-    private Label empehlen_subtitle;
-    @FXML
-    private Label empfehlen_frage;
-    @FXML
-    private Button bewerten_positiv_button;
+    private CheckBox katalog_cb_ausleihen;
 
     /**
      * Initializes the controller class.

@@ -8,7 +8,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="810.0" maxWidth="1024.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" styleClass="content-katalog-item-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Katalog.Filmbewerten_itemController">
+<BorderPane maxHeight="810.0" maxWidth="1024.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" styleClass="content-katalog-item-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Kunden.Kunde_bewerten_itemController">
     <center>
         <VBox styleClass="content" BorderPane.alignment="CENTER">
             <children>
