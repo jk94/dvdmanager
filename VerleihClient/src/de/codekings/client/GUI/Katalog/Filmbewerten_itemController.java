@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package de.codekings.client.GUI.Katalog;
 
 import java.net.URL;
@@ -11,17 +12,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
  *
- * @author Jan
+ * @author Simon
  */
 public class Filmbewerten_itemController implements Initializable {
-
     @FXML
     private ImageView katalog_cover;
     @FXML
@@ -48,48 +46,7 @@ public class Filmbewerten_itemController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         // TODO
-    }
-
-    public void setTitel(String titel) {
-        this.katalog_titel.setText(titel);
-    }
-
-    public void setCover(Image img) {
-        katalog_cover.setImage(img);
-    }
-
-    public void setSubtitle(String subtitle) {
-        this.katalog_subtitle.setText(subtitle);
-    }
-
-    public void setDescription(String desc) {
-        this.katalog_desc.setText(desc);
-    }
-
-    public void setGenre(String genre) {
-        this.katalog_genre.setText(genre);
-    }
-
-    public void setJahr(String jahr) {
-        this.katalog_jahr.setText(jahr);
-    }
-
-    public void setLaufzeit(String laufzeit) {
-        this.katalog_laufzeit.setText(laufzeit);
-    }
-
-    public void setVerfuegbar(boolean v) {
-        if (v) {
-            this.katalog_lbl_verfuegbar.setTextFill(Color.web("#FFFF00"));
-            this.katalog_lbl_verfuegbar.setText("verfügbar");
-            Image img = new Image(getClass().getClassLoader().getResource("de/codekings/client/GUI/Elements/verfuegbar.png").toExternalForm(), false);
-        } else {
-            this.katalog_lbl_verfuegbar.setTextFill(Color.web("#FF0000"));
-            this.katalog_lbl_verfuegbar.setText("nicht verfügbar");
-            Image img = new Image(getClass().getClassLoader().getResource("de/codekings/client/GUI/Elements/nverfuegbar.png").toExternalForm(), false);
-
-        }
-    }
+    }    
+    
 }
