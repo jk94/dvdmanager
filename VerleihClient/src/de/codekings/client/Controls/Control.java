@@ -6,12 +6,17 @@
 package de.codekings.client.Controls;
 
 import de.codekings.client.GUI.Login.LoginSession;
+import de.codekings.client.GUI.MainFrame.MainApplication;
+import de.codekings.client.GUI.MainFrame.TemplateController;
 import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.stage.Stage;
 
 /**
  *
@@ -23,11 +28,12 @@ public class Control implements MessageReturn {
     private ContentControl contManager;
     private static Control control;
     private boolean loginResultEmpfangen = false, loginResult = false;
-    private LoginSession session = new LoginSession("", "");
+    private LoginSession session = new LoginSession("", "", "");
+    
+    
 
     public Control() {
         loadConfig();
-        loadContentControl();
     }
 
     public final void loadConfig() {
@@ -54,25 +60,11 @@ public class Control implements MessageReturn {
                 String email = m.getAdditionalparameter().get("email");
                 String hashedpw = m.getAdditionalparameter().get("passwort");
                 int permission = Integer.parseInt(m.getAdditionalparameter().get("permission"));
+                String sessionhash = m.getAdditionalparameter().get("session");
 
-                class SessionCreater implements Runnable {
-
-                    String email = m.getAdditionalparameter().get("email");
-                    String hashedpw = m.getAdditionalparameter().get("passwort");
-                    int permission = Integer.parseInt(m.getAdditionalparameter().get("permission"));
-
-                    @Override
-                    public void run() {
-                        loginResult = true;
-                        loginResultEmpfangen = true;
-                        session = new LoginSession(email, hashedpw);
-                        session.setPermission(permission);
-                    }
-
-                }
                 loginResult = true;
                 loginResultEmpfangen = true;
-                session = new LoginSession(email, hashedpw);
+                session = new LoginSession(email, hashedpw, sessionhash);
                 session.setPermission(permission);
                 //Platform.runLater(new SessionCreater());
             } else {
@@ -93,8 +85,8 @@ public class Control implements MessageReturn {
         return control;
     }
 
-    public final void loadContentControl() {
-        this.contManager = new ContentControl();
+    public final void loadContentControl(TemplateController tpc) {
+        this.contManager = new ContentControl(tpc);
     }
 
     public final ContentControl getContentControl() {
@@ -110,11 +102,10 @@ public class Control implements MessageReturn {
         loginrequest.addAdditionalParameter("passwort", passwort);
 
         ClientThread loginsession = new ClientThread(this, host, port);
-        loginsession.requestToServer(loginrequest, false);
+        loginsession.requestToServer(loginrequest);
 
         int counter = 0;
-        while (counter < 10 && !loginResultEmpfangen)
-        {
+        while (counter < 10 && !loginResultEmpfangen) {
             counter++;
             try {
                 Thread.sleep(500l);
@@ -122,5 +113,20 @@ public class Control implements MessageReturn {
             }
         }
         return loginResult;
+    }
+    
+    public void openMainFrame(){
+        if(session != null){
+            if(!session.getEmail().equals("")){
+                MainApplication mainframe = new MainApplication();
+                Stage s = new Stage();
+                try {
+                    mainframe.start(s);
+                } catch (Exception ex) {
+                    Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                loadContentControl(mainframe.getTemplateController());
+            }
+        }
     }
 }

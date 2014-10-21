@@ -5,12 +5,12 @@
  */
 package de.codekings.server.connection;
 
+import de.codekings.common.Connection.Hasher;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Mitarbeiter;
 import de.codekings.common.datacontents.User;
-;
 import de.codekings.common.json.JSON_Parser;
 import de.codekings.server.controls.Control;
 import de.codekings.server.controls.DBOperations;
@@ -20,6 +20,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,8 +31,6 @@ import java.util.logging.Logger;
  *
  * @author Jan
  */
-
-
 class ServerThread extends Thread {
 
     private BufferedReader reader;
@@ -36,6 +38,8 @@ class ServerThread extends Thread {
     private final Socket socket;
     private final VerleihServer verleihserver;
     private static Logger log = Control.getInstance().getLogger();
+    private Timer timeoutTimer;
+    private final int i_timeout = 120000;
 
     /**
      * Neuer ServerThread -> Instanz von Server zur Verbindung eines Clients
@@ -48,13 +52,25 @@ class ServerThread extends Thread {
         this.socket = s;
         this.verleihserver = vs;
         try {
-
             this.reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             this.writer = new PrintWriter(s.getOutputStream());
 
         } catch (IOException ex) {
             log.log(Level.SEVERE, ex.getMessage());
         }
+        timeoutTimer = new Timer();
+
+        timeoutTimer.schedule(new TimerTask() {
+            int counter = 0;
+
+            @Override
+            public void run() {
+                if (counter >= i_timeout) {
+                    ThreadcloseConnection();
+                }
+                counter++;
+            }
+        }, 1);
     }
 
     /**
@@ -157,8 +173,14 @@ class ServerThread extends Thread {
                 if (u.getPasswort().equals(hashedpw)) {
                     //Hier wird eingeloggt
                     answer.addAdditionalParameter("result", "success");
+
+                    Random rnd = new Random();
+                    int rndint = Math.round(rnd.nextFloat() * 1000);
+                    String hash = Hasher.getInstance().ToMD5(email + hashedpw + new Date().getTime() + rndint);
+
                     answer.addAdditionalParameter("email", email);
                     answer.addAdditionalParameter("passwort", hashedpw);
+                    answer.addAdditionalParameter("session", hash);
 
                     Mitarbeiter ma = DBOperations.getMitarbeiter(u.getU_ID());
                     if (ma != null) {
@@ -193,6 +215,17 @@ class ServerThread extends Thread {
             this.reader.close();
             this.writer.close();
             this.socket.close();
+        } catch (IOException ex) {
+            log.log(Level.SEVERE, ex.getMessage());
+        }
+    }
+
+    private void ThreadcloseConnection() {
+        try {
+            this.reader.close();
+            this.writer.close();
+            this.socket.close();
+            verleihserver.removeConnection(this);
         } catch (IOException ex) {
             log.log(Level.SEVERE, ex.getMessage());
         }

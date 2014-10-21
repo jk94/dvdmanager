@@ -7,6 +7,7 @@ package de.codekings.client.GUI.MainFrame;
 
 import de.codekings.client.GUI.Katalog.CoverFlow.CoverFlowAnzeige;
 import de.codekings.client.Controls.Control;
+import de.codekings.client.GUI.Katalog.Katalog_itemController;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,15 +21,17 @@ import javafx.stage.Stage;
  */
 public class MainApplication extends Application {
 
+    private TemplateController templateController = null;
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Control c = new Control();
-        c.setControl(c);
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("template.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            root = fxmlLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/MainFrame/template.fxml").openStream());
+            templateController = (TemplateController) fxmlLoader.getController();
         } catch (IOException e) {
-            System.out.println("loading failed");
+           System.out.println("loading failed");
         }
         Scene scene = new Scene(root);
         primaryStage.setTitle("DVD Verleih");
@@ -41,6 +44,10 @@ public class MainApplication extends Application {
 
     public static void main(String[] args) {
         MainApplication.launch(args);
+    }
+    
+    public TemplateController getTemplateController(){
+        return templateController;
     }
 
 }

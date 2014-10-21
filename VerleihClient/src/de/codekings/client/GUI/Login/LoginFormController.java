@@ -9,6 +9,8 @@ import de.codekings.client.Controls.Control;
 import de.codekings.common.Connection.Hasher;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -63,6 +65,18 @@ public class LoginFormController implements Initializable {
                 //Logged In
                 setHinweis("Anmeldung erfolgreich!");
                 setHinweisVisible(true);
+                try {
+                    Thread.sleep(1500l);
+                } catch (InterruptedException ex) {
+                    System.out.println(ex.getMessage());
+                }
+                setHinweis("Sie werden angemeldet...");
+                try {
+                    Thread.sleep(1000l);
+                } catch (InterruptedException ex) {
+                    System.out.println(ex.getMessage());
+                }
+                control.openMainFrame();
             } else {
                 setHinweisVisible(true);
                 setHinweis("Anmeldung fehlgeschlagen.\nBitte erneut versuchen.");

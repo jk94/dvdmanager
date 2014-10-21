@@ -45,7 +45,7 @@ public class Katalogmanager implements MessageReturn, ContentView {
         ClientThread clth = new ClientThread(this, host, port);
 
         Message m = new Message("getFilms");
-        clth.requestToServer(m, false);
+        clth.requestToServer(m);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class Katalogmanager implements MessageReturn, ContentView {
                 ClientThread getCoverThread = new ClientThread(this, host, port);
                 Message covermessage = new Message("getCover");
                 covermessage.addAdditionalParameter("FILM_ID", String.valueOf(ke.getFilm().getFILMID()));
-                getCoverThread.requestToServer(covermessage, false);
+                getCoverThread.requestToServer(covermessage);
             }
 
         }
