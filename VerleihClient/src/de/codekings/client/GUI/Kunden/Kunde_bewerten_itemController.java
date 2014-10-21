@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.codekings.client.GUI.Katalog;
+package de.codekings.client.GUI.Kunden;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,7 +20,7 @@ import javafx.scene.paint.Color;
  *
  * @author Jan
  */
-public class Filmbewerten_itemController implements Initializable {
+public class Kunde_bewerten_itemController implements Initializable {
 
     @FXML
     private ImageView katalog_cover;

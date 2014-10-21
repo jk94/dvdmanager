@@ -10,6 +10,8 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 
 /**
  * FXML Controller class
@@ -18,7 +20,13 @@ import javafx.scene.control.Button;
  */
 public class ZurueckgebenController implements Initializable {
     @FXML
-    private Button btn_test;
+    private TableView<?> mitarbeiter_zurueckgeben_tabelle;
+    @FXML
+    private Label mitarbeiter_zurueckgeben_titel;
+    @FXML
+    private Button mitarbeiter_zurueckgeben_btnloeschen;
+    @FXML
+    private Button mitarbeiter_zurueckgeben_btnausleihen;
 
     /**
      * Initializes the controller class.
