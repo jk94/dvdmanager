@@ -6,8 +6,6 @@
 package de.codekings.client.GUI.Login;
 
 import de.codekings.client.Controls.Control;
-import de.codekings.client.GUI.Katalog.Katalog_itemController;
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,7 +33,7 @@ public class login extends Application {
 
             lfc = (LoginFormController) fxmlLoader.getController();
             lfc.setControl(c);
-            //root = FXMLLoader.load(getClass().getResource("loginform.fxml"));
+            
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(0);
