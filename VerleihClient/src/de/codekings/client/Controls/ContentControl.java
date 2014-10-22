@@ -6,6 +6,7 @@ import de.codekings.client.Enum.ContentPageType;
 import static de.codekings.client.Enum.ContentPageType.BACK;
 import static de.codekings.client.Enum.ContentPageType.FORWARD;
 import de.codekings.client.GUI.Katalog.Katalogmanager;
+import de.codekings.client.GUI.MainFrame.TemplateController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.ScrollPane;
@@ -22,10 +23,12 @@ import javafx.scene.control.ScrollPane;
 public class ContentControl {
 
     private static Verlaufsmanager verlManager;
+    private TemplateController templateController;
 
-    public ContentControl() {
+    public ContentControl(TemplateController tpc) {
         Verlaufsmanager v = new Verlaufsmanager();
         setVerlaufsManager(v);
+        this.templateController = tpc;
     }
 
     public static void setVerlaufsManager(Verlaufsmanager vlm) {

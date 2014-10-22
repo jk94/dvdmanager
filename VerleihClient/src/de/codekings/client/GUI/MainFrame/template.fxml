@@ -10,6 +10,123 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<<<<<<< HEAD
+<BorderPane fx:id="bp_mainframe" prefHeight="600.0" prefWidth="1024.0" stylesheets="@de/codekings/client/GUI/MainFrame/template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.MainFrame.TemplateController">
+    <top>
+        <HBox prefHeight="64.0" styleClass="header" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="head_btn_home" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="imgbtn">
+                    <graphic>
+                        <ImageView fx:id="head_btn_home_img" fitHeight="40.0" fitWidth="40.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                </Button>
+                <Button fx:id="head_btn_back" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="imgbtn">
+                    <graphic>
+                        <ImageView fx:id="head_btn_back_img" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                </Button>
+                <Button fx:id="head_btn_forward" layoutX="41.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="imgbtn">
+                    <graphic>
+                        <ImageView fx:id="head_btn_forward_img" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                </Button>
+                <Region prefHeight="56.0" prefWidth="188.0" />
+                <Label alignment="CENTER" prefHeight="36.0" prefWidth="567.0" text="CODEKINGS DVD" textAlignment="CENTER" textFill="#b43104">
+                    <font>
+                        <Font name="Stencil" size="45.0" />
+                    </font>
+                </Label>
+                <Region layoutX="106.0" layoutY="10.0" prefHeight="56.0" prefWidth="167.0" />
+                <Button fx:id="head_btn_search" layoutX="46.0" layoutY="10.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn" HBox.hgrow="ALWAYS">
+                    <graphic>
+                        <ImageView fx:id="head_btn_search_img" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                    </graphic>
+                    <HBox.margin>
+                        <Insets top="15.0" />
+                    </HBox.margin>
+                </Button>
+                <TextField maxWidth="150.0" minWidth="150.0" prefHeight="15.0" prefWidth="150.0" styleClass="search-box" text="Titelsuche" HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets top="15.0" />
+                    </HBox.margin>
+                </TextField>
+                <Region layoutX="844.0" layoutY="15.0" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+            </children>
+        </HBox>
+    </top>
+    <left>
+        <Accordion fx:id="menu_accordion" style="-fx-background-color: #1C1C1C;" styleClass="menu-accordion" BorderPane.alignment="CENTER">
+            <panes>
+                <TitledPane fx:id="menu_dvdkatalog" animated="false" text="DVD Katalog">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <Button fx:id="btn_start" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Start" />
+                                        <Button fx:id="btn_titelsuche" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Titelsuche" />
+                                        <Button fx:id="btn_genresuche" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Genresuche" />
+                                        <Button fx:id="btn_neuheiten" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Neuheiten" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </TitledPane>
+                <TitledPane fx:id="menu_kundenbereich" animated="false" text="Kundenbereich">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <Button fx:id="kunde_btn_start" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Start" />
+                                        <Button fx:id="kunde_btn_ausleihen" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Artikel ausleihen" />
+                                        <Button fx:id="kunde_btn_entliehen" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Entliehene Artikel" />
+                                        <Button fx:id="kunde_btn_bewertung" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Bewertung abgeben" />
+                                        <Button fx:id="kunde_btn_kontoverwaltung" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Kontoverwaltung" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </TitledPane>
+                <TitledPane fx:id="menu_mitarbeiterbereich" animated="false" layoutX="15.0" layoutY="45.0" text="Mitarbeiterbereich">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <Button fx:id="btn_mab_katalogpflege" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Katalog pflegen" />
+                                        <Button fx:id="btn_entliehen2" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Artikel zurückgeben" />
+                                        <Button fx:id="btn_mab_registieren" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Kunde registrieren" />
+                                        <Button fx:id="btn_kontoverwaltung2" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Kontoverwaltung" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </TitledPane>
+                <TitledPane fx:id="menu_adminbereich" animated="false" layoutX="15.0" layoutY="75.0" text="Adminbereich">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <Button fx:id="btn_uebersicht21" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Mitarbeiterverwaltung" />
+                                        <Button fx:id="btn_ausleihen21" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="MassDestruction" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </TitledPane>
+            </panes>
+        </Accordion>
+    </left>
+    <center>
+        <ScrollPane fx:id="content_base" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" styleClass="content-base" BorderPane.alignment="CENTER" />
+    </center>
+=======
 <BorderPane fx:id="bp_mainframe" prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.MainFrame.TemplateController">
    <left>
       <Accordion fx:id="menu_accordion" style="-fx-background-color: #1C1C1C;" styleClass="menu-accordion" stylesheets="@template.css" BorderPane.alignment="CENTER">
@@ -147,4 +264,5 @@
          </right>
       </BorderPane>
    </top>
+>>>>>>> 742a104548ce44cdd16a2a6ef8ae700382522e5b
 </BorderPane>

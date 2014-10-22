@@ -25,5 +25,9 @@ public class Film_Client extends Film {
         public Cover getCover(){
             return cover;
         }
+        
+        public void setCover(Cover c){
+            this.cover = c;
+        }
 
     }
