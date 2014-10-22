@@ -2,6 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group/>
+=======
+        <group>
+<<<<<<< HEAD
+            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih_2/VerleihServer/src/de/codekings/server/connection/ServerThread.java</file>
+            <file>file:/C:/Users/Jan/Documents/GIT/dvdverleih_2/VerleihServer/src/de/codekings/server/connection/VerleihServer.java</file>
+=======
+            <file>file:/C:/Users/Simon/Documents/dvdverleih-code/VerleihServer/src/de/codekings/server/connection/ServerThread.java</file>
+>>>>>>> 742a104548ce44cdd16a2a6ef8ae700382522e5b
+        </group>
+>>>>>>> 9451141b7df273db78b471b70c170cb48b6f1cd6
     </open-files>
 </project-private>

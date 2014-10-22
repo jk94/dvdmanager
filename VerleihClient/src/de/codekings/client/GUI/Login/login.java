@@ -33,7 +33,7 @@ public class login extends Application {
 
             lfc = (LoginFormController) fxmlLoader.getController();
             lfc.setControl(c);
-            
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(0);

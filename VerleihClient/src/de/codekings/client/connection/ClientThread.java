@@ -32,7 +32,7 @@ public class ClientThread extends Thread {
         this.port = port;
     }
 
-    public void requestToServer(Message m, boolean secured) {
+    public void requestToServer(Message m) {
         Socket conn = newConnection();
         JSON_Parser jwriter = new JSON_Parser();
         try {

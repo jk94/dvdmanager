@@ -16,6 +16,7 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -36,7 +37,6 @@ public class TemplateController implements Initializable {
     private Button btn_genresuche;
     @FXML
     private Button btn_neuheiten;
-    @FXML
     private ImageView head_searchicon;
     @FXML
     private Button head_btn_home;
@@ -50,8 +50,6 @@ public class TemplateController implements Initializable {
     private Button head_btn_forward;
     @FXML
     private ImageView head_btn_forward_img;
-    @FXML
-    private Button btn_search;
     @FXML
     private Accordion menu_accordion;
     @FXML
@@ -91,6 +89,10 @@ public class TemplateController implements Initializable {
     private Button kunde_btn_kontoverwaltung;
     @FXML
     private BorderPane bp_mainframe;
+    @FXML
+    private Button head_btn_search;
+    @FXML
+    private ImageView head_btn_search_img;
 
     /**
      * Initializes the controller class.
@@ -98,10 +100,12 @@ public class TemplateController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tc = this;
-        //Control.getControl().getContentManager().changeContent(content_pane, ContentPageType.MA_KundeRegistrieren);
-        //head_btn_back.setDisable(!ContentManager.getVerlaufsManager().canBack());
-        //head_btn_forward.setDisable(!ContentManager.getVerlaufsManager().canNext());
-        // TODO
+        head_btn_back_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/arrowleft.png")));
+        head_btn_forward_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/arrowright.png")));
+        head_btn_home_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/homebutton.png")));
+        head_btn_search_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/searchicon.png")));
+        
+// TODO
         btn_start.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(content_base, ContentPageType.Katalog_Start, false);
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
@@ -155,8 +159,5 @@ public class TemplateController implements Initializable {
         return this.content_pane;
     }
 
-    public static TemplateController getTemplateController() {
-        return tc;
-    }
 
 }

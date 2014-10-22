@@ -41,11 +41,9 @@ public class Create_userController implements Initializable {
     @FXML
     private ListView<?> user_list;
     @FXML
-    private RadioButton user_btnkunde;
+    private Button user_btnspeichern1;
     @FXML
-    private RadioButton user_btnma;
-    @FXML
-    private RadioButton user_btnadmin;
+    private Button user_btnspeichern11;
 
     /**
      * Initializes the controller class.
