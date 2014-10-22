@@ -6,8 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="540.0" prefWidth="800.0" styleClass="content-base" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="de.codekings.client.GUI.Kunden.Kunde_startController">
+<AnchorPane id="AnchorPane" prefHeight="540.0" prefWidth="800.0" styleClass="content-base" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Kunden.Kunde_startController">
    <children>
       <Label fx:id="kunde_start_titel" layoutX="61.0" layoutY="44.0" prefHeight="17.0" prefWidth="267.0" styleClass="standard-text" text="Hallo, USER" />
       <Pane fx:id="kunde_start_warenkorbpane" layoutX="476.0" layoutY="303.0">

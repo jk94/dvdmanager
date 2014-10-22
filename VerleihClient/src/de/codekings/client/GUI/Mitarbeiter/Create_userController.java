@@ -44,6 +44,14 @@ public class Create_userController implements Initializable {
     private Button user_btnspeichern1;
     @FXML
     private Button user_btnspeichern11;
+    @FXML
+    private TextField user_email1;
+    @FXML
+    private TextField user_name1;
+    @FXML
+    private TextField user_email11;
+    @FXML
+    private TextField user_email2;
 
     /**
      * Initializes the controller class.

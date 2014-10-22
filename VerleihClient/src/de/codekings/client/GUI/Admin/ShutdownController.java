@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package de.codekings.client.GUI.Kunden;
+package de.codekings.client.GUI.Admin;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,25 +19,15 @@ import javafx.scene.layout.Pane;
  *
  * @author Simon
  */
-public class Kunde_startController implements Initializable {
+public class ShutdownController implements Initializable {
+    @FXML
+    private Pane admin_shutdown_pane;
+    @FXML
+    private Button admin_destruction;
     @FXML
     private Label kunde_start_warenkorb;
     @FXML
-    private Label kunde_start_titel;
-    @FXML
-    private Pane kunde_start_warenkorbpane;
-    @FXML
-    private Button kunde_start_btnausleihe;
-    @FXML
-    private Pane kunde_start_entlpane;
-    @FXML
-    private Button kunde_start_btnentl;
-    @FXML
-    private Label kunde_start_entl;
-    @FXML
-    private Label kunde_start_guthaben;
-    @FXML
-    private Pane kunde_start_coverflow;
+    private Label admin_shutdown_label;
 
     /**
      * Initializes the controller class.
