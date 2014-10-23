@@ -3,57 +3,69 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.codekings.client.GUI.Mitarbeiter;
+
+package de.codekings.client.GUI.Admin;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
  *
-<<<<<<< HEAD
- * @author Jan
-=======
  * @author Simon
->>>>>>> 2029bd59d8ee9cd4c7598f08be7dc35e14732263
  */
-public class Create_userController implements Initializable {
-    @FXML
-    private PasswordField user_passwort;
-    @FXML
-    private PasswordField user_passwort_check;
-    @FXML
-    private Button user_btnspeichern;
-    @FXML
-    private DatePicker user_datum;
+public class Admin_maverwaltungController implements Initializable {
     @FXML
     private ListView<?> user_list;
     @FXML
-    private Button user_btnspeichern1;
+    private Button user_btnspeichern;
     @FXML
-    private Button user_btnspeichern11;
+    private PasswordField user_passwort_check;
     @FXML
-    private TextField user_input_email;
+    private PasswordField user_passwort;
     @FXML
-    private TextField user_input_vorname;
+    private DatePicker user_datum;
     @FXML
-    private TextField user_input_nachname;
+    private Label user_labelpers;
     @FXML
-    private TextField user_input_adresse;
+    private Label user_labeladr;
     @FXML
-    private TextField user_table_head;
+    private Label user_label_pw2;
+    @FXML
+    private Label user_labelpw;
+    @FXML
+    private TextField user_input_plz;
     @FXML
     private TextField user_input_ort;
     @FXML
-    private TextField user_input_plz;
+    private TextField user_table_head;
+    @FXML
+    private Button user_btn_verwerfen;
+    @FXML
+    private CheckBox user_check_admin;
+    @FXML
+    private CheckBox user_check_ma;
+    @FXML
+    private CheckBox user_check_kunde;
+    @FXML
+    private Button user_btn_create;
+    @FXML
+    private TextField user_input_adresse;
+    @FXML
+    private TextField user_input_nachname;
+    @FXML
+    private TextField user_input_vorname;
+    @FXML
+    private TextField user_input_email;
 
     /**
      * Initializes the controller class.
@@ -106,6 +118,8 @@ public class Create_userController implements Initializable {
             //TODO setHinweisVisible(true);
             //     setHinweis("Adresse muss Hausnummer enthalten.");
         }
+        
     }    
+    
     
 }

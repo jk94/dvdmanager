@@ -7,13 +7,13 @@
 
 <AnchorPane styleClass="content-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.Create_userController">
     <children>
-        <TextField fx:id="user_name" layoutX="47.0" layoutY="28.0" prefHeight="25.0" prefWidth="278.0" promptText="E-Mail" />
-        <TextField fx:id="user_email" layoutX="47.0" layoutY="66.0" prefHeight="25.0" prefWidth="129.0" promptText="Vorname" />
-      <TextField fx:id="user_email1" layoutX="188.0" layoutY="66.0" prefHeight="25.0" prefWidth="136.0" promptText="Nachname" />
+        <TextField fx:id="user_input_email" layoutX="47.0" layoutY="28.0" prefHeight="25.0" prefWidth="278.0" promptText="E-Mail" />
+        <TextField fx:id="user_input_vorname" layoutX="47.0" layoutY="66.0" prefHeight="25.0" prefWidth="129.0" promptText="Vorname" />
+      <TextField fx:id="user_input_nachname" layoutX="188.0" layoutY="66.0" prefHeight="25.0" prefWidth="136.0" promptText="Nachname" />
         <DatePicker fx:id="user_datum" layoutX="335.0" layoutY="65.0" prefHeight="25.0" prefWidth="136.0" promptText="Geburtsdatum" />
-      <TextField fx:id="user_name1" layoutX="47.0" layoutY="119.0" prefHeight="25.0" prefWidth="278.0" promptText="Straße" />
-        <PasswordField fx:id="user_passwort" layoutX="246.0" layoutY="216.0" prefHeight="25.0" prefWidth="184.0" text="passwort" />
-        <PasswordField fx:id="user_passwort_check" layoutX="48.0" layoutY="216.0" prefHeight="25.0" prefWidth="184.0" text="passwort " />
+      <TextField fx:id="user_input_adresse" layoutX="47.0" layoutY="119.0" prefHeight="25.0" prefWidth="278.0" promptText="Straße" />
+        <PasswordField fx:id="user_passwort_check" layoutX="246.0" layoutY="216.0" prefHeight="25.0" prefWidth="184.0" text="passwort" />
+        <PasswordField fx:id="user_passwort" layoutX="48.0" layoutY="216.0" prefHeight="25.0" prefWidth="184.0" text="passwort " />
         <Button fx:id="user_btnspeichern" layoutX="345.0" layoutY="361.0" mnemonicParsing="false" text="Neu Anlegen" />
         <ListView fx:id="user_list" layoutX="504.0" layoutY="47.0" prefHeight="339.0" prefWidth="200.0" />
       <CheckBox layoutX="62.0" layoutY="284.0" mnemonicParsing="false" selected="true" styleClass="content-radiobtn" text="Kunde" />
@@ -21,9 +21,9 @@
       <CheckBox layoutX="256.0" layoutY="284.0" mnemonicParsing="false" styleClass="content-radiobtn" text="Administrator" />
       <Button fx:id="user_btnspeichern1" layoutX="188.0" layoutY="361.0" mnemonicParsing="false" text="Änderungen speichern" />
       <Button fx:id="user_btnspeichern11" layoutX="78.0" layoutY="361.0" mnemonicParsing="false" text="Verwerfen" />
-      <TextField layoutX="504.0" layoutY="6.0" prefHeight="41.0" prefWidth="200.0" />
-      <TextField fx:id="user_email11" layoutX="189.0" layoutY="152.0" prefHeight="25.0" prefWidth="136.0" promptText="Ort" />
-      <TextField fx:id="user_email2" layoutX="48.0" layoutY="152.0" prefHeight="25.0" prefWidth="129.0" promptText="PLZ" />
+      <TextField fx:id="user_table_head" layoutX="504.0" layoutY="22.0" prefHeight="25.0" prefWidth="200.0" />
+      <TextField fx:id="user_input_ort" layoutX="189.0" layoutY="152.0" prefHeight="25.0" prefWidth="136.0" promptText="Ort" />
+      <TextField fx:id="user_input_plz" layoutX="48.0" layoutY="152.0" prefHeight="25.0" prefWidth="129.0" promptText="PLZ" />
       <Label layoutX="48.0" layoutY="193.0" prefHeight="17.0" prefWidth="136.0" styleClass="standard-text" text="Passwort:" />
       <Label layoutX="246.0" layoutY="193.0" styleClass="standard-text" text="Passwort erneut eingeben:" />
       <Label layoutX="47.0" layoutY="102.0" styleClass="standard-text" text="Adresse" />
