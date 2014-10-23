@@ -19,7 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 /**
  * FXML Controller class
@@ -34,36 +33,40 @@ public class Kunde_bewerten_itemController implements Initializable, MessageRetu
     private ImageView empfehlung_cover;
     @FXML
     private Label empfehlung_frage;
-    @FXML
-    private Button bewertung_positiv;
-    @FXML
-    private ImageView bewerten_positiv_img;
-    @FXML
-    private Button bewertung_negativ;
-    @FXML
-    private ImageView bewertung_negativ_img;
 
     private int FILM_ID;
 
-    
+    private Button empehlung_positiv;
+    @FXML
+    private Label bewerten_subtitle;
+    @FXML
+    private Button bewerten_positiv;
+    @FXML
+    private ImageView bewerten_positiv_img;
+    @FXML
+    private Button bewerten_negativ;
+    @FXML
+    private ImageView bewerten_negativ_img;
+
     @Override
     public void returnedMessage(Message m) {
-        if(m.getCommand().equalsIgnoreCase("bewertungresponse")){
+        if (m.getCommand().equalsIgnoreCase("bewertungresponse")) {
             empfehlung_frage.setText("Bewertung abgegeben!");
-            bewertung_negativ.setDisable(true);
-            bewertung_positiv.setDisable(true);
+            bewerten_negativ.setDisable(true);
+            bewerten_positiv.setDisable(true);
         }
     }
 
-    
-    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        this.bewertung_positiv.setOnMouseClicked((MouseEvent event) -> {
+        bewerten_positiv_img.setImage(new Image(Kunde_bewerten_itemController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/bewertung_up.png")));
+        bewerten_negativ_img.setImage(new Image(Kunde_bewerten_itemController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/bewertung_down.png")));
+
+        this.bewerten_positiv.setOnMouseClicked((MouseEvent event) -> {
             ConfigManager cfgManager = Control.getControl().getCfgManager();
             String host = cfgManager.getConfigs().getProperty("ip");
             int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
@@ -72,13 +75,13 @@ public class Kunde_bewerten_itemController implements Initializable, MessageRetu
             Message bewertung = new Message("bewertung");
             bewertung.addAdditionalParameter("FILM_ID", String.valueOf(FILM_ID));
             bewertung.addAdditionalParameter("type", "+");
-            
+
             bewertung_conn.requestToServer(bewertung);
-            
-            bewertung_positiv.setDisable(true);
+
+            bewerten_positiv.setDisable(true);
         });
-        
-        this.bewertung_negativ.setOnMouseClicked((MouseEvent event) -> {
+
+        this.bewerten_negativ.setOnMouseClicked((MouseEvent event) -> {
             ConfigManager cfgManager = Control.getControl().getCfgManager();
             String host = cfgManager.getConfigs().getProperty("ip");
             int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
@@ -87,9 +90,9 @@ public class Kunde_bewerten_itemController implements Initializable, MessageRetu
             Message bewertung = new Message("bewertung");
             bewertung.addAdditionalParameter("FILM_ID", String.valueOf(FILM_ID));
             bewertung.addAdditionalParameter("type", "-");
-            
+
             bewertung_conn.requestToServer(bewertung);
-            bewertung_negativ.setDisable(true);
+            bewerten_negativ.setDisable(true);
         });
         // TODO
     }
@@ -106,5 +109,8 @@ public class Kunde_bewerten_itemController implements Initializable, MessageRetu
         this.FILM_ID = id;
     }
 
-    
+    public void setSubtitle(String subtitle) {
+        this.bewerten_subtitle.setText(subtitle);
+    }
+
 }

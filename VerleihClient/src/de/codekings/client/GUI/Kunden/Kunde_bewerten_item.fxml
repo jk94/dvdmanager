@@ -24,15 +24,21 @@
                <center>
                         <HBox prefHeight="31.0" prefWidth="97.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="empehlung_positiv" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0" text="+">
+                        <Button fx:id="bewerten_positiv" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0">
                            <HBox.margin>
                               <Insets top="40.0" />
                            </HBox.margin>
+                           <graphic>
+                              <ImageView fx:id="bewerten_positiv_img" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
                         </Button>
-                        <Button fx:id="empfehlung_negativ" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0" text="-">
+                        <Button fx:id="bewerten_negativ" mnemonicParsing="false" prefHeight="150.0" prefWidth="150.0">
                            <HBox.margin>
                               <Insets left="100.0" top="40.0" />
                            </HBox.margin>
+                           <graphic>
+                              <ImageView fx:id="bewerten_negativ_img" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
                         </Button>
                      </children>
                         </HBox>
@@ -68,6 +74,11 @@
                      <font>
                         <Font size="27.0" />
                      </font>
+                  </Label>
+                  <Label fx:id="bewerten_subtitle" text="Subtitle">
+                     <VBox.margin>
+                        <Insets left="70.0" />
+                     </VBox.margin>
                   </Label>
                     <ImageView fx:id="empfehlung_cover" fitHeight="230.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                </children>

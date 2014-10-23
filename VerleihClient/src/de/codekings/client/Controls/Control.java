@@ -33,7 +33,7 @@ public class Control implements MessageReturn {
 
     public Control() {
         loadConfig();
-        //loadData();
+        loadData();
     }
 
     public final void loadConfig() {
@@ -136,6 +136,7 @@ public class Control implements MessageReturn {
                     System.out.println(ex.getMessage());
                 }
                 loadContentControl(mainframe.getTemplateController());
+                
             }
         }
     }
