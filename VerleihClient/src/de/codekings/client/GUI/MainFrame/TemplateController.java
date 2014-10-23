@@ -93,6 +93,8 @@ public class TemplateController implements Initializable {
     private Button head_btn_search;
     @FXML
     private ImageView head_btn_search_img;
+    @FXML
+    private ImageView header_logo;
 
     /**
      * Initializes the controller class.
@@ -104,7 +106,7 @@ public class TemplateController implements Initializable {
         head_btn_forward_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/arrowright.png")));
         head_btn_home_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/homebutton.png")));
         head_btn_search_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/searchicon.png")));
-        
+        header_logo.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/cover.png")));
 // TODO
         btn_start.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(content_base, ContentPageType.Katalog_Start, false);

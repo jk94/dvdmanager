@@ -14,10 +14,13 @@
    <top>
       <BorderPane prefHeight="123.0" prefWidth="450.0" BorderPane.alignment="CENTER">
          <center>
-            <ImageView fx:id="login_headerimg" fitHeight="115.0" fitWidth="410.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+            <ImageView fx:id="login_headerimg" fitHeight="115.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <effect>
                   <Bloom />
                </effect>
+               <BorderPane.margin>
+                  <Insets left="-5.0" right="-30.0" top="-5.0" />
+               </BorderPane.margin>
             </ImageView>
          </center>
          <right>
