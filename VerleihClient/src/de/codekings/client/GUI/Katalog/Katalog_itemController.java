@@ -37,9 +37,9 @@ public class Katalog_itemController implements Initializable {
     @FXML
     private Label katalog_laufzeit;
     @FXML
-    private ImageView katalog_img_verfuegbar;
-    @FXML
     private Label katalog_lbl_verfuegbar;
+    @FXML
+    private ImageView katalog_img_verfuegbar;
     @FXML
     private CheckBox katalog_cb_ausleihen;
 
