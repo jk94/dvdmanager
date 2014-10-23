@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="450.0" styleClass="content-back" stylesheets="@de/codekings/client/GUI/MainFrame/template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Login.LoginFormController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="450.0" styleClass="content-back" stylesheets="de/codekings/client/GUI/MainFrame/template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Login.LoginFormController">
    <top>
       <BorderPane prefHeight="123.0" prefWidth="450.0" BorderPane.alignment="CENTER">
          <center>
@@ -47,7 +47,7 @@
             <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="login_login" mnemonicParsing="false" prefHeight="25.0" prefWidth="305.0" text="Log In" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <Button fx:id="login_login" defaultButton="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="305.0" text="Log In" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="5.0" />
                </GridPane.margin></Button>

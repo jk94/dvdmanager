@@ -64,9 +64,9 @@ public class VerleihServer extends Thread {
 
                 log.log(Level.INFO, "Verbindung wurde von {0} hergestellt", socket.getInetAddress());
 
-                ServerThread client = new ServerThread(socket, this);
-                client.start();
-                serverthreads.add(client);
+                ServerThread serverthread = new ServerThread(socket, this);
+                serverthread.start();
+                serverthreads.add(serverthread);
 
             } catch (IOException ex) {
                 log.log(Level.SEVERE, ex.getMessage());
