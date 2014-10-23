@@ -72,7 +72,10 @@ public class Admin_maverwaltungController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        public void getPasswort(String titel) {
+            this.user_passwort.getSOMETHING!!
+    }
     }    
     
 }
