@@ -152,7 +152,11 @@ public class TemplateController implements Initializable {
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });
         
-        
+        kunde_btn_bewertung.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getContentControl().changeContent(content_base, ContentPageType.Kunde_BewAbg, true);
+            head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
+            head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
+        });
     }
 
     public Pane getContentPane() {
