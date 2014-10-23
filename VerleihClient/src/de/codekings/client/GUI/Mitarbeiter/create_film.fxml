@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="create_anchor" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="793.0" styleClass="content-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.Create_filmController">
+<AnchorPane fx:id="create_anchor" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="881.0" styleClass="content-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.Create_filmController">
     <children>
         <Button fx:id="create_btn" layoutX="611.0" layoutY="528.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Erstellen" />
         <TextField fx:id="txf_titel" layoutX="32.0" layoutY="34.0" prefHeight="25.0" prefWidth="463.0" promptText="Titel" />
@@ -23,18 +23,14 @@
         <TextField fx:id="txf_schauspieler" layoutX="32.0" layoutY="118.0" prefHeight="25.0" prefWidth="245.0" promptText="Schauspieler" />
         <TextField fx:id="txf_regisseur" layoutX="295.0" layoutY="118.0" prefHeight="25.0" prefWidth="201.0" promptText="Regisseur" />
       <TextField fx:id="txf_subtitel" layoutX="32.0" layoutY="65.0" prefHeight="25.0" prefWidth="463.0" promptText="Subtitel" />
-      <TableView layoutX="526.0" layoutY="168.0" prefHeight="335.0" prefWidth="240.0">
-        <columns>
-          <TableColumn fx:id="tblc_filme" maxWidth="240.0" minWidth="240.0" prefWidth="240.0" resizable="false" sortable="false" text="Film" />
-        </columns>
-      </TableView>
+      <TableView fx:id="tbvw_filme" layoutX="526.0" layoutY="246.0" prefHeight="257.0" prefWidth="325.0" />
       <Button fx:id="create_btn1" layoutX="691.0" layoutY="528.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Verwerfen" />
       <ComboBox fx:id="cb_genre" editable="true" layoutX="32.0" layoutY="195.0" prefHeight="25.0" prefWidth="187.0" promptText="Genre auswählen" />
       <ListView fx:id="li_genre_added" layoutX="295.0" layoutY="168.0" prefHeight="79.0" prefWidth="201.0" />
       <Button fx:id="btn_genre_add" layoutX="251.0" layoutY="183.0" mnemonicParsing="false" text="&gt;" />
       <Button fx:id="btn_genre_remove" layoutX="251.0" layoutY="208.0" mnemonicParsing="false" text="&lt;" />
       <Button fx:id="create_btn2" layoutX="528.0" layoutY="528.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Update" />
-      <ImageView fitHeight="135.0" fitWidth="110.0" layoutX="526.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: #1C1C1C; -fx-border: 1px;">
+      <ImageView fx:id="img_cover" fitHeight="202.0" fitWidth="166.0" layoutX="527.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: #1C1C1C; -fx-border: 1px;">
          <image>
             <Image url="de/codekings/client/GUI/Elements/NoCover.png" />
          </image>

@@ -15,14 +15,10 @@ import de.codekings.common.config.ConfigManager;
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Sendable;
-import de.codekings.common.json.JSON_Parser;
-import java.awt.image.BufferedImage;
-import java.awt.image.IndexColorModel;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
 /**

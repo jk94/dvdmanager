@@ -78,6 +78,10 @@ public class Control implements MessageReturn {
     public ConfigManager getCfgManager() {
         return cfgManager;
     }
+    
+    public DataManager getDataManager(){
+        return datamanager;
+    }
 
     public static final void setControl(Control c) {
         control = c;
@@ -136,7 +140,15 @@ public class Control implements MessageReturn {
                     System.out.println(ex.getMessage());
                 }
                 loadContentControl(mainframe.getTemplateController());
-                
+                switch(session.getPermission()){
+                    case 1: mainframe.setKundenView();
+                        break;
+                    case 2: mainframe.setMitarbeiterView();
+                        break;
+                    case 3: mainframe.setAdminView();
+                        break;
+                    default: mainframe.setKundenView();
+                }
             }
         }
     }

@@ -3,11 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package de.codekings.client.GUI.Mitarbeiter;
 
+import de.codekings.client.Controls.Control;
+import de.codekings.client.datacontent.Film_Client;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,9 +19,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -26,6 +33,7 @@ import javafx.scene.layout.AnchorPane;
  * @author Simon
  */
 public class Create_filmController implements Initializable {
+
     @FXML
     private AnchorPane create_anchor;
     @FXML
@@ -55,8 +63,6 @@ public class Create_filmController implements Initializable {
     @FXML
     private TextField txf_subtitel;
     @FXML
-    private TableColumn<?, ?> tblc_filme;
-    @FXML
     private Button create_btn1;
     @FXML
     private ComboBox<?> cb_genre;
@@ -68,6 +74,12 @@ public class Create_filmController implements Initializable {
     private Button btn_genre_remove;
     @FXML
     private Button create_btn2;
+    @FXML
+    private ImageView img_cover;
+    @FXML
+    private TableView<Film_Client> tbvw_filme;
+
+    private ObservableList<Film_Client> data;
 
     /**
      * Initializes the controller class.
@@ -75,6 +87,24 @@ public class Create_filmController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+        data = FXCollections.observableArrayList();
+        ArrayList<Film_Client> filme = (ArrayList<Film_Client>) Control.getControl().getDataManager().getFilme().clone();
+        for (Film_Client fc : filme) {
+            data.add(fc);
+        }
+
+        String columnname[] = {"Titel", "Subtitel"};
+        String variablename[] = {"s_titel", "s_subtitel"};
+
+        TableColumn<Film_Client, String> titel = new TableColumn<>(columnname[0]);
+        TableColumn<Film_Client, String> subtitel = new TableColumn<>(columnname[1]);
+        titel.setCellValueFactory(new PropertyValueFactory<Film_Client, String>(variablename[0]));
+        subtitel.setCellValueFactory(new PropertyValueFactory<Film_Client, String>(variablename[1]));
+
+        tbvw_filme.getColumns().clear();
+        tbvw_filme.getColumns().add(titel);
+        tbvw_filme.getColumns().add(subtitel);
+        tbvw_filme.getItems().addAll(data);
+    }
+
 }
