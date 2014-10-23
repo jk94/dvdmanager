@@ -9,8 +9,6 @@ import de.codekings.client.Controls.Control;
 import de.codekings.common.Connection.Hasher;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -20,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -27,6 +26,7 @@ import javafx.scene.input.MouseEvent;
  * @author Jan
  */
 public class LoginFormController implements Initializable {
+
     @FXML
     private ImageView login_headerimg;
     @FXML
@@ -39,16 +39,17 @@ public class LoginFormController implements Initializable {
     private Label login_hinweis;
     @FXML
     private PasswordField login_passwort;
-    
+
     private Control control;
+    private Stage ownstage;
 
     /**
      * Initializes the controller class.
      */
-   @Override
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+
         login_headerimg.setImage(new Image(LoginFormController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/cover.png")));
 
         login_exit.setOnMouseClicked((MouseEvent event) -> {
@@ -59,7 +60,7 @@ public class LoginFormController implements Initializable {
             Hasher h = Hasher.getInstance();
             String email = login_email.getText();
             String passwort = h.ToMD5(login_passwort.getText());
-            
+
             boolean ergebnis = control.login(email, passwort);
             if (ergebnis) {
                 //Logged In
@@ -77,6 +78,7 @@ public class LoginFormController implements Initializable {
                     System.out.println(ex.getMessage());
                 }
                 control.openMainFrame();
+                ownstage.hide();
             } else {
                 setHinweisVisible(true);
                 setHinweis("Anmeldung fehlgeschlagen.\nBitte erneut versuchen.");
@@ -86,6 +88,14 @@ public class LoginFormController implements Initializable {
         this.setHinweis("Melden Sie sich bitte mit Ihren Anmeldedaten an!");
         this.setHinweisVisible(true);
 
+    }
+    
+    public void reset(){
+        this.setHinweis("Melden Sie sich bitte mit Ihren Anmeldedaten an!");
+        this.setHinweisVisible(true);
+        
+        login_email.setText("");
+        login_passwort.setText("");
     }
 
     public void setHinweisVisible(boolean value) {
@@ -98,5 +108,21 @@ public class LoginFormController implements Initializable {
 
     public void setControl(Control c) {
         this.control = c;
+    }
+
+    public void setVisible(boolean value) {
+        if (value) {
+
+        } else {
+
+        }
+    }
+
+    public void setStage(Stage ps) {
+        this.ownstage = ps;
+    }
+    
+    public Stage getStage(){
+        return ownstage;
     }
 }

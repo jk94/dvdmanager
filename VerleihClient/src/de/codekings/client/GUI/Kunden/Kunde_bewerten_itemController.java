@@ -106,9 +106,5 @@ public class Kunde_bewerten_itemController implements Initializable, MessageRetu
         this.FILM_ID = id;
     }
 
-    public void setSubtitle(String subtitle) {
-        this.katalog_subtitle.setText(subtitle);
-    }
-
     
 }
