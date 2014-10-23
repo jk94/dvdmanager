@@ -88,6 +88,7 @@ class ServerThread extends Thread {
                     if (s.equals("")) {
                     } else {
                         Message m = (Message) j.parseStringToObject(s, Message.class); //Konvertierung von JSON-String in Message
+                        resetTimeout();
                         if (MessageAuswertung(m)) { //Wenn MessageAuswertung = true, wird Verbindung getrennt.
                             reader.close();
                             writer.close();
@@ -115,6 +116,24 @@ class ServerThread extends Thread {
     private void write(String s) {
         writer.append(s + "\n");
         writer.flush();
+        resetTimeout();
+    }
+
+    private void resetTimeout() {
+        timeoutTimer.cancel();
+        timeoutTimer.purge();
+        timeoutTimer = new Timer();
+        timeoutTimer.schedule(new TimerTask() {
+            int counter = 0;
+
+            @Override
+            public void run() {
+                if (counter >= i_timeout) {
+                    ThreadcloseConnection();
+                }
+                counter++;
+            }
+        }, 1);
     }
 
     /**
@@ -215,6 +234,8 @@ class ServerThread extends Thread {
             this.reader.close();
             this.writer.close();
             this.socket.close();
+            timeoutTimer.cancel();
+            timeoutTimer.purge();
         } catch (IOException ex) {
             log.log(Level.SEVERE, ex.getMessage());
         }
@@ -226,6 +247,9 @@ class ServerThread extends Thread {
             this.writer.close();
             this.socket.close();
             verleihserver.removeConnection(this);
+            timeoutTimer.cancel();
+            timeoutTimer.purge();
+            log.log(Level.INFO, "Connection to {0} was closed automized!");
         } catch (IOException ex) {
             log.log(Level.SEVERE, ex.getMessage());
         }

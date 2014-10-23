@@ -47,7 +47,7 @@
             <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="login_login" mnemonicParsing="false" prefHeight="25.0" prefWidth="305.0" text="Log In" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP">
+            <Button fx:id="login_login" defaultButton="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="305.0" text="Log In" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets top="5.0" />
                </GridPane.margin></Button>
