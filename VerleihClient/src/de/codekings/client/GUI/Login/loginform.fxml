@@ -14,12 +14,12 @@
    <top>
       <BorderPane prefHeight="123.0" prefWidth="450.0" BorderPane.alignment="CENTER">
          <center>
-            <ImageView fx:id="login_headerimg" fitHeight="115.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+            <ImageView fx:id="login_headerimg" fitHeight="120.0" fitWidth="455.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <effect>
                   <Bloom />
                </effect>
                <BorderPane.margin>
-                  <Insets left="-5.0" right="-30.0" top="-5.0" />
+                  <Insets right="-30.0" top="-10.0" />
                </BorderPane.margin>
             </ImageView>
          </center>
@@ -30,6 +30,16 @@
                </opaqueInsets>
             </Button>
          </right>
+         <bottom>
+            <Separator prefWidth="150.0" styleClass="login-logo" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets top="-15.0" />
+               </padding>
+            </Separator>
+         </bottom>
       </BorderPane>
    </top>
    <right>

@@ -33,7 +33,7 @@ public class Control implements MessageReturn {
 
     public Control() {
         loadConfig();
-        //loadData();
+        loadData();
     }
 
     public final void loadConfig() {

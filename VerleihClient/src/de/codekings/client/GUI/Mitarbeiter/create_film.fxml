@@ -34,6 +34,10 @@
       <Button fx:id="btn_genre_add" layoutX="251.0" layoutY="183.0" mnemonicParsing="false" text="&gt;" />
       <Button fx:id="btn_genre_remove" layoutX="251.0" layoutY="208.0" mnemonicParsing="false" text="&lt;" />
       <Button fx:id="create_btn2" layoutX="528.0" layoutY="528.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Update" />
-      <ImageView fitHeight="135.0" fitWidth="110.0" layoutX="526.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: #1C1C1C; -fx-border: 1px;" />
+      <ImageView fitHeight="135.0" fitWidth="110.0" layoutX="526.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: #1C1C1C; -fx-border: 1px;">
+         <image>
+            <Image url="de/codekings/client/GUI/Elements/NoCover.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>
