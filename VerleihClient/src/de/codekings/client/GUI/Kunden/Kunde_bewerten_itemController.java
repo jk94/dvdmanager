@@ -5,14 +5,20 @@
  */
 package de.codekings.client.GUI.Kunden;
 
+import de.codekings.client.Controls.Control;
+import de.codekings.client.connection.ClientThread;
+import de.codekings.client.connection.MessageReturn;
+import de.codekings.common.Connection.Message;
+import de.codekings.common.config.ConfigManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 /**
@@ -20,76 +26,85 @@ import javafx.scene.paint.Color;
  *
  * @author Jan
  */
-public class Kunde_bewerten_itemController implements Initializable {
+public class Kunde_bewerten_itemController implements Initializable, MessageReturn {
 
     @FXML
-    private ImageView katalog_cover;
+    private Label bewerten_filmtitel;
     @FXML
-    private Label katalog_titel;
+    private ImageView empfehlung_cover;
     @FXML
-    private Label katalog_subtitle;
+    private Label empfehlung_frage;
     @FXML
-    private Label katalog_desc;
+    private Button bewertung_positiv;
     @FXML
-    private Label katalog_genre;
+    private ImageView bewerten_positiv_img;
     @FXML
-    private Label katalog_jahr;
+    private Button bewertung_negativ;
     @FXML
-    private Label katalog_laufzeit;
-    @FXML
-    private ImageView katalog_img_verfuegbar;
-    @FXML
-    private Label katalog_lbl_verfuegbar;
-    @FXML
-    private CheckBox katalog_cb_ausleihen;
+    private ImageView bewertung_negativ_img;
 
+    private int FILM_ID;
+
+    
+    @Override
+    public void returnedMessage(Message m) {
+        if(m.getCommand().equalsIgnoreCase("bewertungresponse")){
+            empfehlung_frage.setText("Bewertung abgegeben!");
+            bewertung_negativ.setDisable(true);
+            bewertung_positiv.setDisable(true);
+        }
+    }
+
+    
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        this.bewertung_positiv.setOnMouseClicked((MouseEvent event) -> {
+            ConfigManager cfgManager = Control.getControl().getCfgManager();
+            String host = cfgManager.getConfigs().getProperty("ip");
+            int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+            ClientThread bewertung_conn = new ClientThread(null, host, port);
+            Message bewertung = new Message("bewertung");
+            bewertung.addAdditionalParameter("FILM_ID", String.valueOf(FILM_ID));
+            bewertung.addAdditionalParameter("type", "+");
+            
+            bewertung_conn.requestToServer(bewertung);
+            
+            bewertung_positiv.setDisable(true);
+        });
+        
+        this.bewertung_negativ.setOnMouseClicked((MouseEvent event) -> {
+            ConfigManager cfgManager = Control.getControl().getCfgManager();
+            String host = cfgManager.getConfigs().getProperty("ip");
+            int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+            ClientThread bewertung_conn = new ClientThread(null, host, port);
+            Message bewertung = new Message("bewertung");
+            bewertung.addAdditionalParameter("FILM_ID", String.valueOf(FILM_ID));
+            bewertung.addAdditionalParameter("type", "-");
+            
+            bewertung_conn.requestToServer(bewertung);
+            bewertung_negativ.setDisable(true);
+        });
         // TODO
     }
 
     public void setTitel(String titel) {
-        this.katalog_titel.setText(titel);
+        this.bewerten_filmtitel.setText(titel);
     }
 
     public void setCover(Image img) {
-        katalog_cover.setImage(img);
+        this.empfehlung_cover.setImage(img);
     }
 
-    public void setSubtitle(String subtitle) {
-        this.katalog_subtitle.setText(subtitle);
+    public void setFilmID(int id) {
+        this.FILM_ID = id;
     }
 
-    public void setDescription(String desc) {
-        this.katalog_desc.setText(desc);
-    }
-
-    public void setGenre(String genre) {
-        this.katalog_genre.setText(genre);
-    }
-
-    public void setJahr(String jahr) {
-        this.katalog_jahr.setText(jahr);
-    }
-
-    public void setLaufzeit(String laufzeit) {
-        this.katalog_laufzeit.setText(laufzeit);
-    }
-
-    public void setVerfuegbar(boolean v) {
-        if (v) {
-            this.katalog_lbl_verfuegbar.setTextFill(Color.web("#FFFF00"));
-            this.katalog_lbl_verfuegbar.setText("verfügbar");
-            Image img = new Image(getClass().getClassLoader().getResource("de/codekings/client/GUI/Elements/verfuegbar.png").toExternalForm(), false);
-        } else {
-            this.katalog_lbl_verfuegbar.setTextFill(Color.web("#FF0000"));
-            this.katalog_lbl_verfuegbar.setText("nicht verfügbar");
-            Image img = new Image(getClass().getClassLoader().getResource("de/codekings/client/GUI/Elements/nverfuegbar.png").toExternalForm(), false);
-
-        }
-    }
+    
 }

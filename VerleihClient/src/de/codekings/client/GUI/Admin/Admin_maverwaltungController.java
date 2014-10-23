@@ -73,9 +73,53 @@ public class Admin_maverwaltungController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        public void getPasswort(String titel) {
-            this.user_passwort.getSOMETHING!!
-    }
+        String vorname = user_input_vorname.getText();
+        if (!vorname.matches("[a-zA-Z]")){ 
+            //TODO setHinweisVisible(true);
+            //     setHinweis("Vorname darf nur aus Buchstaben bestehen.");
+        }
+        String name = user_input_nachname.getText();
+         if (!name.matches("[a-zA-Z]")){ 
+            //TODO setHinweisVisible(true);
+            //     setHinweis("Name darf nur aus Buchstaben bestehen.");
+        }
+        String email = user_input_email.getText();
+         if (!name.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")){
+             //TODO setHinweisVisible(true);
+            //     setHinweis("Email nicht validiert."); 
+         }
+        String passwort = user_passwort.getText();
+        if (!name.matches("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})")){
+             //TODO setHinweisVisible(true);
+            //     setHinweis("Passwort Kriterien nicht erfüllt."); 
+         }
+        String passwort_check = user_passwort_check.getText();
+        if (!passwort.equals(passwort_check))
+        {
+            //TODO setHinweisVisible(true);
+            //     setHinweis("Passwörter stimmen nicht überein!");
+        }
+        
+        //  TODO   Welcher Datentyp?? geburtstag = user_datum.getValue();
+        
+        String plz = user_input_plz.getText();
+        if (!vorname.matches("[0-9]")){ 
+            //TODO setHinweisVisible(true);
+            //     setHinweis("Postleitzahl darf nur aus Zahlen bestehen.");
+        }
+        String ort = user_input_ort.getText();
+        if (!vorname.matches("[a-zA-Z]")){ 
+            //TODO setHinweisVisible(true);
+            //     setHinweis("Ort darf nur aus Buchstaben bestehen.");
+        }
+        String str = user_input_adresse.getText();
+        if (!vorname.matches("(?=.*\\d)(?=.*[a-zA-Z])")){ 
+            //TODO setHinweisVisible(true);
+            //     setHinweis("Adresse muss Hausnummer enthalten.");
+        }
+        
     }    
+    
     
 }

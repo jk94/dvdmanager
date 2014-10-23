@@ -14,14 +14,13 @@ import java.util.Date;
  */
 public class LoginSession {
 
-    private String email = "", hashedpw = "", sessionhash = "";
+    private String email = "", hashedpw = "";
     private Date logintime = null;
     private int permission = 0;
 
-    public LoginSession(String email, String hashedpw, String sessionhash) {
+    public LoginSession(String email, String hashedpw) {
         this.email = email;
         this.hashedpw = hashedpw;
-        this.sessionhash = sessionhash;
         this.logintime = new Date();
     }
 
@@ -42,12 +41,7 @@ public class LoginSession {
     }
 
     public DateFormat getLoginTime() {
-        
-        
-        return null;
-    }
 
-    public String getSessionhash() {
-        return sessionhash;
+        return null;
     }
 }

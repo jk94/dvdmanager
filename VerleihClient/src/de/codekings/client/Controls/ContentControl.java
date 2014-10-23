@@ -24,10 +24,12 @@ public class ContentControl {
 
     private static Verlaufsmanager verlManager;
     private TemplateController templateController;
+    private DataManager datamanager;
 
-    public ContentControl(TemplateController tpc) {
+    public ContentControl(DataManager dmgr, TemplateController tpc) {
         Verlaufsmanager v = new Verlaufsmanager();
         setVerlaufsManager(v);
+        this.datamanager = dmgr;
         this.templateController = tpc;
     }
 
@@ -48,17 +50,7 @@ public class ContentControl {
         Parent p = null;
         switch (t) {
             case Katalog_Start:
-                Katalogmanager k = new Katalogmanager();
-                int counter = 0;
-                do {
-                    counter++;
-                    try {
-                        Thread.sleep(1000l);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(ContentControl.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } while (k.waitForContent() || counter>4);
-
+                Katalogmanager k = new Katalogmanager(datamanager);
                 p = k.getContentView();
                 break;
 

@@ -33,17 +33,21 @@ public class login extends Application {
 
             lfc = (LoginFormController) fxmlLoader.getController();
             lfc.setControl(c);
+            lfc.setStage(primaryStage);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(0);
         }
-
+        
+        c.setLoginFormControler(lfc);
+        
         Scene scene = new Scene(root, 450, 270);
 
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("");
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
     /**
