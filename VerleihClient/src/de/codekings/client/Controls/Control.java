@@ -136,6 +136,7 @@ public class Control implements MessageReturn {
                     System.out.println(ex.getMessage());
                 }
                 loadContentControl(mainframe.getTemplateController());
+                
             }
         }
     }

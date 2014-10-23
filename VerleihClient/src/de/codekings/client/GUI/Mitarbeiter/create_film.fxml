@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -7,8 +8,8 @@
 <AnchorPane fx:id="create_anchor" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="793.0" styleClass="content-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.Create_filmController">
     <children>
         <Button fx:id="create_btn" layoutX="609.0" layoutY="475.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Erstellen" />
-        <TextField fx:id="txf_titel" layoutX="32.0" layoutY="34.0" prefHeight="25.0" prefWidth="463.0" promptText="Titel" />
-        <TextArea fx:id="txf_beschreibung" layoutX="32.0" layoutY="108.0" prefHeight="167.0" prefWidth="463.0" promptText="Beschreibung" />
+        <TextField fx:id="txf_titel" layoutX="32.0" layoutY="34.0" prefHeight="25.0" prefWidth="317.0" promptText="Titel" />
+        <TextArea fx:id="txf_beschreibung" layoutX="32.0" layoutY="168.0" prefHeight="167.0" prefWidth="463.0" promptText="Beschreibung" />
       <RadioButton fx:id="rbtn_fsk0" layoutX="32.0" layoutY="440.0" mnemonicParsing="false" selected="true" style="-fx-text-fill: #B43104;" styleClass="content-radiobtn" text="kein FSK">
          <toggleGroup>
             <ToggleGroup fx:id="fskbuttons" />
@@ -19,9 +20,9 @@
         <RadioButton fx:id="rbtn_fsk16" layoutX="295.0" layoutY="440.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="FSK 16" toggleGroup="$fskbuttons" />
         <RadioButton fx:id="rbtn_fsk18" layoutX="371.0" layoutY="440.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="FSK 18" toggleGroup="$fskbuttons" />
         <TextField fx:id="txf_trailer" layoutX="32.0" layoutY="475.0" prefHeight="25.0" prefWidth="463.0" promptText="Trailer" />
-        <TextField fx:id="txf_schauspieler" layoutX="32.0" layoutY="305.0" prefHeight="25.0" prefWidth="245.0" promptText="Schauspieler" />
-        <TextField fx:id="txf_regisseur" layoutX="295.0" layoutY="305.0" prefHeight="25.0" prefWidth="201.0" promptText="Regisseur" />
-      <TextField fx:id="txf_subtitel" layoutX="32.0" layoutY="66.0" prefHeight="25.0" prefWidth="463.0" promptText="Subtitel" />
+        <TextField fx:id="txf_schauspieler" layoutX="32.0" layoutY="98.0" prefHeight="25.0" prefWidth="187.0" promptText="Schauspieler" />
+        <TextField fx:id="txf_regisseur" layoutX="32.0" layoutY="129.0" prefHeight="25.0" prefWidth="187.0" promptText="Regisseur" />
+      <TextField fx:id="txf_subtitel" layoutX="32.0" layoutY="66.0" prefHeight="25.0" prefWidth="245.0" promptText="Subtitel" />
       <TableView layoutX="526.0" layoutY="34.0" prefHeight="434.0" prefWidth="240.0">
         <columns>
           <TableColumn fx:id="tblc_filme" maxWidth="240.0" minWidth="240.0" prefWidth="240.0" resizable="false" sortable="false" text="Film" />
@@ -33,5 +34,6 @@
       <Button fx:id="btn_genre_add" layoutX="251.0" layoutY="358.0" mnemonicParsing="false" text="&gt;" />
       <Button fx:id="btn_genre_remove" layoutX="251.0" layoutY="383.0" mnemonicParsing="false" text="&lt;" />
       <Button fx:id="create_btn2" layoutX="526.0" layoutY="475.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Update" />
+      <ImageView fitHeight="134.0" fitWidth="98.0" layoutX="396.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: #1C1C1C; -fx-border: 1px;" />
     </children>
 </AnchorPane>

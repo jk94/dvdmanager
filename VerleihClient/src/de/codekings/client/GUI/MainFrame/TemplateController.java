@@ -163,5 +163,8 @@ public class TemplateController implements Initializable {
         return this.content_pane;
     }
 
-
+    public Accordion getMenu(){
+        return this.menu_accordion;
+    }
+    
 }
