@@ -14,6 +14,7 @@ import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
+import de.codekings.common.datacontents.Genre;
 import de.codekings.common.datacontents.Sendable;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import javafx.scene.image.Image;
 public class DataManager implements MessageReturn {
 
     ArrayList<Film_Client> li_filme = new ArrayList<>();
+    ArrayList<Genre> li_genre = new ArrayList<>();
     private final int updateTime;
     private Control control;
     private final Timer updateTimer;
@@ -44,16 +46,18 @@ public class DataManager implements MessageReturn {
         } else {
             updateTime = 600000;
         }
+        System.out.println(updateTime);
         updateData();
         updateTimer = new Timer();
         updateTimer.schedule(new TimerTask() {
 
             @Override
             public void run() {
-                updateData();
+                System.out.println("timer");
+                this.run();
+                //updateData();
             }
         }, updateTime);
-
     }
 
     @Override
@@ -83,7 +87,6 @@ public class DataManager implements MessageReturn {
                     li_filme = filme;
                 }
             }).start();
-
         }
 
         if (m.getCommand().equalsIgnoreCase("returnCover")) {
@@ -113,13 +116,19 @@ public class DataManager implements MessageReturn {
                 }
             }).start();
         }
+        if(m.getCommand().equalsIgnoreCase("returnGenres")){
+            
+        }
     }
 
     public final void updateData() {
-
+        System.out.println("Update Start");
         //Update Filme
         Message FilmRequest = new Message("getFilms");
-        new ClientThread(this, host, port).requestToServer(FilmRequest);
+        new ClientThread(this, host, port).requestToServer(FilmRequest).closeConnection();
+        
+        Message GenreRequest = new Message("getGenres");
+        new ClientThread(this, host, port).requestToServer(GenreRequest).closeConnection();
     }
 
     public ArrayList<Film_Client> getFilme() {
