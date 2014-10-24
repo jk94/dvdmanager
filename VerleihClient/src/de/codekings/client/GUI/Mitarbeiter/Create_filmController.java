@@ -6,7 +6,9 @@
 package de.codekings.client.GUI.Mitarbeiter;
 
 import de.codekings.client.Controls.Control;
+import de.codekings.client.connection.MessageReturn;
 import de.codekings.client.datacontent.Film_Client;
+import de.codekings.common.Connection.Message;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -25,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -36,8 +39,6 @@ public class Create_filmController implements Initializable {
 
     @FXML
     private AnchorPane create_anchor;
-    @FXML
-    private Button create_btn;
     @FXML
     private TextField txf_titel;
     @FXML
@@ -63,8 +64,6 @@ public class Create_filmController implements Initializable {
     @FXML
     private TextField txf_subtitel;
     @FXML
-    private Button create_btn1;
-    @FXML
     private ComboBox<?> cb_genre;
     @FXML
     private ListView<?> li_genre_added;
@@ -73,13 +72,19 @@ public class Create_filmController implements Initializable {
     @FXML
     private Button btn_genre_remove;
     @FXML
-    private Button create_btn2;
-    @FXML
     private ImageView img_cover;
     @FXML
     private TableView<Film_Client> tbvw_filme;
 
     private ObservableList<Film_Client> data;
+    @FXML
+    private Button btn_create;
+    @FXML
+    private Button btn_reset;
+    @FXML
+    private Button btn_update;
+    @FXML
+    private Button btn_remove;
 
     /**
      * Initializes the controller class.
@@ -87,6 +92,36 @@ public class Create_filmController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        ladeTableView();
+        ladeGenreList();
+        btn_genre_add.setOnMouseClicked((MouseEvent event) -> {
+            
+        });
+        
+    }
+
+    private void ladeGenreList(){
+        class GenreEmpfänger implements MessageReturn{
+            Create_filmController cfc;
+            
+            public GenreEmpfänger(Create_filmController cfc){
+                this.cfc = cfc;
+                
+                Message genrerequest = new Message("getGenre");
+                
+            }
+
+            @Override
+            public void returnedMessage(Message m) {
+                
+            }
+            
+            
+            
+        }
+    }
+    
+    private void ladeTableView(){
         data = FXCollections.observableArrayList();
         ArrayList<Film_Client> filme = (ArrayList<Film_Client>) Control.getControl().getDataManager().getFilme().clone();
         for (Film_Client fc : filme) {
@@ -106,5 +141,5 @@ public class Create_filmController implements Initializable {
         tbvw_filme.getColumns().add(subtitel);
         tbvw_filme.getItems().addAll(data);
     }
-
+    
 }

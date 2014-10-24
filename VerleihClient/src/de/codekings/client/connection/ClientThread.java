@@ -13,6 +13,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.rmi.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,6 +24,7 @@ public class ClientThread extends Thread {
 
     private final String host;
     private final int port;
+    private Socket conn;
     PrintWriter writer = null;
     BufferedReader reader = null;
     MessageReturn mr;
@@ -32,8 +35,8 @@ public class ClientThread extends Thread {
         this.port = port;
     }
 
-    public void requestToServer(Message m) {
-        Socket conn = newConnection();
+    public ClientThread requestToServer(Message m) {
+        conn = newConnection();
         JSON_Parser jwriter = new JSON_Parser();
         try {
             reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -63,6 +66,7 @@ public class ClientThread extends Thread {
         }).start();
         writer.append(jwriter.parseObjectToString(m) + "\n");
         writer.flush();
+        return this;
     }
 
     private Socket newConnection() {
@@ -75,5 +79,13 @@ public class ClientThread extends Thread {
             System.out.println(ex.getMessage());
         }
         return socket;
+    }
+    
+    public void closeConnection(){
+        try {
+            conn.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
