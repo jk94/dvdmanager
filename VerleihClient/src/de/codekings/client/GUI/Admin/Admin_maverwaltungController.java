@@ -75,8 +75,7 @@ public class Admin_maverwaltungController implements Initializable {
         
         String vorname = user_input_vorname.getText();
         if (!vorname.matches("[a-zA-Z]")){ 
-            //TODO setHinweisVisible(true);
-            //     setHinweis("Vorname darf nur aus Buchstaben bestehen.");
+            //("Vorname darf nur aus Buchstaben bestehen.");
         }
         String name = user_input_nachname.getText();
          if (!name.matches("[a-zA-Z]")){ 
@@ -84,18 +83,18 @@ public class Admin_maverwaltungController implements Initializable {
             //     setHinweis("Name darf nur aus Buchstaben bestehen.");
         }
         String email = user_input_email.getText();
-         if (!name.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+         if (!email.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")){
              //TODO setHinweisVisible(true);
             //     setHinweis("Email nicht validiert."); 
          }
         String passwort = user_passwort.getText();
-        if (!name.matches("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})")){
+        if (!passwort.matches("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})")){
              //TODO setHinweisVisible(true);
             //     setHinweis("Passwort Kriterien nicht erfüllt."); 
          }
         String passwort_check = user_passwort_check.getText();
-        if (!passwort.equals(passwort_check))
+        if (!passwort_check.equals(passwort_check))
         {
             //TODO setHinweisVisible(true);
             //     setHinweis("Passwörter stimmen nicht überein!");
