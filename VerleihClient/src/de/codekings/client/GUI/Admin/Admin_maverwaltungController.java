@@ -17,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import se.mbaeumer.fxmessagebox.MessageBox;
+import se.mbaeumer.fxmessagebox.MessageBoxType;
 
 /**
  * FXML Controller class
@@ -75,7 +77,8 @@ public class Admin_maverwaltungController implements Initializable {
         
         String vorname = user_input_vorname.getText();
         if (!vorname.matches("[a-zA-Z]")){ 
-            //("Vorname darf nur aus Buchstaben bestehen.");
+            MessageBox error = new MessageBox("Vorname darf nur aus Buchstaben bestehen.",MessageBoxType.OK_ONLY);
+            error.showAndWait();
         }
         String name = user_input_nachname.getText();
          if (!name.matches("[a-zA-Z]")){ 
