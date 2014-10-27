@@ -61,10 +61,10 @@
                             <children>
                                 <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <Button fx:id="btn_start" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Start" />
-                                        <Button fx:id="btn_titelsuche" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Titelsuche" />
-                                        <Button fx:id="btn_genresuche" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Genresuche" />
-                                        <Button fx:id="btn_neuheiten" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Neuheiten" />
+                                        <Button fx:id="btn_katalog_start" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Start" />
+                                        <Button fx:id="btn_katalog_titelsuche" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Titelsuche" />
+                                        <Button fx:id="btn_katalog_genresuche" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Genresuche" />
+                                        <Button fx:id="btn_katalog_neuheiten" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Neuheiten" />
                                     </children>
                                 </VBox>
                             </children>
@@ -77,11 +77,11 @@
                             <children>
                                 <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <Button fx:id="kunde_btn_start" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Start" />
-                                        <Button fx:id="kunde_btn_ausleihen" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Artikel ausleihen" />
-                                        <Button fx:id="kunde_btn_entliehen" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Entliehene Artikel" />
-                                        <Button fx:id="kunde_btn_bewertung" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Bewertung abgeben" />
-                                        <Button fx:id="kunde_btn_kontoverwaltung" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Kontoverwaltung" />
+                                        <Button fx:id="btn_kunde_start" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Start" />
+                                        <Button fx:id="btn_kunde_ausleihen" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Artikel ausleihen" />
+                                        <Button fx:id="btn_kunde_entliehen" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Entliehene Artikel" />
+                                        <Button fx:id="btn_kunde_bewertung" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Bewertung abgeben" />
+                                        <Button fx:id="btn_kunde_kontoverwaltung" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Kontoverwaltung" />
                                     </children>
                                 </VBox>
                             </children>
@@ -95,9 +95,8 @@
                                 <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <Button fx:id="btn_mab_katalogpflege" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Katalog pflegen" />
-                                        <Button fx:id="btn_entliehen2" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Artikel zurückgeben" />
-                                        <Button fx:id="btn_mab_registieren" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Kunde registrieren" />
-                                        <Button fx:id="btn_kontoverwaltung2" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Kontoverwaltung" />
+                                        <Button fx:id="btn_mab_return" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Artikel zurückgeben" />
+                                        <Button fx:id="btn_mab_kontoverwaltung" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Kontoverwaltung" />
                                     </children>
                                 </VBox>
                             </children>
@@ -110,8 +109,8 @@
                             <children>
                                 <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <Button fx:id="btn_uebersicht21" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Mitarbeiterverwaltung" />
-                                        <Button fx:id="btn_ausleihen21" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="MassDestruction" />
+                                        <Button fx:id="btn_admin_kontenverwaltung" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Mitarbeiterverwaltung" />
+                                        <Button fx:id="btn_admin_destruct" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="MassDestruction" />
                                     </children>
                                 </VBox>
                             </children>

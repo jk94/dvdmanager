@@ -29,14 +29,7 @@ import javafx.scene.layout.Pane;
  */
 public class TemplateController implements Initializable {
 
-    @FXML
     private Button btn_start;
-    @FXML
-    private Button btn_titelsuche;
-    @FXML
-    private Button btn_genresuche;
-    @FXML
-    private Button btn_neuheiten;
     private ImageView head_searchicon;
     @FXML
     private Button head_btn_home;
@@ -59,16 +52,7 @@ public class TemplateController implements Initializable {
     @FXML
     private TitledPane menu_mitarbeiterbereich;
     @FXML
-    private Button btn_entliehen2;
-    @FXML
-    private Button btn_kontoverwaltung2;
-    @FXML
     private TitledPane menu_adminbereich;
-    @FXML
-    private Button btn_uebersicht21;
-    @FXML
-    private Button btn_ausleihen21;
-    @FXML
     private Button btn_mab_registieren;
     @FXML
     private ScrollPane content_base;
@@ -77,15 +61,10 @@ public class TemplateController implements Initializable {
     private static TemplateController tc;
     @FXML
     private Button btn_mab_katalogpflege;
-    @FXML
     private Button kunde_btn_start;
-    @FXML
     private Button kunde_btn_ausleihen;
-    @FXML
     private Button kunde_btn_entliehen;
-    @FXML
     private Button kunde_btn_bewertung;
-    @FXML
     private Button kunde_btn_kontoverwaltung;
     @FXML
     private BorderPane bp_mainframe;
@@ -95,6 +74,32 @@ public class TemplateController implements Initializable {
     private ImageView head_btn_search_img;
     @FXML
     private ImageView header_logo;
+    @FXML
+    private Button btn_katalog_start;
+    @FXML
+    private Button btn_katalog_titelsuche;
+    @FXML
+    private Button btn_katalog_genresuche;
+    @FXML
+    private Button btn_katalog_neuheiten;
+    @FXML
+    private Button btn_kunde_start;
+    @FXML
+    private Button btn_kunde_ausleihen;
+    @FXML
+    private Button btn_kunde_entliehen;
+    @FXML
+    private Button btn_kunde_bewertung;
+    @FXML
+    private Button btn_kunde_kontoverwaltung;
+    @FXML
+    private Button btn_mab_return;
+    @FXML
+    private Button btn_mab_kontoverwaltung;
+    @FXML
+    private Button btn_admin_kontenverwaltung;
+    @FXML
+    private Button btn_admin_destruct;
 
     /**
      * Initializes the controller class.
@@ -108,32 +113,32 @@ public class TemplateController implements Initializable {
         head_btn_search_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/searchicon.png")));
         header_logo.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/cover.png")));
 // TODO
-        btn_start.setOnMouseClicked((MouseEvent event) -> {
+        btn_katalog_start.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(content_base, ContentPageType.Katalog_Start, false);
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });
-        kunde_btn_start.setOnMouseClicked((MouseEvent event) -> {
+        btn_kunde_start.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(content_base, ContentPageType.Kunde_Start, false);
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });
-        kunde_btn_ausleihen.setOnMouseClicked((MouseEvent event) -> {
+        btn_kunde_ausleihen.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(content_base, ContentPageType.Kunde_Ausleihen, false);
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });
-        kunde_btn_entliehen.setOnMouseClicked((MouseEvent event) -> {
+        btn_kunde_entliehen.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(content_base, ContentPageType.Kunde_EntlieheneArt, false);
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });
-        kunde_btn_kontoverwaltung.setOnMouseClicked((MouseEvent event) -> {
+        btn_kunde_kontoverwaltung.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(content_base, ContentPageType.Kunde_Verwaltung, false);
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });
-        btn_mab_registieren.setOnMouseClicked((MouseEvent event) -> {
+        btn_mab_kontoverwaltung.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(content_base, ContentPageType.MA_KundeRegistrieren, false);
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
@@ -154,7 +159,7 @@ public class TemplateController implements Initializable {
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });
         
-        kunde_btn_bewertung.setOnMouseClicked((MouseEvent event) -> {
+        btn_kunde_bewertung.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(content_base, ContentPageType.Kunde_BewAbg, true);
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());

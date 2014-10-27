@@ -220,21 +220,35 @@ class ServerThread extends Thread {
 
             beenden = true;
         }//</editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="getGenres">
         if (m.getCommand().equalsIgnoreCase("getGenres")) {
             ArrayList<Genre> genres = DBOperations.getGenre();
 
             Message answer = new Message("returnGenres");
-            for(Genre g:genres){
+            for (Genre g : genres) {
                 answer.addSendable(g);
             }
             write(j.parseObjectToString(answer));
 
             beenden = true;
         }//</editor-fold>
-        
-        
+
+        // <editor-fold defaultstate="collapsed" desc="checkEmail">
+        if (m.getCommand().equalsIgnoreCase("checkEmail")) {
+            User u = DBOperations.getUser(m.getAdditionalparameter().get("email"));
+
+            Message answer = new Message("ReturnEmailValidation");
+            if (u != null) {
+                answer.addAdditionalParameter("status", String.valueOf(false));
+            } else {
+                answer.addAdditionalParameter("status", String.valueOf(true));
+            }
+
+            write(j.parseObjectToString(answer));
+
+            beenden = true;
+        }//</editor-fold>
 
         return beenden;
 
