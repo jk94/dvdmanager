@@ -17,6 +17,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import se.mbaeumer.fxmessagebox.MessageBox;
+import se.mbaeumer.fxmessagebox.MessageBoxType;
 
 /**
  * FXML Controller class
@@ -73,49 +76,66 @@ public class Admin_maverwaltungController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        user_btn_create.setOnMouseClicked((MouseEvent event) -> {
+            check_Input();
+            // schreibe eingaben in db
+        });
+        
+        user_btnspeichern.setOnMouseClicked((MouseEvent event) -> {
+            check_Input();
+            // ändere db nach eingabe
+        });
+        user_btn_verwerfen.setOnMouseClicked((MouseEvent event) -> {
+            //lade Seite neu, ohne eingaben zu behalten
+        });
+        
+    }
+    
+    public void check_Input () {
         String vorname = user_input_vorname.getText();
         if (!vorname.matches("[a-zA-Z]")){ 
-            //("Vorname darf nur aus Buchstaben bestehen.");
+            MessageBox error = new MessageBox("Vorname darf nur aus Buchstaben bestehen.",MessageBoxType.OK_ONLY);
+            error.showAndWait();
         }
         String name = user_input_nachname.getText();
          if (!name.matches("[a-zA-Z]")){ 
-            //TODO setHinweisVisible(true);
-            //     setHinweis("Name darf nur aus Buchstaben bestehen.");
+            MessageBox error = new MessageBox("Name darf nur aus Buchstaben bestehen.",MessageBoxType.OK_ONLY);
+            error.showAndWait();
         }
         String email = user_input_email.getText();
          if (!email.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")){
-             //TODO setHinweisVisible(true);
-            //     setHinweis("Email nicht validiert."); 
+            MessageBox error = new MessageBox("Email entspricht nicht vorgegebenem Format.",MessageBoxType.OK_ONLY);
+            error.showAndWait();
          }
         String passwort = user_passwort.getText();
         if (!passwort.matches("((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})")){
-             //TODO setHinweisVisible(true);
-            //     setHinweis("Passwort Kriterien nicht erfüllt."); 
+            MessageBox error = new MessageBox("Passwortkriterien nicht erfüllt.",MessageBoxType.OK_ONLY);
+            error.showAndWait();
          }
         String passwort_check = user_passwort_check.getText();
         if (!passwort_check.equals(passwort_check))
         {
-            //TODO setHinweisVisible(true);
-            //     setHinweis("Passwörter stimmen nicht überein!");
+            MessageBox error = new MessageBox("Passwörter stimmen nicht überein!",MessageBoxType.OK_ONLY);
+            error.showAndWait();
         }
         
         //  TODO   Welcher Datentyp?? geburtstag = user_datum.getValue();
         
         String plz = user_input_plz.getText();
         if (!vorname.matches("[0-9]")){ 
-            //TODO setHinweisVisible(true);
-            //     setHinweis("Postleitzahl darf nur aus Zahlen bestehen.");
+            MessageBox error = new MessageBox("Postleitzahl darf nur aus Zahlen bestehen.",MessageBoxType.OK_ONLY);
+            error.showAndWait();
         }
         String ort = user_input_ort.getText();
         if (!vorname.matches("[a-zA-Z]")){ 
-            //TODO setHinweisVisible(true);
-            //     setHinweis("Ort darf nur aus Buchstaben bestehen.");
+            MessageBox error = new MessageBox("Ort darf nur aus Buchstaben bestehen.",MessageBoxType.OK_ONLY);
+            error.showAndWait();
         }
         String str = user_input_adresse.getText();
         if (!vorname.matches("(?=.*\\d)(?=.*[a-zA-Z])")){ 
-            //TODO setHinweisVisible(true);
-            //     setHinweis("Adresse muss Hausnummer enthalten.");
+            MessageBox error = new MessageBox("Adresse muss Hausnummer enthalten.",MessageBoxType.OK_ONLY);
+            error.showAndWait();
         }
         
     }    

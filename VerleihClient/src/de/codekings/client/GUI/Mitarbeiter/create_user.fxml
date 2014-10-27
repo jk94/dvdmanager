@@ -14,13 +14,13 @@
       <TextField fx:id="user_input_adresse" layoutX="47.0" layoutY="119.0" prefHeight="25.0" prefWidth="278.0" promptText="Straße" />
         <PasswordField fx:id="user_passwort_check" layoutX="246.0" layoutY="216.0" prefHeight="25.0" prefWidth="184.0" text="passwort" />
         <PasswordField fx:id="user_passwort" layoutX="48.0" layoutY="216.0" prefHeight="25.0" prefWidth="184.0" text="passwort " />
-        <Button fx:id="user_btnspeichern" layoutX="345.0" layoutY="361.0" mnemonicParsing="false" text="Neu Anlegen" />
+        <Button fx:id="user_btn_create" layoutX="345.0" layoutY="361.0" mnemonicParsing="false" text="Neu Anlegen" />
         <ListView fx:id="user_list" layoutX="504.0" layoutY="47.0" prefHeight="339.0" prefWidth="200.0" />
-      <CheckBox layoutX="62.0" layoutY="284.0" mnemonicParsing="false" selected="true" styleClass="content-radiobtn" text="Kunde" />
-      <CheckBox layoutX="149.0" layoutY="284.0" mnemonicParsing="false" styleClass="content-radiobtn" text="Mitarbeiter" />
-      <CheckBox layoutX="256.0" layoutY="284.0" mnemonicParsing="false" styleClass="content-radiobtn" text="Administrator" />
-      <Button fx:id="user_btnspeichern1" layoutX="188.0" layoutY="361.0" mnemonicParsing="false" text="Änderungen speichern" />
-      <Button fx:id="user_btnspeichern11" layoutX="78.0" layoutY="361.0" mnemonicParsing="false" text="Verwerfen" />
+      <CheckBox fx:id="user_check_kunde" layoutX="62.0" layoutY="284.0" mnemonicParsing="false" selected="true" styleClass="content-radiobtn" text="Kunde" />
+      <CheckBox fx:id="user_check_mitarbeiter" layoutX="149.0" layoutY="284.0" mnemonicParsing="false" styleClass="content-radiobtn" text="Mitarbeiter" />
+      <CheckBox fx:id="user_check_admin" layoutX="256.0" layoutY="284.0" mnemonicParsing="false" styleClass="content-radiobtn" text="Administrator" />
+      <Button fx:id="user_btnspeichern" layoutX="188.0" layoutY="361.0" mnemonicParsing="false" text="Änderungen speichern" />
+      <Button fx:id="user_btn_verwerfen" layoutX="78.0" layoutY="361.0" mnemonicParsing="false" text="Verwerfen" />
       <TextField fx:id="user_table_head" layoutX="504.0" layoutY="22.0" prefHeight="25.0" prefWidth="200.0" />
       <TextField fx:id="user_input_ort" layoutX="189.0" layoutY="152.0" prefHeight="25.0" prefWidth="136.0" promptText="Ort" />
       <TextField fx:id="user_input_plz" layoutX="48.0" layoutY="152.0" prefHeight="25.0" prefWidth="129.0" promptText="PLZ" />
