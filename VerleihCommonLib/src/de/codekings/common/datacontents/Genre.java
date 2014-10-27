@@ -5,21 +5,25 @@
  */
 package de.codekings.common.datacontents;
 
+import de.codekings.common.Enumerators.ClassType;
+
 /**
  *
  * @author Jan
  */
-public class Genre {
+public class Genre extends Sendable{
     
     private int genre_id;
     private String genrebezeichnung;
 
     public Genre(int genre_id, String genrebezeichnung) {
+        super(ClassType.T_GENRE);
         this.genre_id = genre_id;
         this.genrebezeichnung = genrebezeichnung;
     }
 
     public Genre() {
+        super(ClassType.T_GENRE);
     }
 
     public int getGenre_id() {

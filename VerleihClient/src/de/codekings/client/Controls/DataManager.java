@@ -36,6 +36,15 @@ public class DataManager implements MessageReturn {
     private ConfigManager cfgManager;
     private final String host;
     private final int port;
+    private final TimerTask updateTimerTask = new TimerTask() {
+
+        @Override
+        public void run() {
+            System.out.println("timer");
+            updateData();
+            updateTimer.schedule(updateTimerTask, updateTime);
+        }
+    };
 
     public DataManager(Control c) {
         this.cfgManager = c.getCfgManager();
@@ -48,24 +57,16 @@ public class DataManager implements MessageReturn {
         }
         System.out.println(updateTime);
         updateData();
-        updateTimer = new Timer();
-        updateTimer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                System.out.println("timer");
-                this.run();
-                //updateData();
-            }
-        }, updateTime);
+        updateTimer = new Timer(true);
+        //updateTimer.schedule(updateTimerTask, updateTime);
     }
 
     @Override
     public void returnedMessage(Message m) {
         DataManager instance = this;
         if (m.getCommand().equalsIgnoreCase("returnFilms")) {
-
-            new Thread(new Runnable() {
+            li_filme.clear();
+            Thread t = new Thread(new Runnable() {
 
                 @Override
                 public void run() {
@@ -86,11 +87,14 @@ public class DataManager implements MessageReturn {
                     });
                     li_filme = filme;
                 }
-            }).start();
+            });
+            t.setDaemon(true);
+            t.setPriority(Thread.MIN_PRIORITY);
+            t.start();
         }
 
         if (m.getCommand().equalsIgnoreCase("returnCover")) {
-            new Thread(() -> {
+            Thread t = new Thread(() -> {
                 Cover c = null;
                 for (Sendable s : m.getContent()) {
                     if (s instanceof Cover) {
@@ -114,10 +118,19 @@ public class DataManager implements MessageReturn {
                 } else {
                     //Cover not Found anzeigen
                 }
-            }).start();
+            });
+            t.setDaemon(true);
+            t.setPriority(Thread.MIN_PRIORITY);
+            t.start();
         }
-        if(m.getCommand().equalsIgnoreCase("returnGenres")){
-            
+        if (m.getCommand().equalsIgnoreCase("returnGenres")) {
+            li_genre.clear();
+            for (Sendable s : m.getContent()) {
+                if (s instanceof Genre) {
+                    Genre g = (Genre) s;
+                    li_genre.add(g);
+                }
+            }
         }
     }
 
@@ -125,14 +138,18 @@ public class DataManager implements MessageReturn {
         System.out.println("Update Start");
         //Update Filme
         Message FilmRequest = new Message("getFilms");
-        new ClientThread(this, host, port).requestToServer(FilmRequest).closeConnection();
-        
+        new ClientThread(this, host, port).requestToServer(FilmRequest);
+
         Message GenreRequest = new Message("getGenres");
-        new ClientThread(this, host, port).requestToServer(GenreRequest).closeConnection();
+        new ClientThread(this, host, port).requestToServer(GenreRequest);
     }
 
     public ArrayList<Film_Client> getFilme() {
         return li_filme;
+    }
+
+    public ArrayList<Genre> getGenres() {
+        return li_genre;
     }
 
 }

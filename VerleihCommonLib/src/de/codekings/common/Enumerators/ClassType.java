@@ -10,5 +10,5 @@ package de.codekings.common.Enumerators;
  * @author Jan
  */
 public enum ClassType {
-    T_FILM, T_DVD, T_KUNDE, T_MITARBEITER, T_PUBLICKEY, T_COVER;
+    T_FILM, T_DVD, T_KUNDE, T_MITARBEITER, T_PUBLICKEY, T_COVER, T_GENRE;
 }

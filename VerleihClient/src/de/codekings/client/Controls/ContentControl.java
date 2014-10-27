@@ -59,14 +59,14 @@ public class ContentControl {
 
             case Kunde_Start:
                 try {
-                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/gui/kunden/kunde_start.fxml"));
+                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Kunden/kunde_start.fxml"));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 break;
             case Kunde_Ausleihen:
                 try {
-                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/gui/kunden/kunde_ausleihen.fxml"));
+                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Kunden/kunde_ausleihen.fxml"));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
