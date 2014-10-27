@@ -5,36 +5,41 @@
  */
 package de.codekings.client.datacontent;
 
+import de.codekings.common.datacontents.Cover;
 import javafx.scene.image.Image;
 
 /**
  *
  * @author Jan
  */
-public class Cover_Client {
+public class Cover_Client extends Cover {
 
-    private int film_id;
-    private Image cover;
+    private Image imgCover;
 
     public Cover_Client(int film_id, Image cover) {
-        this.film_id = film_id;
-        this.cover = cover;
+        super(film_id);
+        this.imgCover = cover;
     }
 
-    public Image getCover() {
-        return cover;
+    @Override
+    public Image gibCoverImage() {
+        return imgCover;
     }
 
-    public void setCover(Image cover) {
-        this.cover = cover;
+    public void setCoverImage(Image cover) {
+        this.imgCover = cover;
     }
 
-    public int getFilm_id() {
-        return film_id;
+    @Override
+    public void setCover(String cover) {
+        super.setCover(cover);
     }
 
-    public void setFilm_id(int film_id) {
-        this.film_id = film_id;
+    @Override
+    public String getCover() {
+        return super.getCover(); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
 
 }

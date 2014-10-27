@@ -106,7 +106,7 @@ public class DataManager implements MessageReturn {
                         for (Film_Client fi : li_filme) {
                             try {
                                 if (fi.getFILMID() == c.getFilm_id()) {
-                                    fi.setCover(new Cover_Client(c.getFilm_id(), c.gibCoverImage()));
+                                    fi.setCover(c);
                                 }
                             } catch (Exception e) {
                                 System.out.println(e.getMessage());

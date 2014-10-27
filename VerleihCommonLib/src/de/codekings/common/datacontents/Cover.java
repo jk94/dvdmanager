@@ -25,6 +25,12 @@ public class Cover extends Sendable {
         super(ClassType.T_COVER);
         cover = "";
     }
+    
+    public Cover(int filmid){
+        super(ClassType.T_COVER);
+        cover = "";
+        film_id = filmid;
+    }
 
     public Cover(int film_id, String cover) {
         super(ClassType.T_COVER);

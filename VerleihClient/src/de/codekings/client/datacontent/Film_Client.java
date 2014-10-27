@@ -5,6 +5,7 @@
  */
 package de.codekings.client.datacontent;
 
+import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
 
 /**
@@ -12,8 +13,8 @@ import de.codekings.common.datacontents.Film;
  * @author Jan
  */
 public class Film_Client extends Film {
-        private Cover_Client cover;
-        public Film_Client(Film f, Cover_Client c) {
+        private Cover cover;
+        public Film_Client(Film f, Cover c) {
             super(f.getFILMID(), f.getRelease_date(), f.getLi_actors(), f.getLi_awards(), f.getGenres(), 
                     f.getS_titel(), f.getS_subtitel(), f.getS_description(), f.getS_trailer(), 
                     f.getS_regie(), f.getS_FSK(), f.getI_rating(), f.getI_duration(), f.getI_fsk(), 
@@ -21,11 +22,11 @@ public class Film_Client extends Film {
             this.cover = c;
         }
         
-        public Cover_Client getCover(){
+        public Cover getCover(){
             return cover;
         }
         
-        public void setCover(Cover_Client c){
+        public void setCover(Cover c){
             this.cover = c;
         }
 
