@@ -9,6 +9,7 @@ import de.codekings.client.Controls.Control;
 import de.codekings.client.connection.MessageReturn;
 import de.codekings.client.datacontent.Film_Client;
 import de.codekings.common.Connection.Message;
+import de.codekings.common.datacontents.Genre;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -64,9 +65,9 @@ public class Create_filmController implements Initializable {
     @FXML
     private TextField txf_subtitel;
     @FXML
-    private ComboBox<?> cb_genre;
+    private ComboBox<String> cb_genre;
     @FXML
-    private ListView<?> li_genre_added;
+    private ListView<String> li_genre_added;
     @FXML
     private Button btn_genre_add;
     @FXML
@@ -76,7 +77,8 @@ public class Create_filmController implements Initializable {
     @FXML
     private TableView<Film_Client> tbvw_filme;
 
-    private ObservableList<Film_Client> data;
+    private ObservableList<Film_Client> filmdata;
+    private ObservableList<Genre> genredata;
     @FXML
     private Button btn_create;
     @FXML
@@ -95,37 +97,26 @@ public class Create_filmController implements Initializable {
         ladeTableView();
         ladeGenreList();
         btn_genre_add.setOnMouseClicked((MouseEvent event) -> {
-            
+
         });
+
+    }
+
+    private void ladeGenreList() {
+        ArrayList<Genre> genres = (ArrayList<Genre>) Control.getControl().getDataManager().getGenres().clone();
+        for (Genre g : genres) {
+            cb_genre.getItems().add(g.getGenrebezeichnung());
+        }
+
+        
         
     }
 
-    private void ladeGenreList(){
-        class GenreEmpfänger implements MessageReturn{
-            Create_filmController cfc;
-            
-            public GenreEmpfänger(Create_filmController cfc){
-                this.cfc = cfc;
-                
-                Message genrerequest = new Message("getGenre");
-                
-            }
-
-            @Override
-            public void returnedMessage(Message m) {
-                
-            }
-            
-            
-            
-        }
-    }
-    
-    private void ladeTableView(){
-        data = FXCollections.observableArrayList();
+    private void ladeTableView() {
+        filmdata = FXCollections.observableArrayList();
         ArrayList<Film_Client> filme = (ArrayList<Film_Client>) Control.getControl().getDataManager().getFilme().clone();
         for (Film_Client fc : filme) {
-            data.add(fc);
+            filmdata.add(fc);
         }
 
         String columnname[] = {"Titel", "Subtitel"};
@@ -139,7 +130,7 @@ public class Create_filmController implements Initializable {
         tbvw_filme.getColumns().clear();
         tbvw_filme.getColumns().add(titel);
         tbvw_filme.getColumns().add(subtitel);
-        tbvw_filme.getItems().addAll(data);
+        tbvw_filme.getItems().addAll(filmdata);
     }
-    
+
 }

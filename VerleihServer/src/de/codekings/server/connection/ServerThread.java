@@ -9,6 +9,7 @@ import de.codekings.common.Connection.Hasher;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
+import de.codekings.common.datacontents.Genre;
 import de.codekings.common.datacontents.Mitarbeiter;
 import de.codekings.common.datacontents.User;
 import de.codekings.common.json.JSON_Parser;
@@ -219,6 +220,21 @@ class ServerThread extends Thread {
 
             beenden = true;
         }//</editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="getGenres">
+        if (m.getCommand().equalsIgnoreCase("getGenres")) {
+            ArrayList<Genre> genres = DBOperations.getGenre();
+
+            Message answer = new Message("returnGenres");
+            for(Genre g:genres){
+                answer.addSendable(g);
+            }
+            write(j.parseObjectToString(answer));
+
+            beenden = true;
+        }//</editor-fold>
+        
+        
 
         return beenden;
 
