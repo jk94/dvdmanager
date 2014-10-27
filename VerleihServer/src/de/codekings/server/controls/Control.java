@@ -25,6 +25,7 @@ public class Control {
     private ConfigManager cfgManager;
     private DBController dbManager;
     private VerleihServer secureVerleihserver, unsecureVerleihserver;
+    private CoverManager coverManager;
 
     public Control() {
         //Initialisiere Log für alle!
@@ -37,7 +38,10 @@ public class Control {
         //Initialisiere Datenbankverbindung
         loadDatabase();
 
-        //Initialisiere verschlüsselten und unverschlüsselten Server und starte sie.
+        //Initialisiere CoverManager
+        loadCoverManager();
+        
+        //Initialisiere unverschlüsselten Server und startet ihn.
         runServer();
 
         theControl = this;
@@ -62,6 +66,10 @@ public class Control {
 
     public Logger getLogger() {
         return log;
+    }
+    
+    public CoverManager getCoverManager(){
+        return coverManager;
     }
 
     public final void loadConfig() {
@@ -96,6 +104,10 @@ public class Control {
             System.out.println("Verbindung zur Datenbank nicht möglich. "
                     + "Überprüfen Sie die Konfigurationsdatei: 'config/server.cfg'");
         }
+    }
+
+    public final void loadCoverManager() {
+        this.coverManager = new CoverManager();
     }
 
     private void runServer() {

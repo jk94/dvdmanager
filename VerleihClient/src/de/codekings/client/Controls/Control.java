@@ -122,7 +122,7 @@ public class Control implements MessageReturn {
         loginsession.requestToServer(loginrequest);
 
         int counter = 0;
-        while (counter < 20 && !loginResultEmpfangen) {
+        while (counter < 50 && !loginResultEmpfangen) {
             counter++;
             try {
                 Thread.sleep(500l);

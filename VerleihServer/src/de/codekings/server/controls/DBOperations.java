@@ -7,6 +7,7 @@ import de.codekings.common.datacontents.Genre;
 import de.codekings.common.datacontents.Mitarbeiter;
 import de.codekings.common.datacontents.User;
 import de.codekings.common.json.JSON_Parser;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
@@ -138,10 +139,11 @@ public class DBOperations {
             while (rs.next()) {
                 String covername = rs.getString("cover");
                 try {
-                    File coverfile = new File("../covers/" + covername);
-
-                    cover.setCover(JSON_Parser.encodeToString(ImageIO.read(coverfile), "png"));
+                    File coverfile = new File("./covers/" + covername);
+                    BufferedImage img = ImageIO.read(coverfile);
+                    cover.setCover(JSON_Parser.encodeToString(img, "jpg"));
                 } catch (IOException ex) {
+                    cover.setCover("");
                 }
             }
             rs.close();

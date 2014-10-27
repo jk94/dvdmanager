@@ -167,8 +167,9 @@ class ServerThread extends Thread {
         if (m.getCommand().equalsIgnoreCase("getCover")) {
             Message returnMessage = new Message("returnCover");
 
-            Cover c = DBOperations.getCover(Integer.parseInt(m.getAdditionalparameter().get("FILM_ID")));
-
+            int filmid = Integer.parseInt(m.getAdditionalparameter().get("FILM_ID"));
+            //Cover c = DBOperations.getCover(Integer.parseInt(m.getAdditionalparameter().get("FILM_ID")));
+            Cover c = Control.getInstance().getCoverManager().getCover(filmid);
             returnMessage.addSendable(c);
             returnMessage.addAdditionalParameter("FILM_ID", m.getAdditionalparameter().get("FILM_ID"));
 
