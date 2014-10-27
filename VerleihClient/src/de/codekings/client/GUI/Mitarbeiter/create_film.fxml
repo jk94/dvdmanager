@@ -46,17 +46,14 @@
          </graphic></Button>
       <Button fx:id="create_btn2" layoutX="528.0" layoutY="528.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Update" />
       <Button fx:id="btn_remove" layoutX="692.0" layoutY="528.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Löschen" />
-      <AnchorPane layoutX="32.0" layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="190.0" style="-fx-border-color: FFFFFF; -fx-border-width: 2px;" AnchorPane.bottomAnchor="231.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="659.0" AnchorPane.topAnchor="106.0">
+      <AnchorPane layoutX="32.0" layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="190.0" style="-fx-border-color: FFFFFF; -fx-border-width: 2px;">
          <children>
-            <ImageView fx:id="img_cover" fitHeight="219.0" fitWidth="190.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="img_cover" fitHeight="220.0" fitWidth="190.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="de/codekings/client/GUI/Elements/NoCover.png" />
                </image>
             </ImageView>
          </children>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
       </AnchorPane>
     </children>
 </AnchorPane>

@@ -6,9 +6,7 @@
 package de.codekings.client.GUI.Mitarbeiter;
 
 import de.codekings.client.Controls.Control;
-import de.codekings.client.connection.MessageReturn;
 import de.codekings.client.datacontent.Film_Client;
-import de.codekings.common.Connection.Message;
 import de.codekings.common.datacontents.Genre;
 import java.net.URL;
 import java.util.ArrayList;
@@ -78,7 +76,7 @@ public class Create_filmController implements Initializable {
     private TableView<Film_Client> tbvw_filme;
 
     private ObservableList<Film_Client> filmdata;
-    private ObservableList<Genre> genredata;
+    
     @FXML
     private Button btn_create;
     @FXML
@@ -100,6 +98,39 @@ public class Create_filmController implements Initializable {
 
         });
 
+        btn_reset.setOnMouseClicked((MouseEvent event) -> {
+            txf_beschreibung.setText("");
+            txf_regisseur.setText("");
+            txf_schauspieler.setText("");
+            txf_subtitel.setText("");
+            txf_titel.setText("");
+            txf_trailer.setText("");
+            cb_genre.setValue("");
+            li_genre_added.getItems().clear();
+        });
+        
+        btn_genre_add.setOnMouseClicked((MouseEvent event) -> {
+            ArrayList<Genre> genres = (ArrayList<Genre>) Control.getControl().getDataManager().getGenres().clone();
+            String genreinput = cb_genre.getValue();
+            boolean vorhanden = false;
+            for (Genre genre : genres) {
+                if(genre.getGenrebezeichnung().equals(genreinput)){
+                    vorhanden = true;
+                    break;
+                }
+            }
+            if(vorhanden){
+                li_genre_added.getItems().add(genreinput);
+            }else{
+                //Genre dem Server hinzufügen!!
+            }
+        });
+        
+        btn_genre_remove.setOnMouseClicked((MouseEvent event) -> {
+            int index = li_genre_added.getSelectionModel().getSelectedIndex();
+            li_genre_added.getItems().remove(index);
+        });
+        
     }
 
     private void ladeGenreList() {
@@ -108,8 +139,6 @@ public class Create_filmController implements Initializable {
             cb_genre.getItems().add(g.getGenrebezeichnung());
         }
 
-        
-        
     }
 
     private void ladeTableView() {

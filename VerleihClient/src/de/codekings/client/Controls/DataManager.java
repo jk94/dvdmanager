@@ -101,22 +101,37 @@ public class DataManager implements MessageReturn {
                         c = (Cover) s;
                     }
                 }
+                if (c.getFilm_id() == 33) {
+                    System.out.println("Aliens");
+                }
+
+                String pfad = "de/codekings/client/GUI/Elements/NoCover.png";
+                InputStream is = LoginFormController.class.getClassLoader().getResourceAsStream(pfad);
+                Image nocover = new Image(is, 200.0, 250.0, true, true);
+
+                Film_Client fc = null;
+
                 if (c != null) {
-                    if (!c.getCover().equals("")) {
-                        for (Film_Client fi : li_filme) {
-                            try {
-                                if (fi.getFILMID() == c.getFilm_id()) {
-                                    fi.setCover(c);
-                                }
-                            } catch (Exception e) {
-                                System.out.println(e.getMessage());
+                    for (Film_Client fi : li_filme) {
+                        try {
+                            if (fi.getFILMID() == c.getFilm_id()) {
+                                fc = fi;
+                                break;
                             }
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
                         }
+                    }
+
+                    if (!c.getCover().equals("")) {
+                        fc.setCover(c);
                     } else {
                         //Cover not Found anzeigen
+                        fc.setCover(new Cover_Client(fc.getFILMID(), nocover));
                     }
                 } else {
                     //Cover not Found anzeigen
+                    fc.setCover(new Cover_Client(fc.getFILMID(), nocover));
                 }
             });
             t.setDaemon(true);
