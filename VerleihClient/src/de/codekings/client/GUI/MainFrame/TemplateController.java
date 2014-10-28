@@ -15,10 +15,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
@@ -29,8 +31,8 @@ import javafx.scene.layout.Pane;
  */
 public class TemplateController implements Initializable {
 
-    private Button btn_start;
-    private ImageView head_searchicon;
+    private static TemplateController tc;
+     
     @FXML
     private Button head_btn_home;
     @FXML
@@ -53,25 +55,14 @@ public class TemplateController implements Initializable {
     private TitledPane menu_mitarbeiterbereich;
     @FXML
     private TitledPane menu_adminbereich;
-    private Button btn_mab_registieren;
     @FXML
     private ScrollPane content_base;
-    private Pane content_pane;
-
-    private static TemplateController tc;
     @FXML
     private Button btn_mab_katalogpflege;
-    private Button kunde_btn_start;
-    private Button kunde_btn_ausleihen;
-    private Button kunde_btn_entliehen;
-    private Button kunde_btn_bewertung;
-    private Button kunde_btn_kontoverwaltung;
     @FXML
     private BorderPane bp_mainframe;
     @FXML
     private Button head_btn_search;
-    @FXML
-    private ImageView head_btn_search_img;
     @FXML
     private ImageView header_logo;
     @FXML
@@ -100,6 +91,16 @@ public class TemplateController implements Initializable {
     private Button btn_admin_kontenverwaltung;
     @FXML
     private Button btn_admin_destruct;
+    @FXML
+    private AnchorPane head_left;
+    @FXML
+    private AnchorPane head_center;
+    @FXML
+    private AnchorPane head_right;
+    @FXML
+    private TextField head_search_field;
+    @FXML
+    private ImageView head_btn_search_img;
 
     /**
      * Initializes the controller class.
@@ -164,10 +165,6 @@ public class TemplateController implements Initializable {
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });
-    }
-
-    public Pane getContentPane() {
-        return this.content_pane;
     }
 
     public Accordion getMenu(){
