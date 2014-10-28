@@ -85,7 +85,7 @@
    <top>
       <BorderPane prefHeight="69.0" prefWidth="1029.0" BorderPane.alignment="CENTER">
          <left>
-            <AnchorPane fx:id="head_left" prefHeight="200.0" prefWidth="200.0" styleClass="head-left" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="head_left" prefHeight="200.0" prefWidth="200.0" styleClass="header-left" BorderPane.alignment="CENTER">
                <children>
                   <Button fx:id="head_btn_forward" layoutX="137.0" layoutY="16.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="imgbtn">
                      <graphic>
@@ -106,14 +106,14 @@
             </AnchorPane>
          </left>
          <center>
-            <AnchorPane fx:id="head_center" prefHeight="200.0" prefWidth="200.0" styleClass="head-center" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="head_center" prefHeight="200.0" prefWidth="200.0" styleClass="header-center" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fx:id="header_logo" fitHeight="80.0" fitWidth="320.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>
          </center>
          <right>
-            <AnchorPane fx:id="head_right" prefHeight="200.0" prefWidth="200.0" styleClass="head-right" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="head_right" prefHeight="200.0" prefWidth="200.0" styleClass="header-right" BorderPane.alignment="CENTER">
                <children>
                   <TextField fx:id="head_search_field" layoutX="44.0" layoutY="28.0" maxWidth="150.0" minWidth="150.0" prefHeight="15.0" prefWidth="150.0" styleClass="search-box" text="Titelsuche" />
                   <Button fx:id="head_btn_search" layoutY="26.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="10.0" styleClass="imgbtn">

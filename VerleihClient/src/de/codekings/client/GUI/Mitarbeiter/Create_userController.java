@@ -81,8 +81,9 @@ public class Create_userController implements Initializable, MessageReturn {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
         user_btn_create.setOnMouseClicked((MouseEvent event) -> {
+            //variablen definieren
             check_Input();
                
             ConfigManager cfgManager = Control.getControl().getCfgManager();
