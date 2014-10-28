@@ -78,20 +78,13 @@ public class DBOperations {
                 neuerFilm.setI_rating(rating);
                 neuerFilm.setI_fsk(iFSK);
 
-                String actorsunsplitted = rs.getString("actor"), awardsunsplitted = rs.getString("awards");
+                String actorsunsplitted = rs.getString("actor");
                 String[] actors = new String[0];
-                String[] awards = new String[0];
-                if (awardsunsplitted.contains(";")) {
-                    awards = awardsunsplitted.split(";");
-                }
                 if (actorsunsplitted.contains(";")) {
                     actors = actorsunsplitted.split(";");
                 }
                 for (String actor : actors) {
                     neuerFilm.addActor(actor.trim());
-                }
-                for (String award : awards) {
-                    neuerFilm.addActor(award.trim());
                 }
                 liste.add(neuerFilm);
             }

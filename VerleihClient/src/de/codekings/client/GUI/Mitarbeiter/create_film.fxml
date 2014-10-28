@@ -10,7 +10,7 @@
     <children>
         <Button fx:id="btn_create" layoutX="611.0" layoutY="528.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Erstellen" />
         <TextField fx:id="txf_titel" layoutX="32.0" layoutY="34.0" prefHeight="25.0" prefWidth="463.0" promptText="Titel" />
-        <TextArea fx:id="txf_beschreibung" layoutX="32.0" layoutY="339.0" prefHeight="144.0" prefWidth="463.0" promptText="Beschreibung" />
+        <TextArea fx:id="txf_beschreibung" layoutX="32.0" layoutY="339.0" prefHeight="144.0" prefWidth="463.0" promptText="Beschreibung" wrapText="true" />
       <RadioButton fx:id="rbtn_fsk0" layoutX="32.0" layoutY="493.0" mnemonicParsing="false" selected="true" style="-fx-text-fill: #B43104;" styleClass="content-radiobtn" text="kein FSK">
          <toggleGroup>
             <ToggleGroup fx:id="fskbuttons" />
