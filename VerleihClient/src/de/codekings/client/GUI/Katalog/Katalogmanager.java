@@ -80,7 +80,7 @@ public class Katalogmanager implements ContentView {
                 kic.setLaufzeit("" + f.getI_duration() + " min");
                 kic.setSubtitle(f.getS_subtitel());
 
-                kic.setCover(f.getCover().getCover());
+                kic.setCover(f.getCover().gibCoverImage());
 
                 Katalogeintrag k = new Katalogeintrag(pa, kic, f);
                 addEintrag(k);

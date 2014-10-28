@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -20,14 +21,14 @@
         <RadioButton fx:id="rbtn_fsk16" layoutX="295.0" layoutY="493.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="FSK 16" toggleGroup="$fskbuttons" />
         <RadioButton fx:id="rbtn_fsk18" layoutX="371.0" layoutY="493.0" mnemonicParsing="false" style="-fx-text-fill: #B43104;" text="FSK 18" toggleGroup="$fskbuttons" />
         <TextField fx:id="txf_trailer" layoutX="32.0" layoutY="528.0" prefHeight="25.0" prefWidth="463.0" promptText="Trailer" />
-        <TextField fx:id="txf_schauspieler" layoutX="255.0" layoutY="110.0" prefHeight="25.0" prefWidth="240.0" promptText="Schauspieler" />
-        <TextField fx:id="txf_regisseur" layoutX="255.0" layoutY="142.0" prefHeight="25.0" prefWidth="240.0" promptText="Regisseur" />
+        <TextField fx:id="txf_schauspieler" layoutX="255.0" layoutY="106.0" prefHeight="25.0" prefWidth="240.0" promptText="Schauspieler" />
+        <TextField fx:id="txf_regisseur" layoutX="255.0" layoutY="138.0" prefHeight="25.0" prefWidth="240.0" promptText="Regisseur" />
       <TextField fx:id="txf_subtitel" layoutX="32.0" layoutY="65.0" prefHeight="25.0" prefWidth="463.0" promptText="Subtitel" />
       <TableView fx:id="tbvw_filme" layoutX="523.0" layoutY="37.0" prefHeight="473.0" prefWidth="325.0" />
       <Button fx:id="btn_reset" layoutX="777.0" layoutY="528.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Verwerfen" />
-      <ComboBox fx:id="cb_genre" editable="true" layoutX="255.0" layoutY="179.0" prefHeight="25.0" prefWidth="240.0" promptText="Genre auswählen" />
-      <ListView fx:id="li_genre_added" layoutX="255.0" layoutY="245.0" prefHeight="83.0" prefWidth="240.0" />
-      <Button fx:id="btn_genre_add" layoutX="352.0" layoutY="211.0" mnemonicParsing="false">
+      <ComboBox fx:id="cb_genre" editable="true" layoutX="255.0" layoutY="175.0" prefHeight="25.0" prefWidth="240.0" promptText="Genre auswählen" />
+      <ListView fx:id="li_genre_added" layoutX="255.0" layoutY="241.0" prefHeight="83.0" prefWidth="240.0" />
+      <Button fx:id="btn_genre_add" layoutX="352.0" layoutY="207.0" mnemonicParsing="false">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -35,7 +36,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="btn_genre_remove" layoutX="377.0" layoutY="211.0" mnemonicParsing="false">
+      <Button fx:id="btn_genre_remove" layoutX="377.0" layoutY="207.0" mnemonicParsing="false">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -44,11 +45,15 @@
             </ImageView>
          </graphic></Button>
       <Button fx:id="create_btn2" layoutX="528.0" layoutY="528.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Update" />
-      <ImageView fx:id="img_cover" fitHeight="219.0" fitWidth="190.0" layoutX="35.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: #1C1C1C; -fx-border: 1px;">
-         <image>
-            <Image url="de/codekings/client/GUI/Elements/NoCover.png" />
-         </image>
-      </ImageView>
       <Button fx:id="btn_remove" layoutX="692.0" layoutY="528.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Löschen" />
+      <AnchorPane layoutX="32.0" layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="190.0" style="-fx-border-color: FFFFFF; -fx-border-width: 2px;">
+         <children>
+            <ImageView fx:id="img_cover" fitHeight="220.0" fitWidth="190.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="de/codekings/client/GUI/Elements/NoCover.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
     </children>
 </AnchorPane>

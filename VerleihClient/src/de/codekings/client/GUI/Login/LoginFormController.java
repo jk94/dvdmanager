@@ -57,6 +57,7 @@ public class LoginFormController implements Initializable {
         });
 
         login_login.setOnMouseClicked((MouseEvent event) -> {
+            setHinweis("Bitte warten...");
             Hasher h = Hasher.getInstance();
             String email = login_email.getText();
             String passwort = h.ToMD5(login_passwort.getText());
@@ -68,12 +69,6 @@ public class LoginFormController implements Initializable {
                 setHinweisVisible(true);
                 try {
                     Thread.sleep(1500l);
-                } catch (InterruptedException ex) {
-                    System.out.println(ex.getMessage());
-                }
-                setHinweis("Sie werden angemeldet...");
-                try {
-                    Thread.sleep(1000l);
                 } catch (InterruptedException ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -89,11 +84,11 @@ public class LoginFormController implements Initializable {
         this.setHinweisVisible(true);
 
     }
-    
-    public void reset(){
+
+    public void reset() {
         this.setHinweis("Melden Sie sich bitte mit Ihren Anmeldedaten an!");
         this.setHinweisVisible(true);
-        
+
         login_email.setText("");
         login_passwort.setText("");
     }
@@ -121,8 +116,8 @@ public class LoginFormController implements Initializable {
     public void setStage(Stage ps) {
         this.ownstage = ps;
     }
-    
-    public Stage getStage(){
+
+    public Stage getStage() {
         return ownstage;
     }
 }

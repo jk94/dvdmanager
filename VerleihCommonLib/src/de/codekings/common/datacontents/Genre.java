@@ -11,7 +11,7 @@ import de.codekings.common.Enumerators.ClassType;
  *
  * @author Jan
  */
-public class Genre extends Sendable{
+public class Genre extends Sendable implements Comparable<Genre>{
     
     private int genre_id;
     private String genrebezeichnung;
@@ -40,6 +40,11 @@ public class Genre extends Sendable{
 
     public void setGenrebezeichnung(String genrebezeichnung) {
         this.genrebezeichnung = genrebezeichnung;
+    }
+
+    @Override
+    public int compareTo(Genre t) {
+        return this.genrebezeichnung.compareTo(t.getGenrebezeichnung());
     }
     
     

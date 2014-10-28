@@ -10,9 +10,7 @@ import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
 import de.codekings.common.Connection.Hasher;
 import de.codekings.common.Connection.Message;
-import de.codekings.common.Enumerators.ClassType;
 import de.codekings.common.config.ConfigManager;
-import de.codekings.common.datacontents.Kunde;
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -36,12 +34,8 @@ import se.mbaeumer.fxmessagebox.MessageBoxType;
 /**
  * FXML Controller class
  *
- * <<<<<<< HEAD @a
- *
- *
- * uthor Jan ======= @author Simon >>>>>>> 2029bd59d8
- *
- * ee9cd4c7598f08be7dc35e14732263
+ * @author Jan
+ * 
  */
 public class Create_userController implements Initializable, MessageReturn {
 

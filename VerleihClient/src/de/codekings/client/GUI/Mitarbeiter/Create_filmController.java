@@ -6,12 +6,16 @@
 package de.codekings.client.GUI.Mitarbeiter;
 
 import de.codekings.client.Controls.Control;
+import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
 import de.codekings.client.datacontent.Film_Client;
 import de.codekings.common.Connection.Message;
+import de.codekings.common.config.ConfigManager;
 import de.codekings.common.datacontents.Genre;
+import de.codekings.common.datacontents.Sendable;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,7 +40,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author Simon
  */
-public class Create_filmController implements Initializable {
+public class Create_filmController implements Initializable, MessageReturn {
 
     @FXML
     private AnchorPane create_anchor;
@@ -78,7 +82,7 @@ public class Create_filmController implements Initializable {
     private TableView<Film_Client> tbvw_filme;
 
     private ObservableList<Film_Client> filmdata;
-    private ObservableList<Genre> genredata;
+
     @FXML
     private Button btn_create;
     @FXML
@@ -100,16 +104,73 @@ public class Create_filmController implements Initializable {
 
         });
 
+        btn_reset.setOnMouseClicked((MouseEvent event) -> {
+            txf_beschreibung.setText("");
+            txf_regisseur.setText("");
+            txf_schauspieler.setText("");
+            txf_subtitel.setText("");
+            txf_titel.setText("");
+            txf_trailer.setText("");
+            cb_genre.setValue("");
+            ladeGenreList();
+            li_genre_added.getItems().clear();
+        });
+
+        btn_genre_add.setOnMouseClicked((MouseEvent event) -> {
+            ArrayList<Genre> genres = (ArrayList<Genre>) Control.getControl().getDataManager().getGenres().clone();
+            String genreinput = cb_genre.getValue();
+            boolean vorhanden = false;
+            for (Genre genre : genres) {
+                if (genre.getGenrebezeichnung().equals(genreinput)) {
+                    vorhanden = true;
+                    break;
+                }
+            }
+            if (!vorhanden) {
+                ConfigManager cfgManager = Control.getControl().getCfgManager();
+                String host = cfgManager.getConfigs().getProperty("ip");
+                int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+                ClientThread ct = new ClientThread(this, host, port);
+
+                Message m = new Message("addGenre");
+                m.addAdditionalParameter("bez", genreinput);
+
+                ct.requestToServer(m);
+                //Genre dem Server hinzufügen!!
+            }
+            li_genre_added.getItems().add(genreinput);
+            
+            
+//Aus der CB löschen..
+        });
+
+        btn_genre_remove.setOnMouseClicked((MouseEvent event) -> {
+            int index = li_genre_added.getSelectionModel().getSelectedIndex();
+            li_genre_added.getItems().remove(index);
+            //der Combobox hinzufügen
+        });
+
+    }
+
+    @Override
+    public void returnedMessage(Message m) {
+        if (m.getCommand().equalsIgnoreCase("addedGenre")) {
+            for (Sendable s : m.getContent()) {
+                if (s instanceof Genre) {
+
+                }
+            }
+        }
     }
 
     private void ladeGenreList() {
+        cb_genre.getItems().clear();
         ArrayList<Genre> genres = (ArrayList<Genre>) Control.getControl().getDataManager().getGenres().clone();
+        Collections.sort(genres);
         for (Genre g : genres) {
             cb_genre.getItems().add(g.getGenrebezeichnung());
-        }
-
-        
-        
+        }   
     }
 
     private void ladeTableView() {

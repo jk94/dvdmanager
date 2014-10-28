@@ -59,27 +59,30 @@ public class Control implements MessageReturn {
     @Override
     public void returnedMessage(Message m) {
         if (m.getCommand().equalsIgnoreCase("loginresult")) {
+            Thread t = new Thread(() -> {
+                if (m.getAdditionalparameter().get("result").equalsIgnoreCase("success")) {
+                    String email = m.getAdditionalparameter().get("email");
+                    String hashedpw = m.getAdditionalparameter().get("passwort");
+                    int permission = Integer.parseInt(m.getAdditionalparameter().get("permission"));
 
-            if (m.getAdditionalparameter().get("result").equalsIgnoreCase("success")) {
-                String email = m.getAdditionalparameter().get("email");
-                String hashedpw = m.getAdditionalparameter().get("passwort");
-                int permission = Integer.parseInt(m.getAdditionalparameter().get("permission"));
-                
-                loginResult = true;
-                loginResultEmpfangen = true;
-                session = new LoginSession(email, hashedpw);
-                session.setPermission(permission);
-            } else {
-                loginResultEmpfangen = true;
-            }
+                    loginResult = true;
+                    loginResultEmpfangen = true;
+                    session = new LoginSession(email, hashedpw);
+                    session.setPermission(permission);
+                } else {
+                    loginResultEmpfangen = true;
+                }
+            });
+            t.setPriority(Thread.MAX_PRIORITY);
+            t.start();
         }
     }
 
     public ConfigManager getCfgManager() {
         return cfgManager;
     }
-    
-    public DataManager getDataManager(){
+
+    public DataManager getDataManager() {
         return datamanager;
     }
 
@@ -91,10 +94,10 @@ public class Control implements MessageReturn {
         return control;
     }
 
-    public void setLoginFormControler(LoginFormController lfc){
+    public void setLoginFormControler(LoginFormController lfc) {
         this.loginform = lfc;
     }
-    
+
     public final void loadContentControl(TemplateController tpc) {
         this.contManager = new ContentControl(datamanager, tpc);
     }
@@ -107,7 +110,7 @@ public class Control implements MessageReturn {
         loginResult = false;
         loginResultEmpfangen = false;
         session = new LoginSession("", "");
-        
+
         String host = cfgManager.getConfigs().getProperty("ip");
         int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
 
@@ -119,7 +122,7 @@ public class Control implements MessageReturn {
         loginsession.requestToServer(loginrequest);
 
         int counter = 0;
-        while (counter < 20 && !loginResultEmpfangen) {
+        while (counter < 50 && !loginResultEmpfangen) {
             counter++;
             try {
                 Thread.sleep(500l);
@@ -140,20 +143,24 @@ public class Control implements MessageReturn {
                     System.out.println(ex.getMessage());
                 }
                 loadContentControl(mainframe.getTemplateController());
-                switch(session.getPermission()){
-                    case 1: mainframe.setKundenView();
+                switch (session.getPermission()) {
+                    case 1:
+                        mainframe.setKundenView();
                         break;
-                    case 2: mainframe.setMitarbeiterView();
+                    case 2:
+                        mainframe.setMitarbeiterView();
                         break;
-                    case 3: mainframe.setAdminView();
+                    case 3:
+                        mainframe.setAdminView();
                         break;
-                    default: mainframe.setKundenView();
+                    default:
+                        mainframe.setKundenView();
                 }
             }
         }
     }
-    
-    public void MainFrameClosed(){
+
+    public void MainFrameClosed() {
         session = new LoginSession("", "");
         loginform.reset();
         loginform.getStage().show();
