@@ -18,6 +18,7 @@ import de.codekings.common.datacontents.Genre;
 import de.codekings.common.datacontents.Sendable;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.image.Image;
@@ -85,6 +86,7 @@ public class DataManager implements MessageReturn {
                         covermessage.addAdditionalParameter("FILM_ID", String.valueOf(f.getFILMID()));
                         getCoverThread.requestToServer(covermessage);
                     });
+                    Collections.sort(filme);
                     li_filme = filme;
                 }
             });
@@ -101,10 +103,6 @@ public class DataManager implements MessageReturn {
                         c = (Cover) s;
                     }
                 }
-                if (c.getFilm_id() == 33) {
-                    System.out.println("Aliens");
-                }
-
                 String pfad = "de/codekings/client/GUI/Elements/NoCover.png";
                 InputStream is = LoginFormController.class.getClassLoader().getResourceAsStream(pfad);
                 Image nocover = new Image(is, 200.0, 250.0, true, true);
@@ -124,7 +122,11 @@ public class DataManager implements MessageReturn {
                     }
 
                     if (!c.getCover().equals("")) {
-                        fc.setCover(c);
+                        try {
+                            fc.setCover(c);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
                     } else {
                         //Cover not Found anzeigen
                         fc.setCover(new Cover_Client(fc.getFILMID(), nocover));
@@ -155,8 +157,7 @@ public class DataManager implements MessageReturn {
         Message FilmRequest = new Message("getFilms");
         new ClientThread(this, host, port).requestToServer(FilmRequest);
 
-        Message GenreRequest = new Message("getGenres");
-        new ClientThread(this, host, port).requestToServer(GenreRequest);
+        updateGenres();
     }
 
     public ArrayList<Film_Client> getFilme() {
@@ -165,6 +166,11 @@ public class DataManager implements MessageReturn {
 
     public ArrayList<Genre> getGenres() {
         return li_genre;
+    }
+
+    public void updateGenres() {
+        Message GenreRequest = new Message("getGenres");
+        new ClientThread(this, host, port).requestToServer(GenreRequest);
     }
 
 }

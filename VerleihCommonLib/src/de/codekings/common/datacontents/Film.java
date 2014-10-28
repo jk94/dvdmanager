@@ -15,7 +15,7 @@ import java.util.Date;
  * @author Jan
  */
 @JsonDeserialize(as = Film.class)
-public class Film extends Sendable {
+public class Film extends Sendable implements Comparable<Film> {
 
     private int FILMID;
     private String s_titel = "", s_subtitel = "", s_description = "";
@@ -23,14 +23,13 @@ public class Film extends Sendable {
     private int i_rating = -1, i_duration = -1, i_fsk = 0;
     private double d_preis = 0.0;
     private Date release_date;
-    private ArrayList<String> li_actors, li_awards;
+    private ArrayList<String> li_actors;
     private ArrayList<Genre> li_genre;
 
     public Film(int fid) {
         super(ClassType.T_FILM);
         FILMID = fid;
         li_actors = new ArrayList<>();
-        li_awards = new ArrayList<>();
         li_genre = new ArrayList<>();
     }
 
@@ -38,14 +37,13 @@ public class Film extends Sendable {
         super(ClassType.T_FILM);
     }
 
-    public Film(int FILMID, Date release_date, ArrayList<String> li_actors, ArrayList<String> li_awards,
+    public Film(int FILMID, Date release_date, ArrayList<String> li_actors,
             ArrayList<Genre> li_genre, String ti, String suti, String des, String tr,
             String re, String fsk, int rat, int dur, int fsk_i, double p, ClassType t) {
         super(t);
         this.FILMID = FILMID;
         this.release_date = release_date;
         this.li_actors = li_actors;
-        this.li_awards = li_awards;
         this.li_genre = li_genre;
         this.s_trailer = tr;
         this.s_titel = ti;
@@ -128,10 +126,6 @@ public class Film extends Sendable {
         return null;
     }
 
-    public ArrayList<String> getAwards() {
-        return li_awards;
-    }
-
     public void setFILMID(int FILMID) {
         this.FILMID = FILMID;
     }
@@ -140,33 +134,12 @@ public class Film extends Sendable {
         this.li_actors = li_actors;
     }
 
-    public void setLi_awards(ArrayList<String> li_awards) {
-        this.li_awards = li_awards;
-    }
-
     public void setLi_genre(ArrayList<Genre> li_genre) {
         this.li_genre = li_genre;
     }
 
     public ArrayList<String> getLi_actors() {
         return li_actors;
-    }
-
-    public ArrayList<String> getLi_awards() {
-        return li_awards;
-    }
-    
-    public String getAward(int i) {
-        if (i < li_awards.size() && i >= 0) {
-            return li_awards.get(i);
-        }
-        return "";
-    }
-
-    public void addAward(String name) {
-        if (!li_awards.contains(name)) {
-            li_awards.add(name);
-        }
     }
 
     public String getS_titel() {
@@ -233,18 +206,8 @@ public class Film extends Sendable {
         this.release_date = release_date;
     }
 
-    /* public boolean loadFilmFromDatabase(ResultSet rs) {
-     try {
-     setS_titel(rs.getString(1));
-     setS_subtitel(rs.getString("subtitle"));
-     setS_description(rs.getString("desc"));
-     setS_trailer(rs.getString("trailer"));
-     //setS_FSK(rs.getString("bez"));
-     //setI_fsk(rs.getInt("alter"));
-
-     } catch (SQLException ex) {
-     log.log(Level.SEVERE, ex.getMessage());
-     }
-     return true;
-     }*/
+   @Override
+    public int compareTo(Film t) {
+        return this.getS_titel().compareTo(t.getS_titel());
+    }
 }

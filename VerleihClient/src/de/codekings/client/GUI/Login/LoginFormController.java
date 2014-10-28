@@ -17,8 +17,13 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import se.mbaeumer.fxmessagebox.MessageBox;
+import se.mbaeumer.fxmessagebox.MessageBoxResult;
+import se.mbaeumer.fxmessagebox.MessageBoxType;
 
 /**
  * FXML Controller class
@@ -53,36 +58,66 @@ public class LoginFormController implements Initializable {
         login_headerimg.setImage(new Image(LoginFormController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/cover.png")));
 
         login_exit.setOnMouseClicked((MouseEvent event) -> {
-            System.exit(0);
+            MessageBox mb = new MessageBox("Möchten Sie wirklich beenden?", MessageBoxType.YES_NO);
+            mb.setAlwaysOnTop(true);
+            mb.setTitle("Beenden");
+            mb.setResizable(false);
+            mb.showAndWait();
+            MessageBoxResult result = mb.getMessageBoxResult();
+            if (result == MessageBoxResult.YES) {
+                System.exit(0);
+            }
+        });
+
+        login_email.setOnKeyPressed((KeyEvent event) -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                go4Login();
+            }
+        });
+
+        login_passwort.setOnKeyPressed((KeyEvent event) -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                go4Login();
+            }
+        });
+
+        login_login.setOnKeyPressed((KeyEvent event) -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                go4Login();
+            }
         });
 
         login_login.setOnMouseClicked((MouseEvent event) -> {
-            setHinweis("Bitte warten...");
-            Hasher h = Hasher.getInstance();
-            String email = login_email.getText();
-            String passwort = h.ToMD5(login_passwort.getText());
-
-            boolean ergebnis = control.login(email, passwort);
-            if (ergebnis) {
-                //Logged In
-                setHinweis("Anmeldung erfolgreich!");
-                setHinweisVisible(true);
-                try {
-                    Thread.sleep(1500l);
-                } catch (InterruptedException ex) {
-                    System.out.println(ex.getMessage());
-                }
-                control.openMainFrame();
-                ownstage.hide();
-            } else {
-                setHinweisVisible(true);
-                setHinweis("Anmeldung fehlgeschlagen.\nBitte erneut versuchen.");
-            }
+            go4Login();
         });
 
         this.setHinweis("Melden Sie sich bitte mit Ihren Anmeldedaten an!");
         this.setHinweisVisible(true);
 
+    }
+
+    public void go4Login() {
+        setHinweis("Bitte warten...");
+        Hasher h = Hasher.getInstance();
+        String email = login_email.getText();
+        String passwort = h.ToMD5(login_passwort.getText());
+
+        boolean ergebnis = control.login(email, passwort);
+        if (ergebnis) {
+            //Logged In
+            setHinweis("Anmeldung erfolgreich!");
+            setHinweisVisible(true);
+            try {
+                Thread.sleep(1500l);
+            } catch (InterruptedException ex) {
+                System.out.println(ex.getMessage());
+            }
+            control.openMainFrame();
+            ownstage.hide();
+        } else {
+            setHinweisVisible(true);
+            setHinweis("Anmeldung fehlgeschlagen.\nBitte erneut versuchen.");
+        }
     }
 
     public void reset() {
