@@ -6,6 +6,7 @@
 package de.codekings.client.GUI.Mitarbeiter;
 
 import de.codekings.client.Controls.Control;
+import de.codekings.client.GUI.MainFrame.TemplateController;
 import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
 import de.codekings.client.datacontent.Film_Client;
@@ -39,12 +40,15 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import se.mbaeumer.fxmessagebox.MessageBox;
+import se.mbaeumer.fxmessagebox.MessageBoxType;
 
 /**
  * FXML Controller class
@@ -185,16 +189,21 @@ public class Create_filmController implements Initializable, MessageReturn {
                     }
                 }
                 img_cover.setImage(fc.getCover().gibCoverImage());
-                switch(fc.getI_fsk()){
-                    case 0: fskbuttons.selectToggle(rbtn_fsk0);
+                switch (fc.getI_fsk()) {
+                    case 0:
+                        fskbuttons.selectToggle(rbtn_fsk0);
                         break;
-                    case 6: fskbuttons.selectToggle(rbtn_fsk6);
+                    case 6:
+                        fskbuttons.selectToggle(rbtn_fsk6);
                         break;
-                    case 12: fskbuttons.selectToggle(rbtn_fsk12);
+                    case 12:
+                        fskbuttons.selectToggle(rbtn_fsk12);
                         break;
-                    case 16: fskbuttons.selectToggle(rbtn_fsk16);
+                    case 16:
+                        fskbuttons.selectToggle(rbtn_fsk16);
                         break;
-                    case 18: fskbuttons.selectToggle(rbtn_fsk18);
+                    case 18:
+                        fskbuttons.selectToggle(rbtn_fsk18);
                         break;
                     default:
                         fskbuttons.selectToggle(rbtn_fsk0);
@@ -203,7 +212,6 @@ public class Create_filmController implements Initializable, MessageReturn {
         });
 
         img_cover.setOnMouseClicked((MouseEvent event) -> {
-            Desktop desktop = Desktop.getDesktop();
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Wählen Sie ein Cover");
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -212,14 +220,24 @@ public class Create_filmController implements Initializable, MessageReturn {
             if (file != null) {
                 long size = file.length();
                 System.out.println(size);
-                if(size<=122880){
+                if (size <= 122880) {
                     try {
                         BufferedImage img = ImageIO.read(file);
                         Cover c = new Cover(selectedFilmID, JSON_Parser.encodeToString(img, "JPG"));
                         img_cover.setImage(c.gibCoverImage());
                     } catch (IOException ex) {
-                        Logger.getLogger(Create_filmController.class.getName()).log(Level.SEVERE, null, ex);
+                        MessageBox mb = new MessageBox("Fehler beim Laden des Bildes", MessageBoxType.OK_ONLY);
+                        mb.setAlwaysOnTop(true);
+                        mb.setTitle("Fehler!");
+                        mb.setResizable(false);
+                        mb.showAndWait();
                     }
+                } else {
+                    MessageBox mb = new MessageBox("Das Bild darf höchstens 120kb groß sein.", MessageBoxType.OK_ONLY);
+                    mb.setAlwaysOnTop(true);
+                    mb.setTitle("Fehler!");
+                    mb.setResizable(false);
+                    mb.showAndWait();
                 }
             }
         });
@@ -296,6 +314,7 @@ public class Create_filmController implements Initializable, MessageReturn {
         ladeGenreList();
         li_genre_added.getItems().clear();
         selectedFilmID = -1;
+        img_cover.setImage(new Image(Create_filmController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/NoCover.png")));
     }
 
 }

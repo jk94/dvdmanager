@@ -122,7 +122,11 @@ public class DataManager implements MessageReturn {
                     }
 
                     if (!c.getCover().equals("")) {
-                        fc.setCover(c);
+                        try {
+                            fc.setCover(c);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
                     } else {
                         //Cover not Found anzeigen
                         fc.setCover(new Cover_Client(fc.getFILMID(), nocover));
@@ -163,8 +167,8 @@ public class DataManager implements MessageReturn {
     public ArrayList<Genre> getGenres() {
         return li_genre;
     }
-    
-    public void updateGenres(){
+
+    public void updateGenres() {
         Message GenreRequest = new Message("getGenres");
         new ClientThread(this, host, port).requestToServer(GenreRequest);
     }
