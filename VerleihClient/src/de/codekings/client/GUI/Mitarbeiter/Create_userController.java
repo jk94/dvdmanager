@@ -34,12 +34,8 @@ import se.mbaeumer.fxmessagebox.MessageBoxType;
 /**
  * FXML Controller class
  *
- * <<<<<<< HEAD @a
- *
- *
- * uthor Jan ======= @author Simon >>>>>>> 2029bd59d8
- *
- * ee9cd4c7598f08be7dc35e14732263
+ * @author Jan
+ * 
  */
 public class Create_userController implements Initializable, MessageReturn {
 
