@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class CoverManager {
 
     private ArrayList<Cover> coverlist;
+    private boolean firstloadfinished = false;
 
     public CoverManager() {
         //FirstLoad
@@ -49,8 +50,13 @@ public class CoverManager {
             coverlist.add(DBOperations.getCover(f.getFILMID()));
             System.out.println("Cover " + f.getFILMID() + " loaded!");
         }
+        firstloadfinished = true;
         });
         t.start();
+    }
+    
+    public boolean isFirstLoaded(){
+        return firstloadfinished;
     }
 
     public void updateCover(int filmid){
