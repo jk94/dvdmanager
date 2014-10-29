@@ -28,6 +28,8 @@ public class Control {
     private CoverManager coverManager;
 
     public Control() {
+        theControl = this;
+
         //Initialisiere Log für alle!
         log = Logger.getLogger(Control.class.getSimpleName());
         loadConfig();
@@ -43,9 +45,6 @@ public class Control {
         
         //Initialisiere unverschlüsselten Server und startet ihn.
         runServer();
-
-        theControl = this;
-
     }
 
     public static Control getInstance() {
