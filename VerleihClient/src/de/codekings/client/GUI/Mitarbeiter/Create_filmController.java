@@ -219,7 +219,6 @@ public class Create_filmController implements Initializable, MessageReturn {
             File file = fileChooser.showOpenDialog(new Stage());
             if (file != null) {
                 long size = file.length();
-                System.out.println(size);
                 if (size <= 122880) {
                     try {
                         BufferedImage img = ImageIO.read(file);
