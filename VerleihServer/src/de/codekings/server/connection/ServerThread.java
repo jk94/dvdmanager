@@ -16,6 +16,7 @@ import de.codekings.common.json.JSON_Parser;
 import de.codekings.server.controls.Control;
 import de.codekings.server.controls.DBOperations;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -23,8 +24,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,8 +38,8 @@ class ServerThread extends Thread {
     private final Socket socket;
     private final VerleihServer verleihserver;
     private static Logger log = Control.getInstance().getLogger();
-    private Timer timeoutTimer;
-    private final int i_timeout = 120000;
+    private final TimeOut timeouter;
+    private final int i_timeout = 30000;
 
     /**
      * Neuer ServerThread -> Instanz von Server zur Verbindung eines Clients
@@ -59,19 +58,8 @@ class ServerThread extends Thread {
         } catch (IOException ex) {
             log.log(Level.SEVERE, ex.getMessage());
         }
-        timeoutTimer = new Timer();
-
-        timeoutTimer.schedule(new TimerTask() {
-            int counter = 0;
-
-            @Override
-            public void run() {
-                if (counter >= i_timeout) {
-                    ThreadcloseConnection();
-                }
-                counter++;
-            }
-        }, 1);
+        timeouter = new TimeOut(i_timeout);
+        timeouter.start();
     }
 
     /**
@@ -121,20 +109,7 @@ class ServerThread extends Thread {
     }
 
     private void resetTimeout() {
-        timeoutTimer.cancel();
-        timeoutTimer.purge();
-        timeoutTimer = new Timer();
-        timeoutTimer.schedule(new TimerTask() {
-            int counter = 0;
-
-            @Override
-            public void run() {
-                if (counter >= i_timeout) {
-                    ThreadcloseConnection();
-                }
-                counter++;
-            }
-        }, 1);
+        timeouter.reset();
     }
 
     /**
@@ -251,6 +226,47 @@ class ServerThread extends Thread {
             beenden = true;
         }//</editor-fold>
 
+        // <editor-fold defaultstate="collapsed" desc="removeFilm">
+        if (m.getCommand().equalsIgnoreCase("removeFilm")) {
+            int id = Integer.parseInt(m.getAdditionalparameter().get("FILM_ID"));
+            DBOperations.setFilmRemoved(id);
+
+            //Lösche Cover
+            String covername = DBOperations.getFilmProperty(id, "cover");
+            File coverfile = new File("./covers/" + covername);
+            try {
+                coverfile.delete(); //Wirft bei nicht vorhanden sein lt. JavaDoc Exception
+            } catch (Exception ex) {
+                
+            }
+            DBOperations.setNoCover(id);
+
+            beenden = true;
+        }//</editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="addGenre">
+        if (m.getCommand().equalsIgnoreCase("addGenre")) {
+            String bez = m.getAdditionalparameter().get("bez");
+            
+            Genre g = DBOperations.addGenre(bez);
+            
+            Message answer = new Message("addedGenre");
+            
+            
+            if(g!=null){
+                answer.setCommand("addedGenre");
+                answer.addSendable(g);
+                write(j.parseObjectToString(answer));
+            }else{
+                answer.setCommand("GenreExists");
+            }
+            write(j.parseObjectToString(answer));
+            
+            beenden = true;
+        }//</editor-fold>
+        
+        
+
         return beenden;
 
     }
@@ -265,8 +281,7 @@ class ServerThread extends Thread {
             this.reader.close();
             this.writer.close();
             this.socket.close();
-            timeoutTimer.cancel();
-            timeoutTimer.purge();
+            timeouter.ende();
         } catch (IOException ex) {
             log.log(Level.SEVERE, ex.getMessage());
         }
@@ -278,11 +293,44 @@ class ServerThread extends Thread {
             this.writer.close();
             this.socket.close();
             verleihserver.removeConnection(this);
-            timeoutTimer.cancel();
-            timeoutTimer.purge();
+            this.timeouter.ende();
             log.log(Level.INFO, "Connection to {0} was closed automized!");
         } catch (IOException ex) {
             log.log(Level.SEVERE, ex.getMessage());
+        }
+    }
+
+    class TimeOut extends Thread {
+
+        private final int timeout;
+        private boolean ende = false;
+        int counter = 0;
+
+        public TimeOut(int timeout) {
+            this.timeout = timeout;
+        }
+
+        @Override
+        public void run() {
+            while (!ende) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (counter >= timeout) {
+                    ThreadcloseConnection();
+                }
+                counter++;
+            }
+        }
+
+        public void reset() {
+            counter = 0;
+        }
+
+        public void ende() {
+            ende = true;
         }
     }
 

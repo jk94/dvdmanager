@@ -7,8 +7,6 @@ import static de.codekings.client.Enum.ContentPageType.BACK;
 import static de.codekings.client.Enum.ContentPageType.FORWARD;
 import de.codekings.client.GUI.Katalog.Katalogmanager;
 import de.codekings.client.GUI.MainFrame.TemplateController;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.control.ScrollPane;
 
 /*

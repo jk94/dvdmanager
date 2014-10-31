@@ -6,17 +6,17 @@
 package de.codekings.client.GUI.Mitarbeiter;
 
 import de.codekings.client.Controls.Control;
-import de.codekings.client.GUI.MainFrame.TemplateController;
+import de.codekings.client.Controls.DataManager;
 import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
 import de.codekings.client.datacontent.Film_Client;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
 import de.codekings.common.datacontents.Cover;
+import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Genre;
 import de.codekings.common.datacontents.Sendable;
 import de.codekings.common.json.JSON_Parser;
-import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -24,8 +24,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -48,6 +46,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import se.mbaeumer.fxmessagebox.MessageBox;
+import se.mbaeumer.fxmessagebox.MessageBoxResult;
 import se.mbaeumer.fxmessagebox.MessageBoxType;
 
 /**
@@ -238,6 +237,43 @@ public class Create_filmController implements Initializable, MessageReturn {
                     mb.setResizable(false);
                     mb.showAndWait();
                 }
+            }
+        });
+
+        btn_remove.setOnMouseClicked((MouseEvent event) -> {
+            if (tbvw_filme.getSelectionModel().getSelectedIndices().size() > 0) {
+                int selectedIndex = tbvw_filme.getSelectionModel().getSelectedIndex();
+                MessageBox mb = new MessageBox("Wenn Sie den Film löschen, kann auf\ndiesen nicht mehr zugegriffen werden.\n"
+                        + "Das Cover wird vom Server gelöscht.\n\nMöchten Sie fortfahren?", MessageBoxType.YES_NO);
+                mb.setAlwaysOnTop(true);
+                mb.setTitle("Achtung!");
+                mb.setResizable(false);
+                mb.setWidth(225.0);
+                mb.setHeight(175.0);
+                mb.showAndWait();
+                if (mb.getMessageBoxResult() == MessageBoxResult.YES) {
+                    Message m = new Message("removeFilm");
+                    m.addAdditionalParameter("FILM_ID",String.valueOf(tbvw_filme.getItems().get(selectedIndex).getFILMID()));
+
+                    ConfigManager cfgManager = Control.getControl().getCfgManager();
+                    String host = cfgManager.getConfigs().getProperty("ip");
+                    int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+                    ClientThread ct = new ClientThread(this, host, port);
+                    ct.requestToServer(m);
+                    
+                    DataManager dm = Control.getControl().getDataManager();
+                    dm.removeFilm(tbvw_filme.getItems().get(selectedIndex).getFILMID());
+                    
+                    tbvw_filme.getItems().remove(selectedIndex);
+                }
+                tbvw_filme.getItems().remove(selectedIndex);
+            } else {
+                MessageBox mb = new MessageBox("Kein Film aus der Liste zum Löschen ausgewählt", MessageBoxType.OK_ONLY);
+                mb.setAlwaysOnTop(true);
+                mb.setTitle("Fehler!");
+                mb.setResizable(false);
+                mb.showAndWait();
             }
         });
 
