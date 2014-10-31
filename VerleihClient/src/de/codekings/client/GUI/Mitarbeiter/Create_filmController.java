@@ -9,6 +9,7 @@ import de.codekings.client.Controls.Control;
 import de.codekings.client.Controls.DataManager;
 import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
+import de.codekings.client.datacontent.Cover_Client;
 import de.codekings.client.datacontent.Film_Client;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
@@ -36,6 +37,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -94,19 +96,22 @@ public class Create_filmController implements Initializable, MessageReturn {
     private ImageView img_cover;
     @FXML
     private TableView<Film_Client> tbvw_filme;
-
-    private ObservableList<Film_Client> filmdata;
-
     @FXML
     private Button btn_create;
     @FXML
     private Button btn_reset;
     @FXML
-    private Button btn_update;
-    @FXML
     private Button btn_remove;
+    @FXML
+    private ComboBox<Integer> cb_rating;
+
+    private ObservableList<Film_Client> filmdata;
 
     private int selectedFilmID = -1;
+    @FXML
+    private Button btn_update;
+    @FXML
+    private TextField txf_laufzeit;
 
     /**
      * Initializes the controller class.
@@ -116,8 +121,23 @@ public class Create_filmController implements Initializable, MessageReturn {
         // TODO
         ladeTableView();
         ladeGenreList();
-        btn_genre_add.setOnMouseClicked((MouseEvent event) -> {
+        ladeRatingView();
 
+        btn_create.setOnMouseClicked((MouseEvent event) -> {
+            Film film = generateFilm();
+            Cover_Client cc = new Cover_Client(film.getFILMID(), img_cover.getImage());
+            Cover c = new Cover(film.getFILMID(), cc.getCover());
+            Message m = new Message("addFilm");
+            m.addSendable(film);
+            m.addSendable(c);
+
+            ConfigManager cfgManager = Control.getControl().getCfgManager();
+            String host = cfgManager.getConfigs().getProperty("ip");
+            int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+            ClientThread ct = new ClientThread(this, host, port);
+            ct.requestToServer(m);
+            
         });
 
         btn_reset.setOnMouseClicked((MouseEvent event) -> {
@@ -171,10 +191,11 @@ public class Create_filmController implements Initializable, MessageReturn {
                 selectedFilmID = fc.getFILMID();
                 txf_beschreibung.setText(fc.getS_description());
                 txf_regisseur.setText(fc.getS_regie());
-                txf_schauspieler.setText("");
                 txf_subtitel.setText(fc.getS_subtitel());
                 txf_titel.setText(fc.getS_titel());
                 txf_trailer.setText(fc.getS_trailer());
+                txf_laufzeit.setText(String.valueOf(fc.getI_duration()));
+                cb_rating.setValue(fc.getI_rating());
                 for (Genre g : fc.getGenres()) {
                     cb_genre.getItems().remove(g.getGenrebezeichnung());
                     li_genre_added.getItems().add(g.getGenrebezeichnung());
@@ -187,6 +208,7 @@ public class Create_filmController implements Initializable, MessageReturn {
                         ausgabe = ausgabe + fc.getActor(i);
                     }
                 }
+                txf_schauspieler.setText(ausgabe);
                 img_cover.setImage(fc.getCover().gibCoverImage());
                 switch (fc.getI_fsk()) {
                     case 0:
@@ -253,7 +275,7 @@ public class Create_filmController implements Initializable, MessageReturn {
                 mb.showAndWait();
                 if (mb.getMessageBoxResult() == MessageBoxResult.YES) {
                     Message m = new Message("removeFilm");
-                    m.addAdditionalParameter("FILM_ID",String.valueOf(tbvw_filme.getItems().get(selectedIndex).getFILMID()));
+                    m.addAdditionalParameter("FILM_ID", String.valueOf(tbvw_filme.getItems().get(selectedIndex).getFILMID()));
 
                     ConfigManager cfgManager = Control.getControl().getCfgManager();
                     String host = cfgManager.getConfigs().getProperty("ip");
@@ -261,10 +283,10 @@ public class Create_filmController implements Initializable, MessageReturn {
 
                     ClientThread ct = new ClientThread(this, host, port);
                     ct.requestToServer(m);
-                    
+
                     DataManager dm = Control.getControl().getDataManager();
                     dm.removeFilm(tbvw_filme.getItems().get(selectedIndex).getFILMID());
-                    
+
                     tbvw_filme.getItems().remove(selectedIndex);
                 }
                 tbvw_filme.getItems().remove(selectedIndex);
@@ -349,7 +371,58 @@ public class Create_filmController implements Initializable, MessageReturn {
         ladeGenreList();
         li_genre_added.getItems().clear();
         selectedFilmID = -1;
+        txf_laufzeit.setText("");
+        cb_rating.setValue(0);
         img_cover.setImage(new Image(Create_filmController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/NoCover.png")));
+    }
+
+    private Film generateFilm() {
+        String beschreibung = txf_beschreibung.getText();
+        String regie = txf_regisseur.getText();
+        String actor = txf_schauspieler.getText();
+        String sub = txf_subtitel.getText();
+        String titel = txf_titel.getText();
+        String trailer = txf_trailer.getText();
+
+        //img_cover.setImage(new Image(Create_filmController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/NoCover.png")));
+        Film f = new Film(selectedFilmID);
+        f.setS_description(beschreibung);
+        f.setS_regie(regie);
+        f.setS_subtitel(sub);
+        f.setS_titel(titel);
+        f.setS_trailer(trailer);
+        for (String a : actor.split(";")) {
+            f.addActor(a.trim());
+        }
+        f.setI_rating(cb_rating.getSelectionModel().getSelectedItem());
+
+        ArrayList<Genre> localgenre = (ArrayList<Genre>) Control.getControl().getDataManager().getGenres().clone();
+        for (String gbez : li_genre_added.getItems()) {
+            Genre addGenre = null;
+            for (Genre g : localgenre) {
+                if (g.getGenrebezeichnung().equals(gbez)) {
+                    addGenre = g;
+                    break;
+                }
+            }
+            if (addGenre != null) {
+                f.addGenre(addGenre);
+            }
+        }
+        f.setI_duration(Integer.parseInt(txf_laufzeit.getText()));
+        int fsk = fskbuttons.getToggles().indexOf(fskbuttons.getSelectedToggle());
+        f.setI_fsk(fsk);
+        ToggleButton tb = (ToggleButton) fskbuttons.getSelectedToggle();
+        f.setS_FSK(tb.getText());
+
+        return f;
+    }
+
+    private void ladeRatingView() {
+        cb_rating.getItems().clear();
+        for (int i = 0; i <= 100; i++) {
+            cb_rating.getItems().add(i);
+        }
     }
 
 }

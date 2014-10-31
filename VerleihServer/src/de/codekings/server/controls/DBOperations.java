@@ -121,6 +121,51 @@ public class DBOperations {
         }
         return liste;
     }
+    
+    public static Genre getGenre(String bez){
+        Genre erg = null;
+        
+        DBController dbc = Control.getInstance().getDbManager();
+        
+        String sqlstatement = "SELECT * FROM tbl_genre WHERE name = ?";
+
+        try {
+            PreparedStatement pst = dbc.getConnection().prepareStatement(sqlstatement);
+            pst.setString(1, bez);
+            ResultSet rs = dbc.executeQuery(pst);
+            while (rs.next()) {
+                int genre_id = rs.getInt("GE_ID");
+                String bezeichnung = rs.getString("name");
+                erg = new Genre(genre_id, bezeichnung);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            return null;
+        }
+        return erg;
+    }
+    
+    public static Genre getGenre(int id){
+        Genre erg = null;
+        
+        DBController dbc = Control.getInstance().getDbManager();
+        
+        String sqlstatement = "SELECT * FROM tbl_genre WHERE GE_ID = ?";
+
+        try {
+            PreparedStatement pst = dbc.getConnection().prepareStatement(sqlstatement);
+            pst.setInt(1, id);
+            ResultSet rs = dbc.executeQuery(pst);
+            while (rs.next()) {
+                String bezeichnung = rs.getString("name");
+                erg = new Genre(id, bezeichnung);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            return null;
+        }
+        return erg;
+    }
 
     public static Cover getCover(int FILM_ID) {
         Cover cover = new Cover();
@@ -303,8 +348,8 @@ public class DBOperations {
         dbc.executeUpdate(sql);
     }
 
-    public static Genre addGenre(String bez) {
-        Genre erg = null;
+    public static boolean addGenre(String bez) {
+        boolean erg = true;
 
         String sql = "INSERT INTO `tbl_genre` (`name`) VALUES (?)";
 
@@ -316,24 +361,10 @@ public class DBOperations {
             dbc.executeUpdate(pst);
 
         } catch (SQLException e) {
+            erg = false;
             e.printStackTrace();
         }
 
-        String sqlstatement = "SELECT * FROM tbl_genre WHERE name = ?";
-
-        try {
-            PreparedStatement pst = dbc.getConnection().prepareStatement(sqlstatement);
-            pst.setString(0, bez);
-            ResultSet rs = dbc.executeQuery(pst);
-            while (rs.next()) {
-                int genre_id = rs.getInt("GE_ID");
-                String bezeichnung = rs.getString("name");
-                erg = new Genre(genre_id, bezeichnung);
-            }
-            rs.close();
-        } catch (SQLException ex) {
-            return null;
-        }
         return erg;
     }
 

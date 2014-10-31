@@ -232,40 +232,30 @@ class ServerThread extends Thread {
             DBOperations.setFilmRemoved(id);
 
             //Lösche Cover
-            String covername = DBOperations.getFilmProperty(id, "cover");
-            File coverfile = new File("./covers/" + covername);
-            try {
-                coverfile.delete(); //Wirft bei nicht vorhanden sein lt. JavaDoc Exception
-            } catch (Exception ex) {
-                
-            }
-            DBOperations.setNoCover(id);
+            Control.getInstance().getCoverManager().deleteCover(id);
 
             beenden = true;
         }//</editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="addGenre">
         if (m.getCommand().equalsIgnoreCase("addGenre")) {
             String bez = m.getAdditionalparameter().get("bez");
-            
-            Genre g = DBOperations.addGenre(bez);
-            
-            Message answer = new Message("addedGenre");
-            
-            
-            if(g!=null){
-                answer.setCommand("addedGenre");
-                answer.addSendable(g);
-                write(j.parseObjectToString(answer));
-            }else{
+
+            boolean exist = !DBOperations.addGenre(bez);
+
+            Message answer = new Message();
+            if (exist) {
                 answer.setCommand("GenreExists");
+            } else {
+                answer.setCommand("addedGenre");
             }
+            Genre g = DBOperations.getGenre(bez);
+
+            answer.addSendable(g);
             write(j.parseObjectToString(answer));
-            
+
             beenden = true;
         }//</editor-fold>
-        
-        
 
         return beenden;
 
