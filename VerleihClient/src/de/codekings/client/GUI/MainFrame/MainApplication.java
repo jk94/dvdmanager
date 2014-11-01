@@ -7,8 +7,14 @@ package de.codekings.client.GUI.MainFrame;
 
 import de.codekings.client.Controls.Control;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,12 +34,7 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = null;
-        //c = new Control();
-        //Control.setControl(c);
         try {
-            //FXMLLoader fxmlLoader = new FXMLLoader();
-            //root = fxmlLoader.load(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/MainFrame/template.fxml"));
-            //templateController = (TemplateController) fxmlLoader.getController();
 
             FXMLLoader fxmlLoader = new FXMLLoader();
             //root = fxmlLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/MainFrame/template.fxml").openStream());
@@ -52,8 +53,7 @@ public class MainApplication extends Application {
         });
 
         primaryStage.show();
-        //CoverFlowAnzeige ca = new CoverFlowAnzeige();
-        //ca.start(new Stage());
+
     }
 
     public static void main(String[] args) {
@@ -63,20 +63,20 @@ public class MainApplication extends Application {
     public TemplateController getTemplateController() {
         return templateController;
     }
-    
-    public void setKundenView(){
+
+    public void setKundenView() {
         ObservableList<TitledPane> tp = templateController.getMenu().getPanes();
         tp.remove(2);
         tp.remove(2);
     }
-    
-    public void setMitarbeiterView(){
+
+    public void setMitarbeiterView() {
         ObservableList<TitledPane> tp = templateController.getMenu().getPanes();
         tp.remove(3);
     }
-    
-    public void setAdminView(){
-        
+
+    public void setAdminView() {
+
     }
 
 }

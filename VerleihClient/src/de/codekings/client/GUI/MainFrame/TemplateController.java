@@ -22,7 +22,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -31,7 +30,7 @@ import javafx.scene.layout.Pane;
  */
 public class TemplateController implements Initializable {
 
-    private static TemplateController tc;
+    //private static TemplateController tc;
      
     @FXML
     private Button head_btn_home;
@@ -101,19 +100,25 @@ public class TemplateController implements Initializable {
     private TextField head_search_field;
     @FXML
     private ImageView head_btn_search_img;
+    @FXML
+    private Button btn_katalog_exit;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tc = this;
+        //tc = this;
         head_btn_back_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/arrowleft.png")));
         head_btn_forward_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/arrowright.png")));
         head_btn_home_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/homebutton.png")));
         head_btn_search_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/searchicon.png")));
         header_logo.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/cover.png")));
 // TODO
+        btn_katalog_exit.setOnMouseClicked((MouseEvent event) ->{
+            Control.getControl().MainFrameClosed();
+        });
+        
         btn_katalog_start.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(content_base, ContentPageType.Katalog_Start, false);
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());

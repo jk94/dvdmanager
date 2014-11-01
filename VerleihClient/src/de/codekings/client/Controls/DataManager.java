@@ -172,5 +172,14 @@ public class DataManager implements MessageReturn {
         Message GenreRequest = new Message("getGenres");
         new ClientThread(this, host, port).requestToServer(GenreRequest);
     }
+    
+    public void removeFilm(int filmid){
+        for(Film_Client fi: li_filme){
+            if(fi.getFILMID()==filmid){
+                li_filme.remove(fi);
+                break;
+            }
+        }
+    }
 
 }

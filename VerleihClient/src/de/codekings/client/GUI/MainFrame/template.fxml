@@ -24,6 +24,7 @@
                                         <Button fx:id="btn_katalog_titelsuche" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Titelsuche" />
                                         <Button fx:id="btn_katalog_genresuche" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Genresuche" />
                                         <Button fx:id="btn_katalog_neuheiten" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Neuheiten" />
+                              <Button fx:id="btn_katalog_exit" layoutX="10.0" layoutY="85.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Exit" />
                                     </children>
                                 </VBox>
                             </children>

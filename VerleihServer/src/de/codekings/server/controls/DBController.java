@@ -147,13 +147,27 @@ public final class DBController {
         return ergebnisRS;
     }
 
-    public void executeBatch(PreparedStatement pst) {
+    public void executeUpdate(PreparedStatement pst) {
         try {
             if (connection.isClosed()) {
                 this.initDBConnection();
             }
             connection.setAutoCommit(true);
-            pst.executeBatch();
+            pst.executeUpdate();
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            log.log(Level.SEVERE, "Couldn't execute SQL-Statement. {0}", e.getMessage());
+        }
+    }
+    
+    public void executeUpdate(String statement) {
+        try {
+            if (connection.isClosed()) {
+                this.initDBConnection();
+            }
+            connection.setAutoCommit(true);
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate(statement);
             connection.setAutoCommit(false);
         } catch (SQLException e) {
             log.log(Level.SEVERE, "Couldn't execute SQL-Statement. {0}", e.getMessage());

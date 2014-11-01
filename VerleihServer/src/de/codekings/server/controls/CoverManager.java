@@ -7,6 +7,7 @@ package de.codekings.server.controls;
 
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class CoverManager {
 
     private ArrayList<Cover> coverlist;
+    private boolean firstloadfinished = false;
 
     public CoverManager() {
         //FirstLoad
@@ -49,8 +51,13 @@ public class CoverManager {
             coverlist.add(DBOperations.getCover(f.getFILMID()));
             System.out.println("Cover " + f.getFILMID() + " loaded!");
         }
+        firstloadfinished = true;
         });
         t.start();
+    }
+    
+    public boolean isFirstLoaded(){
+        return firstloadfinished;
     }
 
     public void updateCover(int filmid){
@@ -67,6 +74,18 @@ public class CoverManager {
             Cover c = DBOperations.getCover(filmid);
             coverlist.add(c);
         }
+    }
+    
+    public void deleteCover(int filmid){
+        String covername = DBOperations.getFilmProperty(filmid, "cover");
+            File coverfile = new File("./covers/" + covername);
+            try{
+            coverfile.delete(); //Wirft bei nicht vorhanden sein lt. JavaDoc Exception
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+            DBOperations.setNoCover(filmid);
+            coverlist.remove(getCover(filmid));
     }
     
 }

@@ -15,6 +15,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
 
 /*
@@ -35,7 +38,9 @@ public class DBOperations {
 
         String sqlstatement = "SELECT * FROM tbl_film f, tbl_genre_zuordnung gz, "
                 + "tbl_genre g, tbl_fsk fk WHERE f.FI_ID = gz.FI_ID "
-                + "AND g.GE_ID = gz.GE_ID AND f.fsk = fk.FSK_ID ORDER BY f.title, f.subtitle, f.FI_ID ASC";
+                + "AND g.GE_ID = gz.GE_ID AND f.fsk = fk.FSK_ID "
+                + "AND f.removed = 0 "
+                + "ORDER BY f.title, f.subtitle, f.FI_ID ASC";
 
         ResultSet rs = dbc.executeQuery(sqlstatement);
         try {
@@ -116,6 +121,51 @@ public class DBOperations {
         }
         return liste;
     }
+    
+    public static Genre getGenre(String bez){
+        Genre erg = null;
+        
+        DBController dbc = Control.getInstance().getDbManager();
+        
+        String sqlstatement = "SELECT * FROM tbl_genre WHERE name = ?";
+
+        try {
+            PreparedStatement pst = dbc.getConnection().prepareStatement(sqlstatement);
+            pst.setString(1, bez);
+            ResultSet rs = dbc.executeQuery(pst);
+            while (rs.next()) {
+                int genre_id = rs.getInt("GE_ID");
+                String bezeichnung = rs.getString("name");
+                erg = new Genre(genre_id, bezeichnung);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            return null;
+        }
+        return erg;
+    }
+    
+    public static Genre getGenre(int id){
+        Genre erg = null;
+        
+        DBController dbc = Control.getInstance().getDbManager();
+        
+        String sqlstatement = "SELECT * FROM tbl_genre WHERE GE_ID = ?";
+
+        try {
+            PreparedStatement pst = dbc.getConnection().prepareStatement(sqlstatement);
+            pst.setInt(1, id);
+            ResultSet rs = dbc.executeQuery(pst);
+            while (rs.next()) {
+                String bezeichnung = rs.getString("name");
+                erg = new Genre(id, bezeichnung);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            return null;
+        }
+        return erg;
+    }
 
     public static Cover getCover(int FILM_ID) {
         Cover cover = new Cover();
@@ -131,12 +181,22 @@ public class DBOperations {
         try {
             while (rs.next()) {
                 String covername = rs.getString("cover");
+                BufferedImage nocover = null;
                 try {
-                    File coverfile = new File("./covers/" + covername);
-                    BufferedImage img = ImageIO.read(coverfile);
-                    cover.setCover(JSON_Parser.encodeToString(img, "jpg"));
+                    nocover = ImageIO.read(DBOperations.class.getClassLoader().getResourceAsStream("de/codekings/server/main/NoCover.jpg"));
                 } catch (IOException ex) {
-                    cover.setCover("");
+                    System.out.println(ex.getMessage());
+                }
+                if (covername.equals("")) {
+                    cover.setCover(JSON_Parser.encodeToString(nocover, "jpg"));
+                } else {
+                    try {
+                        File coverfile = new File("./covers/" + covername);
+                        BufferedImage img = ImageIO.read(coverfile);
+                        cover.setCover(JSON_Parser.encodeToString(img, "jpg"));
+                    } catch (IOException ex) {
+                        cover.setCover(JSON_Parser.encodeToString(nocover, "jpg"));
+                    }
                 }
             }
             rs.close();
@@ -242,14 +302,70 @@ public class DBOperations {
                 while (rs.next()) {
                     int ma_id = rs.getInt("MA_ID");
                     int perm = rs.getInt("permission");
-                    
-                    ma = new Mitarbeiter(u_id, u.getName(), u.getVorname(), u.getStrasse(), u.getPlz(), u.getOrt(), u.getPasswort(), 
+
+                    ma = new Mitarbeiter(u_id, u.getName(), u.getVorname(), u.getStrasse(), u.getPlz(), u.getOrt(), u.getPasswort(),
                             u.getEmail(), u.getAccountnummer(), u.getHausnr(), u.getGeburtsdatum(), ma_id, perm);
                 }
             } catch (Exception e) {
             }
         }
         return ma;
+    }
+
+    public static String getFilmProperty(int filmid, String column) {
+        String erg = "";
+
+        String sqlstatement = "SELECT " + column + " FROM tbl_film";
+
+        DBController dbc = Control.getInstance().getDbManager();
+
+        ResultSet rs = dbc.executeQuery(sqlstatement);
+
+        try {
+            while (rs.next()) {
+                erg = rs.getString(column);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+        }
+
+        return erg;
+    }
+
+    public static void setFilmRemoved(int filmid) {
+        String sql = "UPDATE `tbl_film` SET `removed`='1' WHERE (`FI_ID`='" + filmid + "')";
+
+        DBController dbc = Control.getInstance().getDbManager();
+
+        dbc.executeUpdate(sql);
+    }
+
+    public static void setNoCover(int filmid) {
+        String sql = "UPDATE `tbl_film` SET `cover`='NoCover.jpg' WHERE (`FI_ID`='" + filmid + "')";
+
+        DBController dbc = Control.getInstance().getDbManager();
+
+        dbc.executeUpdate(sql);
+    }
+
+    public static boolean addGenre(String bez) {
+        boolean erg = true;
+
+        String sql = "INSERT INTO `tbl_genre` (`name`) VALUES (?)";
+
+        DBController dbc = Control.getInstance().getDbManager();
+
+        try {
+            PreparedStatement pst = dbc.getConnection().prepareStatement(sql);
+            pst.setString(1, bez);
+            dbc.executeUpdate(pst);
+
+        } catch (SQLException e) {
+            erg = false;
+            e.printStackTrace();
+        }
+
+        return erg;
     }
 
 }
