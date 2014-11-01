@@ -27,6 +27,7 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -42,6 +43,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -125,18 +127,27 @@ public class Create_filmController implements Initializable, MessageReturn {
 
         btn_create.setOnMouseClicked((MouseEvent event) -> {
             Film film = generateFilm();
-            Cover_Client cc = new Cover_Client(film.getFILMID(), img_cover.getImage());
-            Cover c = new Cover(film.getFILMID(), cc.getCover());
+            //Cover_Client cc = new Cover_Client(film.getFILMID(), img_cover.getImage());
+            //Cover c = new Cover(film.getFILMID(), cc.getCover());
+            
+            Cover c = new Cover(film.getFILMID(), JSON_Parser.encodeToString(SwingFXUtils.fromFXImage(img_cover.getImage(), null), "JPG"));
+
             Message m = new Message("addFilm");
             m.addSendable(film);
             m.addSendable(c);
-
+            m.addAdditionalParameter("email", Control.getControl().getSession().getEmail());
+            
             ConfigManager cfgManager = Control.getControl().getCfgManager();
             String host = cfgManager.getConfigs().getProperty("ip");
             int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
 
             ClientThread ct = new ClientThread(this, host, port);
             ct.requestToServer(m);
+            
+            
+            MessageBox mb = new MessageBox("Film hinzugefügt", MessageBoxType.OK_ONLY);
+            mb.setTitle("Information");
+            mb.showAndWait();
             
         });
 
@@ -411,7 +422,7 @@ public class Create_filmController implements Initializable, MessageReturn {
         }
         f.setI_duration(Integer.parseInt(txf_laufzeit.getText()));
         int fsk = fskbuttons.getToggles().indexOf(fskbuttons.getSelectedToggle());
-        f.setI_fsk(fsk);
+        f.setI_fsk(fsk + 1);
         ToggleButton tb = (ToggleButton) fskbuttons.getSelectedToggle();
         f.setS_FSK(tb.getText());
 

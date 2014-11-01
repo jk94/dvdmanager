@@ -11,6 +11,7 @@ import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Genre;
 import de.codekings.common.datacontents.Mitarbeiter;
+import de.codekings.common.datacontents.Sendable;
 import de.codekings.common.datacontents.User;
 import de.codekings.common.json.JSON_Parser;
 import de.codekings.server.controls.Control;
@@ -253,6 +254,37 @@ class ServerThread extends Thread {
 
             answer.addSendable(g);
             write(j.parseObjectToString(answer));
+
+            beenden = true;
+        }//</editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="addFilm">
+        if (m.getCommand().equalsIgnoreCase("addFilm")) {
+            Film f = null;
+            Cover c = null;
+            String email = m.getAdditionalparameter().get("email");
+            User u = DBOperations.getUser(email);
+            if (u != null) {
+                Mitarbeiter mb = DBOperations.getMitarbeiter(u.getU_ID());
+                if (mb != null) {
+                    for (Sendable s : m.getContent()) {
+                        if (s instanceof Film) {
+                            f = (Film) s;
+                            break;
+                        }
+                    }
+
+                    DBOperations.addFilm(f, u.getU_ID());
+
+                    for (Sendable s : m.getContent()) {
+                        if (s instanceof Cover) {
+                            c = (Cover) s;
+                            break;
+                        }
+                    }
+                    DBOperations.setCover(c);
+                }
+            }
 
             beenden = true;
         }//</editor-fold>

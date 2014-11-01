@@ -19,8 +19,8 @@ import de.codekings.common.datacontents.Sendable;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.image.Image;
 
 /**
@@ -33,20 +33,11 @@ public class DataManager implements MessageReturn {
     ArrayList<Genre> li_genre = new ArrayList<>();
     private final int updateTime;
     private Control control;
-    private final Timer updateTimer;
+    private final UpdateTimer updateTimer;
     private ConfigManager cfgManager;
     private final String host;
     private final int port;
-    private final TimerTask updateTimerTask = new TimerTask() {
-
-        @Override
-        public void run() {
-            System.out.println("timer");
-            updateData();
-            updateTimer.schedule(updateTimerTask, updateTime);
-        }
-    };
-
+    
     public DataManager(Control c) {
         this.cfgManager = c.getCfgManager();
         host = cfgManager.getConfigs().getProperty("ip");
@@ -56,10 +47,9 @@ public class DataManager implements MessageReturn {
         } else {
             updateTime = 600000;
         }
-        System.out.println(updateTime);
         updateData();
-        updateTimer = new Timer(true);
-        //updateTimer.schedule(updateTimerTask, updateTime);
+        updateTimer = new UpdateTimer(this.updateTime);
+        updateTimer.start();
     }
 
     @Override
@@ -182,4 +172,39 @@ public class DataManager implements MessageReturn {
         }
     }
 
+    class UpdateTimer extends Thread {
+
+        private final int intervall;
+        private boolean ende = false;
+        int counter = 0;
+
+        public UpdateTimer(int intervall) {
+            this.intervall = intervall;
+        }
+
+        @Override
+        public void run() {
+            while (!ende) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(DataManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (counter >= intervall) {
+                    updateData();
+                    reset();
+                }
+                counter++;
+            }
+        }
+
+        public void reset() {
+            counter = 0;
+        }
+
+        public void ende() {
+            ende = true;
+        }
+    }
+    
 }
