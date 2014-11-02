@@ -15,10 +15,8 @@ import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
 import java.io.File;
 import java.io.FileNotFoundException;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 
 /**
  *
@@ -141,8 +139,6 @@ public class Control implements MessageReturn {
                 MainApplication mainframe = new MainApplication();
                 Stage s = new Stage();
                 s.setMaximized(true);
-                s.setAlwaysOnTop(true);
-                s.initStyle(StageStyle.UTILITY);
                 
                 try {
                     mainframe.start(s);
@@ -171,5 +167,9 @@ public class Control implements MessageReturn {
         session = new LoginSession("", "");
         loginform.reset();
         loginform.getStage().show();
+    }
+
+    public LoginSession getSession() {
+        return session;
     }
 }

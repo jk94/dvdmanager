@@ -132,13 +132,4 @@ public abstract class User extends Sendable{
     public void setU_ID(int U_ID) {
         this.U_ID = U_ID;
     }
-    
-    public boolean authUser(String email, String pw){
-        if(email.equalsIgnoreCase(this.email)){
-            if(pw.equals(this.passwort)){
-                return true;
-            }
-        }
-        return false;
-    }
 }

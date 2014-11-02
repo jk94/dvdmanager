@@ -30,6 +30,8 @@ public class Kunde_entliehenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        //TableView einfache Abfrage DB
     }    
     
 }

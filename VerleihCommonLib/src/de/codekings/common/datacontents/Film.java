@@ -103,6 +103,18 @@ public class Film extends Sendable implements Comparable<Film> {
         return "";
     }
 
+    public String gibActors(){
+        String ausgabe = "";
+        for (int i = 0; i < li_actors.size(); i++) {
+            if(i<li_actors.size()-1){
+                ausgabe = ausgabe + li_actors.get(i) + "; ";
+            }else{
+                ausgabe = ausgabe + li_actors.get(i);
+            }
+        }
+        return ausgabe;
+    }
+    
     public void addActor(String name) {
         if (!li_actors.contains(name)) {
             li_actors.add(name);
