@@ -108,7 +108,7 @@ public class LoginFormController implements Initializable {
             setHinweis("Anmeldung erfolgreich!");
             setHinweisVisible(true);
             try {
-                Thread.sleep(1500l);
+                Thread.sleep(100l);
             } catch (InterruptedException ex) {
                 System.out.println(ex.getMessage());
             }

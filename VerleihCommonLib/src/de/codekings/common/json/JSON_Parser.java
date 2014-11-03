@@ -41,7 +41,7 @@ public class JSON_Parser {
             image = ImageIO.read(bis);
             bis.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("decodeToImage() " + e.getMessage());
         }
         return image;
     }
@@ -66,7 +66,7 @@ public class JSON_Parser {
 
             bos.close();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println("encodeToString() " + e.getMessage());
         }
         return imageString;
     }
@@ -80,7 +80,7 @@ public class JSON_Parser {
         try {
             return om.writeValueAsString(o);
         } catch (JsonProcessingException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("parseObjectToString()" + ex.getMessage());
         }
         return "";
     }
@@ -95,7 +95,7 @@ public class JSON_Parser {
         try {
             return om.readValue(parsingString, c);
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("parseStringToObject() " + ex.getMessage());
         }
         return null;
     }

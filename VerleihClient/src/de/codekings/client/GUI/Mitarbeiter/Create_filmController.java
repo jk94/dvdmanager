@@ -9,7 +9,6 @@ import de.codekings.client.Controls.Control;
 import de.codekings.client.Controls.DataManager;
 import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
-import de.codekings.client.datacontent.Cover_Client;
 import de.codekings.client.datacontent.Film_Client;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
@@ -43,7 +42,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -131,7 +129,7 @@ public class Create_filmController implements Initializable, MessageReturn {
             //Cover c = new Cover(film.getFILMID(), cc.getCover());
             
             Cover c = new Cover(film.getFILMID(), JSON_Parser.encodeToString(SwingFXUtils.fromFXImage(img_cover.getImage(), null), "JPG"));
-
+            
             Message m = new Message("addFilm");
             m.addSendable(film);
             m.addSendable(c);
@@ -142,8 +140,7 @@ public class Create_filmController implements Initializable, MessageReturn {
             int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
 
             ClientThread ct = new ClientThread(this, host, port);
-            ct.requestToServer(m);
-            
+            //ct.requestToServer(m);
             
             MessageBox mb = new MessageBox("Film hinzugefügt", MessageBoxType.OK_ONLY);
             mb.setTitle("Information");
@@ -394,8 +391,7 @@ public class Create_filmController implements Initializable, MessageReturn {
         String sub = txf_subtitel.getText();
         String titel = txf_titel.getText();
         String trailer = txf_trailer.getText();
-
-        //img_cover.setImage(new Image(Create_filmController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/NoCover.png")));
+        
         Film f = new Film(selectedFilmID);
         f.setS_description(beschreibung);
         f.setS_regie(regie);

@@ -274,11 +274,12 @@ class ServerThread extends Thread {
                         }
                     }
 
-                    DBOperations.addFilm(f, u.getU_ID());
+                    int addedID = DBOperations.addFilm(f, u.getU_ID());
 
                     for (Sendable s : m.getContent()) {
                         if (s instanceof Cover) {
                             c = (Cover) s;
+                            c.setFilm_id(addedID);
                             break;
                         }
                     }
