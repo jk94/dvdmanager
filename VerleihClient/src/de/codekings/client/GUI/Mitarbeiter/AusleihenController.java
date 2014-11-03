@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package de.codekings.client.GUI.Mitarbeiter;
 
 import java.net.URL;
@@ -17,19 +18,19 @@ import javafx.scene.control.TextField;
 /**
  * FXML Controller class
  *
- * @author Heiko
+ * @author Simon
  */
-public class ZurueckgebenController implements Initializable {
+public class AusleihenController implements Initializable {
     @FXML
-    private Button ma_return_btnruecknahme;
+    private Button ma_ausleihen_btnanzeigen;
     @FXML
-    private TableView<?> ma_return_table;
+    private Label ma_ausleihen_label;
     @FXML
-    private TextField ma_return_accnr_input;
+    private TextField ma_ausleihen_accnr_input;
     @FXML
-    private Label ma_return_label;
+    private TableView<?> ma_ausleihen_table;
     @FXML
-    private Button ma_return_btnanzeigen;
+    private Button ma_ausleihen_btnausleihe;
 
     /**
      * Initializes the controller class.
@@ -37,7 +38,6 @@ public class ZurueckgebenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
     }    
     
 }

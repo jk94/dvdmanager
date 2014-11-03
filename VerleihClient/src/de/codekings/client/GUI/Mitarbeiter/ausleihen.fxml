@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="content-back" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="de.codekings.client.GUI.Mitarbeiter.AusleihenController">
+   <children>
+      <Button fx:id="ma_ausleihen_btnanzeigen" layoutX="220.0" layoutY="90.0" mnemonicParsing="false" styleClass="standard-btn" text="Anzeigen" />
+      <Label fx:id="ma_ausleihen_label" layoutX="51.0" layoutY="58.0" styleClass="standard-text" text="Bitte gebe die Account-Nummer ein:" />
+      <TextField fx:id="ma_ausleihen_accnr_input" layoutX="51.0" layoutY="90.0" styleClass="katalog-textfield" />
+      <TableView fx:id="ma_ausleihen_table" layoutX="51.0" layoutY="136.0" prefHeight="200.0" prefWidth="491.0" />
+      <Button fx:id="ma_ausleihen_btnausleihe" layoutX="413.0" layoutY="350.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="129.0" styleClass="standard-btn" text="Artikel verleihen" />
+   </children>
+</AnchorPane>

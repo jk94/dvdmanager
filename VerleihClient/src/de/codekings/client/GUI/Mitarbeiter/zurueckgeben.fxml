@@ -9,21 +9,10 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.ZurueckgebenController">
    <children>
-      <AnchorPane id="AnchorPane" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" styleClass="content-base">
-         <children>
-            <TableView fx:id="mitarbeiter_zurueckgeben_tabelle" layoutX="18.0" layoutY="105.0" prefHeight="207.0" prefWidth="554.0">
-               <columns>
-                  <TableColumn minWidth="6.0" prefWidth="33.0" text="#" />
-                  <TableColumn prefWidth="107.0" text=" Filmtitel" />
-                  <TableColumn prefWidth="63.0" text="DVD ID" />
-                  <TableColumn prefWidth="86.0" text="Kunden ID" />
-                  <TableColumn minWidth="0.0" prefWidth="165.0" text="Rückgabedatum geplant" />
-                  <TableColumn prefWidth="99.0" text="Strafzahlung" />
-               </columns>
-            </TableView>
-            <Label fx:id="mitarbeiter_zurueckgeben_titel" layoutX="35.0" layoutY="55.0" prefHeight="17.0" prefWidth="263.0" styleClass="standard-text" text="Folgende Medien werden zurückgegeben:" />
-            <Button fx:id="mitarbeiter_zurueckgeben_btnausleihen" layoutX="373.0" layoutY="358.0" mnemonicParsing="false" styleClass="standard-btn" text="Ausgewählte Medien zurückgeben" />
-         </children>
-      </AnchorPane>
+      <Button fx:id="ma_return_btnruecknahme" layoutX="417.0" layoutY="330.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="129.0" styleClass="standard-btn" text="Artikel zurücknehmen" />
+      <TableView fx:id="ma_return_table" layoutX="55.0" layoutY="100.0" prefHeight="200.0" prefWidth="491.0" />
+      <TextField fx:id="ma_return_accnr_input" layoutX="55.0" layoutY="53.0" styleClass="katalog-textfield" />
+      <Label fx:id="ma_return_label" layoutX="55.0" layoutY="28.0" styleClass="standard-text" text="Bitte gebe die Account-Nummer ein:" />
+      <Button fx:id="ma_return_btnanzeigen" layoutX="217.0" layoutY="53.0" mnemonicParsing="false" styleClass="standard-btn" text="Anzeigen" />
    </children>
 </AnchorPane>
