@@ -68,6 +68,16 @@ public class ClientThread extends Thread {
         return this;
     }
 
+    public boolean isOnline() {
+        this.conn = newConnection();
+        if (conn != null) {
+            if (conn.isConnected()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private Socket newConnection() {
         Socket socket = null;
         try {
@@ -79,8 +89,8 @@ public class ClientThread extends Thread {
         }
         return socket;
     }
-    
-    public void closeConnection(){
+
+    public void closeConnection() {
         try {
             conn.close();
         } catch (IOException ex) {

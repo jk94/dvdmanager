@@ -127,29 +127,55 @@ public class Create_filmController implements Initializable, MessageReturn {
             Film film = generateFilm();
             //Cover_Client cc = new Cover_Client(film.getFILMID(), img_cover.getImage());
             //Cover c = new Cover(film.getFILMID(), cc.getCover());
-            
+
             Cover c = new Cover(film.getFILMID(), JSON_Parser.encodeToString(SwingFXUtils.fromFXImage(img_cover.getImage(), null), "JPG"));
-            
+
             Message m = new Message("addFilm");
             m.addSendable(film);
             m.addSendable(c);
             m.addAdditionalParameter("email", Control.getControl().getSession().getEmail());
-            
+
             ConfigManager cfgManager = Control.getControl().getCfgManager();
             String host = cfgManager.getConfigs().getProperty("ip");
             int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
 
             ClientThread ct = new ClientThread(this, host, port);
-            //ct.requestToServer(m);
-            
+            ct.requestToServer(m);
+
             MessageBox mb = new MessageBox("Film hinzugefügt", MessageBoxType.OK_ONLY);
             mb.setTitle("Information");
             mb.showAndWait();
-            
+
+        });
+
+        btn_update.setOnMouseClicked((MouseEvent event) -> {
+            Film film = generateFilm();
+            //Cover_Client cc = new Cover_Client(film.getFILMID(), img_cover.getImage());
+            //Cover c = new Cover(film.getFILMID(), cc.getCover());
+
+            Cover c = new Cover(film.getFILMID(), JSON_Parser.encodeToString(SwingFXUtils.fromFXImage(img_cover.getImage(), null), "JPG"));
+
+            Message m = new Message("updateFilm");
+            m.addSendable(film);
+            m.addSendable(c);
+            m.addAdditionalParameter("email", Control.getControl().getSession().getEmail());
+
+            ConfigManager cfgManager = Control.getControl().getCfgManager();
+            String host = cfgManager.getConfigs().getProperty("ip");
+            int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+            ClientThread ct = new ClientThread(this, host, port);
+            ct.requestToServer(m);
+
+            MessageBox mb = new MessageBox("Änderungen gespeichert", MessageBoxType.OK_ONLY);
+            mb.setTitle("Information");
+            mb.showAndWait();
+
         });
 
         btn_reset.setOnMouseClicked((MouseEvent event) -> {
             resetValues();
+            btn_update.setDisable(true);
         });
 
         btn_genre_add.setOnMouseClicked((MouseEvent event) -> {
@@ -237,6 +263,7 @@ public class Create_filmController implements Initializable, MessageReturn {
                     default:
                         fskbuttons.selectToggle(rbtn_fsk0);
                 }
+                btn_update.setDisable(false);
             }
         });
 
@@ -391,7 +418,7 @@ public class Create_filmController implements Initializable, MessageReturn {
         String sub = txf_subtitel.getText();
         String titel = txf_titel.getText();
         String trailer = txf_trailer.getText();
-        
+
         Film f = new Film(selectedFilmID);
         f.setS_description(beschreibung);
         f.setS_regie(regie);

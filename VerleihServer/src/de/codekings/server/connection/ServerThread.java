@@ -242,15 +242,15 @@ class ServerThread extends Thread {
         if (m.getCommand().equalsIgnoreCase("addGenre")) {
             String bez = m.getAdditionalparameter().get("bez");
 
-            boolean exist = !DBOperations.addGenre(bez);
+            int genreid = DBOperations.addGenre(bez);
 
             Message answer = new Message();
-            if (exist) {
+            if (genreid < 0) {
                 answer.setCommand("GenreExists");
             } else {
                 answer.setCommand("addedGenre");
             }
-            Genre g = DBOperations.getGenre(bez);
+            Genre g = new Genre(genreid, bez);
 
             answer.addSendable(g);
             write(j.parseObjectToString(answer));
@@ -284,6 +284,43 @@ class ServerThread extends Thread {
                         }
                     }
                     DBOperations.setCover(c);
+                }
+            }
+
+            beenden = true;
+        }//</editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="updateFilm">
+        if (m.getCommand().equalsIgnoreCase("updateFilm")) {
+            Film f = null;
+            Cover c = null;
+            String email = m.getAdditionalparameter().get("email");
+            User u = DBOperations.getUser(email);
+            if (u != null) {
+                Mitarbeiter mb = DBOperations.getMitarbeiter(u.getU_ID());
+                if (mb != null) {
+                    for (Sendable s : m.getContent()) {
+                        if (s instanceof Film) {
+                            f = (Film) s;
+                            break;
+                        }
+                    }
+
+                    DBOperations.UpdateFilm(f, u.getU_ID());
+
+                    for (Sendable s : m.getContent()) {
+                        if (s instanceof Cover) {
+                            c = (Cover) s;
+                            break;
+                        }
+                    }
+                    String covername = DBOperations.getFilmProperty(f.getFILMID(), "cover");
+                    if (covername.equals("")) {
+                        DBOperations.setCover(c);
+                    } else {
+                        DBOperations.updateCover(c, covername);
+                    }
+
                 }
             }
 

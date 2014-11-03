@@ -17,6 +17,7 @@ public class LoginSession {
     private String email = "", hashedpw = "";
     private Date logintime = null;
     private int permission = 0;
+    private int fsk = 0;
 
     public LoginSession(String email, String hashedpw) {
         this.email = email;
@@ -36,6 +37,14 @@ public class LoginSession {
         return permission;
     }
 
+    public int getFSK(){
+        return fsk;
+    }
+    
+    public void setFSK(int fsk){
+        this.fsk = fsk;
+    }
+    
     public void setPermission(int value) {
         this.permission = value;
     }

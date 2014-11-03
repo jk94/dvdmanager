@@ -101,7 +101,7 @@ public class DataManager implements MessageReturn {
                 Film_Client fc = null;
 
                 try {
-                    Thread.sleep(100l);
+                    Thread.sleep(300l);
                 } catch (InterruptedException e) {
 
                 }
@@ -127,7 +127,11 @@ public class DataManager implements MessageReturn {
                             }
                         } else {
                             //Cover not Found anzeigen
-                            fc.setCover(new Cover_Client(fc.getFILMID(), nocover));
+                            System.out.println("Covernotfound");
+                            if (fc.getCover().getCover().equals("")) {
+                                fc.setCover(new Cover_Client(fc.getFILMID(), nocover));
+                                System.out.println("notfoudn");
+                            }
                         }
                     } else {
                         //Cover not Found anzeigen

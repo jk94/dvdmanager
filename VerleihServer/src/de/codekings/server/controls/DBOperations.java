@@ -400,24 +400,27 @@ public class DBOperations {
         dbc.executeUpdate(sql);
     }
 
-    public static boolean addGenre(String bez) {
-        boolean erg = true;
-
+    public static int addGenre(String bez) {
+        int id = -1;
         String sql = "INSERT INTO `tbl_genre` (`name`) VALUES (?)";
 
         DBController dbc = Control.getInstance().getDbManager();
 
         try {
-            PreparedStatement pst = dbc.getConnection().prepareStatement(sql);
+            PreparedStatement pst = dbc.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, bez);
             dbc.executeUpdate(pst);
+            ResultSet rs = pst.getResultSet();
+
+            while (rs.next()) {
+                id = rs.getInt(1);
+            }
 
         } catch (SQLException e) {
-            erg = false;
             e.printStackTrace();
         }
 
-        return erg;
+        return id;
     }
 
     public static int addFilm(Film f, int editor) {
@@ -492,6 +495,64 @@ public class DBOperations {
             pst.setInt(2, c.getFilm_id());
         } catch (SQLException ex) {
             Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void UpdateFilm(Film f, int u_id) {
+        String sql = "UPDATE `tbl_film` SET `title`=?, `subtitle`=? , `desc`=? , fsk=?, rating=?, trailer=?, actor=?, "
+                + "regie=?, release_date=?, duration=?, last_edit_by=?, last_edit=? WHERE (`FI_ID`=?)";
+        String deleteGenreZuordnung = "DELETE FROM `tbl_genre_zuordnung` WHERE (`GEZ_ID`=?)";
+        String sql2 = "INSERT INTO tbl_genre_zuordnung (FI_ID, GE_ID) VALUES (?, ?)";
+
+        DBController dbc = Control.getInstance().getDbManager();
+
+        try {
+            PreparedStatement pst = dbc.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pst.setString(1, f.getS_titel());
+            pst.setString(2, f.getS_subtitel());
+            pst.setString(3, f.getS_description());
+            pst.setInt(4, f.getI_fsk());
+            pst.setInt(5, f.getI_rating());
+
+            pst.setString(6, f.getS_trailer());
+            pst.setString(7, f.gibActors());
+            pst.setString(8, f.getS_regie());
+            java.sql.Date sqldate = new java.sql.Date(1000000l); //java.sql.Date.valueOf(f.getRelease_date().toLocaleString());
+            pst.setDate(9, sqldate);
+            pst.setInt(10, f.getI_duration());
+            //Last EDIT!!
+            pst.setInt(11, u_id);
+            //Current Time
+            java.util.Date utilDate = new java.util.Date();
+            java.sql.Date lastedit = new java.sql.Date(utilDate.getTime());
+            pst.setDate(12, lastedit);
+
+            pst.setInt(13, f.getFILMID());
+
+            dbc.executeUpdate(pst); //Übernehme FilmUpdates
+
+            pst = dbc.getConnection().prepareStatement(deleteGenreZuordnung);
+            pst.setInt(1, f.getFILMID());
+            dbc.executeUpdate(pst); //Lösche alle Genre Zuordnungen
+
+            for (int i = 0; i <= (f.getGenres().size() - 1); i++) { //Setze die Genrezuordnung neu
+                Genre g = f.getGenre(i);
+                pst = dbc.getConnection().prepareStatement(sql2);
+                pst.setInt(1, f.getFILMID());
+                pst.setInt(2, g.getGenre_id());
+                dbc.executeUpdate(pst);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void updateCover(Cover c, String covername) {
+        File coverfile = new File("./covers/" + covername);
+        try {
+            ImageIO.write(JSON_Parser.decodeToImage(c.getCover()), "jpg", coverfile);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 

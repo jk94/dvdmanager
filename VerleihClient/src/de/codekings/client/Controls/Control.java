@@ -16,7 +16,8 @@ import de.codekings.common.config.ConfigManager;
 import java.io.File;
 import java.io.FileNotFoundException;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import se.mbaeumer.fxmessagebox.MessageBox;
+import se.mbaeumer.fxmessagebox.MessageBoxType;
 
 /**
  *
@@ -34,7 +35,23 @@ public class Control implements MessageReturn {
 
     public Control() {
         loadConfig();
-        loadData();
+
+        //Teste Connection
+        Message m = new Message("");
+        ClientThread ct = new ClientThread(this, cfgManager.getConfigs().getProperty("ip"), Integer.parseInt(cfgManager.getConfigs().getProperty("port")));
+        if (ct.isOnline()) {
+            loadData();
+        }else{
+            MessageBox mb = new MessageBox("\nVerbindung zum Server nicht möglich!\n\n"
+                    + "Der Server ist vermutlich nicht\n"
+                    + "gestartet oder offline.\n\n"
+                    + "Bitte stellen Sie sicher, dass der\nServer gestartet und online ist.", MessageBoxType.OK_ONLY);
+            mb.setTitle("Warnung!");
+            mb.setHeight(250.0);
+            mb.setWidth(50.0);
+            mb.showAndWait();
+            System.exit(0);
+        }
     }
 
     public final void loadConfig() {
@@ -139,7 +156,7 @@ public class Control implements MessageReturn {
                 MainApplication mainframe = new MainApplication();
                 Stage s = new Stage();
                 s.setMaximized(true);
-                
+
                 try {
                     mainframe.start(s);
                 } catch (Exception ex) {
