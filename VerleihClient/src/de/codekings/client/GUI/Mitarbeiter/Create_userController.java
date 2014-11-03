@@ -10,7 +10,9 @@ import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
 import de.codekings.common.Connection.Hasher;
 import de.codekings.common.Connection.Message;
+import de.codekings.common.Enumerators.ClassType;
 import de.codekings.common.config.ConfigManager;
+import de.codekings.common.datacontents.Kunde;
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -84,6 +86,19 @@ public class Create_userController implements Initializable, MessageReturn {
         
         user_btn_create.setOnMouseClicked((MouseEvent event) -> {
             //variablen definieren
+            String vorname = user_input_vorname.getText();
+            String name = user_input_nachname.getText();
+            String email = user_input_email.getText();
+            String passwort = user_passwort.getText();
+            
+            LocalDate geburtstag = user_datum.getValue();
+            Instant datum = Instant.from(geburtstag.atStartOfDay(ZoneId.systemDefault()));
+            Date d_geb = Date.from(datum);
+            
+            String plz = user_input_plz.getText();
+            String ort = user_input_ort.getText();
+            String str = user_input_adresse.getText();
+        
             check_Input();
                
             ConfigManager cfgManager = Control.getControl().getCfgManager();
@@ -93,7 +108,8 @@ public class Create_userController implements Initializable, MessageReturn {
             ClientThread emailv = new ClientThread(this, host, port);
             Message request = new Message("CreateUser");
             String hpw = Hasher.getInstance().ToMD5(user_passwort.getText());
-            //Kunde Kunde_neu = new Kunde(0, vorname, adresse, plz, ort, hpw, email, 0, hausnr, datum, null, null, port, ClassType.T_KUNDE);
+            
+            //Kunde Kunde_neu = new Kunde(0, vorname, str, plz, ort, hpw, email, 0, hausnr, datum, null, null, port, ClassType.T_KUNDE);
             
             emailv.requestToServer(request);
             
@@ -173,7 +189,7 @@ public class Create_userController implements Initializable, MessageReturn {
         Instant datum = Instant.from(geburtstag.atStartOfDay(ZoneId.systemDefault()));
         Date d_geb = Date.from(datum);
 
-        System.out.println(d_geb.toLocaleString());
+        //System.out.println(d_geb.toLocaleString());
 
         String plz = user_input_plz.getText();
         if (!vorname.matches("[0-9]")) {

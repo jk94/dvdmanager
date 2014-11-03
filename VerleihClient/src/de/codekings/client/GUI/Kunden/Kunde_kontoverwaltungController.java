@@ -6,6 +6,7 @@
 
 package de.codekings.client.GUI.Kunden;
 
+import de.codekings.client.Controls.Control;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -23,28 +24,52 @@ public class Kunde_kontoverwaltungController implements Initializable {
     @FXML
     private Label kunde_konto_name;
     @FXML
-    private TextField kunde_konto_email_neu;
-    @FXML
-    private TextField kunde_konto_name_neu;
-    @FXML
     private Label kunde_konto_email;
     @FXML
-    private TextField kunde_konto_pass_neu;
+    private Label kunde_konto_vorname;
     @FXML
-    private TextField kunde_konto_pass_neu_contr;
+    private Label kunde_konto_adresse;
     @FXML
-    private Button kunde_konto_verwerfen;
+    private Label kunde_konto_hausnr;
     @FXML
-    private Button kunde_konto_aendern;
+    private Label kunde_konto_plz;
     @FXML
-    private TextField kunde_konto_pass_akt;
+    private Label kunde_konto_ort;
+    @FXML
+    private Label kunde_konto_guthaben;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        /*
+        
+        ...get UserInfo
+        String email= Control.getControl().getSession().getEmail();
+        String vorname = Control.getControl().getSession().getVorname();
+        String name
+        String adresse
+        String hausnr
+        String plz
+        String ort
+        String guthaben
+        
+        set UserInfo
+        
+        
+        
+        kunde_konto_vorname.setText(vorname);
+        kunde_konto_name.setText(name);
+        kunde_konto_email.setText(email);
+        kunde_konto_adresse.setText(adresse);
+        kunde_konto_hausnr.setText(hausnr);
+        kunde_konto_pls.setText(plz);
+        kunde_konto_ort.setText(ort);
+        kunde_konto_guthaen.setText(guthaben);
+        
+        */        
+                
+     }    
     
 }

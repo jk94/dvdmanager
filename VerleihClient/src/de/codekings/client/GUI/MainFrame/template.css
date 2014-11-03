@@ -23,14 +23,14 @@
     -fx-border-color: #1C1C1C;
     -fx-border-top: 5px;
     -fx-border-bottom: 5px;
-    -fx-border-right: 5px;
+    //-fx-border-right: 5px;
 }
 .header-left {
     -fx-background-color: #2E2E2E;
     -fx-border-color: #1C1C1C;
     -fx-border-top: 5px;
     -fx-border-bottom: 5px;
-    -fx-border-left: 5px;
+    //-fx-border-left: 5px;
 }
 
 .header{
@@ -38,7 +38,7 @@
     -fx-border-color: #1C1C1C;
     -fx-border-top: 5px;
     -fx-border-bottom: 5px;
-    -fx-border-left: 5px;
+    //-fx-border-left: 5px;
 }
 
 .menu-base {
