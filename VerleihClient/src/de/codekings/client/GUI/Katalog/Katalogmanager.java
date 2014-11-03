@@ -88,7 +88,7 @@ public class Katalogmanager implements ContentView {
                 vboxliste.getChildren().add(pa);
 
             } catch (IOException e) {
-                System.out.println(e.getCause());
+                System.out.println(e.getMessage());
             }
         }
         content = vboxliste;

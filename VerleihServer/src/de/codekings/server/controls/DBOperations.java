@@ -14,10 +14,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.image.Image;
 import javax.imageio.ImageIO;
 
 /*
@@ -420,7 +420,7 @@ public class DBOperations {
         return erg;
     }
 
-    public static void addFilm(Film f, int editor) {
+    public static int addFilm(Film f, int editor) {
         String sql = "INSERT INTO `tbl_film` (`title`, `subtitle`, `desc`, `fsk`, "
                 + "`rating`, `cover`, `trailer`, `actor`, `regie`, `release_date`, "
                 + "`duration`, `preis`, `last_edit_by`, `last_edit`) "
@@ -431,7 +431,7 @@ public class DBOperations {
         DBController dbc = Control.getInstance().getDbManager();
 
         try {
-            PreparedStatement pst = dbc.getConnection().prepareStatement(sql);
+            PreparedStatement pst = dbc.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, f.getS_titel());
             pst.setString(2, f.getS_subtitel());
             pst.setString(3, f.getS_description());
@@ -450,9 +450,15 @@ public class DBOperations {
             java.util.Date utilDate = new java.util.Date();
             java.sql.Date lastedit = new java.sql.Date(utilDate.getTime());
             pst.setDate(13, lastedit);
-            dbc.executeUpdate(pst);
 
-            for (Genre g : f.getGenres()) {
+            pst.executeUpdate();
+            ResultSet rs = pst.getGeneratedKeys();
+            while (rs.next()) {
+                f.setFILMID(rs.getInt(1));
+            }
+            //dbc.executeUpdate(pst);
+            for (int i = 0; i <= (f.getGenres().size() - 1); i++) {
+                Genre g = f.getGenre(i);
                 pst = dbc.getConnection().prepareStatement(sql2);
                 pst.setInt(1, f.getFILMID());
                 pst.setInt(2, g.getGenre_id());
@@ -461,7 +467,7 @@ public class DBOperations {
         } catch (SQLException ex) {
             Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        return f.getFILMID();
     }
 
     public static void setCover(Cover c) {
@@ -469,7 +475,7 @@ public class DBOperations {
         File coverfile = new File("./covers/" + filmname + ".jpg");
         String finalname = filmname + ".jpg";
         int counter = 1;
-        while(coverfile.exists()){
+        while (coverfile.exists()) {
             coverfile = new File("./covers/" + filmname + String.valueOf(counter) + ".jpp");
             finalname = filmname + String.valueOf(counter) + ".jpp";
         }
@@ -477,6 +483,15 @@ public class DBOperations {
             ImageIO.write(JSON_Parser.decodeToImage(c.getCover()), "jpg", coverfile);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
+        }
+        String sql = "UPDATE `tbl_film` SET `cover`=? WHERE (`FI_ID`=?)";
+        DBController dbc = Control.getInstance().getDbManager();
+        try {
+            PreparedStatement pst = dbc.getConnection().prepareStatement(sql);
+            pst.setString(1, finalname);
+            pst.setInt(2, c.getFilm_id());
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

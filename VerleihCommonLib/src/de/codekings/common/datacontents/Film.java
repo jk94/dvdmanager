@@ -56,10 +56,6 @@ public class Film extends Sendable implements Comparable<Film> {
         this.i_rating = rat;
     }
 
-    public ArrayList<Genre> getLi_genre() {
-        return li_genre;
-    }
-
     public int getFILMID() {
         return FILMID;
     }
@@ -91,7 +87,7 @@ public class Film extends Sendable implements Comparable<Film> {
     public ArrayList<String> getActors() {
         return li_actors;
     }
-    
+
     public void setActors(ArrayList<String> actors) {
         this.li_actors = actors;
     }
@@ -103,18 +99,18 @@ public class Film extends Sendable implements Comparable<Film> {
         return "";
     }
 
-    public String gibActors(){
+    public String gibActors() {
         String ausgabe = "";
         for (int i = 0; i < li_actors.size(); i++) {
-            if(i<li_actors.size()-1){
+            if (i < li_actors.size() - 1) {
                 ausgabe = ausgabe + li_actors.get(i) + "; ";
-            }else{
+            } else {
                 ausgabe = ausgabe + li_actors.get(i);
             }
         }
         return ausgabe;
     }
-    
+
     public void addActor(String name) {
         if (!li_actors.contains(name)) {
             li_actors.add(name);
@@ -142,16 +138,8 @@ public class Film extends Sendable implements Comparable<Film> {
         this.FILMID = FILMID;
     }
 
-    public void setLi_actors(ArrayList<String> li_actors) {
-        this.li_actors = li_actors;
-    }
-
-    public void setLi_genre(ArrayList<Genre> li_genre) {
+    public void setGenres(ArrayList<Genre> li_genre) {
         this.li_genre = li_genre;
-    }
-
-    public ArrayList<String> getLi_actors() {
-        return li_actors;
     }
 
     public String getS_titel() {
@@ -218,8 +206,8 @@ public class Film extends Sendable implements Comparable<Film> {
         this.release_date = release_date;
     }
 
-   @Override
+    @Override
     public int compareTo(Film t) {
-        return this.getS_titel().compareTo(t.getS_titel());
+        return this.getS_titel().toLowerCase().compareTo(t.getS_titel().toLowerCase());
     }
 }

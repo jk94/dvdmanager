@@ -50,7 +50,6 @@ public class ClientThread extends Thread {
                 String s;
                 JSON_Parser jreader = new JSON_Parser();
                 while (reader != null && (s = reader.readLine()) != null) {
-                    System.out.println(s);
                     //TODO Annahme der Daten
                     s = s.trim();
                     if (s.equals("")) {
@@ -61,7 +60,7 @@ public class ClientThread extends Thread {
                     }
                 }
             } catch (IOException ex) {
-                System.out.println(ex.getMessage());
+                System.out.println("ClientThread:reader() " + ex.getMessage());
             }
         }).start();
         writer.append(jwriter.parseObjectToString(m) + "\n");

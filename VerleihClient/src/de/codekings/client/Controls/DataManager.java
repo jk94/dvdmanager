@@ -37,7 +37,7 @@ public class DataManager implements MessageReturn {
     private ConfigManager cfgManager;
     private final String host;
     private final int port;
-    
+
     public DataManager(Control c) {
         this.cfgManager = c.getCfgManager();
         host = cfgManager.getConfigs().getProperty("ip");
@@ -69,6 +69,7 @@ public class DataManager implements MessageReturn {
 
                     m.getContent().stream().filter((s) -> (s instanceof Film)).forEach((s) -> {
                         Film f = (Film) s;
+
                         Film_Client fc = new Film_Client(f, new Cover_Client(f.getFILMID(), img));
                         filme.add(fc);
                         ClientThread getCoverThread = new ClientThread(instance, host, port);
@@ -99,6 +100,12 @@ public class DataManager implements MessageReturn {
 
                 Film_Client fc = null;
 
+                try {
+                    Thread.sleep(100l);
+                } catch (InterruptedException e) {
+
+                }
+
                 if (c != null) {
                     for (Film_Client fi : li_filme) {
                         try {
@@ -110,20 +117,22 @@ public class DataManager implements MessageReturn {
                             System.out.println(e.getMessage());
                         }
                     }
-
-                    if (!c.getCover().equals("")) {
-                        try {
-                            fc.setCover(c);
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
+                    if (fc != null) {
+                        if (!c.getCover().equals("")) {
+                            try {
+                                fc.setCover(c);
+                            } catch (Exception e) {
+                                System.out.println("1." + e.getMessage());
+                                e.printStackTrace();
+                            }
+                        } else {
+                            //Cover not Found anzeigen
+                            fc.setCover(new Cover_Client(fc.getFILMID(), nocover));
                         }
                     } else {
                         //Cover not Found anzeigen
-                        fc.setCover(new Cover_Client(fc.getFILMID(), nocover));
+                        //fc.setCover(new Cover_Client(fc.getFILMID(), nocover));
                     }
-                } else {
-                    //Cover not Found anzeigen
-                    fc.setCover(new Cover_Client(fc.getFILMID(), nocover));
                 }
             });
             t.setDaemon(true);
@@ -162,10 +171,10 @@ public class DataManager implements MessageReturn {
         Message GenreRequest = new Message("getGenres");
         new ClientThread(this, host, port).requestToServer(GenreRequest);
     }
-    
-    public void removeFilm(int filmid){
-        for(Film_Client fi: li_filme){
-            if(fi.getFILMID()==filmid){
+
+    public void removeFilm(int filmid) {
+        for (Film_Client fi : li_filme) {
+            if (fi.getFILMID() == filmid) {
                 li_filme.remove(fi);
                 break;
             }
@@ -206,5 +215,5 @@ public class DataManager implements MessageReturn {
             ende = true;
         }
     }
-    
+
 }

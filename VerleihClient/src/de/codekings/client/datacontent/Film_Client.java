@@ -15,7 +15,7 @@ import de.codekings.common.datacontents.Film;
 public class Film_Client extends Film {
         private Cover cover;
         public Film_Client(Film f, Cover c) {
-            super(f.getFILMID(), f.getRelease_date(), f.getLi_actors(), f.getGenres(), 
+            super(f.getFILMID(), f.getRelease_date(), f.getActors(), f.getGenres(), 
                     f.getS_titel(), f.getS_subtitel(), f.getS_description(), f.getS_trailer(), 
                     f.getS_regie(), f.getS_FSK(), f.getI_rating(), f.getI_duration(), f.getI_fsk(), 
                     f.getD_preis(), f.getClassType());
