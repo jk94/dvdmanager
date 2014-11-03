@@ -13,7 +13,7 @@ import java.util.Date;
  * @author Jan
  */
 
-public abstract class User extends Sendable{
+public class User extends Sendable{
     
     private int U_ID;
     private String name, vorname, strasse, plz, ort;

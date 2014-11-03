@@ -22,6 +22,7 @@ class Katalogeintrag {
         this.content = c;
         this.contentcontroller = cc;
         this.film = f;
+        contentcontroller.setFilmID(f.getFILMID());
     }
 
     public Parent getContent() {

@@ -2,6 +2,7 @@ package de.codekings.server.controls;
 
 import de.codekings.common.Enumerators.ClassType;
 import de.codekings.common.datacontents.Cover;
+import de.codekings.common.datacontents.DVD;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Genre;
 import de.codekings.common.datacontents.Mitarbeiter;
@@ -152,6 +153,106 @@ public class DBOperations {
         return liste;
     }
 
+    public static Film getFilm(int film_id) {
+        ArrayList<Genre> ge_liste = getGenre();
+        Film erg = new Film(film_id);
+        DBController dbc = Control.getInstance().getDbManager();
+
+        String sqlstatement = "SELECT * FROM tbl_film f, tbl_genre_zuordnung gz, "
+                + "tbl_genre g, tbl_fsk fk WHERE f.FI_ID = gz.FI_ID "
+                + "AND g.GE_ID = gz.GE_ID AND f.fsk = fk.FSK_ID "
+                + "AND f.removed = 0 AND f.FI_ID = " + film_id + " "
+                + "ORDER BY f.title, f.subtitle, f.FI_ID ASC";
+
+        ResultSet rs = dbc.executeQuery(sqlstatement);
+        boolean hatgenre = false;
+        try {
+            while (rs.next()) {
+                hatgenre = true;
+                String genre = rs.getString("name");
+
+                for (Genre g : ge_liste) {
+                    if (g.getGenrebezeichnung().equals(genre)) {
+                        erg.addGenre(g);
+                        break;
+                    }
+                }
+
+                int duration = rs.getInt("duration"), rating = rs.getInt("rating"), iFSK = rs.getInt("age");
+                String titel = rs.getString("title"), subt = rs.getString("subtitle"), des = rs.getString("desc"),
+                        sFSK = rs.getString("bez"), trailer = rs.getString("trailer"), regie = rs.getString("regie");
+                double preis = rs.getDouble("preis");
+                Date release = rs.getDate("release_date");
+
+                erg.setS_titel(titel);
+                erg.setS_subtitel(subt);
+                erg.setS_FSK(sFSK);
+                erg.setS_trailer(trailer);
+                erg.setS_regie(regie);
+                erg.setS_description(des);
+                erg.setI_duration(duration);
+                erg.setI_rating(rating);
+                erg.setI_fsk(iFSK);
+                erg.setD_preis(preis);
+
+                String actorsunsplitted = rs.getString("actor");
+                String[] actors = new String[0];
+                if (actorsunsplitted.contains(";")) {
+                    actors = actorsunsplitted.split(";");
+                }
+                for (String actor : actors) {
+                    erg.addActor(actor.trim());
+                }
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (!hatgenre) {//Für Filme ohne Genre
+            sqlstatement = "SELECT * FROM tbl_film f, tbl_fsk fk WHERE "
+                    + "f.fsk = fk.FSK_ID "
+                    + "AND f.removed = 0 AND f.FILM_ID = " + film_id + " "
+                    + "ORDER BY f.title, f.subtitle, f.FI_ID ASC";
+            rs = dbc.executeQuery(sqlstatement);
+            try {
+                while (rs.next()) {
+
+                    int duration = rs.getInt("duration"), rating = rs.getInt("rating"), iFSK = rs.getInt("age");
+                    String titel = rs.getString("title"), subt = rs.getString("subtitle"), des = rs.getString("desc"),
+                            sFSK = rs.getString("bez"), trailer = rs.getString("trailer"), regie = rs.getString("regie");
+                    double preis = rs.getDouble("preis");
+                    java.sql.Date release = rs.getDate("release_date");
+
+                    erg.setS_titel(titel);
+                    erg.setS_subtitel(subt);
+                    erg.setS_FSK(sFSK);
+                    erg.setS_trailer(trailer);
+                    erg.setS_regie(regie);
+                    erg.setS_description(des);
+                    erg.setI_duration(duration);
+                    erg.setI_rating(rating);
+                    erg.setI_fsk(iFSK);
+                    erg.setD_preis(preis);
+
+                    String actorsunsplitted = rs.getString("actor");
+                    String[] actors = new String[0];
+                    if (actorsunsplitted.contains(";")) {
+                        actors = actorsunsplitted.split(";");
+                    }
+                    for (String actor : actors) {
+                        erg.addActor(actor.trim());
+                    }
+                }
+                rs.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return erg;
+    }
+
     public static ArrayList<Genre> getGenre() {
         ArrayList<Genre> liste = new ArrayList<>();
 
@@ -234,8 +335,10 @@ public class DBOperations {
             while (rs.next()) {
                 String covername = rs.getString("cover");
                 BufferedImage nocover = null;
+
                 try {
-                    nocover = ImageIO.read(DBOperations.class.getClassLoader().getResourceAsStream("de/codekings/server/main/NoCover.jpg"));
+                    nocover = ImageIO.read(DBOperations.class
+                            .getClassLoader().getResourceAsStream("de/codekings/server/main/NoCover.jpg"));
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -466,9 +569,11 @@ public class DBOperations {
                 pst.setInt(1, f.getFILMID());
                 pst.setInt(2, g.getGenre_id());
                 dbc.executeUpdate(pst);
+
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBOperations.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return f.getFILMID();
     }
@@ -493,8 +598,10 @@ public class DBOperations {
             PreparedStatement pst = dbc.getConnection().prepareStatement(sql);
             pst.setString(1, finalname);
             pst.setInt(2, c.getFilm_id());
+
         } catch (SQLException ex) {
-            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBOperations.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -541,9 +648,11 @@ public class DBOperations {
                 pst.setInt(1, f.getFILMID());
                 pst.setInt(2, g.getGenre_id());
                 dbc.executeUpdate(pst);
+
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBOperations.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -553,6 +662,55 @@ public class DBOperations {
             ImageIO.write(JSON_Parser.decodeToImage(c.getCover()), "jpg", coverfile);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
+        }
+    }
+
+    public static ArrayList<DVD> getReservierteDVDs(int filmid) {
+        ArrayList<DVD> erg = new ArrayList<>();
+
+        String sql = "SELECT * FROM tbl_reservierung, tbl_dvd WHERE gueltig = 1 AND FI_ID = " + filmid;
+
+        DBController dbc = Control.getInstance().getDbManager();
+
+        ResultSet rs = dbc.executeQuery(sql);
+        try {
+            while (rs.next()) {
+                int reservierungsid = rs.getInt("RES_ID");
+                java.util.Date now = new java.util.Date();
+                java.sql.Date dbDate = rs.getDate("reservierungsdatum");
+                long diff = now.getTime() - dbDate.getTime();
+                if ((diff / 1000) % 60 > 1200) {
+                    //gueltig auf falsch
+                    setReservierungUngueltig(reservierungsid);
+                    continue;
+                } else {
+                    int dvdid = rs.getInt("DVD_ID");
+                DVD neueDVD = new DVD(dvdid);
+                neueDVD.setFilm(getFilm(rs.getInt("FI_ID")));
+                neueDVD.setS_artikelnr(rs.getString("art_nr"));
+                neueDVD.setS_lastedit("");
+                neueDVD.setS_lasteditdate("");
+                erg.add(neueDVD);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static void setReservierungUngueltig(int resid) {
+        String sql = "UPDATE `tbl_reservierung` SET `gueltig`='0' WHERE (`RES_ID`=?)";
+
+        DBController dbc = Control.getInstance().getDbManager();
+
+        try {
+            PreparedStatement pst = dbc.getConnection().prepareStatement(sql);
+            pst.setInt(1, resid);
+            dbc.executeUpdate(pst);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 

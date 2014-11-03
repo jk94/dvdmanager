@@ -8,6 +8,7 @@ package de.codekings.server.connection;
 import de.codekings.common.Connection.Hasher;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.datacontents.Cover;
+import de.codekings.common.datacontents.DVD;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Genre;
 import de.codekings.common.datacontents.Mitarbeiter;
@@ -323,6 +324,26 @@ class ServerThread extends Thread {
 
                 }
             }
+
+            beenden = true;
+        }//</editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="isFilmReserved">
+        if (m.getCommand().equalsIgnoreCase("isFilmReserved")) {
+            Film f = null;
+            //f = DBOperations.getFilm(Integer.parseInt(m.getAdditionalparameter().get("id")));
+
+            String email = m.getAdditionalparameter().get("email");
+            ArrayList<DVD> dvd_liste = DBOperations.getReservierteDVDs(Integer.parseInt(m.getAdditionalparameter().get("id")));
+            Message answer = new Message("filmReserved");
+            
+            if(dvd_liste.size()>0){
+                
+            }else{
+                answer.setCommand(email);
+            }
+            
+            
 
             beenden = true;
         }//</editor-fold>

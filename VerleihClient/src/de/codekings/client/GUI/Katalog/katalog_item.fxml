@@ -65,13 +65,9 @@
                         </HBox>
                     </center>
                     <right>
-                        <HBox prefHeight="31.0" prefWidth="97.0" BorderPane.alignment="CENTER">
+                        <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="31.0" prefWidth="97.0" BorderPane.alignment="CENTER">
                             <children>
-                                <CheckBox fx:id="katalog_cb_ausleihen" mnemonicParsing="false" styleClass="content-katalog-additional" text="Ausleihen">
-                                    <HBox.margin>
-                                        <Insets right="10.0" top="10.0" />
-                                    </HBox.margin>
-                                </CheckBox>
+                        <Button fx:id="katalog_btn_auswaehlen" mnemonicParsing="false" text="Auswählen" />
                             </children>
                         </HBox>
                     </right>

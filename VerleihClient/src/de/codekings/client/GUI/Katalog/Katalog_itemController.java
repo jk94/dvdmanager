@@ -5,14 +5,20 @@
  */
 package de.codekings.client.GUI.Katalog;
 
+import de.codekings.client.Controls.Control;
+import de.codekings.client.connection.ClientThread;
+import de.codekings.client.connection.MessageReturn;
+import de.codekings.common.Connection.Message;
+import de.codekings.common.config.ConfigManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 /**
@@ -20,7 +26,7 @@ import javafx.scene.paint.Color;
  *
  * @author Jan
  */
-public class Katalog_itemController implements Initializable {
+public class Katalog_itemController implements Initializable, MessageReturn {
 
     @FXML
     private ImageView katalog_cover;
@@ -41,15 +47,55 @@ public class Katalog_itemController implements Initializable {
     @FXML
     private ImageView katalog_img_verfuegbar;
     @FXML
-    private CheckBox katalog_cb_ausleihen;
+    private Button katalog_btn_auswaehlen;
+
+    private int film_id = -1;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ConfigManager cfgManager = Control.getControl().getCfgManager();
+        String host = cfgManager.getConfigs().getProperty("ip");
+        int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+        
+        katalog_btn_auswaehlen.setDisable(true);
+        katalog_btn_auswaehlen.setOnMouseClicked((MouseEvent event) -> {
+            katalog_btn_auswaehlen.setText("Wird reserviert..");
 
+            ClientThread ct = new ClientThread(this, host, port);
+            Message m = new Message("reserveFilm");
+            m.addAdditionalParameter("id", String.valueOf(film_id));
+            m.addAdditionalParameter("email", Control.getControl().getSession().getEmail());
+
+            ct.requestToServer(m);
+            katalog_btn_auswaehlen.setDisable(true);
+        });
+
+        //Check ob schon reserviert
+        ClientThread ct = new ClientThread(this, host, port);
+        Message m = new Message("isFilmReserved");
+        m.addAdditionalParameter("id", String.valueOf(film_id));
+        m.addAdditionalParameter("email", Control.getControl().getSession().getEmail());
+        ct.requestToServer(m);
         // TODO
+    }
+
+    @Override
+    public void returnedMessage(Message m) {
+        if (m.getCommand().equalsIgnoreCase("filmReserved")) {
+            if (m.getAdditionalparameter().get("result").equalsIgnoreCase("success")) {
+                katalog_btn_auswaehlen.setText("Reserviert!");
+            } else {
+                katalog_btn_auswaehlen.setDisable(false);
+                katalog_btn_auswaehlen.setText("Auswählen");
+            }
+        }
+    }
+
+    public void setFilmID(int id) {
+        this.film_id = id;
     }
 
     public void setTitel(String titel) {

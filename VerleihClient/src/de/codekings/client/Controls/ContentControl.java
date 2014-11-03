@@ -39,7 +39,8 @@ public class ContentControl {
         return verlManager;
     }
 
-    public boolean changeContent(ScrollPane contpane, ContentPageType t, boolean fwORbw) {
+    public boolean changeContent(ContentPageType t, boolean fwORbw) {
+        ScrollPane contpane = templateController.getContent_base();
         if (verlManager.getPage() != null) {
             if (verlManager.getPage().equals(t)) {
                 return false;
@@ -127,14 +128,14 @@ public class ContentControl {
                 break;
             case BACK:
                 if (verlManager.canBack()) {
-                    changeContent(contpane, verlManager.backPage(), true);
+                    changeContent(verlManager.backPage(), true);
                     verlManager.decreaseIndex();
                     return true;
                 }
                 break;
             case FORWARD:
                 if (verlManager.canNext()) {
-                    changeContent(contpane, verlManager.nextPage(t), true);
+                    changeContent(verlManager.nextPage(t), true);
                     verlManager.increaseIndex();
                     return true;
                 }

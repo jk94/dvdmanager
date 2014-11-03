@@ -8,19 +8,23 @@ package de.codekings.client.GUI.Mitarbeiter;
 import de.codekings.client.Controls.Control;
 import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
+import de.codekings.client.datacontent.Film_Client;
 import de.codekings.common.Connection.Hasher;
 import de.codekings.common.Connection.Message;
-import de.codekings.common.Enumerators.ClassType;
 import de.codekings.common.config.ConfigManager;
-import de.codekings.common.datacontents.Kunde;
+import de.codekings.common.datacontents.Sendable;
+import de.codekings.common.datacontents.User;
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -28,7 +32,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import se.mbaeumer.fxmessagebox.MessageBox;
 import se.mbaeumer.fxmessagebox.MessageBoxType;
@@ -37,7 +43,7 @@ import se.mbaeumer.fxmessagebox.MessageBoxType;
  * FXML Controller class
  *
  * @author Jan
- * 
+ *
  */
 public class Create_userController implements Initializable, MessageReturn {
 
@@ -78,29 +84,33 @@ public class Create_userController implements Initializable, MessageReturn {
 
     private boolean emailOkay = false, emailvalidation = false;
 
+    private ObservableList<User> userdata;
+
+    private boolean usererhalten = false;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         user_btn_create.setOnMouseClicked((MouseEvent event) -> {
             //variablen definieren
             String vorname = user_input_vorname.getText();
             String name = user_input_nachname.getText();
             String email = user_input_email.getText();
             String passwort = user_passwort.getText();
-            
+
             LocalDate geburtstag = user_datum.getValue();
             Instant datum = Instant.from(geburtstag.atStartOfDay(ZoneId.systemDefault()));
             Date d_geb = Date.from(datum);
-            
+
             String plz = user_input_plz.getText();
             String ort = user_input_ort.getText();
             String str = user_input_adresse.getText();
-        
+
             check_Input();
-               
+
             ConfigManager cfgManager = Control.getControl().getCfgManager();
             String host = cfgManager.getConfigs().getProperty("ip");
             int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
@@ -108,11 +118,10 @@ public class Create_userController implements Initializable, MessageReturn {
             ClientThread emailv = new ClientThread(this, host, port);
             Message request = new Message("CreateUser");
             String hpw = Hasher.getInstance().ToMD5(user_passwort.getText());
-            
+
             //Kunde Kunde_neu = new Kunde(0, vorname, str, plz, ort, hpw, email, 0, hausnr, datum, null, null, port, ClassType.T_KUNDE);
-            
             emailv.requestToServer(request);
-            
+
             // schreibe eingaben in db
         });
 
@@ -133,6 +142,16 @@ public class Create_userController implements Initializable, MessageReturn {
             boolean okay = Boolean.getBoolean(m.getAdditionalparameter().get("status"));
             emailOkay = okay;
             emailvalidation = true;
+        }
+        if (m.getCommand().equalsIgnoreCase("ReturnUserData")) {
+
+            for (Sendable s : m.getContent()) {
+                if (s instanceof User) {
+                    userdata.add((User) s);
+                }
+            }
+
+            usererhalten = true;
         }
     }
 
@@ -190,7 +209,6 @@ public class Create_userController implements Initializable, MessageReturn {
         Date d_geb = Date.from(datum);
 
         //System.out.println(d_geb.toLocaleString());
-
         String plz = user_input_plz.getText();
         if (!vorname.matches("[0-9]")) {
             MessageBox error = new MessageBox("Postleitzahl darf nur aus Zahlen bestehen.", MessageBoxType.OK_ONLY);
@@ -218,6 +236,44 @@ public class Create_userController implements Initializable, MessageReturn {
             permission = 3;
         }
 
+    }
+
+    private void ladeTableView() {
+        userdata = FXCollections.observableArrayList();
+
+        ConfigManager cfgManager = Control.getControl().getCfgManager();
+        String host = cfgManager.getConfigs().getProperty("ip");
+        int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+        Message request = new Message("getUsers");
+
+        ClientThread loginsession = new ClientThread(this, host, port);
+        loginsession.requestToServer(request);
+
+        int counter = 0;
+        while (counter < 50 && !usererhalten) {
+            counter++;
+            try {
+                Thread.sleep(500l);
+            } catch (InterruptedException e) {
+            }
+        }
+
+        usererhalten = false;
+
+        String columnname[] = {"Name", "Vorname", "Accountnr."};
+        String variablename[] = {"name", "vorname" , "accountnummer"};
+
+        TableColumn<User, String> titel = new TableColumn<>(columnname[0]);
+        TableColumn<User, String> subtitel = new TableColumn<>(columnname[1]);
+        
+        titel.setCellValueFactory(new PropertyValueFactory<User, String>(variablename[0]));
+        subtitel.setCellValueFactory(new PropertyValueFactory<User, String>(variablename[1]));
+
+/*        tbvw_filme.getColumns().clear();
+        tbvw_filme.getColumns().add(titel);
+        tbvw_filme.getColumns().add(subtitel);
+        tbvw_filme.getItems().addAll(userdata);*/
     }
 
 }

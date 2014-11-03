@@ -86,7 +86,10 @@ public class ConfigManager {
             System.out.println(e.getMessage());
         }
     }
-
+    
+    /**
+     * Erzeugt eine neue ConfigDatei für den Server
+     */
     public void writeDefaultServerConfig() {
         Properties property = new Properties();
         property.put("dbHost", "localhost");
@@ -95,15 +98,15 @@ public class ConfigManager {
         property.put("dbUser", "ckdbuser");
         property.put("dbPassword", "test123");
         property.put("logpath", "./logs/");
-        property.put("generatenewkeys", "true");
-        property.put("secureport", "2704");
-        property.put("standardport", "1994");
+        property.put("port", "1994");
 
         
         writeConfig(property, "server.cfg", "Server-Konfiguration\n\nHier lassen sich ein"
                 + " paar Einstellungen für den Server festlegen!");
     }
-    
+    /**
+     * Erzeugt eine neue ConfigDatei für den Client
+     */
     public void writeDefaultClientConfig(){
         Properties property = new Properties();
         property.put("ip", "127.0.0.1");
