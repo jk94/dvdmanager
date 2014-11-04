@@ -73,6 +73,7 @@ public class Katalogmanager implements ContentView {
                 pa = fxmlLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Katalog/katalog_item.fxml").openStream());
 
                 Katalog_itemController kic = (Katalog_itemController) fxmlLoader.getController();
+                
                 kic.setTitel(f.getS_titel());
 
                 kic.setDescription(f.getS_description());
@@ -84,7 +85,7 @@ public class Katalogmanager implements ContentView {
 
                 Katalogeintrag k = new Katalogeintrag(pa, kic, f);
                 addEintrag(k);
-
+                kic.loadAfterInit();
                 vboxliste.getChildren().add(pa);
 
             } catch (IOException e) {

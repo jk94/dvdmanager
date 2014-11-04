@@ -11,6 +11,7 @@ import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.DVD;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Genre;
+import de.codekings.common.datacontents.Kunde;
 import de.codekings.common.datacontents.Mitarbeiter;
 import de.codekings.common.datacontents.Sendable;
 import de.codekings.common.datacontents.User;
@@ -48,7 +49,6 @@ class ServerThread extends Thread {
      *
      * @param s Socket des Servers
      * @param k Krypter (Wenn secure=false -> optional)
-     * @param secure Verschlüsselte Verbindung (bei true -> Krypter PFLICHT!)
      */
     public ServerThread(Socket s, VerleihServer vs) {
         this.socket = s;
@@ -330,20 +330,36 @@ class ServerThread extends Thread {
 
         // <editor-fold defaultstate="collapsed" desc="isFilmReserved">
         if (m.getCommand().equalsIgnoreCase("isFilmReserved")) {
-            Film f = null;
-            //f = DBOperations.getFilm(Integer.parseInt(m.getAdditionalparameter().get("id")));
-
+            int filmid = Integer.parseInt(m.getAdditionalparameter().get("id"));
             String email = m.getAdditionalparameter().get("email");
-            ArrayList<DVD> dvd_liste = DBOperations.getReservierteDVDs(Integer.parseInt(m.getAdditionalparameter().get("id")));
-            Message answer = new Message("filmReserved");
-            
-            if(dvd_liste.size()>0){
-                
-            }else{
-                answer.setCommand(email);
+
+//Überprüfe ob von Kunde reserviert
+            User u = DBOperations.getUser(email);
+            Kunde k = DBOperations.getKunde(u.getU_ID());
+            ArrayList<DVD> res = DBOperations.getReservierungOfKunde(k.getKU_ID());
+            boolean reserviert = false;
+            for (DVD d : res) {
+                if (d.getFilm().getFILMID() == filmid) {
+                    reserviert = true;
+                    break;
+                }
             }
-            
-            
+            if (!reserviert) {
+                //Überprüfe ob von jemand anderem reserviert
+                ArrayList<DVD> dvd_liste = DBOperations.getDVDs(filmid);
+                for (DVD d : dvd_liste) {
+                    reserviert = DBOperations.isReserviert(d.getDVDID());
+                }
+            }
+
+            Message answer = new Message("filmReserved");
+            if (reserviert) {
+                answer.addAdditionalParameter("result", "success");
+            } else {
+                answer.addAdditionalParameter("result", "failed");
+            }
+
+            write(j.parseObjectToString(answer));
 
             beenden = true;
         }//</editor-fold>

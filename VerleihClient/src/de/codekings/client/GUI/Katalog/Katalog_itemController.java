@@ -59,7 +59,7 @@ public class Katalog_itemController implements Initializable, MessageReturn {
         ConfigManager cfgManager = Control.getControl().getCfgManager();
         String host = cfgManager.getConfigs().getProperty("ip");
         int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
-        
+
         katalog_btn_auswaehlen.setDisable(true);
         katalog_btn_auswaehlen.setOnMouseClicked((MouseEvent event) -> {
             katalog_btn_auswaehlen.setText("Wird reserviert..");
@@ -73,12 +73,6 @@ public class Katalog_itemController implements Initializable, MessageReturn {
             katalog_btn_auswaehlen.setDisable(true);
         });
 
-        //Check ob schon reserviert
-        ClientThread ct = new ClientThread(this, host, port);
-        Message m = new Message("isFilmReserved");
-        m.addAdditionalParameter("id", String.valueOf(film_id));
-        m.addAdditionalParameter("email", Control.getControl().getSession().getEmail());
-        ct.requestToServer(m);
         // TODO
     }
 
@@ -92,6 +86,19 @@ public class Katalog_itemController implements Initializable, MessageReturn {
                 katalog_btn_auswaehlen.setText("Auswählen");
             }
         }
+    }
+
+    public void loadAfterInit() {
+        ConfigManager cfgManager = Control.getControl().getCfgManager();
+        String host = cfgManager.getConfigs().getProperty("ip");
+        int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+        //Check ob schon reserviert
+        ClientThread ct = new ClientThread(this, host, port);
+        Message m = new Message("isFilmReserved");
+        m.addAdditionalParameter("id", String.valueOf(film_id));
+        m.addAdditionalParameter("email", Control.getControl().getSession().getEmail());
+        ct.requestToServer(m);
     }
 
     public void setFilmID(int id) {
