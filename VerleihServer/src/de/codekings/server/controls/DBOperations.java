@@ -440,6 +440,30 @@ public class DBOperations {
 
         return ergUser;
     }
+    
+    public static ArrayList<Integer> getUserIDs () {
+        ArrayList<Integer> erg = new ArrayList();
+        
+        String sql = "SELECT U_ID FROM tbl_user;";
+        
+        DBController dbc = Control.getInstance().getDbManager();
+        try {
+            
+            PreparedStatement ps = dbc.getConnection().prepareStatement(sql);
+            
+            ResultSet rs = dbc.executeQuery(ps);
+            
+            while(rs.next()){
+                erg.add(rs.getInt("U_ID"));
+            }
+            
+        }catch(SQLException e) {
+            
+        }
+        
+        return erg;
+
+    }
 
     public static Mitarbeiter getMitarbeiter(int u_id) {
         Mitarbeiter ma = null;
