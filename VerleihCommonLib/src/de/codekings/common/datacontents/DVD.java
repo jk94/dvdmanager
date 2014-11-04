@@ -16,7 +16,7 @@ import de.codekings.common.Enumerators.ClassType;
 public class DVD extends Sendable {
 
     private int DVDID;
-    private String s_artikelnr = "", s_notiz = "", s_lastedit = "", s_lasteditdate = "";
+    private String s_artikelnr = "", s_notiz = "";
     private Film film;
     private boolean ausgeliehen;
 
@@ -29,35 +29,17 @@ public class DVD extends Sendable {
         super(ClassType.T_DVD);
     }
     
-    public DVD(int DVDID, Film film, boolean ausgeliehen, ClassType t, String artnr, String notiz, String le, String sled) {
+    public DVD(int DVDID, Film film, boolean ausgeliehen, ClassType t, String artnr, String notiz) {
         super(t);
         this.DVDID = DVDID;
         this.film = film;
         this.ausgeliehen = ausgeliehen;
         this.s_artikelnr = artnr;
-        this.s_lastedit = le;
-        this.s_lasteditdate = sled;
         this.s_notiz = notiz;
     }
     
     public int getDVDID() {
         return DVDID;
-    }
-
-    public String getS_lastedit() {
-        return s_lastedit;
-    }
-
-    public void setS_lastedit(String s_lastedit) {
-        this.s_lastedit = s_lastedit;
-    }
-
-    public String getS_lasteditdate() {
-        return s_lasteditdate;
-    }
-
-    public void setS_lasteditdate(String s_lasteditdate) {
-        this.s_lasteditdate = s_lasteditdate;
     }
 
     public String getS_artikelnr() {

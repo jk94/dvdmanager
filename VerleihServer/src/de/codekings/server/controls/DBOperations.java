@@ -5,6 +5,7 @@ import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.DVD;
 import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Genre;
+import de.codekings.common.datacontents.Kunde;
 import de.codekings.common.datacontents.Mitarbeiter;
 import de.codekings.common.datacontents.User;
 import de.codekings.common.json.JSON_Parser;
@@ -467,6 +468,34 @@ public class DBOperations {
         return ma;
     }
 
+    public static Kunde getKunde(int u_id) {
+        Kunde ku = null;
+        User u = getUser(u_id);
+
+        if (u != null) {
+            try {
+                DBController dbc = Control.getInstance().getDbManager();
+                String sql = "SELECT * FROM tbl_kunde WHERE U_ID = ?";
+                PreparedStatement ps = dbc.getConnection().prepareStatement(sql);
+
+                ps.setInt(1, u.getU_ID());
+
+                ResultSet rs = dbc.executeQuery(ps);
+
+                while (rs.next()) {
+                    int ku_id = rs.getInt("KU_ID");
+                    java.sql.Date joining = rs.getDate("date_of_joining");
+                    double accountbalance = rs.getDouble("account_balance");
+
+                    ku = new Kunde(u_id, u.getName(), u.getVorname(), u.getStrasse(), u.getPlz(), u.getOrt(), u.getPasswort(),
+                            u.getEmail(), u.getAccountnummer(), u.getHausnr(), u.getGeburtsdatum(), ku_id, joining, accountbalance, ClassType.T_KUNDE);
+                }
+            } catch (Exception e) {
+            }
+        }
+        return ku;
+    }
+
     public static String getFilmProperty(int filmid, String column) {
         String erg = "";
 
@@ -665,38 +694,73 @@ public class DBOperations {
         }
     }
 
-    public static ArrayList<DVD> getReservierteDVDs(int filmid) {
-        ArrayList<DVD> erg = new ArrayList<>();
+    public static boolean isReserviert(int dvdid) {
+        boolean erg = true;
 
-        String sql = "SELECT * FROM tbl_reservierung, tbl_dvd WHERE gueltig = 1 AND FI_ID = " + filmid;
+        String sql = "SELECT * FROM tbl_reservierung WHERE gueltig = 1 AND DVD_ID = " + dvdid + " ORDER BY reservierungsdatum DESC";
 
         DBController dbc = Control.getInstance().getDbManager();
 
         ResultSet rs = dbc.executeQuery(sql);
         try {
-            while (rs.next()) {
-                int reservierungsid = rs.getInt("RES_ID");
-                java.util.Date now = new java.util.Date();
-                java.sql.Date dbDate = rs.getDate("reservierungsdatum");
-                long diff = now.getTime() - dbDate.getTime();
-                if ((diff / 1000) % 60 > 1200) {
-                    //gueltig auf falsch
-                    setReservierungUngueltig(reservierungsid);
-                    continue;
-                } else {
-                    int dvdid = rs.getInt("DVD_ID");
-                DVD neueDVD = new DVD(dvdid);
-                neueDVD.setFilm(getFilm(rs.getInt("FI_ID")));
-                neueDVD.setS_artikelnr(rs.getString("art_nr"));
-                neueDVD.setS_lastedit("");
-                neueDVD.setS_lasteditdate("");
-                erg.add(neueDVD);
-                }
+            rs.next();
+            int reservierungsid = rs.getInt("RES_ID");
+            java.util.Date now = new java.util.Date();
+            java.sql.Date dbDate = rs.getDate("reservierungsdatum");
+            long diff = now.getTime() - dbDate.getTime();
+            System.out.println(diff / 1000 % 60);
+            if ((diff / 1000) % 60 > 1200) {
+                //gueltig auf falsch
+                //setReservierungUngueltig(reservierungsid);
+                erg = false;
+            } else {
+                erg = true;
             }
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
+        return erg;
+    }
+
+    public static ArrayList<DVD> getDVDs(int filmid) {
+        ArrayList<DVD> erg = new ArrayList<>();
+
+        String sql = "SELECT DVD_ID FROM tbl_dvd WHERE FI_ID = " + filmid;
+        DBController dbc = Control.getInstance().getDbManager();
+        ResultSet rs = dbc.executeQuery(sql);
+
+        try {
+            while (rs.next()) {
+                int dvdid = rs.getInt("DVD_ID");
+                DVD neueDVD = getDVD(dvdid);
+                erg.add(neueDVD);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return erg;
+    }
+
+    public static DVD getDVD(int dvdid) {
+        String sql = "SELECT * FROM tbl_dvd WHERE DVD_ID = " + dvdid;
+        DBController dbc = Control.getInstance().getDbManager();
+        ResultSet rs = dbc.executeQuery(sql);
+        try {
+            while (rs.next()) {
+
+                DVD neueDVD = new DVD(dvdid);
+                neueDVD.setFilm(getFilm(rs.getInt("FI_ID")));
+                neueDVD.setS_artikelnr(rs.getString("art_nr"));
+                neueDVD.setS_notiz(rs.getString("notice"));
+                return neueDVD;
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperations.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
         return null;
     }
 
@@ -712,6 +776,26 @@ public class DBOperations {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static ArrayList<DVD> getReservierungOfKunde(int ku_id) {
+        ArrayList<DVD> erg = new ArrayList<>();
+        String sql = "SELECT * FROM tbl_reservierung WHERE KU_ID = " + ku_id + " AND gueltig = 1 ORDER BY reservierungsdatum DESC";
+        DBController dbc = Control.getInstance().getDbManager();
+
+        ResultSet rs = dbc.executeQuery(sql);
+
+        try {
+            while (rs.next()) {
+                if(isReserviert(rs.getInt("DVD_ID"))){
+                    erg.add(getDVD(rs.getInt("DVD_ID")));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperations.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return erg;
     }
 
 }

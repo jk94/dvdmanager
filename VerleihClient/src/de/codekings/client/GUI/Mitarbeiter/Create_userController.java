@@ -82,19 +82,22 @@ public class Create_userController implements Initializable, MessageReturn {
     private boolean emailOkay = false, emailvalidation = false;
 
     private ObservableList<User> userdata;
-
+    
+    private int selectedUserID = -1;
     private boolean usererhalten = false;
     @FXML
     private TextField user_table_search;
     @FXML
-    private TableView<?> user_table;
+    private TableView<User> user_table;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
+        ladeTableView();
+        
         user_btn_create.setOnMouseClicked((MouseEvent event) -> {
             //variablen definieren
             String vorname = user_input_vorname.getText();
@@ -119,8 +122,9 @@ public class Create_userController implements Initializable, MessageReturn {
             ClientThread emailv = new ClientThread(this, host, port);
             Message request = new Message("CreateUser");
             String hpw = Hasher.getInstance().ToMD5(user_passwort.getText());
-
-            //Kunde Kunde_neu = new Kunde(0, vorname, str, plz, ort, hpw, email, 0, hausnr, datum, null, null, port, ClassType.T_KUNDE);
+            
+            //request.addSendable(Kunde);
+            
             emailv.requestToServer(request);
 
             // schreibe eingaben in db
@@ -135,7 +139,28 @@ public class Create_userController implements Initializable, MessageReturn {
             //lade Seite neu, ohne eingaben zu behalten
             resetValues();
         });
+        
+        user_table.setOnMouseClicked((MouseEvent event) -> {
+            int klickcount = event.getClickCount();
 
+            if (klickcount == 2) {
+                resetValues();
+                User uc = user_table.getSelectionModel().getSelectedItem();
+                selectedUserID = uc.getUSERID();
+                
+                /*txf_beschreibung.setText(fc.getS_description());
+                txf_regisseur.setText(fc.getS_regie());
+                txf_subtitel.setText(fc.getS_subtitel());
+                txf_titel.setText(fc.getS_titel());
+                txf_trailer.setText(fc.getS_trailer());
+                txf_laufzeit.setText(String.valueOf(fc.getI_duration()));
+                cb_rating.setValue(fc.getI_rating());
+                txf_schauspieler.setText(ausgabe);
+                */
+                
+                user_btnspeichern.setDisable(false);
+            }
+        });
     }
 
     @Override
@@ -276,10 +301,10 @@ public class Create_userController implements Initializable, MessageReturn {
         col_accnr.setCellValueFactory(new PropertyValueFactory<User, String>(variablename[2]));
 
         user_table.getColumns().clear();
-        /*user_table.getColumns().add(col_name);
+        user_table.getColumns().add(col_name);
         user_table.getColumns().add(col_vorname);
         user_table.getColumns().add(col_accnr);
-        user_table.getItems().addAll(userdata);*/
+        user_table.getItems().addAll(userdata);
     }
     
      private void resetValues() {
@@ -292,6 +317,7 @@ public class Create_userController implements Initializable, MessageReturn {
        }
      
      /*private User generateUser() {
+        
         String vorname = user_input_vorname.getText();
         String name = user_input_nachname.getText();
         String email = user_input_email.getText();
@@ -305,7 +331,11 @@ public class Create_userController implements Initializable, MessageReturn {
         String ort = user_input_ort.getText();
         String str = user_input_adresse.getText();
            
-        --- eingaben setten... ---
+                
+        return u; 
+    }
+     
+    /* private User updateUser() {
         User u = new User(selectedUserID);
         u.setS_description(beschreibung);
         u.setS_regie(regie);
@@ -313,14 +343,7 @@ public class Create_userController implements Initializable, MessageReturn {
         u.setS_titel(titel);
         u.setS_trailer(trailer);
         u.setI_duration(Integer.parseInt(txf_laufzeit.getText()));
-        
-        --- irgendwas mit rechten... ---
-        int fsk = fskbuttons.getToggles().indexOf(fskbuttons.getSelectedToggle());
-        f.setI_fsk(fsk + 1);
-        ToggleButton tb = (ToggleButton) fskbuttons.getSelectedToggle();
-        f.setS_FSK(tb.getText());
-           
-        return u; 
-    }*/ 
-
+        return u;
+    }*/
 }
+

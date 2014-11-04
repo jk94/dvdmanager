@@ -79,8 +79,6 @@ public class TemplateController implements Initializable {
     @FXML
     private Button btn_kunde_entliehen;
     @FXML
-    private Button btn_kunde_bewertung;
-    @FXML
     private Button btn_kunde_kontoverwaltung;
     @FXML
     private Button btn_mab_return;
@@ -101,7 +99,7 @@ public class TemplateController implements Initializable {
     @FXML
     private ImageView head_btn_search_img;
     @FXML
-    private Button btn_katalog_exit;
+    private Button btn_mab_ausleihe;
 
     /**
      * Initializes the controller class.
@@ -115,9 +113,6 @@ public class TemplateController implements Initializable {
         head_btn_search_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/searchicon.png")));
         header_logo.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/cover.png")));
 // TODO
-        btn_katalog_exit.setOnMouseClicked((MouseEvent event) ->{
-            Control.getControl().MainFrameClosed();
-        });
         
         btn_katalog_start.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(ContentPageType.Katalog_Start, false);
@@ -165,11 +160,6 @@ public class TemplateController implements Initializable {
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });
         
-        btn_kunde_bewertung.setOnMouseClicked((MouseEvent event) -> {
-            Control.getControl().getContentControl().changeContent(ContentPageType.Kunde_BewAbg, true);
-            head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
-            head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
-        });
     }
 
     public Accordion getMenu(){
