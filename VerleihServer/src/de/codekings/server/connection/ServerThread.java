@@ -13,6 +13,7 @@ import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Genre;
 import de.codekings.common.datacontents.Kunde;
 import de.codekings.common.datacontents.Mitarbeiter;
+import de.codekings.common.datacontents.Reservierung;
 import de.codekings.common.datacontents.Sendable;
 import de.codekings.common.datacontents.User;
 import de.codekings.common.json.JSON_Parser;
@@ -331,7 +332,7 @@ class ServerThread extends Thread {
 
             beenden = true;
         }//</editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="isFilmReserved">
         if (m.getCommand().equalsIgnoreCase("isFilmReserved")) {
             int filmid = Integer.parseInt(m.getAdditionalparameter().get("id"));
@@ -421,23 +422,43 @@ class ServerThread extends Thread {
 
             beenden = true;
         }//</editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="getUsers">
         if (m.getCommand().equalsIgnoreCase("getUsers")) {
             Message answer = new Message("returnUsers");
-            
+
             ArrayList<Integer> ids = DBOperations.getUserIDs();
-            for(int id:ids){
+            for (int id : ids) {
                 User u = DBOperations.getUser(id);
                 answer.addSendable(u);
             }
-            
+
             write(j.parseObjectToString(answer));
             beenden = true;
-            
+
         }//</editor-fold>
-        
-        
+
+        // <editor-fold defaultstate="collapsed" desc="removeReservierung">
+        if (m.getCommand().equalsIgnoreCase("removeReservierung")) {
+            DBOperations.setReservierungUngueltig(Integer.parseInt(m.getAdditionalparameter().get("RES_ID")));
+            beenden = true;
+
+        }//</editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="getReservierungen">
+        if (m.getCommand().equalsIgnoreCase("getReservierungen")) {
+            Message answer = new Message("returnReservierungen");
+            String email = m.getAdditionalparameter().get("email");
+            ArrayList<Reservierung> res = DBOperations.getReservierungOfKunde2(DBOperations.getKunde(DBOperations.getUser(email).getU_ID()).getKU_ID());
+            for (Reservierung r : res) {
+                answer.addSendable(r);
+            }
+
+            write(j.parseObjectToString(answer));
+            beenden = true;
+
+        }//</editor-fold>
+
         return beenden;
 
     }

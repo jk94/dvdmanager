@@ -7,6 +7,7 @@ import de.codekings.common.datacontents.Film;
 import de.codekings.common.datacontents.Genre;
 import de.codekings.common.datacontents.Kunde;
 import de.codekings.common.datacontents.Mitarbeiter;
+import de.codekings.common.datacontents.Reservierung;
 import de.codekings.common.datacontents.User;
 import de.codekings.common.json.JSON_Parser;
 import java.awt.image.BufferedImage;
@@ -440,27 +441,27 @@ public class DBOperations {
 
         return ergUser;
     }
-    
-    public static ArrayList<Integer> getUserIDs () {
+
+    public static ArrayList<Integer> getUserIDs() {
         ArrayList<Integer> erg = new ArrayList();
-        
+
         String sql = "SELECT U_ID FROM tbl_user;";
-        
+
         DBController dbc = Control.getInstance().getDbManager();
         try {
-            
+
             PreparedStatement ps = dbc.getConnection().prepareStatement(sql);
-            
+
             ResultSet rs = dbc.executeQuery(ps);
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 erg.add(rs.getInt("U_ID"));
             }
-            
-        }catch(SQLException e) {
-            
+
+        } catch (SQLException e) {
+
         }
-        
+
         return erg;
 
     }
@@ -786,7 +787,7 @@ public class DBOperations {
 
                 DVD neueDVD = new DVD(dvdid);
                 neueDVD.setFilm(getFilm(rs.getInt("FI_ID")));
-                neueDVD.setS_artikelnr(rs.getString("art_nr"));
+                neueDVD.setS_artikelnr(String.valueOf(rs.getInt("art_nr")));
                 neueDVD.setS_notiz(rs.getString("notice"));
                 return neueDVD;
 
@@ -818,11 +819,13 @@ public class DBOperations {
         boolean erfolgreich = false;
         if (alleDVDs.size() > 0) {
             DVD dvd = null;
+            System.out.println(filmid);
             for (DVD d : alleDVDs) {
-                System.out.println("DVD-ID: " + d.getDVDID());
-                System.out.println("Reserviert: " + isReserviert(filmid));
-                System.out.println("Ausgeliehen: " + isAusgeliehen(filmid));
-                if (!isReserviert(filmid) && !isAusgeliehen(filmid)) {
+                System.out.println(d.getDVDID());
+                System.out.println(!isReserviert(d.getDVDID()) && !isAusgeliehen(d.getDVDID()));
+                System.out.println(isReserviert(d.getDVDID()));
+                System.out.println(isAusgeliehen(d.getDVDID()));
+                if (!isReserviert(d.getDVDID()) && !isAusgeliehen(d.getDVDID())) {
                     dvd = d;
                     break;
                 }
@@ -840,7 +843,7 @@ public class DBOperations {
                     dbc.executeUpdate(pst);
                     erfolgreich = true;
                 } catch (SQLException ex) {
-                    Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+                    ex.printStackTrace();
                 }
             }
         }
@@ -860,6 +863,35 @@ public class DBOperations {
                 if (isReserviert(rs.getInt("DVD_ID"))) {
                     erg.add(getDVD(rs.getInt("DVD_ID")));
                 }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperations.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return erg;
+    }
+
+    public static ArrayList<Reservierung> getReservierungOfKunde2(int ku_id) {
+        ArrayList<Reservierung> erg = new ArrayList<>();
+        String sql = "SELECT * FROM tbl_reservierung WHERE KU_ID = " + ku_id + " AND gueltig = 1";
+        DBController dbc = Control.getInstance().getDbManager();
+
+        ResultSet rs = dbc.executeQuery(sql);
+
+        try {
+            int counter = 1;
+            while (rs.next()) {
+                if (isReserviert(rs.getInt("DVD_ID"))) {
+                    DVD d = getDVD(rs.getInt("DVD_ID"));
+                    String filmname = d.getFilm().getS_titel();
+                    if (!d.getFilm().getS_subtitel().equals("")) {
+                        filmname = filmname + " - " + d.getFilm().getS_subtitel();
+                    }
+                    Date gueltigbis = new Date(rs.getDate("reservierungsdatum").getTime() + 1200000);
+                    Reservierung r = new Reservierung(rs.getInt("RES_ID"), counter, filmname, Integer.parseInt(d.getS_artikelnr()), gueltigbis, d.getFilm().getD_preis());
+                    erg.add(r);
+                }
+                counter++;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBOperations.class

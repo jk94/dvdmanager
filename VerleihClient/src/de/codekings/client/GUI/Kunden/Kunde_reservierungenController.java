@@ -25,6 +25,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import se.mbaeumer.fxmessagebox.MessageBox;
+import se.mbaeumer.fxmessagebox.MessageBoxResult;
+import se.mbaeumer.fxmessagebox.MessageBoxType;
 
 /**
  * FXML Controller class
@@ -49,6 +53,39 @@ public class Kunde_reservierungenController implements Initializable, MessageRet
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        ladeTableView();
+
+        btn_loeschen.setOnMouseClicked((MouseEvent event) -> {
+            if (tbvw_reservierungen.getSelectionModel().getSelectedItems().size() == 1) {
+                MessageBox mb = new MessageBox("Möchten Sie diese Reservierung wirklich löschen?", MessageBoxType.YES_NO);
+                mb.setAlwaysOnTop(true);
+                mb.setTitle("Achtung!");
+                mb.setResizable(false);
+                mb.setWidth(225.0);
+                mb.setHeight(175.0);
+                mb.showAndWait();
+                if (mb.getMessageBoxResult().equals(MessageBoxResult.YES)) {
+                    Reservierung r = tbvw_reservierungen.getSelectionModel().getSelectedItem();
+                    ConfigManager cfgManager = Control.getControl().getCfgManager();
+                    String host = cfgManager.getConfigs().getProperty("ip");
+                    int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+                    ClientThread ct = new ClientThread(this, host, port);
+                    Message m = new Message("removeReservierung");
+                    m.addAdditionalParameter("RES_ID", String.valueOf(r.getResid()));
+                    ct.requestToServer(m);
+                    tbvw_reservierungen.getItems().remove(r);
+                }
+            }else{
+                MessageBox mb = new MessageBox("Keine Reservierung ausgewählt!", MessageBoxType.OK_ONLY);
+                mb.setAlwaysOnTop(true);
+                mb.setTitle("Achtung!");
+                mb.setResizable(false);
+                mb.setWidth(225.0);
+                mb.setHeight(175.0);
+                mb.showAndWait();
+            }
+        });
     }
 
     @Override
@@ -56,12 +93,11 @@ public class Kunde_reservierungenController implements Initializable, MessageRet
         if (m.getCommand().equalsIgnoreCase("returnReservierungen")) {
             reservierungsdata = FXCollections.observableArrayList();
             for (Sendable s : m.getContent()) {
-                if(s instanceof Reservierung){
+                if (s instanceof Reservierung) {
                     Reservierung r = (Reservierung) s;
                     reservierungsdata.add(r);
                 }
             }
-
             reservierungenerhalten = true;
         }
     }
@@ -79,15 +115,15 @@ public class Kunde_reservierungenController implements Initializable, MessageRet
         m.addAdditionalParameter("email", Control.getControl().getSession().getEmail());
         ct.requestToServer(m);
         int counter = 0;
-        while(!reservierungenerhalten && counter < 20){
+        while (!reservierungenerhalten && counter < 20) {
             try {
-                counter ++;
+                counter++;
                 Thread.sleep(100l);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Kunde_reservierungenController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         String columnname[] = {"#", "Filmname", "Artikelnr.", "gültig bis", "Kosten"};
         String variablename[] = {"listnummer", "filmname", "artikelnr", "gueltigbis", "kosten"};
 
@@ -96,15 +132,13 @@ public class Kunde_reservierungenController implements Initializable, MessageRet
         TableColumn<Reservierung, Integer> artnr = new TableColumn<>(columnname[2]);
         TableColumn<Reservierung, String> gueltig = new TableColumn<>(columnname[3]);
         TableColumn<Reservierung, String> kosten = new TableColumn<>(columnname[4]);
-        
-        
+
         nr.setCellValueFactory(new PropertyValueFactory<>(variablename[0]));
         filmname.setCellValueFactory(new PropertyValueFactory<>(variablename[1]));
         artnr.setCellValueFactory(new PropertyValueFactory<>(variablename[2]));
         gueltig.setCellValueFactory(new PropertyValueFactory<>(variablename[3]));
         kosten.setCellValueFactory(new PropertyValueFactory<>(variablename[4]));
 
-        
         tbvw_reservierungen.getColumns().clear();
         tbvw_reservierungen.getColumns().addAll(nr, filmname, artnr, gueltig, kosten);
         tbvw_reservierungen.getItems().addAll(reservierungsdata);
