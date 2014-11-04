@@ -31,7 +31,6 @@ import javafx.scene.layout.BorderPane;
 public class TemplateController implements Initializable {
 
     //private static TemplateController tc;
-     
     @FXML
     private Button head_btn_home;
     @FXML
@@ -113,7 +112,7 @@ public class TemplateController implements Initializable {
         head_btn_search_img.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/searchicon.png")));
         header_logo.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/cover.png")));
 // TODO
-        
+
         btn_katalog_start.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(ContentPageType.Katalog_Start, false);
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
@@ -162,12 +161,17 @@ public class TemplateController implements Initializable {
         
     }
 
-    public Accordion getMenu(){
+    public Accordion getMenu() {
         return this.menu_accordion;
     }
 
     public ScrollPane getContent_base() {
         return content_base;
+    }
+
+    public void initAfterInit(){
+        head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
+        head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
     }
     
 }

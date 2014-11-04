@@ -8,7 +8,6 @@ package de.codekings.client.GUI.Mitarbeiter;
 import de.codekings.client.Controls.Control;
 import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
-import de.codekings.client.datacontent.Film_Client;
 import de.codekings.common.Connection.Hasher;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
@@ -18,7 +17,6 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -30,7 +28,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -146,7 +143,7 @@ public class Create_userController implements Initializable, MessageReturn {
             if (klickcount == 2) {
                 resetValues();
                 User uc = user_table.getSelectionModel().getSelectedItem();
-                selectedUserID = uc.getUSERID();
+                //selectedUserID = uc.getUSERID();
                 
                 /*txf_beschreibung.setText(fc.getS_description());
                 txf_regisseur.setText(fc.getS_regie());

@@ -5,6 +5,7 @@
  */
 package de.codekings.client.Controls;
 
+import de.codekings.client.Enum.ContentPageType;
 import de.codekings.client.GUI.Login.LoginFormController;
 import de.codekings.client.GUI.Login.LoginSession;
 import de.codekings.client.GUI.MainFrame.MainApplication;
@@ -15,6 +16,7 @@ import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
 import java.io.File;
 import java.io.FileNotFoundException;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import se.mbaeumer.fxmessagebox.MessageBox;
 import se.mbaeumer.fxmessagebox.MessageBoxType;
@@ -41,7 +43,7 @@ public class Control implements MessageReturn {
         ClientThread ct = new ClientThread(this, cfgManager.getConfigs().getProperty("ip"), Integer.parseInt(cfgManager.getConfigs().getProperty("port")));
         if (ct.isOnline()) {
             loadData();
-        }else{
+        } else {
             MessageBox mb = new MessageBox("\nVerbindung zum Server nicht möglich!\n\n"
                     + "Der Server ist vermutlich nicht\n"
                     + "gestartet oder offline.\n\n"
@@ -163,6 +165,7 @@ public class Control implements MessageReturn {
                     System.out.println(ex.getMessage());
                 }
                 loadContentControl(mainframe.getTemplateController());
+                mainframe.getTemplateController().initAfterInit();
                 switch (session.getPermission()) {
                     case 1:
                         mainframe.setKundenView();
@@ -177,10 +180,11 @@ public class Control implements MessageReturn {
                         mainframe.setKundenView();
                 }
             }
-        }
+            contManager.changeContent(ContentPageType.Katalog_Start, false);
     }
+}
 
-    public void MainFrameClosed() {
+public void MainFrameClosed() {
         session = new LoginSession("", "");
         loginform.reset();
         loginform.getStage().show();
