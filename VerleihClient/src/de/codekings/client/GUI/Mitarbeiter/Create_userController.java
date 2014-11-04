@@ -33,6 +33,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -54,8 +55,6 @@ public class Create_userController implements Initializable, MessageReturn {
     @FXML
     private DatePicker user_datum;
     @FXML
-    private ListView<?> user_list;
-    @FXML
     private TextField user_input_email;
     @FXML
     private TextField user_input_vorname;
@@ -63,8 +62,6 @@ public class Create_userController implements Initializable, MessageReturn {
     private TextField user_input_nachname;
     @FXML
     private TextField user_input_adresse;
-    @FXML
-    private TextField user_table_head;
     @FXML
     private TextField user_input_ort;
     @FXML
@@ -87,6 +84,10 @@ public class Create_userController implements Initializable, MessageReturn {
     private ObservableList<User> userdata;
 
     private boolean usererhalten = false;
+    @FXML
+    private TextField user_table_search;
+    @FXML
+    private TableView<?> user_table;
 
     /**
      * Initializes the controller class.
@@ -128,9 +129,11 @@ public class Create_userController implements Initializable, MessageReturn {
         user_btnspeichern.setOnMouseClicked((MouseEvent event) -> {
             check_Input();
             // ändere db nach eingabe
+            // bzw eine SetMethode die Werte ersetzt. oder einfach nochmal gernerate mit overwrite?
         });
         user_btn_verwerfen.setOnMouseClicked((MouseEvent event) -> {
             //lade Seite neu, ohne eingaben zu behalten
+            resetValues();
         });
 
     }
@@ -260,20 +263,64 @@ public class Create_userController implements Initializable, MessageReturn {
         }
 
         usererhalten = false;
-
+        
         String columnname[] = {"Name", "Vorname", "Accountnr."};
         String variablename[] = {"name", "vorname" , "accountnummer"};
 
-        TableColumn<User, String> titel = new TableColumn<>(columnname[0]);
-        TableColumn<User, String> subtitel = new TableColumn<>(columnname[1]);
+        TableColumn<User, String> col_name = new TableColumn<>(columnname[0]);
+        TableColumn<User, String> col_vorname = new TableColumn<>(columnname[1]);
+        TableColumn<User, String> col_accnr = new TableColumn<>(columnname[2]);
         
-        titel.setCellValueFactory(new PropertyValueFactory<User, String>(variablename[0]));
-        subtitel.setCellValueFactory(new PropertyValueFactory<User, String>(variablename[1]));
+        col_name.setCellValueFactory(new PropertyValueFactory<User, String>(variablename[0]));
+        col_vorname.setCellValueFactory(new PropertyValueFactory<User, String>(variablename[1]));
+        col_accnr.setCellValueFactory(new PropertyValueFactory<User, String>(variablename[2]));
 
-/*        tbvw_filme.getColumns().clear();
-        tbvw_filme.getColumns().add(titel);
-        tbvw_filme.getColumns().add(subtitel);
-        tbvw_filme.getItems().addAll(userdata);*/
+        user_table.getColumns().clear();
+        /*user_table.getColumns().add(col_name);
+        user_table.getColumns().add(col_vorname);
+        user_table.getColumns().add(col_accnr);
+        user_table.getItems().addAll(userdata);*/
     }
+    
+     private void resetValues() {
+        user_input_vorname.setText("");
+        user_input_nachname.setText("");
+        user_input_email.setText("");
+        user_input_adresse.setText("");
+        user_input_plz.setText("");
+        user_input_ort.setText("");
+       }
+     
+     /*private User generateUser() {
+        String vorname = user_input_vorname.getText();
+        String name = user_input_nachname.getText();
+        String email = user_input_email.getText();
+        String passwort = user_passwort.getText();
+
+        LocalDate geburtstag = user_datum.getValue();
+        Instant datum = Instant.from(geburtstag.atStartOfDay(ZoneId.systemDefault()));
+        Date d_geb = Date.from(datum);
+
+        String plz = user_input_plz.getText();
+        String ort = user_input_ort.getText();
+        String str = user_input_adresse.getText();
+           
+        --- eingaben setten... ---
+        User u = new User(selectedUserID);
+        u.setS_description(beschreibung);
+        u.setS_regie(regie);
+        u.setS_subtitel(sub);
+        u.setS_titel(titel);
+        u.setS_trailer(trailer);
+        u.setI_duration(Integer.parseInt(txf_laufzeit.getText()));
+        
+        --- irgendwas mit rechten... ---
+        int fsk = fskbuttons.getToggles().indexOf(fskbuttons.getSelectedToggle());
+        f.setI_fsk(fsk + 1);
+        ToggleButton tb = (ToggleButton) fskbuttons.getSelectedToggle();
+        f.setS_FSK(tb.getText());
+           
+        return u; 
+    }*/ 
 
 }
