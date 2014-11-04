@@ -151,9 +151,13 @@ class ServerThread extends Thread {
             returnMessage.addAdditionalParameter("FILM_ID", m.getAdditionalparameter().get("FILM_ID"));
 
             if (c != null) {
-                String sMessage = j.parseObjectToString(returnMessage);
-
-                write(sMessage);
+                try {
+                    String sMessage = j.parseObjectToString(returnMessage);
+                    Thread.sleep(200l);
+                    write(sMessage);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             beenden = true;
         }//</editor-fold>
@@ -332,33 +336,87 @@ class ServerThread extends Thread {
         if (m.getCommand().equalsIgnoreCase("isFilmReserved")) {
             int filmid = Integer.parseInt(m.getAdditionalparameter().get("id"));
             String email = m.getAdditionalparameter().get("email");
-
-//Überprüfe ob von Kunde reserviert
+            Message answer = new Message("filmReserving");
+            //Überprüfe ob von Kunde reserviert
             User u = DBOperations.getUser(email);
             Kunde k = DBOperations.getKunde(u.getU_ID());
             ArrayList<DVD> res = DBOperations.getReservierungOfKunde(k.getKU_ID());
             boolean reserviert = false;
             for (DVD d : res) {
                 if (d.getFilm().getFILMID() == filmid) {
+                    answer.addAdditionalParameter("result", "ownreserved");
                     reserviert = true;
                     break;
                 }
             }
             if (!reserviert) {
-                //Überprüfe ob von jemand anderem reserviert
+                //Überprüfe ob noch DVDs vorhanden
                 ArrayList<DVD> dvd_liste = DBOperations.getDVDs(filmid);
-                for (DVD d : dvd_liste) {
-                    reserviert = DBOperations.isReserviert(d.getDVDID());
+                if (dvd_liste.isEmpty()) {
+                    answer.addAdditionalParameter("result", "noDVD");
+                    reserviert = true;
+                } else {
+                    int anzahlReservierungenAufFilm = DBOperations.getAnzahlReservierungZuFilm(filmid);
+                    int anzahlAusleiheAufFilm = DBOperations.getAnzahlAusleiheZuFilm(filmid);
+                    if (dvd_liste.size() <= anzahlReservierungenAufFilm + anzahlAusleiheAufFilm) {
+                        answer.addAdditionalParameter("result", "noMore");
+                        reserviert = true;
+                    }
                 }
             }
 
-            Message answer = new Message("filmReserved");
-            if (reserviert) {
-                answer.addAdditionalParameter("result", "success");
-            } else {
-                answer.addAdditionalParameter("result", "failed");
+            if (!reserviert) {
+                answer.addAdditionalParameter("result", "ok");
+            }
+            write(j.parseObjectToString(answer));
+
+            beenden = true;
+        }//</editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="reserveFilm">
+        if (m.getCommand().equalsIgnoreCase("reserveFilm")) {
+            int filmid = Integer.parseInt(m.getAdditionalparameter().get("FI_ID"));
+            String email = m.getAdditionalparameter().get("email");
+            Message answer = new Message("filmReserving");
+            //Überprüfe ob von Kunde reserviert
+            User u = DBOperations.getUser(email);
+            Kunde k = DBOperations.getKunde(u.getU_ID());
+            ArrayList<DVD> res = DBOperations.getReservierungOfKunde(k.getKU_ID());
+            boolean reserviert = false;
+            boolean bereitsreserviert = false;
+            for (DVD d : res) {
+                if (d.getFilm().getFILMID() == filmid) {
+                    bereitsreserviert = true;
+                    answer.addAdditionalParameter("result", "ownreserved");
+                    break;
+                }
+            }
+            if (!bereitsreserviert) {
+                //Überprüfe ob noch DVDs vorhanden
+                ArrayList<DVD> dvd_liste = DBOperations.getDVDs(filmid);
+                if (dvd_liste.isEmpty()) {
+                    answer.addAdditionalParameter("result", "noDVD");
+                    reserviert = true;
+                } else {
+                    int anzahlReservierungenAufFilm = DBOperations.getAnzahlReservierungZuFilm(filmid);
+                    int anzahlAusleiheAufFilm = DBOperations.getAnzahlAusleiheZuFilm(filmid);
+                    if (dvd_liste.size() <= anzahlReservierungenAufFilm + anzahlAusleiheAufFilm) {
+                        answer.addAdditionalParameter("result", "noMore");
+                        reserviert = true;
+                    }
+                }
             }
 
+            if (!reserviert && !bereitsreserviert) {
+                //Reserviere Film
+                int ku_id = DBOperations.getKunde(DBOperations.getUser(email).getU_ID()).getKU_ID();
+                reserviert = DBOperations.reserviereEineDVD(filmid, ku_id);
+                if (reserviert) {
+                    answer.addAdditionalParameter("result", "reserved");
+                } else {
+                    answer.addAdditionalParameter("result", "failed");
+                }
+            }
             write(j.parseObjectToString(answer));
 
             beenden = true;

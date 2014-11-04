@@ -49,7 +49,6 @@ public final class DBController {
 
     public void setDbHost(String dbHost) {
         this.dbHost = dbHost;
-        System.out.println(log.toString());
     }
 
     public String getDbPort() {
