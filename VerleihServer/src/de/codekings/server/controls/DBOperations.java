@@ -695,28 +695,38 @@ public class DBOperations {
     }
 
     public static boolean isReserviert(int dvdid) {
+        boolean erg = false;
+
+        String sql = "SELECT * FROM tbl_reservierung WHERE gueltig = 1 AND DVD_ID = " + dvdid;
+
+        DBController dbc = Control.getInstance().getDbManager();
+
+        ResultSet rs = dbc.executeQuery(sql);
+
+        try {
+            while (rs.next()) {
+                erg = true;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return erg;
+    }
+
+    public static boolean isAusgeliehen(int dvdid) {
         boolean erg = true;
 
-        String sql = "SELECT * FROM tbl_reservierung WHERE gueltig = 1 AND DVD_ID = " + dvdid + " ORDER BY reservierungsdatum DESC";
+        String sql = "SELECT * FROM tbl_ausleihe WHERE returned = 0 AND DVD_ID = " + dvdid + "";
 
         DBController dbc = Control.getInstance().getDbManager();
 
         ResultSet rs = dbc.executeQuery(sql);
         try {
-            rs.next();
-            int reservierungsid = rs.getInt("RES_ID");
-            java.util.Date now = new java.util.Date();
-            java.sql.Date dbDate = rs.getDate("reservierungsdatum");
-            long diff = now.getTime() - dbDate.getTime();
-            System.out.println(diff / 1000 % 60);
-            if ((diff / 1000) % 60 > 1200) {
-                //gueltig auf falsch
-                //setReservierungUngueltig(reservierungsid);
+            while (rs.next()) {
                 erg = false;
-            } else {
-                erg = true;
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -778,6 +788,42 @@ public class DBOperations {
         }
     }
 
+    public static boolean reserviereEineDVD(int filmid, int kundenid) {
+        ArrayList<DVD> alleDVDs = getDVDs(filmid);
+        DBController dbc = Control.getInstance().getDbManager();
+        boolean erfolgreich = false;
+        if (alleDVDs.size() > 0) {
+            DVD dvd = null;
+            for (DVD d : alleDVDs) {
+                System.out.println("DVD-ID: " + d.getDVDID());
+                System.out.println("Reserviert: " + isReserviert(filmid));
+                System.out.println("Ausgeliehen: " + isAusgeliehen(filmid));
+                if (!isReserviert(filmid) && !isAusgeliehen(filmid)) {
+                    dvd = d;
+                    break;
+                }
+            }
+            if (dvd != null) {
+                String insert = "INSERT INTO `tbl_reservierung` (`KU_ID`, `DVD_ID`, `reservierungsdatum`, `gueltig`) "
+                        + "VALUES (?, ?, ?, '1')";
+                try {
+                    PreparedStatement pst = dbc.getConnection().prepareStatement(insert);
+                    pst.setInt(1, kundenid);
+                    pst.setInt(2, dvd.getDVDID());
+                    java.util.Date now = new java.util.Date();
+                    pst.setDate(3, new java.sql.Date(now.getTime()));
+
+                    dbc.executeUpdate(pst);
+                    erfolgreich = true;
+                } catch (SQLException ex) {
+                    Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        return erfolgreich;
+    }
+
     public static ArrayList<DVD> getReservierungOfKunde(int ku_id) {
         ArrayList<DVD> erg = new ArrayList<>();
         String sql = "SELECT * FROM tbl_reservierung WHERE KU_ID = " + ku_id + " AND gueltig = 1 ORDER BY reservierungsdatum DESC";
@@ -787,9 +833,42 @@ public class DBOperations {
 
         try {
             while (rs.next()) {
-                if(isReserviert(rs.getInt("DVD_ID"))){
+                if (isReserviert(rs.getInt("DVD_ID"))) {
                     erg.add(getDVD(rs.getInt("DVD_ID")));
                 }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperations.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return erg;
+    }
+
+    public static int getAnzahlReservierungZuFilm(int filmid) {
+        String sql = "SELECT Count(*) FROM tbl_reservierung r, tbl_dvd d WHERE d.FI_ID = " + filmid + " AND r.DVD_ID = d.DVD_ID AND gueltig = 1";
+        DBController dbc = Control.getInstance().getDbManager();
+        int erg = 0;
+        ResultSet rs = dbc.executeQuery(sql);
+
+        try {
+            while (rs.next()) {
+                erg = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperations.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return erg;
+    }
+
+    public static int getAnzahlAusleiheZuFilm(int filmid) {
+        String sql = "SELECT Count(*) FROM tbl_ausleihe a, tbl_dvd d WHERE d.FI_ID = " + filmid + " AND a.DVD_ID = d.DVD_ID AND returned = 0";
+        DBController dbc = Control.getInstance().getDbManager();
+        int erg = 0;
+        ResultSet rs = dbc.executeQuery(sql);
+        try {
+            while (rs.next()) {
+                erg = rs.getInt(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBOperations.class

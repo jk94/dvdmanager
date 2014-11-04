@@ -12,6 +12,7 @@ import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -66,7 +67,7 @@ public class Katalog_itemController implements Initializable, MessageReturn {
 
             ClientThread ct = new ClientThread(this, host, port);
             Message m = new Message("reserveFilm");
-            m.addAdditionalParameter("id", String.valueOf(film_id));
+            m.addAdditionalParameter("FI_ID", String.valueOf(film_id));
             m.addAdditionalParameter("email", Control.getControl().getSession().getEmail());
 
             ct.requestToServer(m);
@@ -78,13 +79,38 @@ public class Katalog_itemController implements Initializable, MessageReturn {
 
     @Override
     public void returnedMessage(Message m) {
-        if (m.getCommand().equalsIgnoreCase("filmReserved")) {
-            if (m.getAdditionalparameter().get("result").equalsIgnoreCase("success")) {
-                katalog_btn_auswaehlen.setText("Reserviert!");
-            } else {
-                katalog_btn_auswaehlen.setDisable(false);
-                katalog_btn_auswaehlen.setText("Auswählen");
-            }
+        if (m.getCommand().equalsIgnoreCase("filmReserving")) {
+            Platform.runLater(new Runnable() {
+
+                @Override
+                public void run() {
+                    if (m.getAdditionalparameter().get("result").equalsIgnoreCase("ownreserved")) {
+                        katalog_btn_auswaehlen.setText("Reserviert!");
+                        katalog_btn_auswaehlen.setDisable(true);
+                    }
+                    if (m.getAdditionalparameter().get("result").equalsIgnoreCase("ok")) {
+                        katalog_btn_auswaehlen.setDisable(false);
+                        katalog_btn_auswaehlen.setText("Auswählen");
+                    }
+                    if (m.getAdditionalparameter().get("result").equalsIgnoreCase("noDVD")) {
+                        katalog_btn_auswaehlen.setDisable(true);
+                        katalog_btn_auswaehlen.setText("Keine DVDs auf Lager");
+                    }
+                    if (m.getAdditionalparameter().get("result").equalsIgnoreCase("noMore")) {
+                        katalog_btn_auswaehlen.setDisable(true);
+                        katalog_btn_auswaehlen.setText("Keine DVDs verfügbar");
+                    }
+                    if (m.getAdditionalparameter().get("result").equalsIgnoreCase("reserved")) {
+                        katalog_btn_auswaehlen.setText("Reserviert!");
+                        katalog_btn_auswaehlen.setDisable(true);
+                    }
+                    if (m.getAdditionalparameter().get("result").equalsIgnoreCase("failed")) {
+                        katalog_btn_auswaehlen.setDisable(false);
+                        katalog_btn_auswaehlen.setText("Auswählen");
+                    }
+                }
+            });
+
         }
     }
 
