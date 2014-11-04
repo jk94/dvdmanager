@@ -17,6 +17,7 @@ import de.codekings.common.datacontents.User;
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -89,6 +90,8 @@ public class Create_userController implements Initializable, MessageReturn {
     private TextField user_table_search;
     @FXML
     private TableView<User> user_table;
+    @FXML
+    private TextField user_input_hausnr;
 
     /**
      * Initializes the controller class.
@@ -146,17 +149,21 @@ public class Create_userController implements Initializable, MessageReturn {
             if (klickcount == 2) {
                 resetValues();
                 User uc = user_table.getSelectionModel().getSelectedItem();
-                selectedUserID = uc.getUSERID();
+                selectedUserID = uc.getU_ID();
                 
-                /*txf_beschreibung.setText(fc.getS_description());
-                txf_regisseur.setText(fc.getS_regie());
-                txf_subtitel.setText(fc.getS_subtitel());
-                txf_titel.setText(fc.getS_titel());
-                txf_trailer.setText(fc.getS_trailer());
-                txf_laufzeit.setText(String.valueOf(fc.getI_duration()));
-                cb_rating.setValue(fc.getI_rating());
-                txf_schauspieler.setText(ausgabe);
-                */
+                
+                user_input_nachname.setText(uc.getName());
+                user_input_vorname.setText(uc.getVorname());
+                user_input_adresse.setText(uc.getStrasse());
+                user_input_plz.setText(uc.getPlz());
+                user_input_ort.setText(uc.getOrt());
+                user_input_email.setText(uc.getEmail());
+                user_input_hausnr.setText(String.valueOf(uc.getHausnr()));
+                
+                Date geburtstag = uc.getGeburtsdatum();
+                Instant instant = Instant.ofEpochMilli(geburtstag.getTime());
+                LocalDate datum = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
+                user_datum.setValue(datum);
                 
                 user_btnspeichern.setDisable(false);
             }
@@ -171,7 +178,7 @@ public class Create_userController implements Initializable, MessageReturn {
             emailOkay = okay;
             emailvalidation = true;
         }
-        if (m.getCommand().equalsIgnoreCase("ReturnUserData")) {
+        if (m.getCommand().equalsIgnoreCase("returnUsers")) {
 
             for (Sendable s : m.getContent()) {
                 if (s instanceof User) {

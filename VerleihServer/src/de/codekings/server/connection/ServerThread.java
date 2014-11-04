@@ -331,7 +331,7 @@ class ServerThread extends Thread {
 
             beenden = true;
         }//</editor-fold>
-
+        
         // <editor-fold defaultstate="collapsed" desc="isFilmReserved">
         if (m.getCommand().equalsIgnoreCase("isFilmReserved")) {
             int filmid = Integer.parseInt(m.getAdditionalparameter().get("id"));
@@ -421,7 +421,23 @@ class ServerThread extends Thread {
 
             beenden = true;
         }//</editor-fold>
-
+        
+        // <editor-fold defaultstate="collapsed" desc="getUsers">
+        if (m.getCommand().equalsIgnoreCase("getUsers")) {
+            Message answer = new Message("returnUsers");
+            
+            ArrayList<Integer> ids = DBOperations.getUserIDs();
+            for(int id:ids){
+                User u = DBOperations.getUser(id);
+                answer.addSendable(u);
+            }
+            
+            write(j.parseObjectToString(answer));
+            beenden = true;
+            
+        }//</editor-fold>
+        
+        
         return beenden;
 
     }
