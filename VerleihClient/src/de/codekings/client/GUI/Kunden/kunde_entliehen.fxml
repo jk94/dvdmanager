@@ -6,10 +6,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="de.codekings.client.GUI.Kunden.Kunde_entliehenController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="content-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Kunden.Kunde_entliehenController">
    <children>
-      <Label fx:id="kunde_entl_titel" layoutX="54.0" layoutY="48.0" styleClass="standard-text" text="Die folgenden Medien sind derzeit von dir entliehen:" />
+      <Label fx:id="kunde_entl_titel" layoutX="54.0" layoutY="48.0" prefHeight="17.0" prefWidth="325.0" styleClass="standard-text" text="Die folgenden Medien sind derzeit von dir entliehen:" />
       <TableView fx:id="kunde_entliehen_tabelle" layoutX="54.0" layoutY="85.0" prefHeight="268.0" prefWidth="510.0">
         <columns>
           <TableColumn prefWidth="75.0" text="Nummer" />

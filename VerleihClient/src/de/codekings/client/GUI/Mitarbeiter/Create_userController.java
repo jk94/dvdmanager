@@ -141,6 +141,7 @@ public class Create_userController implements Initializable, MessageReturn {
         user_btn_verwerfen.setOnMouseClicked((MouseEvent event) -> {
             
             resetValues();
+            ladeTableView();
         });
 
         user_table.setOnMouseClicked((MouseEvent event) -> {

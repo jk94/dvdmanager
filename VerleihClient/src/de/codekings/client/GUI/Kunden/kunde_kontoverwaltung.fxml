@@ -6,17 +6,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Kunden.Kunde_kontoverwaltungController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="content-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Kunden.Kunde_kontoverwaltungController">
    <children>
-      <Label layoutX="57.0" layoutY="39.0" prefHeight="17.0" prefWidth="163.0" styleClass="standard_text" text="Deine aktuellen Daten sind:" />
-      <Label fx:id="kunde_konto_vorname" layoutX="170.0" layoutY="82.0" prefHeight="17.0" prefWidth="149.0" styleClass="standard_text" text="Vorname" />
-      <Label fx:id="kunde_konto_name" layoutX="375.0" layoutY="82.0" prefHeight="17.0" prefWidth="149.0" styleClass="standard_text" text="Name" />
-      <Label fx:id="kunde_konto_email" layoutX="170.0" layoutY="111.0" prefHeight="17.0" prefWidth="149.0" styleClass="standard_text" text="email@email.de" />
-      <Label fx:id="kunde_konto_adresse" layoutX="170.0" layoutY="142.0" prefHeight="17.0" prefWidth="192.0" styleClass="standard_text" text="Adresse" />
-      <Label fx:id="kunde_konto_hausnr" layoutX="375.0" layoutY="142.0" prefHeight="17.0" prefWidth="50.0" styleClass="standard_text" text="HsNr" />
-      <Label fx:id="kunde_konto_plz" layoutX="170.0" layoutY="177.0" prefHeight="17.0" prefWidth="50.0" styleClass="standard_text" text="PLZ" />
-      <Label fx:id="kunde_konto_ort" layoutX="319.0" layoutY="177.0" prefHeight="17.0" prefWidth="192.0" styleClass="standard_text" text="Ort" />
-      <Label fx:id="kunde_konto_guthaben" layoutX="170.0" layoutY="209.0" prefHeight="17.0" prefWidth="94.0" styleClass="standard_text" text="Guthaben" />
-      <Label layoutX="57.0" layoutY="314.0" prefHeight="17.0" prefWidth="359.0" styleClass="standard_text" text="Zum Ändern deiner Daten wende dich bitte an einen Mitarbeiter." />
+      <Label layoutX="57.0" layoutY="39.0" prefHeight="17.0" prefWidth="224.0" styleClass="standard-text" text="Deine aktuellen Daten sind:" />
+      <Pane layoutX="169.0" layoutY="106.0">
+         <children>
+            <Label fx:id="kunde_konto_ort" layoutX="149.0" layoutY="95.0" prefHeight="17.0" prefWidth="192.0" styleClass="standard-text" text="Ort" />
+            <Label fx:id="kunde_konto_email" layoutY="29.0" prefHeight="17.0" prefWidth="149.0" styleClass="standard-text" text="email@email.de" />
+            <Label fx:id="kunde_konto_name" layoutX="205.0" prefHeight="17.0" prefWidth="149.0" styleClass="standard-text" text="Name" />
+            <Label fx:id="kunde_konto_adresse" layoutY="60.0" prefHeight="17.0" prefWidth="192.0" styleClass="standard-text" text="Adresse" />
+            <Label fx:id="kunde_konto_plz" layoutY="95.0" prefHeight="17.0" prefWidth="50.0" styleClass="standard-text" text="PLZ" />
+            <Label fx:id="kunde_konto_guthaben" layoutY="127.0" prefHeight="17.0" prefWidth="94.0" styleClass="standard-text" text="Guthaben" />
+            <Label fx:id="kunde_konto_vorname" prefHeight="17.0" prefWidth="149.0" styleClass="standard-text" text="Vorname" />
+            <Label fx:id="kunde_konto_hausnr" layoutX="205.0" layoutY="60.0" prefHeight="17.0" prefWidth="50.0" styleClass="standard-text" text="HsNr" />
+         </children>
+      </Pane>
+      <Label layoutX="57.0" layoutY="314.0" prefHeight="17.0" prefWidth="392.0" styleClass="standard-text" text="Zum Ändern deiner Daten wende dich bitte an einen Mitarbeiter." />
    </children>
 </AnchorPane>

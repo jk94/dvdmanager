@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="776.0" styleClass="content-base" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Kunden.Kunde_reservierungenController">
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="776.0" styleClass="content-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Kunden.Kunde_reservierungenController">
    <children>
       <TableView fx:id="tbvw_reservierungen" layoutX="35.0" layoutY="106.0" prefHeight="333.0" prefWidth="726.0">
         <columns>
@@ -18,7 +18,7 @@
         </columns>
       </TableView>
       <Label layoutX="35.0" layoutY="55.0" prefHeight="17.0" prefWidth="263.0" styleClass="standard-text" text="Folgende DVDs sind für dich reserviert" />
-      <Button fx:id="btn_loeschen" layoutX="561.0" layoutY="447.0" mnemonicParsing="false" styleClass="standard-btn" text="Ausgewählte Reservierung löschen" />
-      <Label fx:id="kunde_ausleihen_kosten" layoutX="599.0" layoutY="55.0" prefHeight="17.0" prefWidth="149.0" styleClass="standard-text" text="Dir werden X € berechnet." />
+      <Button fx:id="btn_loeschen" layoutX="498.0" layoutY="447.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="263.0" styleClass="standard-btn" text="Ausgewählte Reservierung löschen" />
+      <Label fx:id="kunde_ausleihen_kosten" layoutX="562.0" layoutY="55.0" prefHeight="17.0" prefWidth="186.0" styleClass="standard-text" text="Dir werden X € berechnet." />
    </children>
 </AnchorPane>

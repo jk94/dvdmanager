@@ -6,25 +6,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="540.0" prefWidth="800.0" styleClass="content-base" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Kunden.Kunde_startController">
+<AnchorPane id="AnchorPane" prefHeight="540.0" prefWidth="800.0" styleClass="content-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Kunden.Kunde_startController">
    <children>
       <Label fx:id="kunde_start_titel" layoutX="61.0" layoutY="44.0" prefHeight="17.0" prefWidth="267.0" styleClass="standard-text" text="Hallo, USER" />
       <Pane fx:id="kunde_start_warenkorbpane" layoutX="217.0" layoutY="91.0">
          <children>
-            <Button fx:id="kunde_start_btnausleihe" layoutX="107.0" layoutY="34.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="115.0" styleClass="standard-btn" text="Medien Ausleihen" />
+            <Button fx:id="kunde_start_btnausleihe" layoutX="107.0" layoutY="34.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="210.0" styleClass="standard-btn" text="Medien Ausleihen" />
             <Label fx:id="kunde_start_warenkorb" prefHeight="17.0" prefWidth="222.0" styleClass="standard-text" text="Du hast X Medien in deinem Warenkorb" />
          </children>
       </Pane>
-      <Pane fx:id="kunde_start_entlpane" layoutX="217.0" layoutY="195.0">
+      <Pane fx:id="kunde_start_entlpane" layoutX="217.0" layoutY="195.0" prefHeight="67.0" prefWidth="312.0">
          <children>
-            <Button fx:id="kunde_start_btnentl" layoutX="102.0" layoutY="33.0" mnemonicParsing="false" styleClass="standard-btn" text="Entliehene Medien" />
+            <Button fx:id="kunde_start_btnentl" layoutX="102.0" layoutY="41.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="210.0" styleClass="standard-btn" text="Entliehene Medien" />
             <Label fx:id="kunde_start_entl" minHeight="-Infinity" minWidth="-Infinity" styleClass="standard-text" text="Zurzeit hast du noch X Medien entliehen." />
          </children>
       </Pane>
-      <Pane fx:id="kunde_start_kontopane" layoutX="217.0" layoutY="287.0" prefHeight="59.0" prefWidth="218.0">
+      <Pane fx:id="kunde_start_kontopane" layoutX="217.0" layoutY="287.0" prefHeight="81.0" prefWidth="312.0">
          <children>
-            <Label fx:id="kunde_start_guthaben" prefHeight="17.0" prefWidth="210.0" styleClass="standard-text" text="Dein Guthaben beträgt XX €" />
-            <Button fx:id="kunde_start_kontoverwaltung" layoutX="100.0" layoutY="33.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="115.0" styleClass="standard-btn" text="Kontoverwaltung" />
+            <Button fx:id="kunde_start_kontoverwaltung" layoutX="105.0" layoutY="42.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="210.0" styleClass="standard-btn" text="Kontoverwaltung" />
+            <Label fx:id="kunde_start_guthaben" layoutY="14.0" prefHeight="17.0" prefWidth="210.0" styleClass="standard-text" text="Dein Guthaben beträgt XX €" />
          </children>
       </Pane>
    </children>
