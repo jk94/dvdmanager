@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="504.0" prefWidth="774.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="de.codekings.client.GUI.Mitarbeiter.ManageDVDsController">
+   <children>
+      <TableView layoutX="38.0" layoutY="52.0" prefHeight="420.0" prefWidth="242.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+      <ListView layoutX="290.0" layoutY="76.0" prefHeight="360.0" prefWidth="180.0" />
+      <Label layoutX="290.0" layoutY="52.0" prefHeight="25.0" prefWidth="180.0" text="DVDs" textAlignment="CENTER" />
+      <TextField layoutX="495.0" layoutY="77.0" prefHeight="25.0" prefWidth="253.0" promptText="Artikelnummer" />
+      <TextArea layoutX="495.0" layoutY="112.0" prefHeight="324.0" prefWidth="253.0" />
+      <Button layoutX="649.0" layoutY="447.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Speichern" />
+      <Button layoutX="290.0" layoutY="447.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Add DVD" />
+      <Button layoutX="380.0" layoutY="447.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Remove DVD" />
+      <Line endY="410.0" layoutX="487.0" layoutY="65.0" />
+   </children>
+</AnchorPane>
