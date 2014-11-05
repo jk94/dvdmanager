@@ -741,7 +741,7 @@ public class DBOperations {
     }
 
     public static boolean isAusgeliehen(int dvdid) {
-        boolean erg = true;
+        boolean erg = false;
 
         String sql = "SELECT * FROM tbl_ausleihe WHERE returned = 0 AND DVD_ID = " + dvdid + "";
 
@@ -750,7 +750,7 @@ public class DBOperations {
         ResultSet rs = dbc.executeQuery(sql);
         try {
             while (rs.next()) {
-                erg = false;
+                erg = true;
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -821,10 +821,7 @@ public class DBOperations {
             DVD dvd = null;
             System.out.println(filmid);
             for (DVD d : alleDVDs) {
-                System.out.println(d.getDVDID());
-                System.out.println(!isReserviert(d.getDVDID()) && !isAusgeliehen(d.getDVDID()));
-                System.out.println(isReserviert(d.getDVDID()));
-                System.out.println(isAusgeliehen(d.getDVDID()));
+
                 if (!isReserviert(d.getDVDID()) && !isAusgeliehen(d.getDVDID())) {
                     dvd = d;
                     break;
@@ -838,7 +835,7 @@ public class DBOperations {
                     pst.setInt(1, kundenid);
                     pst.setInt(2, dvd.getDVDID());
                     java.util.Date now = new java.util.Date();
-                    pst.setDate(3, new java.sql.Date(now.getTime()));
+                    pst.setLong(3, now.getTime());
 
                     dbc.executeUpdate(pst);
                     erfolgreich = true;
@@ -853,7 +850,7 @@ public class DBOperations {
 
     public static ArrayList<DVD> getReservierungOfKunde(int ku_id) {
         ArrayList<DVD> erg = new ArrayList<>();
-        String sql = "SELECT * FROM tbl_reservierung WHERE KU_ID = " + ku_id + " AND gueltig = 1 ORDER BY reservierungsdatum DESC";
+        String sql = "SELECT * FROM tbl_reservierung WHERE KU_ID = " + ku_id + " AND gueltig = 1 ORDER BY reservierungsdatum ASC";
         DBController dbc = Control.getInstance().getDbManager();
 
         ResultSet rs = dbc.executeQuery(sql);
@@ -887,7 +884,7 @@ public class DBOperations {
                     if (!d.getFilm().getS_subtitel().equals("")) {
                         filmname = filmname + " - " + d.getFilm().getS_subtitel();
                     }
-                    Date gueltigbis = new Date(rs.getDate("reservierungsdatum").getTime() + 1200000);
+                    Date gueltigbis = new Date(rs.getLong("reservierungsdatum") + 1200000);
                     Reservierung r = new Reservierung(rs.getInt("RES_ID"), counter, filmname, Integer.parseInt(d.getS_artikelnr()), gueltigbis, d.getFilm().getD_preis());
                     erg.add(r);
                 }

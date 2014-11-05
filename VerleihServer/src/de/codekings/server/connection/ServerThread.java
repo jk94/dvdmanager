@@ -410,7 +410,7 @@ class ServerThread extends Thread {
 
             if (!reserviert && !bereitsreserviert) {
                 //Reserviere Film
-                int ku_id = DBOperations.getKunde(DBOperations.getUser(email).getU_ID()).getKU_ID();
+                int ku_id = k.getKU_ID();
                 reserviert = DBOperations.reserviereEineDVD(filmid, ku_id);
                 if (reserviert) {
                     answer.addAdditionalParameter("result", "reserved");
