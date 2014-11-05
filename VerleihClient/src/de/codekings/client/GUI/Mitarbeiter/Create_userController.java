@@ -98,46 +98,48 @@ public class Create_userController implements Initializable, MessageReturn {
     public void initialize(URL url, ResourceBundle rb) {
 
         ladeTableView();
+        user_btnspeichern.setDisable(true);
 
-        user_btn_create.setOnMouseClicked((MouseEvent event) -> {
-            //variablen definieren
-            String vorname = user_input_vorname.getText();
-            String name = user_input_nachname.getText();
-            String email = user_input_email.getText();
-            String passwort = user_passwort.getText();
-
-            LocalDate geburtstag = user_datum.getValue();
-            Instant datum = Instant.from(geburtstag.atStartOfDay(ZoneId.systemDefault()));
-            Date d_geb = Date.from(datum);
-
-            String plz = user_input_plz.getText();
-            String ort = user_input_ort.getText();
-            String str = user_input_adresse.getText();
-
+        user_btnspeichern.setOnMouseClicked((MouseEvent event) -> {
+            
             check_Input();
-
+            User user = updateUser();
+            
+            Message m = new Message("updateUser");
+            m.addSendable(user);
+            
             ConfigManager cfgManager = Control.getControl().getCfgManager();
             String host = cfgManager.getConfigs().getProperty("ip");
             int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
 
-            ClientThread emailv = new ClientThread(this, host, port);
-            Message request = new Message("addUser");
-            String hpw = Hasher.getInstance().ToMD5(user_passwort.getText());
+            ClientThread ct = new ClientThread(this, host, port);
+            ct.requestToServer(m);
 
-            //request.addSendable(Kunde);
-            request.addAdditionalParameter("editoremail", Control.getControl().getSession().getEmail());
-            emailv.requestToServer(request);
-
-            // schreibe eingaben in db
+            MessageBox mb = new MessageBox("Änderungen wurden gespeichert", MessageBoxType.OK_ONLY);
+            mb.setTitle("Information");
+            mb.showAndWait();
         });
 
-        user_btnspeichern.setOnMouseClicked((MouseEvent event) -> {
+        user_btn_create.setOnMouseClicked((MouseEvent event) -> {
             check_Input();
-            // ändere db nach eingabe
-            // bzw eine SetMethode die Werte ersetzt. oder einfach nochmal gernerate mit overwrite?
+            User user = generateUser();
+            
+            Message m = new Message("addUser");
+            m.addSendable(user);
+            
+            ConfigManager cfgManager = Control.getControl().getCfgManager();
+            String host = cfgManager.getConfigs().getProperty("ip");
+            int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+            ClientThread ct = new ClientThread(this, host, port);
+            ct.requestToServer(m);
+
+            MessageBox mb = new MessageBox("User hinzugefügt", MessageBoxType.OK_ONLY);
+            mb.setTitle("Information");
+            mb.showAndWait();
         });
         user_btn_verwerfen.setOnMouseClicked((MouseEvent event) -> {
-            //lade Seite neu, ohne eingaben zu behalten
+            
             resetValues();
         });
 
@@ -338,6 +340,9 @@ public class Create_userController implements Initializable, MessageReturn {
         user_input_adresse.setText("");
         user_input_plz.setText("");
         user_input_ort.setText("");
+        user_input_hausnr.setText("");
+        user_datum.setValue(null);
+        
     }
 
     private User generateUser() {
@@ -354,15 +359,16 @@ public class Create_userController implements Initializable, MessageReturn {
         String plz = user_input_plz.getText();
         String ort = user_input_ort.getText();
         String str = user_input_adresse.getText();
+        int hausnummer = Integer.parseInt(user_input_hausnr.getText());
 
-        User u = new User(selectedUserID, name, vorname, str, plz, ort, passwort, email, vorname, selectedUserID, d_geb, ClassType.T_DVD);
-
+        User u = new User(selectedUserID, name, vorname, str, plz, ort, passwort, email, "", hausnummer, d_geb, ClassType.T_KUNDE);
+        
         ConfigManager cfgManager = Control.getControl().getCfgManager();
         String host = cfgManager.getConfigs().getProperty("ip");
         int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
 
         Message request = new Message("addUser");
-
+        request.addSendable(u);
         ClientThread loginsession = new ClientThread(this, host, port);
         loginsession.requestToServer(request);
 
@@ -394,15 +400,16 @@ public class Create_userController implements Initializable, MessageReturn {
         String plz = user_input_plz.getText();
         String ort = user_input_ort.getText();
         String str = user_input_adresse.getText();
+        int hausnummer = Integer.parseInt(user_input_hausnr.getText());
 
-        User u = new User(selectedUserID, name, vorname, str, plz, ort, passwort, email, vorname, selectedUserID, d_geb, ClassType.T_DVD);
-
+        User u = new User(selectedUserID, name, vorname, str, plz, ort, passwort, email, "", hausnummer, d_geb, ClassType.T_KUNDE);
+        
         ConfigManager cfgManager = Control.getControl().getCfgManager();
         String host = cfgManager.getConfigs().getProperty("ip");
         int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
 
         Message request = new Message("updateUser");
-
+        request.addSendable(u);
         ClientThread loginsession = new ClientThread(this, host, port);
         loginsession.requestToServer(request);
 
