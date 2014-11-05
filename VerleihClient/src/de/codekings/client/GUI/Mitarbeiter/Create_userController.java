@@ -81,7 +81,7 @@ public class Create_userController implements Initializable, MessageReturn {
     private boolean emailOkay = false, emailvalidation = false;
 
     private ObservableList<User> userdata;
-    
+
     private int selectedUserID = -1;
     private boolean usererhalten = false;
     @FXML
@@ -96,9 +96,9 @@ public class Create_userController implements Initializable, MessageReturn {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         ladeTableView();
-        
+
         user_btn_create.setOnMouseClicked((MouseEvent event) -> {
             //variablen definieren
             String vorname = user_input_vorname.getText();
@@ -121,11 +121,11 @@ public class Create_userController implements Initializable, MessageReturn {
             int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
 
             ClientThread emailv = new ClientThread(this, host, port);
-            Message request = new Message("CreateUser");
+            Message request = new Message("addUser");
             String hpw = Hasher.getInstance().ToMD5(user_passwort.getText());
-            
+
             //request.addSendable(Kunde);
-            
+            request.addAdditionalParameter("editoremail", Control.getControl().getSession().getEmail());
             emailv.requestToServer(request);
 
             // schreibe eingaben in db
@@ -140,7 +140,7 @@ public class Create_userController implements Initializable, MessageReturn {
             //lade Seite neu, ohne eingaben zu behalten
             resetValues();
         });
-        
+
         user_table.setOnMouseClicked((MouseEvent event) -> {
             int klickcount = event.getClickCount();
 
@@ -148,8 +148,7 @@ public class Create_userController implements Initializable, MessageReturn {
                 resetValues();
                 User uc = user_table.getSelectionModel().getSelectedItem();
                 selectedUserID = uc.getU_ID();
-                
-                
+
                 user_input_nachname.setText(uc.getName());
                 user_input_vorname.setText(uc.getVorname());
                 user_input_adresse.setText(uc.getStrasse());
@@ -157,12 +156,12 @@ public class Create_userController implements Initializable, MessageReturn {
                 user_input_ort.setText(uc.getOrt());
                 user_input_email.setText(uc.getEmail());
                 user_input_hausnr.setText(String.valueOf(uc.getHausnr()));
-                
+
                 Date geburtstag = uc.getGeburtsdatum();
                 Instant instant = Instant.ofEpochMilli(geburtstag.getTime());
                 LocalDate datum = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
                 user_datum.setValue(datum);
-                
+
                 user_btnspeichern.setDisable(false);
             }
         });
@@ -313,14 +312,14 @@ public class Create_userController implements Initializable, MessageReturn {
         }
 
         usererhalten = false;
-        
+
         String columnname[] = {"Name", "Vorname", "Accountnr."};
-        String variablename[] = {"name", "vorname" , "accountnummer"};
+        String variablename[] = {"name", "vorname", "accountnummer"};
 
         TableColumn<User, String> col_name = new TableColumn<>(columnname[0]);
         TableColumn<User, String> col_vorname = new TableColumn<>(columnname[1]);
         TableColumn<User, String> col_accnr = new TableColumn<>(columnname[2]);
-        
+
         col_name.setCellValueFactory(new PropertyValueFactory<User, String>(variablename[0]));
         col_vorname.setCellValueFactory(new PropertyValueFactory<User, String>(variablename[1]));
         col_accnr.setCellValueFactory(new PropertyValueFactory<User, String>(variablename[2]));
@@ -331,18 +330,18 @@ public class Create_userController implements Initializable, MessageReturn {
         user_table.getColumns().add(col_accnr);
         user_table.getItems().addAll(userdata);
     }
-    
-     private void resetValues() {
+
+    private void resetValues() {
         user_input_vorname.setText("");
         user_input_nachname.setText("");
         user_input_email.setText("");
         user_input_adresse.setText("");
         user_input_plz.setText("");
         user_input_ort.setText("");
-       }
-     
-     private User generateUser() {
-        
+    }
+
+    private User generateUser() {
+
         String vorname = user_input_vorname.getText();
         String name = user_input_nachname.getText();
         String email = user_input_email.getText();
@@ -355,9 +354,9 @@ public class Create_userController implements Initializable, MessageReturn {
         String plz = user_input_plz.getText();
         String ort = user_input_ort.getText();
         String str = user_input_adresse.getText();
-        
+
         User u = new User(selectedUserID, name, vorname, str, plz, ort, passwort, email, vorname, selectedUserID, d_geb, ClassType.T_DVD);
-        
+
         ConfigManager cfgManager = Control.getControl().getCfgManager();
         String host = cfgManager.getConfigs().getProperty("ip");
         int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
@@ -377,12 +376,12 @@ public class Create_userController implements Initializable, MessageReturn {
         }
 
         usererhalten = false;
-        
-        return u; 
+
+        return u;
     }
-     
+
     private User updateUser() {
-        
+
         String vorname = user_input_vorname.getText();
         String name = user_input_nachname.getText();
         String email = user_input_email.getText();
@@ -395,9 +394,9 @@ public class Create_userController implements Initializable, MessageReturn {
         String plz = user_input_plz.getText();
         String ort = user_input_ort.getText();
         String str = user_input_adresse.getText();
-        
+
         User u = new User(selectedUserID, name, vorname, str, plz, ort, passwort, email, vorname, selectedUserID, d_geb, ClassType.T_DVD);
-        
+
         ConfigManager cfgManager = Control.getControl().getCfgManager();
         String host = cfgManager.getConfigs().getProperty("ip");
         int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
@@ -417,8 +416,7 @@ public class Create_userController implements Initializable, MessageReturn {
         }
 
         usererhalten = false;
-        
+
         return u;
     }
 }
-
