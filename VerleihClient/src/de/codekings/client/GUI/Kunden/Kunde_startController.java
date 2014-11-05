@@ -14,11 +14,14 @@ import de.codekings.client.connection.MessageReturn;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
 import de.codekings.common.datacontents.Kunde;
+import de.codekings.common.datacontents.Reservierung;
 import de.codekings.common.datacontents.Sendable;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -53,9 +56,13 @@ public class Kunde_startController implements Initializable, MessageReturn {
     @FXML
     private Button kunde_start_kontoverwaltung;
 
-     private Kunde kundendata;
+    private Kunde kundendata;
 
     private boolean datenerhalten = false;
+    
+    private ObservableList<Reservierung> reservierungsdata;
+    
+    private boolean reservierungenerhalten = false;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -103,9 +110,11 @@ public class Kunde_startController implements Initializable, MessageReturn {
             
             kunde_start_titel.setText("Hallo, " + kundendata.getVorname()+ " " + kundendata.getName());
             kunde_start_guthaben.setText("Dein aktuelles Guthaben beträgt " + kundendata.getAccountbalance() + " €.");
-            //kunde_start_entl.setText();
-            //kunde_start_warenkorb.setText();
+            
         }
+            //kunde_start_entl.setText();
+            int anz = getCountReservierungen();
+            kunde_start_warenkorb.setText("Zurzeit sind " + anz + " Artikel von dir reserviert.");
     }
 
     @Override
@@ -120,6 +129,44 @@ public class Kunde_startController implements Initializable, MessageReturn {
 
             datenerhalten = true;
         }
-    }
     
+        if (m.getCommand().equalsIgnoreCase("returnReservierungen")) {
+            reservierungsdata = FXCollections.observableArrayList();
+            for (Sendable s : m.getContent()) {
+                if (s instanceof Reservierung) {
+                    Reservierung r = (Reservierung) s;
+                    reservierungsdata.add(r);
+                }
+            }
+            reservierungenerhalten = true;
+        }
+    }
+
+    private int getCountReservierungen() {
+        reservierungsdata = FXCollections.observableArrayList();
+
+        //Get here Reservierungen
+        ConfigManager cfgManager = Control.getControl().getCfgManager();
+        String host = cfgManager.getConfigs().getProperty("ip");
+        int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+        ClientThread ct = new ClientThread(this, host, port);
+        Message m = new Message("getReservierungen");
+        m.addAdditionalParameter("email", Control.getControl().getSession().getEmail());
+        ct.requestToServer(m);
+        int counter = 0;
+        while (!reservierungenerhalten && counter < 20) {
+            try {
+                counter++;
+                Thread.sleep(100l);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Kunde_reservierungenController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        reservierungenerhalten = false;
+        
+        int anzahlReservierungen = reservierungsdata.size();
+        
+        return anzahlReservierungen;
+    }
 }
