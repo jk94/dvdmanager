@@ -99,6 +99,8 @@ public class TemplateController implements Initializable {
     private ImageView head_btn_search_img;
     @FXML
     private Button btn_mab_ausleihe;
+    @FXML
+    private Button btn_mab_dvdmanager;
 
     /**
      * Initializes the controller class.
@@ -155,6 +157,11 @@ public class TemplateController implements Initializable {
         });
         head_btn_forward.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(ContentPageType.FORWARD, true);
+            head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
+            head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
+        });
+        btn_mab_dvdmanager.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getContentControl().changeContent(ContentPageType.MA_MANAGEDVD, false);
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });

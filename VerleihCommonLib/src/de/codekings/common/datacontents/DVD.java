@@ -12,7 +12,7 @@ import de.codekings.common.Enumerators.ClassType;
  *
  * @author Jan
  */
-@JsonDeserialize(as=DVD.class)
+@JsonDeserialize(as = DVD.class)
 public class DVD extends Sendable {
 
     private int DVDID;
@@ -24,11 +24,11 @@ public class DVD extends Sendable {
         super(ClassType.T_DVD);
         DVDID = id;
     }
-    
-    public DVD(){
+
+    public DVD() {
         super(ClassType.T_DVD);
     }
-    
+
     public DVD(int DVDID, Film film, boolean ausgeliehen, ClassType t, String artnr, String notiz) {
         super(t);
         this.DVDID = DVDID;
@@ -37,9 +37,13 @@ public class DVD extends Sendable {
         this.s_artikelnr = artnr;
         this.s_notiz = notiz;
     }
-    
+
     public int getDVDID() {
         return DVDID;
+    }
+
+    public void setDVDID(int id) {
+        this.DVDID = id;
     }
 
     public String getS_artikelnr() {

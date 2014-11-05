@@ -83,7 +83,7 @@ public class Kunde_kontoverwaltungController implements Initializable, MessageRe
         datenerhalten = false;
         
         userdata.get(0).getEmail();
-                
+             /*   
         kunde_konto_vorname.setText(vorname);
         kunde_konto_name.setText(name);
         kunde_konto_email.setText(email);

@@ -53,6 +53,7 @@
                                 <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <Button fx:id="btn_mab_katalogpflege" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Katalog pflegen" />
+                              <Button fx:id="btn_mab_dvdmanager" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="DVDs pflegen" />
                                         <Button fx:id="btn_mab_kontoverwaltung" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Kontoverwaltung" />
                               <Button fx:id="btn_mab_ausleihe" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Ausleihe" />
                                         <Button fx:id="btn_mab_return" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Rückgabe" />

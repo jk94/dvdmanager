@@ -462,14 +462,14 @@ class ServerThread extends Thread {
         // <editor-fold defaultstate="collapsed" desc="updateUser">
         if (m.getCommand().equalsIgnoreCase("updateUser")) {
             User u = null;
-            
+
             for (Sendable s : m.getContent()) {
                 if (s instanceof User) {
                     u = (User) s;
                     break;
                 }
             }
-               
+
             Message answer = new Message("updateUserSuccess");
 
             DBOperations.updateUser(u);
@@ -511,7 +511,67 @@ class ServerThread extends Thread {
 
         }//</editor-fold>
 
+        // <editor-fold defaultstate="collapsed" desc="removeDVD">
+        if (m.getCommand().equalsIgnoreCase("removeDVD")) {
+            Message answer = new Message("DVDremove");
+            int dvdid = Integer.parseInt(m.getAdditionalparameter().get("DVD_ID"));
+            if (DBOperations.removeDVD(dvdid)) {
+                answer.addAdditionalParameter("result", "success");
+            } else {
+                answer.addAdditionalParameter("result", "dvdsout");
+            }
+
+            write(j.parseObjectToString(answer));
+            beenden = true;
+
+        }//</editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="addDVD">
+        if (m.getCommand().equalsIgnoreCase("addDVD")) {
+            Message answer = new Message("DVDadd");
+            DVD dvd = null;
+            for (Sendable s : m.getContent()) {
+                if (s instanceof DVD) {
+                    dvd = (DVD) s;
+                    break;
+                }
+            }
+            String email = m.getAdditionalparameter().get("email");
+            int editor = DBOperations.getUser(email).getU_ID();
+            if (DBOperations.addDVD(dvd, editor)) {
+                answer.addAdditionalParameter("result", "success");
+            } else {
+                answer.addAdditionalParameter("result", "artnrfailed");
+            }
+
+            write(j.parseObjectToString(answer));
+            beenden = true;
+
+        }//</editor-fold>
         
+        // <editor-fold defaultstate="collapsed" desc="saveDVD">
+        if (m.getCommand().equalsIgnoreCase("saveDVD")) {
+            Message answer = new Message("DVDsave");
+            DVD dvd = null;
+            for (Sendable s : m.getContent()) {
+                if (s instanceof DVD) {
+                    dvd = (DVD) s;
+                    break;
+                }
+            }
+            String email = m.getAdditionalparameter().get("email");
+            int editor = DBOperations.getUser(email).getU_ID();
+            if (DBOperations.updateDVD(dvd, editor)) {
+                answer.addAdditionalParameter("result", "success");
+            } else {
+                answer.addAdditionalParameter("result", "artnrfailed");
+            }
+
+            write(j.parseObjectToString(answer));
+            beenden = true;
+
+        }//</editor-fold>
+
         return beenden;
 
     }
