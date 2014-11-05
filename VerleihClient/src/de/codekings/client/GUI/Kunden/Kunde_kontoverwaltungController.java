@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package de.codekings.client.GUI.Kunden;
 
 import de.codekings.client.Controls.Control;
@@ -18,6 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,6 +31,7 @@ import javafx.scene.control.TextField;
  * @author Simon
  */
 public class Kunde_kontoverwaltungController implements Initializable, MessageReturn {
+
     @FXML
     private Label kunde_konto_name;
     @FXML
@@ -47,22 +48,21 @@ public class Kunde_kontoverwaltungController implements Initializable, MessageRe
     private Label kunde_konto_ort;
     @FXML
     private Label kunde_konto_guthaben;
-    
-    private ObservableList<Kunde> kundendata;
-    
+
+    private Kunde kundendata;
+
     private boolean datenerhalten = false;
-   
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         ladeDaten();
-        
+
     }
-    
-    public void ladeDaten () {
-        String email= Control.getControl().getSession().getEmail();
-        
+
+    public void ladeDaten() {
+        String email = Control.getControl().getSession().getEmail();
+
         ConfigManager cfgManager = Control.getControl().getCfgManager();
         String host = cfgManager.getConfigs().getProperty("ip");
         int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
@@ -71,7 +71,7 @@ public class Kunde_kontoverwaltungController implements Initializable, MessageRe
         request.addAdditionalParameter("email", email);
         ClientThread loginsession = new ClientThread(this, host, port);
         loginsession.requestToServer(request);
-        
+        datenerhalten = false;
         int counter = 0;
         while (!datenerhalten && counter < 20) {
             try {
@@ -81,30 +81,26 @@ public class Kunde_kontoverwaltungController implements Initializable, MessageRe
                 Logger.getLogger(Kunde_reservierungenController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        datenerhalten = false;
-        
-        
-               
-        kunde_konto_vorname.setText(kundendata.get(0).getVorname());
-        kunde_konto_name.setText(kundendata.get(0).getName());
-        kunde_konto_email.setText(kundendata.get(0).getEmail());
-        kunde_konto_adresse.setText(kundendata.get(0).getStrasse());
-        kunde_konto_hausnr.setText(String.valueOf(kundendata.get(0).getHausnr()));
-        kunde_konto_plz.setText(kundendata.get(0).getPlz());
-        kunde_konto_ort.setText(kundendata.get(0).getOrt());
-        kunde_konto_guthaben.setText(String.valueOf(kundendata.get(0).getAccountbalance()));
-        
-                
-                
-     }    
+
+        if (kundendata != null) {
+            kunde_konto_vorname.setText(kundendata.getVorname());
+            kunde_konto_name.setText(kundendata.getName());
+            kunde_konto_email.setText(kundendata.getEmail());
+            kunde_konto_adresse.setText(kundendata.getStrasse());
+            kunde_konto_hausnr.setText(String.valueOf(kundendata.getHausnr()));
+            kunde_konto_plz.setText(kundendata.getPlz());
+            kunde_konto_ort.setText(kundendata.getOrt());
+            kunde_konto_guthaben.setText(String.valueOf(kundendata.getAccountbalance()));
+        }
+    }
 
     @Override
     public void returnedMessage(Message m) {
-       if (m.getCommand().equalsIgnoreCase("returnKunde")) {
+        if (m.getCommand().equalsIgnoreCase("returnKunde")) {
 
             for (Sendable s : m.getContent()) {
                 if (s instanceof Kunde) {
-                    kundendata.add((Kunde) s);
+                    kundendata = (Kunde) s;
                 }
             }
 
