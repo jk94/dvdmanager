@@ -155,6 +155,7 @@ public final class DBController {
             pst.executeUpdate();
             connection.setAutoCommit(false);
         } catch (SQLException e) {
+            e.printStackTrace();
             log.log(Level.SEVERE, "Couldn't execute SQL-Statement. {0}", e.getMessage());
         }
     }

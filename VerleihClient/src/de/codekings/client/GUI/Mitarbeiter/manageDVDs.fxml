@@ -7,23 +7,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="504.0" prefWidth="774.0" styleClass="content-back" stylesheets="de/codekings/client/GUI/MainFrame/template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.ManageDVDsController">
+<AnchorPane id="AnchorPane" prefHeight="504.0" prefWidth="852.0" styleClass="content-back" stylesheets="de/codekings/client/GUI/MainFrame/template.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.ManageDVDsController">
    <children>
-      <TableView fx:id="tbvw_filme" layoutX="38.0" layoutY="52.0" prefHeight="420.0" prefWidth="242.0">
+      <TableView fx:id="tbvw_filme" layoutX="38.0" layoutY="52.0" prefHeight="420.0" prefWidth="310.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />
         </columns>
       </TableView>
-      <Label layoutX="290.0" layoutY="52.0" prefHeight="25.0" prefWidth="180.0" text="DVDs" textAlignment="CENTER" />
-      <TextField fx:id="txf_artikelnummer" layoutX="495.0" layoutY="77.0" prefHeight="25.0" prefWidth="253.0" promptText="Artikelnummer" />
-      <TextArea fx:id="txf_notiz" layoutX="495.0" layoutY="136.0" prefHeight="300.0" prefWidth="253.0" promptText="Bemerkungen" />
-      <Button fx:id="btn_speichern" layoutX="649.0" layoutY="447.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Speichern" />
-      <Button fx:id="btn_add_dvd" layoutX="290.0" layoutY="447.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Add DVD" />
-      <Button fx:id="btn_remove_dvd" layoutX="380.0" layoutY="447.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Remove DVD" />
-      <Line endY="410.0" layoutX="487.0" layoutY="65.0" />
-      <Label layoutX="495.0" layoutY="119.0" prefHeight="17.0" prefWidth="99.0" text="Bemerkungen" />
-      <TableView fx:id="list_dvd" layoutX="290.0" layoutY="77.0" prefHeight="363.0" prefWidth="180.0">
+      <TextField fx:id="txf_artikelnummer" layoutX="570.0" layoutY="75.0" prefHeight="25.0" prefWidth="253.0" promptText="Artikelnummer" />
+      <TextArea fx:id="txf_notiz" layoutX="570.0" layoutY="134.0" prefHeight="300.0" prefWidth="255.0" promptText="Bemerkungen" />
+      <Button fx:id="btn_speichern" layoutX="700.0" layoutY="445.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="Speichern" />
+      <Button fx:id="btn_add_dvd" layoutX="570.0" layoutY="445.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="Neue DVD" />
+      <Button fx:id="btn_remove_dvd" layoutX="365.0" layoutY="445.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="180.0" text="Remove DVD" />
+      <Line endY="410.0" layoutX="562.0" layoutY="63.0" />
+      <Label layoutX="570.0" layoutY="117.0" prefHeight="17.0" prefWidth="99.0" text="Bemerkungen" />
+      <TableView fx:id="list_dvd" layoutX="365.0" layoutY="53.0" prefHeight="385.0" prefWidth="180.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />

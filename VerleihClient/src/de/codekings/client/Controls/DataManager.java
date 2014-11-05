@@ -184,6 +184,15 @@ public class DataManager implements MessageReturn {
             }
         }
     }
+    
+    public Film_Client getFilm(int filmid){
+        for (Film_Client fi : li_filme) {
+            if (fi.getFILMID() == filmid) {
+                return fi;
+            }
+        }
+        return null;
+    }
 
     class UpdateTimer extends Thread {
 

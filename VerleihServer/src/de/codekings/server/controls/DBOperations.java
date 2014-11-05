@@ -362,7 +362,7 @@ public class DBOperations {
         return cover;
     }
 
-    public static void addUser (User u) {
+    public static void addUser(User u) {
         String sql = "INSERT INTO `tbl_user` ( name, vorname, strasse, plz, ort, passwort, email, accountnummer, hausnr, geburtsdatum) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -391,21 +391,20 @@ public class DBOperations {
                 accnr = "0" + accnr;
             }
             dbc.executeUpdate(pst); //Übernehme userUpdates
-            
+
             String sql2 = "UPDATE `tbl_user` SET `accountnummer`=?  WHERE (`U_ID`=?)";
             PreparedStatement pst2 = dbc.getConnection().prepareStatement(sql2);
             pst2.setString(1, accnr);
             pst2.setInt(2, u.getU_ID());
             pst2.executeUpdate();
 
-            
             dbc.executeUpdate(pst2);
 
         } catch (SQLException ex) {
             Logger.getLogger(DBOperations.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     public static void updateUser(User u) {
@@ -426,7 +425,7 @@ public class DBOperations {
             pst.setInt(8, u.getHausnr());
             pst.setDate(9, new java.sql.Date(u.getGeburtsdatum().getTime()));
             pst.setInt(10, u.getU_ID());
-            
+
             pst.executeUpdate();
 
             dbc.executeUpdate(pst); //Übernehme userUpdates
@@ -872,6 +871,102 @@ public class DBOperations {
                     .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public static boolean removeDVD(int dvdid) {
+        if (!isAusgeliehen(dvdid)) {
+            DBController dbc = Control.getInstance().getDbManager();
+            //Remove aus Ausgeliehen
+            String sql = "DELETE FROM `tbl_dvd` WHERE (`DVD_ID`= " + dvdid + " )";
+            dbc.executeUpdate(sql);
+            //Remove aus Reserviert
+            sql = "DELETE FROM `tbl_ausleihe` WHERE (`DVD_ID`= " + dvdid + " )";
+            dbc.executeUpdate(sql);
+            //Remove aus DVD
+            sql = "DELETE FROM `tbl_reservierung` WHERE (`DVD_ID`= " + dvdid + " )";
+            dbc.executeUpdate(sql);
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean addDVD(DVD d, int editor) {
+        boolean erg = false;
+        DBController dbc = Control.getInstance().getDbManager();
+        //Test if Artikelnummer vorhanden
+        String sql = "SELECT * FROM tbl_DVD WHERE art_nr = " + d.getS_artikelnr();
+        ResultSet rs = dbc.executeQuery(sql);
+
+        boolean exist = false;
+        try {
+            while (rs.next()) {
+                exist = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (exist) {
+            return erg;
+        }
+        String insert = "INSERT INTO `tbl_dvd` (`art_nr`, `FI_ID`, `lent`, `notice`, `last_edit_by`, `last_edit`) VALUES (?, ?, '0', ?, ?, ?)";
+        PreparedStatement pst;
+        try {
+            pst = dbc.getConnection().prepareStatement(insert);
+
+            pst.setInt(1, Integer.parseInt(d.getS_artikelnr()));
+            pst.setInt(2, d.getFilm().getFILMID());
+            pst.setString(3, d.getS_notiz());
+            pst.setInt(4, editor);
+            java.util.Date now = new java.util.Date();
+            Date sqlDate = new Date(now.getTime());
+            pst.setDate(5, sqlDate);
+
+            dbc.executeUpdate(pst);
+            erg = true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return erg;
+    }
+
+    public static boolean updateDVD(DVD d, int editor) {
+        boolean erg = false;
+        DBController dbc = Control.getInstance().getDbManager();
+        //Test if Artikelnummer vorhanden
+        String sql = "SELECT * FROM tbl_DVD WHERE art_nr = " + d.getS_artikelnr() + " AND NOT DVD_ID = " + d.getDVDID();
+        ResultSet rs = dbc.executeQuery(sql);
+
+        boolean exist = false;
+        try {
+            while (rs.next()) {
+                exist = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (exist) {
+            return erg;
+        }
+        String update = "UPDATE `tbl_dvd` SET `notice`=?, art_nr=?, last_edit_by=?, last_edit=? WHERE (`DVD_ID`=?)";
+        String insert = "INSERT INTO `tbl_dvd` (`art_nr`, `FI_ID`, `lent`, `notice`, `last_edit_by`, `last_edit`) VALUES (?, ?, '0', ?, ?, ?)";
+        PreparedStatement pst;
+        try {
+            pst = dbc.getConnection().prepareStatement(update);
+
+            pst.setInt(2, Integer.parseInt(d.getS_artikelnr()));
+            pst.setString(1, d.getS_notiz());
+            pst.setInt(3, editor);
+            java.util.Date now = new java.util.Date();
+            Date sqlDate = new Date(now.getTime());
+            pst.setDate(4, sqlDate);
+            pst.setInt(5, d.getDVDID());
+
+            dbc.executeUpdate(pst);
+            erg = true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return erg;
     }
 
     public static void setReservierungUngueltig(int resid) {
