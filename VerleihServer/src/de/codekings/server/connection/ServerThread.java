@@ -426,9 +426,12 @@ class ServerThread extends Thread {
         // <editor-fold defaultstate="collapsed" desc="getKunde">
         if (m.getCommand().equalsIgnoreCase("getKunde")) {
             Message answer = new Message("returnKunde");
-
-            int id = DBOperations.getUser(m.getAdditionalparameter().get("email")).getU_ID();
-
+            int id = 0;
+            if (m.getAdditionalparameter().containsKey("email")) {
+                id = DBOperations.getUser(m.getAdditionalparameter().get("email")).getU_ID();
+            } else {
+                id = Integer.parseInt(m.getAdditionalparameter().get("KU_ID"));
+            }
             Kunde k = DBOperations.getKunde(id);
             answer.addSendable(k);
 
@@ -462,18 +465,18 @@ class ServerThread extends Thread {
         // <editor-fold defaultstate="collapsed" desc="getReservierungen">
         if (m.getCommand().equalsIgnoreCase("getReservierungen")) {
             Message answer = new Message("returnReservierungen");
-            if(m.getAdditionalparameter().containsKey("email")){
-            String email = m.getAdditionalparameter().get("email");
-            ArrayList<Reservierung> res = DBOperations.getReservierungOfKunde2(DBOperations.getKunde(DBOperations.getUser(email).getU_ID()).getKU_ID());
-            for (Reservierung r : res) {
-                answer.addSendable(r);
-            }
-            }else{
+            if (m.getAdditionalparameter().containsKey("email")) {
+                String email = m.getAdditionalparameter().get("email");
+                ArrayList<Reservierung> res = DBOperations.getReservierungOfKunde2(DBOperations.getKunde(DBOperations.getUser(email).getU_ID()).getKU_ID());
+                for (Reservierung r : res) {
+                    answer.addSendable(r);
+                }
+            } else {
                 int accountid = Integer.parseInt(m.getAdditionalparameter().get("accnr"));
                 ArrayList<Reservierung> res = DBOperations.getReservierungOfKunde2(accountid);
-            for (Reservierung r : res) {
-                answer.addSendable(r);
-            }
+                for (Reservierung r : res) {
+                    answer.addSendable(r);
+                }
             }
 
             write(j.parseObjectToString(answer));
@@ -584,6 +587,26 @@ class ServerThread extends Thread {
             String email = m.getAdditionalparameter().get("email");
             int editor = DBOperations.getUser(email).getU_ID();
             if (DBOperations.updateDVD(dvd, editor)) {
+                answer.addAdditionalParameter("result", "success");
+            } else {
+                answer.addAdditionalParameter("result", "artnrfailed");
+            }
+
+            write(j.parseObjectToString(answer));
+            beenden = true;
+
+        }//</editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="submitAusleihe">
+        if (m.getCommand().equalsIgnoreCase("submitAusleihe")) {
+            Message answer = new Message("returnsubmitAusleihe");
+            int id = Integer.parseInt(m.getAdditionalparameter().get("accnr"));
+            double kosten = Double.parseDouble(m.getAdditionalparameter().get("kosten"));
+            Kunde k = DBOperations.getKunde(id);
+            k.setAccountbalance(k.getAccountbalance() - kosten);
+            Date ende = new Date(Long.parseLong(m.getAdditionalparameter().get("date")));
+
+            if (DBOperations.ausleihe(id, ende)) {
                 answer.addAdditionalParameter("result", "success");
             } else {
                 answer.addAdditionalParameter("result", "artnrfailed");

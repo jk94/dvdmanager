@@ -982,25 +982,55 @@ public class DBOperations {
             ex.printStackTrace();
         }
     }
-    
-    public static void updateGueltigkeit(){
+
+    public static void updateGueltigkeit() {
         String sql = "SELECT * FROM tbl_reservierung WHERE gueltig = 1";
 
         DBController dbc = Control.getInstance().getDbManager();
-        
+
         ResultSet rs = dbc.executeQuery(sql);
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 java.util.Date now = new java.util.Date();
                 java.util.Date resDate = new java.util.Date(rs.getLong("reservierungsdatum"));
                 long diff = now.getTime() - resDate.getTime();
-                if(TimeUnit.MILLISECONDS.toMinutes(diff) > 20){
+                if (TimeUnit.MILLISECONDS.toMinutes(diff) > 20) {
                     setReservierungUngueltig(rs.getInt("RES_ID"));
                 }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static boolean ausleihe(int ku_id, java.util.Date ende) {
+        boolean erg = false;
+        ArrayList<Reservierung> res = getReservierungOfKunde2(ku_id);
+        ArrayList<DVD> dvds = getReservierungOfKunde(ku_id);
+        DBController dbc = Control.getInstance().getDbManager();
+        for (DVD r : dvds) {
+            String sql = "INSERT INTO `tbl_ausleihe` (`KU_ID`, `DVD_ID`, `begindate`, `enddate`, `returned`) VALUES (?, ?, ?, ?, '0')";
+            try {
+                PreparedStatement pst = dbc.getConnection().prepareStatement(sql);
+                pst.setInt(1, ku_id);
+                pst.setInt(2, r.getDVDID());
+                java.util.Date now = new java.util.Date();
+                Date sqlnow = new Date(now.getTime());
+                pst.setDate(3, sqlnow);
+                pst.setDate(4, new Date(ende.getTime()));
+
+                dbc.executeUpdate(pst);
+            } catch (SQLException e) {
+                erg = false;
+                e.printStackTrace();
+            }
+        }
+        for(Reservierung r: res){
+            setReservierungUngueltig(r.getResid());
+        }
+        erg = true;
+
+        return erg;
     }
 
     public static boolean reserviereEineDVD(int filmid, int kundenid) {
