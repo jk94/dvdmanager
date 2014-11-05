@@ -19,6 +19,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -115,6 +117,18 @@ public class TemplateController implements Initializable {
         header_logo.setImage(new Image(TemplateController.class.getClassLoader().getResourceAsStream("de/codekings/client/GUI/Elements/cover.png")));
 // TODO
 
+        head_btn_search.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getContentControl().changeContent(head_search_field.getText());
+            head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
+            head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
+        });
+        head_search_field.setOnKeyPressed((KeyEvent event) -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                Control.getControl().getContentControl().changeContent(head_search_field.getText());
+                head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
+                head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
+            }
+        });
         btn_katalog_start.setOnMouseClicked((MouseEvent event) -> {
             Control.getControl().getContentControl().changeContent(ContentPageType.Katalog_Start, false);
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
@@ -190,9 +204,9 @@ public class TemplateController implements Initializable {
         return content_base;
     }
 
-    public void initAfterInit(){
+    public void initAfterInit() {
         head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
         head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
     }
-    
+
 }

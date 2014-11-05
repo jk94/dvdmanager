@@ -42,9 +42,32 @@ public class Control {
 
         //Initialisiere CoverManager
         loadCoverManager();
-        
+
         //Initialisiere unverschlüsselten Server und startet ihn.
         runServer();
+
+        //Setze Reservierungsungültikeitstimer
+        ladeungueltigkeitstimer();
+    }
+
+    private void ladeungueltigkeitstimer() {
+        Thread t = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(60000l);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    DBOperations.updateGueltigkeit();
+                    System.out.println("Ausgeführt");
+                }
+            }
+        });
+        t.setDaemon(true);
+        t.start();
     }
 
     public static Control getInstance() {
@@ -66,8 +89,8 @@ public class Control {
     public Logger getLogger() {
         return log;
     }
-    
-    public CoverManager getCoverManager(){
+
+    public CoverManager getCoverManager() {
         return coverManager;
     }
 
@@ -107,7 +130,7 @@ public class Control {
 
     public final void loadCoverManager() {
         this.coverManager = new CoverManager();
-        while(!coverManager.isFirstLoaded()){
+        while (!coverManager.isFirstLoaded()) {
             try {
                 Thread.sleep(100l);
             } catch (InterruptedException ex) {

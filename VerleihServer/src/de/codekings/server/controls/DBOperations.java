@@ -19,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -977,6 +978,26 @@ public class DBOperations {
             PreparedStatement pst = dbc.getConnection().prepareStatement(sql);
             pst.setInt(1, resid);
             dbc.executeUpdate(pst);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static void updateGueltigkeit(){
+        String sql = "SELECT * FROM tbl_reservierung WHERE gueltig = 1";
+
+        DBController dbc = Control.getInstance().getDbManager();
+        
+        ResultSet rs = dbc.executeQuery(sql);
+        try {
+            while(rs.next()){
+                java.util.Date now = new java.util.Date();
+                java.util.Date resDate = new java.util.Date(rs.getLong("reservierungsdatum"));
+                long diff = now.getTime() - resDate.getTime();
+                if(TimeUnit.MILLISECONDS.toMinutes(diff) > 20){
+                    setReservierungUngueltig(rs.getInt("RES_ID"));
+                }
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

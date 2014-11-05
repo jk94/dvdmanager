@@ -39,6 +39,18 @@ public class ContentControl {
         return verlManager;
     }
 
+    public void changeContent(String search) {
+        ScrollPane contpane = templateController.getContent_base();
+        Parent p = null;
+        Katalogmanager k = new Katalogmanager(datamanager);
+        p = k.getContentView(search);
+
+        verlManager.addPage(ContentPageType.Katalog_Search);
+
+        contpane.setContent(p);
+
+    }
+
     public boolean changeContent(ContentPageType t, boolean fwORbw) {
         ScrollPane contpane = templateController.getContent_base();
         if (verlManager.getPage() != null) {
@@ -55,7 +67,10 @@ public class ContentControl {
 
             case Katalog_Titelsuche:
                 break;
-
+            case Katalog_Search:
+                Katalogmanager k2 = new Katalogmanager(datamanager);
+                p = k2.getContentView();
+                break;
             case Kunde_Start:
                 try {
                     p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Kunden/kunde_start.fxml"));

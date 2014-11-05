@@ -137,6 +137,7 @@ public class AusleihenController implements Initializable, MessageReturn {
         }
         reservierungenerhalten = false;
         ladeTableView();
+        tbvw_reservierungen.getItems().clear();
         tbvw_reservierungen.getItems().addAll(reservierungsdata);
     }
     

@@ -23,8 +23,7 @@ import javafx.stage.WindowEvent;
 public class MainApplication extends Application {
 
     private TemplateController templateController = null;
-    private Control c;
-
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = null;
