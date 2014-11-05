@@ -7,6 +7,7 @@ package de.codekings.server.connection;
 
 import de.codekings.common.Connection.Hasher;
 import de.codekings.common.Connection.Message;
+import de.codekings.common.datacontents.Ausleihe;
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.DVD;
 import de.codekings.common.datacontents.Film;
@@ -616,7 +617,33 @@ class ServerThread extends Thread {
             beenden = true;
 
         }//</editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="getAusleihung">
+        if (m.getCommand().equalsIgnoreCase("getAusleihung")) {
+            Message answer = new Message("returnAusleihe");
+            int id = Integer.parseInt(m.getAdditionalparameter().get("art_nr"));
+            
+           answer.addSendable(DBOperations.getAusleihe(id));
 
+            write(j.parseObjectToString(answer));
+            beenden = true;
+
+        }//</editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="removeAusleihung">
+        if (m.getCommand().equalsIgnoreCase("removeAusleihung")) {
+            Message answer = new Message("AusleiheRemove");
+            for(Sendable s:m.getContent()){
+                if(s instanceof Ausleihe){
+                    Ausleihe a = (Ausleihe) s;
+                    DBOperations.setRueckgabe(a.getAusleihid());
+                }
+            }
+            write(j.parseObjectToString(answer));
+            beenden = true;
+
+        }//</editor-fold>
+        
         return beenden;
 
     }

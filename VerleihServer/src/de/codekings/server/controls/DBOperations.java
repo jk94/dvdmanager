@@ -1,6 +1,7 @@
 package de.codekings.server.controls;
 
 import de.codekings.common.Enumerators.ClassType;
+import de.codekings.common.datacontents.Ausleihe;
 import de.codekings.common.datacontents.Cover;
 import de.codekings.common.datacontents.DVD;
 import de.codekings.common.datacontents.Film;
@@ -1033,6 +1034,39 @@ public class DBOperations {
         return erg;
     }
 
+    public static Ausleihe getAusleihe(int art_nr){
+        String sql = "SELECT * FROM tbl_ausleihe a, tbl_dvd d WHERE art_nr = " + art_nr + " AND d.DVD_ID = a.DVD_ID AND returned = 0";
+        DBController dbc = Control.getInstance().getDbManager();
+        Ausleihe a = new Ausleihe();
+        ResultSet rs = dbc.executeQuery(sql);
+        try {
+            while(rs.next()){
+                java.util.Date begin = new Date(rs.getDate("begindate").getTime());
+                java.util.Date ende = new Date(rs.getDate("enddate").getTime());
+                a = new Ausleihe(rs.getInt("AUS_ID"), -1, begin, ende, getDVD(rs.getInt("DVD_ID")));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return a;
+    }
+    
+    public static void setRueckgabe(int aus_id){
+        String sql = "UPDATE `tbl_ausleihe` SET `returned`='1' WHERE (`AUS_ID`=?)";
+
+        DBController dbc = Control.getInstance().getDbManager();
+
+        try {
+            PreparedStatement pst = dbc.getConnection().prepareStatement(sql);
+            pst.setInt(1, aus_id);
+            dbc.executeUpdate(pst);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public static boolean reserviereEineDVD(int filmid, int kundenid) {
         ArrayList<DVD> alleDVDs = getDVDs(filmid);
         DBController dbc = Control.getInstance().getDbManager();
