@@ -123,6 +123,7 @@ public class Kunde_reservierungenController implements Initializable, MessageRet
                 Logger.getLogger(Kunde_reservierungenController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        reservierungenerhalten = false;
 
         String columnname[] = {"#", "Filmname", "Artikelnr.", "gültig bis", "Kosten"};
         String variablename[] = {"listnummer", "filmname", "artikelnr", "gueltigbis", "kosten"};
