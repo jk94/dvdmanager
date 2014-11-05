@@ -7,12 +7,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.ZurueckgebenController">
+<AnchorPane id="AnchorPane" prefHeight="464.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.ZurueckgebenController">
    <children>
-      <Button fx:id="ma_return_btnruecknahme" layoutX="397.0" layoutY="330.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" styleClass="standard-btn" text="Artikel zurücknehmen" />
-      <TableView fx:id="ma_return_table" layoutX="55.0" layoutY="100.0" prefHeight="200.0" prefWidth="491.0" />
-      <TextField fx:id="ma_return_accnr_input" layoutX="55.0" layoutY="53.0" styleClass="katalog-textfield" />
-      <Label fx:id="ma_return_label" layoutX="55.0" layoutY="28.0" styleClass="standard-text" text="Bitte gebe die Account-Nummer ein:" />
-      <Button fx:id="ma_return_btnanzeigen" layoutX="217.0" layoutY="53.0" mnemonicParsing="false" styleClass="standard-btn" text="Anzeigen" />
+      <Button fx:id="btn_abschließen" layoutX="503.0" layoutY="425.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" styleClass="standard-btn" text="Abschließen" />
+      <TableView fx:id="tbvw_filme" layoutX="55.0" layoutY="100.0" prefHeight="315.0" prefWidth="597.0" />
+      <TextField fx:id="txf_artikelnummer" layoutX="55.0" layoutY="53.0" prefHeight="25.0" prefWidth="195.0" promptText="Artikelnummer" styleClass="katalog-textfield" />
+      <Label fx:id="ma_return_label" layoutX="55.0" layoutY="28.0" styleClass="standard-text" text="Bitte gebe die Artikel-Nummer ein:" />
+      <Button fx:id="btn_suchen" layoutX="259.0" layoutY="53.0" mnemonicParsing="false" styleClass="standard-btn" text="Suchen" />
    </children>
 </AnchorPane>

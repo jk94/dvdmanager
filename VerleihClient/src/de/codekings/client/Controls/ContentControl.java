@@ -123,7 +123,7 @@ public class ContentControl {
                 break;
             case MA_Return:
                 try {
-                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Mitarbeiter/return_film.fxml"));
+                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Mitarbeiter/zurueckgeben.fxml"));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
