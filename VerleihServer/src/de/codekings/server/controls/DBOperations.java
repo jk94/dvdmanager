@@ -361,10 +361,10 @@ public class DBOperations {
         }
         return cover;
     }
-       
-    public static int addUser(User u, int editor) {
-        String sql = "INSERT INTO `tbl_user` ( --- werte ----) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '0.5', ?, ?)";
+
+    public static void addUser (User u) {
+        String sql = "INSERT INTO `tbl_user` ( name, vorname, strasse, plz, ort, passwort, email, accountnummer, hausnr, geburtsdatum) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         DBController dbc = Control.getInstance().getDbManager();
 
@@ -372,30 +372,45 @@ public class DBOperations {
             PreparedStatement pst = dbc.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, u.getName());
             pst.setString(2, u.getVorname());
-            
-            pst.setInt(12, editor);
-            //Current Time
-            java.util.Date utilDate = new java.util.Date();
-            java.sql.Date lastedit = new java.sql.Date(utilDate.getTime());
-            pst.setDate(13, lastedit);
+            pst.setString(3, u.getStrasse());
+            pst.setString(4, u.getPlz());
+            pst.setString(5, u.getOrt());
+            pst.setString(6, u.getPasswort());
+            pst.setString(7, u.getEmail());
+            pst.setString(8, "");
+            pst.setInt(9, u.getHausnr());
+            pst.setDate(10, new java.sql.Date(u.getGeburtsdatum().getTime()));
 
             pst.executeUpdate();
             ResultSet rs = pst.getGeneratedKeys();
             while (rs.next()) {
                 u.setU_ID(rs.getInt(1));
             }
-            //dbc.executeUpdate(pst);
-           
+            String accnr = String.valueOf(u.getU_ID());
+            while (accnr.length() < 10) {
+                accnr = "0" + accnr;
+            }
+            dbc.executeUpdate(pst); //Übernehme userUpdates
+            
+            String sql2 = "UPDATE `tbl_user` SET `accountnummer`=?  WHERE (`U_ID`=?)";
+            PreparedStatement pst2 = dbc.getConnection().prepareStatement(sql2);
+            pst2.setString(1, accnr);
+            pst2.setInt(2, u.getU_ID());
+            pst2.executeUpdate();
+
+            
+            dbc.executeUpdate(pst2);
+
         } catch (SQLException ex) {
             Logger.getLogger(DBOperations.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        return u.getU_ID();
-    }
-    
-    public static void updateUser(User u, int u_id) {
-        String sql = "UPDATE ---werte --- last_edit_by=?, last_edit=? WHERE (`U_ID`=?)";
         
+    }
+
+    public static void updateUser(User u) {
+        String sql = "UPDATE `tbl_user` ( name, vorname, strasse, plz, ort, passwort, email, hausnr, geburtsdatum) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) WHERE (`U_ID`=?)";
 
         DBController dbc = Control.getInstance().getDbManager();
 
@@ -403,27 +418,25 @@ public class DBOperations {
             PreparedStatement pst = dbc.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, u.getName());
             pst.setString(2, u.getVorname());
+            pst.setString(3, u.getStrasse());
+            pst.setString(4, u.getPlz());
+            pst.setString(5, u.getOrt());
+            pst.setString(6, u.getPasswort());
+            pst.setString(7, u.getEmail());
+            pst.setInt(8, u.getHausnr());
+            pst.setDate(9, new java.sql.Date(u.getGeburtsdatum().getTime()));
+            pst.setInt(10, u.getU_ID());
             
-            
-            //Last EDIT!!
-            pst.setInt(11, u_id);
-            //Current Time
-            java.util.Date utilDate = new java.util.Date();
-            java.sql.Date lastedit = new java.sql.Date(utilDate.getTime());
-            pst.setDate(12, lastedit);
-
-            pst.setInt(13, u.getU_ID());
+            pst.executeUpdate();
 
             dbc.executeUpdate(pst); //Übernehme userUpdates
 
-            
         } catch (SQLException ex) {
             Logger.getLogger(DBOperations.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
-     
-     
+
     public static User getUser(String email) {
         User ergUser = null;
 

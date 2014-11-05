@@ -459,33 +459,43 @@ class ServerThread extends Thread {
 
         }//</editor-fold>
 
-        
         // <editor-fold defaultstate="collapsed" desc="updateUser">
         if (m.getCommand().equalsIgnoreCase("updateUser")) {
             User u = null;
             
+            for (Sendable s : m.getContent()) {
+                if (s instanceof User) {
+                    u = (User) s;
+                    break;
+                }
+            }
+               
             Message answer = new Message("updateUserSuccess");
-            
-           DBOperations.updateUser(u, i_timeout);
-            
+
+            DBOperations.updateUser(u);
+
             write(j.parseObjectToString(answer));
             beenden = true;
-            
+
         }//</editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="addUser">
         if (m.getCommand().equalsIgnoreCase("addUser")) {
             User u = null;
-            
+            for (Sendable s : m.getContent()) {
+                if (s instanceof User) {
+                    u = (User) s;
+                    break;
+                }
+            }
             Message answer = new Message("addUserSuccess");
-            
-           DBOperations.addUser(u, i_timeout);
-            
+
+            DBOperations.addUser(u);
+
             write(j.parseObjectToString(answer));
             beenden = true;
-            
+
         }//</editor-fold>
-        
 
         return beenden;
 
