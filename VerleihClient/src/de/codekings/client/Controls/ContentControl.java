@@ -82,6 +82,7 @@ public class ContentControl {
                     p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Kunden/kunde_kontoverwaltung.fxml"));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
+                    e.printStackTrace();
                 }
                 break;
             case Kunde_BewAbg:
