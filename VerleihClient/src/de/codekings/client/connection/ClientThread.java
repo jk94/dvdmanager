@@ -51,6 +51,7 @@ public class ClientThread extends Thread {
                 JSON_Parser jreader = new JSON_Parser();
                 while (reader != null && (s = reader.readLine()) != null) {
                     //TODO Annahme der Daten
+                    System.out.println(s);
                     s = s.trim();
                     if (s.equals("")) {
                     } else {
