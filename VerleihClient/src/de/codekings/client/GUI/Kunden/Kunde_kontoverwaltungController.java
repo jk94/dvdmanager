@@ -11,6 +11,7 @@ import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
+import de.codekings.common.datacontents.Kunde;
 import de.codekings.common.datacontents.Sendable;
 import de.codekings.common.datacontents.User;
 import java.net.URL;
@@ -47,7 +48,7 @@ public class Kunde_kontoverwaltungController implements Initializable, MessageRe
     @FXML
     private Label kunde_konto_guthaben;
     
-    private ObservableList<User> userdata;
+    private ObservableList<Kunde> kundendata;
     
     private boolean datenerhalten = false;
    
@@ -66,7 +67,7 @@ public class Kunde_kontoverwaltungController implements Initializable, MessageRe
         String host = cfgManager.getConfigs().getProperty("ip");
         int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
 
-        Message request = new Message("getUser");
+        Message request = new Message("getKunde");
         request.addAdditionalParameter("email", email);
         ClientThread loginsession = new ClientThread(this, host, port);
         loginsession.requestToServer(request);
@@ -82,28 +83,28 @@ public class Kunde_kontoverwaltungController implements Initializable, MessageRe
         }
         datenerhalten = false;
         
-        userdata.get(0).getEmail();
-             /*   
-        kunde_konto_vorname.setText(vorname);
-        kunde_konto_name.setText(name);
-        kunde_konto_email.setText(email);
-        kunde_konto_adresse.setText(adresse);
-        kunde_konto_hausnr.setText(hausnr);
-        kunde_konto_plz.setText(plz);
-        kunde_konto_ort.setText(ort);
-        kunde_konto_guthaben.setText(guthaben);
-        */
+        
+               
+        kunde_konto_vorname.setText(kundendata.get(0).getVorname());
+        kunde_konto_name.setText(kundendata.get(0).getName());
+        kunde_konto_email.setText(kundendata.get(0).getEmail());
+        kunde_konto_adresse.setText(kundendata.get(0).getStrasse());
+        kunde_konto_hausnr.setText(String.valueOf(kundendata.get(0).getHausnr()));
+        kunde_konto_plz.setText(kundendata.get(0).getPlz());
+        kunde_konto_ort.setText(kundendata.get(0).getOrt());
+        kunde_konto_guthaben.setText(String.valueOf(kundendata.get(0).getAccountbalance()));
+        
                 
                 
      }    
 
     @Override
     public void returnedMessage(Message m) {
-       if (m.getCommand().equalsIgnoreCase("returnUsers")) {
+       if (m.getCommand().equalsIgnoreCase("returnKunde")) {
 
             for (Sendable s : m.getContent()) {
-                if (s instanceof User) {
-                    userdata.add((User) s);
+                if (s instanceof Kunde) {
+                    kundendata.add((Kunde) s);
                 }
             }
 

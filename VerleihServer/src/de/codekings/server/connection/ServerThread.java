@@ -423,6 +423,20 @@ class ServerThread extends Thread {
             beenden = true;
         }//</editor-fold>
 
+        // <editor-fold defaultstate="collapsed" desc="getKunde">
+        if (m.getCommand().equalsIgnoreCase("getKunde")) {
+            Message answer = new Message("returnKunde");
+
+            int id = DBOperations.getUser(m.getAdditionalparameter().get("email")).getU_ID();
+
+            Kunde k = DBOperations.getKunde(id);
+            answer.addSendable(k);
+
+            write(j.parseObjectToString(answer));
+            beenden = true;
+
+        }//</editor-fold>
+
         // <editor-fold defaultstate="collapsed" desc="getUsers">
         if (m.getCommand().equalsIgnoreCase("getUsers")) {
             Message answer = new Message("returnUsers");
@@ -548,7 +562,7 @@ class ServerThread extends Thread {
             beenden = true;
 
         }//</editor-fold>
-        
+
         // <editor-fold defaultstate="collapsed" desc="saveDVD">
         if (m.getCommand().equalsIgnoreCase("saveDVD")) {
             Message answer = new Message("DVDsave");
