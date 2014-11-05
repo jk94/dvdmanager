@@ -11,6 +11,7 @@ import de.codekings.client.connection.MessageReturn;
 import de.codekings.client.datacontent.Film_Client;
 import de.codekings.common.Connection.Hasher;
 import de.codekings.common.Connection.Message;
+import de.codekings.common.Enumerators.ClassType;
 import de.codekings.common.config.ConfigManager;
 import de.codekings.common.datacontents.Sendable;
 import de.codekings.common.datacontents.User;
@@ -188,6 +189,26 @@ public class Create_userController implements Initializable, MessageReturn {
 
             usererhalten = true;
         }
+        if (m.getCommand().equalsIgnoreCase("updateUserSuccess")) {
+
+            for (Sendable s : m.getContent()) {
+                if (s instanceof User) {
+                    userdata.add((User) s);
+                }
+            }
+
+            usererhalten = true;
+        }
+        if (m.getCommand().equalsIgnoreCase("addUserSucess")) {
+
+            for (Sendable s : m.getContent()) {
+                if (s instanceof User) {
+                    userdata.add((User) s);
+                }
+            }
+
+            usererhalten = true;
+        }
     }
 
     public void check_Input() {
@@ -323,7 +344,7 @@ public class Create_userController implements Initializable, MessageReturn {
         user_input_ort.setText("");
        }
      
-     /*private User generateUser() {
+     private User generateUser() {
         
         String vorname = user_input_vorname.getText();
         String name = user_input_nachname.getText();
@@ -337,20 +358,70 @@ public class Create_userController implements Initializable, MessageReturn {
         String plz = user_input_plz.getText();
         String ort = user_input_ort.getText();
         String str = user_input_adresse.getText();
-           
-                
+        
+        User u = new User(selectedUserID, name, vorname, str, plz, ort, passwort, email, vorname, selectedUserID, d_geb, ClassType.T_DVD);
+        
+        ConfigManager cfgManager = Control.getControl().getCfgManager();
+        String host = cfgManager.getConfigs().getProperty("ip");
+        int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+        Message request = new Message("addUser");
+
+        ClientThread loginsession = new ClientThread(this, host, port);
+        loginsession.requestToServer(request);
+
+        int counter = 0;
+        while (counter < 50 && !usererhalten) {
+            counter++;
+            try {
+                Thread.sleep(500l);
+            } catch (InterruptedException e) {
+            }
+        }
+
+        usererhalten = false;
+        
         return u; 
     }
      
-    /* private User updateUser() {
-        User u = new User(selectedUserID);
-        u.setS_description(beschreibung);
-        u.setS_regie(regie);
-        u.setS_subtitel(sub);
-        u.setS_titel(titel);
-        u.setS_trailer(trailer);
-        u.setI_duration(Integer.parseInt(txf_laufzeit.getText()));
+    private User updateUser() {
+        
+        String vorname = user_input_vorname.getText();
+        String name = user_input_nachname.getText();
+        String email = user_input_email.getText();
+        String passwort = user_passwort.getText();
+
+        LocalDate geburtstag = user_datum.getValue();
+        Instant datum = Instant.from(geburtstag.atStartOfDay(ZoneId.systemDefault()));
+        Date d_geb = Date.from(datum);
+
+        String plz = user_input_plz.getText();
+        String ort = user_input_ort.getText();
+        String str = user_input_adresse.getText();
+        
+        User u = new User(selectedUserID, name, vorname, str, plz, ort, passwort, email, vorname, selectedUserID, d_geb, ClassType.T_DVD);
+        
+        ConfigManager cfgManager = Control.getControl().getCfgManager();
+        String host = cfgManager.getConfigs().getProperty("ip");
+        int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+        Message request = new Message("updateUser");
+
+        ClientThread loginsession = new ClientThread(this, host, port);
+        loginsession.requestToServer(request);
+
+        int counter = 0;
+        while (counter < 50 && !usererhalten) {
+            counter++;
+            try {
+                Thread.sleep(500l);
+            } catch (InterruptedException e) {
+            }
+        }
+
+        usererhalten = false;
+        
         return u;
-    }*/
+    }
 }
 
