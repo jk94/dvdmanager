@@ -63,7 +63,7 @@ public class ContentControl {
                     System.out.println(e.getMessage());
                 }
                 break;
-            case Kunde_Ausleihen:
+            case Kunde_Reservierungen:
                 try {
                     p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Kunden/kunde_reservierungen.fxml"));
                 } catch (Exception e) {
@@ -80,13 +80,6 @@ public class ContentControl {
             case Kunde_Verwaltung:
                 try {
                     p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Kunden/kunde_kontoverwaltung.fxml"));
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-                break;
-            case Kunde_BewAbg:
-                try {
-                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Kunden/Kunde_bewerten_item.fxml"));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -115,6 +108,13 @@ public class ContentControl {
             case MA_Return:
                 try {
                     p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Mitarbeiter/return_film.fxml"));
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case MA_Ausleihe:
+                try {
+                    p = FXMLLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Mitarbeiter/ausleihen.fxml"));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }

@@ -948,7 +948,6 @@ public class DBOperations {
             return erg;
         }
         String update = "UPDATE `tbl_dvd` SET `notice`=?, art_nr=?, last_edit_by=?, last_edit=? WHERE (`DVD_ID`=?)";
-        String insert = "INSERT INTO `tbl_dvd` (`art_nr`, `FI_ID`, `lent`, `notice`, `last_edit_by`, `last_edit`) VALUES (?, ?, '0', ?, ?, ?)";
         PreparedStatement pst;
         try {
             pst = dbc.getConnection().prepareStatement(update);

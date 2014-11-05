@@ -74,7 +74,7 @@ public class TemplateController implements Initializable {
     @FXML
     private Button btn_kunde_start;
     @FXML
-    private Button btn_kunde_ausleihen;
+    private Button btn_kunde_reservierungen;
     @FXML
     private Button btn_kunde_entliehen;
     @FXML
@@ -125,8 +125,8 @@ public class TemplateController implements Initializable {
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });
-        btn_kunde_ausleihen.setOnMouseClicked((MouseEvent event) -> {
-            Control.getControl().getContentControl().changeContent(ContentPageType.Kunde_Ausleihen, false);
+        btn_kunde_reservierungen.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getContentControl().changeContent(ContentPageType.Kunde_Reservierungen, false);
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });
@@ -165,7 +165,21 @@ public class TemplateController implements Initializable {
             head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
             head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
         });
-        
+        btn_mab_ausleihe.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getContentControl().changeContent(ContentPageType.MA_Ausleihe, false);
+            head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
+            head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
+        });
+        head_btn_home.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getContentControl().changeContent(ContentPageType.Katalog_Start, false);
+            head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
+            head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
+        });
+        btn_mab_return.setOnMouseClicked((MouseEvent event) -> {
+            Control.getControl().getContentControl().changeContent(ContentPageType.MA_Return, false);
+            head_btn_back.setDisable(!ContentControl.getVerlaufsManager().canBack());
+            head_btn_forward.setDisable(!ContentControl.getVerlaufsManager().canNext());
+        });
     }
 
     public Accordion getMenu() {

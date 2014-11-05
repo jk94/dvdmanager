@@ -6,13 +6,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="content-back" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="de.codekings.client.GUI.Mitarbeiter.AusleihenController">
+<AnchorPane id="AnchorPane" prefHeight="474.0" prefWidth="688.0" styleClass="content-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.AusleihenController">
    <children>
-      <Button fx:id="ma_ausleihen_btnanzeigen" layoutX="220.0" layoutY="90.0" mnemonicParsing="false" styleClass="standard-btn" text="Anzeigen" />
-      <Label fx:id="ma_ausleihen_label" layoutX="51.0" layoutY="58.0" styleClass="standard-text" text="Bitte gebe die Account-Nummer ein:" />
-      <TextField fx:id="ma_ausleihen_accnr_input" layoutX="51.0" layoutY="90.0" styleClass="katalog-textfield" />
-      <TableView fx:id="ma_ausleihen_table" layoutX="51.0" layoutY="136.0" prefHeight="200.0" prefWidth="491.0" />
-      <Button fx:id="ma_ausleihen_btnausleihe" layoutX="413.0" layoutY="350.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="129.0" styleClass="standard-btn" text="Artikel verleihen" />
+      <Button fx:id="btn_anzeigen" layoutX="220.0" layoutY="90.0" mnemonicParsing="false" styleClass="standard-btn" text="Anzeigen" />
+      <Label layoutX="51.0" layoutY="58.0" styleClass="standard-text" text="Bitte gebe die Account-Nummer ein:" />
+      <TextField fx:id="txf_accountnr" layoutX="51.0" layoutY="90.0" promptText="Accountnummer" styleClass="katalog-textfield" />
+      <TableView fx:id="tbvw_reservierungen" layoutX="51.0" layoutY="136.0" prefHeight="246.0" prefWidth="571.0" />
+      <Button fx:id="btn_submit" layoutX="493.0" layoutY="394.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="129.0" styleClass="standard-btn" text="Abschluss" />
+      <DatePicker fx:id="datepicker" layoutX="450.0" layoutY="90.0" prefHeight="25.0" prefWidth="172.0" />
+      <Label layoutX="354.0" layoutY="94.0" text="Rückgabedatum:" />
+      <Button fx:id="btn_remove" layoutX="314.0" layoutY="394.0" mnemonicParsing="false" text="Ausgewählter Artikel löschen" />
    </children>
 </AnchorPane>

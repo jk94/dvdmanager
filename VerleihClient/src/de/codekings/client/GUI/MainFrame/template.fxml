@@ -37,7 +37,7 @@
                                 <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <Button fx:id="btn_kunde_start" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Start" />
-                                        <Button fx:id="btn_kunde_ausleihen" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Vorgemerkte Artikel" />
+                                        <Button fx:id="btn_kunde_reservierungen" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Vorgemerkte Artikel" />
                                         <Button fx:id="btn_kunde_entliehen" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Entliehene Artikel" />
                                         <Button fx:id="btn_kunde_kontoverwaltung" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Kontoverwaltung" />
                                     </children>
