@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -52,6 +53,24 @@ public class Kunde_kontoverwaltungController implements Initializable, MessageRe
     private Kunde kundendata;
 
     private boolean datenerhalten = false;
+    @FXML
+    private Pane kunde_konto_pane;
+    @FXML
+    private Label kunde_konto_name_lbl;
+    @FXML
+    private Label kunde_konto_vorname_lbl;
+    @FXML
+    private Label kunde_konto_guthaben_lbl;
+    @FXML
+    private Label kunde_konto_adresse_lbl;
+    @FXML
+    private Label kunde_konto_email_lbl;
+    @FXML
+    private Label kunde_konto_ort_lbl;
+    @FXML
+    private Label kunde_konto_hausnr_lbl;
+    @FXML
+    private Label kunde_konto_plz_lbl;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -90,7 +109,7 @@ public class Kunde_kontoverwaltungController implements Initializable, MessageRe
             kunde_konto_hausnr.setText(String.valueOf(kundendata.getHausnr()));
             kunde_konto_plz.setText(kundendata.getPlz());
             kunde_konto_ort.setText(kundendata.getOrt());
-            kunde_konto_guthaben.setText(String.valueOf(kundendata.getAccountbalance()));
+            kunde_konto_guthaben.setText(String.valueOf(kundendata.getAccountbalance()) + " €");
         }
     }
 

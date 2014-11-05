@@ -153,9 +153,15 @@ texfield:focused{
 
 }
 
-.scroll-base {
-    -fx-background-color:transparent;
+.scroll-base > .viewport {
+    -fx-background-color: transparent;
 }
+.scroll-base {
+    -fx-background-color: #1C1C1C;
+    -fx-border-color: #1C1C1C;
+    -fx-border-width: 5px;
+ }
+
 .katalog-background {
     -fx-background-color: #2E2E2E;
 }
@@ -183,6 +189,9 @@ texfield:focused{
     -fx-border-width: 2px;
     -fx-text-fill: #B43104;
     -fx-font-size: 14px;
+}
+.standard-btn:hover {
+   -fx-background-color: #1C1C1C;
 }
 
 .standard-text {

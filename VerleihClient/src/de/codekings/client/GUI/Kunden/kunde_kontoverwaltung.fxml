@@ -9,18 +9,26 @@
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="content-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Kunden.Kunde_kontoverwaltungController">
    <children>
       <Label layoutX="57.0" layoutY="39.0" prefHeight="17.0" prefWidth="224.0" styleClass="standard-text" text="Deine aktuellen Daten sind:" />
-      <Pane layoutX="169.0" layoutY="106.0">
+      <Pane fx:id="kunde_konto_pane" layoutX="124.0" layoutY="91.0" prefHeight="208.0" prefWidth="308.0" style="-fx-border-color: #B43104; -fx-border-width: 2px;">
          <children>
-            <Label fx:id="kunde_konto_ort" layoutX="149.0" layoutY="95.0" prefHeight="17.0" prefWidth="192.0" styleClass="standard-text" text="Ort" />
-            <Label fx:id="kunde_konto_email" layoutY="29.0" prefHeight="17.0" prefWidth="149.0" styleClass="standard-text" text="email@email.de" />
-            <Label fx:id="kunde_konto_name" layoutX="205.0" prefHeight="17.0" prefWidth="149.0" styleClass="standard-text" text="Name" />
-            <Label fx:id="kunde_konto_adresse" layoutY="60.0" prefHeight="17.0" prefWidth="192.0" styleClass="standard-text" text="Adresse" />
-            <Label fx:id="kunde_konto_plz" layoutY="95.0" prefHeight="17.0" prefWidth="50.0" styleClass="standard-text" text="PLZ" />
-            <Label fx:id="kunde_konto_guthaben" layoutY="127.0" prefHeight="17.0" prefWidth="94.0" styleClass="standard-text" text="Guthaben" />
-            <Label fx:id="kunde_konto_vorname" prefHeight="17.0" prefWidth="149.0" styleClass="standard-text" text="Vorname" />
-            <Label fx:id="kunde_konto_hausnr" layoutX="205.0" layoutY="60.0" prefHeight="17.0" prefWidth="50.0" styleClass="standard-text" text="HsNr" />
+            <Label fx:id="kunde_konto_ort" layoutX="147.0" layoutY="130.0" prefHeight="17.0" prefWidth="162.0" styleClass="standard-text" text="Ort" />
+            <Label fx:id="kunde_konto_email" layoutX="145.0" layoutY="59.0" prefHeight="17.0" prefWidth="149.0" styleClass="standard-text" text="email@email.de" />
+            <Label fx:id="kunde_konto_name" layoutX="145.0" layoutY="37.0" prefHeight="17.0" prefWidth="122.0" styleClass="standard-text" text="Name" />
+            <Label fx:id="kunde_konto_adresse" layoutX="146.0" layoutY="81.0" prefHeight="17.0" prefWidth="192.0" styleClass="standard-text" text="Adresse" />
+            <Label fx:id="kunde_konto_plz" layoutX="148.0" layoutY="156.0" prefHeight="17.0" prefWidth="85.0" styleClass="standard-text" text="PLZ" />
+            <Label fx:id="kunde_konto_guthaben" layoutX="145.0" layoutY="178.0" prefHeight="17.0" prefWidth="107.0" styleClass="standard-text" text="Guthaben" />
+            <Label fx:id="kunde_konto_vorname" layoutX="146.0" layoutY="17.0" prefHeight="17.0" prefWidth="116.0" styleClass="standard-text" text="Vorname" />
+            <Label fx:id="kunde_konto_hausnr" layoutX="147.0" layoutY="106.0" prefHeight="17.0" prefWidth="50.0" styleClass="standard-text" text="HsNr" />
+            <Label fx:id="kunde_konto_name_lbl" layoutX="13.0" layoutY="37.0" prefHeight="17.0" prefWidth="85.0" styleClass="standard-text" text="Name:" />
+            <Label fx:id="kunde_konto_vorname_lbl" layoutX="14.0" layoutY="17.0" prefHeight="17.0" prefWidth="85.0" styleClass="standard-text" text="Vorname:" />
+            <Label fx:id="kunde_konto_guthaben_lbl" layoutX="15.0" layoutY="177.0" prefHeight="17.0" prefWidth="71.0" styleClass="standard-text" text="Guthaben:" />
+            <Label fx:id="kunde_konto_adresse_lbl" layoutX="14.0" layoutY="82.0" prefHeight="17.0" prefWidth="85.0" styleClass="standard-text" text="Adresse:" />
+            <Label fx:id="kunde_konto_email_lbl" layoutX="14.0" layoutY="58.0" prefHeight="17.0" prefWidth="85.0" styleClass="standard-text" text="Email:" />
+            <Label fx:id="kunde_konto_ort_lbl" layoutX="13.0" layoutY="131.0" prefHeight="17.0" prefWidth="71.0" styleClass="standard-text" text="Ort:" />
+            <Label fx:id="kunde_konto_hausnr_lbl" layoutX="13.0" layoutY="106.0" prefHeight="17.0" prefWidth="91.0" styleClass="standard-text" text="Hausnummer:" />
+            <Label fx:id="kunde_konto_plz_lbl" layoutX="14.0" layoutY="156.0" prefHeight="17.0" prefWidth="85.0" styleClass="standard-text" text="PLZ:" />
          </children>
       </Pane>
-      <Label layoutX="57.0" layoutY="314.0" prefHeight="17.0" prefWidth="392.0" styleClass="standard-text" text="Zum Ändern deiner Daten wende dich bitte an einen Mitarbeiter." />
+      <Label layoutX="50.0" layoutY="318.0" prefHeight="17.0" prefWidth="457.0" styleClass="standard-text" text="Zum Ändern deiner Daten wende dich bitte an einen Mitarbeiter." />
    </children>
 </AnchorPane>

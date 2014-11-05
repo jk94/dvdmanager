@@ -8,7 +8,7 @@
 
 <AnchorPane fx:id="create_anchor" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="881.0" styleClass="content-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Mitarbeiter.Create_filmController">
     <children>
-        <Button fx:id="btn_create" layoutX="607.0" layoutY="560.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Erstellen" />
+        <Button fx:id="btn_create" layoutX="591.0" layoutY="560.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Erstellen" />
         <TextField fx:id="txf_titel" layoutX="32.0" layoutY="34.0" prefHeight="25.0" prefWidth="463.0" promptText="Titel" />
         <TextArea fx:id="txf_beschreibung" layoutX="32.0" layoutY="339.0" prefHeight="144.0" prefWidth="463.0" promptText="Beschreibung" wrapText="true" />
       <RadioButton fx:id="rbtn_fsk0" layoutX="32.0" layoutY="493.0" mnemonicParsing="false" selected="true" style="-fx-text-fill: #B43104;" styleClass="content-radiobtn" text="kein FSK">
@@ -24,8 +24,8 @@
         <TextField fx:id="txf_schauspieler" layoutX="255.0" layoutY="106.0" prefHeight="25.0" prefWidth="240.0" promptText="Schauspieler" />
         <TextField fx:id="txf_regisseur" layoutX="255.0" layoutY="138.0" prefHeight="25.0" prefWidth="240.0" promptText="Regisseur" />
       <TextField fx:id="txf_subtitel" layoutX="32.0" layoutY="65.0" prefHeight="25.0" prefWidth="463.0" promptText="Subtitel" />
-      <TableView fx:id="tbvw_filme" layoutX="523.0" layoutY="37.0" prefHeight="515.0" prefWidth="325.0" />
-      <Button fx:id="btn_reset" layoutX="773.0" layoutY="560.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Verwerfen" />
+      <TableView fx:id="tbvw_filme" layoutX="512.0" layoutY="37.0" prefHeight="515.0" prefWidth="346.0" />
+      <Button fx:id="btn_reset" layoutX="767.0" layoutY="560.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Verwerfen" />
       <ComboBox fx:id="cb_genre" editable="true" layoutX="255.0" layoutY="175.0" prefHeight="25.0" prefWidth="240.0" promptText="Genre auswählen" />
       <ListView fx:id="li_genre_added" layoutX="255.0" layoutY="241.0" prefHeight="83.0" prefWidth="240.0" />
       <Button fx:id="btn_genre_add" layoutX="349.0" layoutY="207.0" mnemonicParsing="false">
@@ -44,8 +44,8 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Button fx:id="btn_update" layoutX="524.0" layoutY="560.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Update" />
-      <Button fx:id="btn_remove" layoutX="688.0" layoutY="560.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Löschen" />
+      <Button fx:id="btn_update" layoutX="512.0" layoutY="560.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Update" />
+      <Button fx:id="btn_remove" layoutX="680.0" layoutY="560.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Löschen" />
       <AnchorPane layoutX="32.0" layoutY="106.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="230.0" prefWidth="190.0" style="-fx-border-color: FFFFFF; -fx-border-width: 2px;">
          <children>
             <ImageView fx:id="img_cover" fitHeight="220.0" fitWidth="190.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">

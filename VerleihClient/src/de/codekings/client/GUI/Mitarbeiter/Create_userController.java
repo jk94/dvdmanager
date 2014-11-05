@@ -85,8 +85,6 @@ public class Create_userController implements Initializable, MessageReturn {
     private int selectedUserID = -1;
     private boolean usererhalten = false;
     @FXML
-    private TextField user_table_search;
-    @FXML
     private TableView<User> user_table;
     @FXML
     private TextField user_input_hausnr;

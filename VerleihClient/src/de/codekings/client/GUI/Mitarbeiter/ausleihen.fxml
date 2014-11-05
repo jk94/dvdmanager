@@ -15,6 +15,6 @@
       <Button fx:id="btn_submit" layoutX="493.0" layoutY="394.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="129.0" styleClass="standard-btn" text="Abschluss" />
       <DatePicker fx:id="datepicker" layoutX="450.0" layoutY="90.0" prefHeight="25.0" prefWidth="172.0" />
       <Label layoutX="354.0" layoutY="94.0" text="Rückgabedatum:" />
-      <Button fx:id="btn_remove" layoutX="314.0" layoutY="394.0" mnemonicParsing="false" text="Ausgewählter Artikel löschen" />
+      <Button fx:id="btn_remove" layoutX="279.0" layoutY="394.0" mnemonicParsing="false" styleClass="standard-btn" text="Ausgewählter Artikel löschen" />
    </children>
 </AnchorPane>
