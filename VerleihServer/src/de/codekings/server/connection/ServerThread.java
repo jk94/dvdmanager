@@ -497,6 +497,21 @@ class ServerThread extends Thread {
 
         }//</editor-fold>
 
+        // <editor-fold defaultstate="collapsed" desc="getDVDs">
+        if (m.getCommand().equalsIgnoreCase("getDVDs")) {
+            Message answer = new Message("returnDVDs");
+            int filmid = Integer.parseInt(m.getAdditionalparameter().get("FI_ID"));
+            ArrayList<DVD> dvds = DBOperations.getDVDs(filmid);
+            for (DVD d : dvds) {
+                answer.addSendable(d);
+            }
+
+            write(j.parseObjectToString(answer));
+            beenden = true;
+
+        }//</editor-fold>
+
+        
         return beenden;
 
     }
