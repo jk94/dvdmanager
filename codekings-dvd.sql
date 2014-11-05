@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50620
 File Encoding         : 65001
 
-Date: 2014-11-03 10:33:33
+Date: 2014-11-05 19:51:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,8 +23,8 @@ CREATE TABLE `tbl_ausleihe` (
   `AUS_ID` int(11) NOT NULL AUTO_INCREMENT,
   `KU_ID` int(11) NOT NULL,
   `DVD_ID` int(11) NOT NULL,
-  `begindate` int(11) NOT NULL,
-  `enddate` int(11) NOT NULL,
+  `begindate` date NOT NULL,
+  `enddate` date NOT NULL,
   `returned` int(11) DEFAULT NULL,
   PRIMARY KEY (`AUS_ID`),
   KEY `Kunde` (`KU_ID`),
@@ -36,7 +36,6 @@ CREATE TABLE `tbl_ausleihe` (
 -- ----------------------------
 -- Records of tbl_ausleihe
 -- ----------------------------
-INSERT INTO `tbl_ausleihe` VALUES ('1', '1', '1', '1410106018', '1410365236', '0');
 
 -- ----------------------------
 -- Table structure for tbl_charts
@@ -66,22 +65,32 @@ INSERT INTO `tbl_charts` VALUES ('2', '1', '361631565', '1', '1');
 DROP TABLE IF EXISTS `tbl_dvd`;
 CREATE TABLE `tbl_dvd` (
   `DVD_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `art_nr` varchar(10) NOT NULL,
+  `art_nr` int(10) NOT NULL,
   `FI_ID` int(11) NOT NULL,
   `lent` int(11) NOT NULL,
   `notice` varchar(255) DEFAULT NULL,
   `last_edit_by` int(11) DEFAULT NULL,
-  `last_edit` int(11) DEFAULT NULL,
+  `last_edit` date DEFAULT NULL,
   PRIMARY KEY (`DVD_ID`),
+  UNIQUE KEY `artikelnummer` (`art_nr`) USING BTREE,
   KEY `FI_ID` (`FI_ID`),
   KEY `last_edit_by` (`last_edit_by`),
+  CONSTRAINT `Filmiddvd` FOREIGN KEY (`FI_ID`) REFERENCES `tbl_film` (`FI_ID`),
   CONSTRAINT `LastEditBy` FOREIGN KEY (`last_edit_by`) REFERENCES `tbl_mitarbeiter` (`MA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_dvd
 -- ----------------------------
-INSERT INTO `tbl_dvd` VALUES ('1', '1235', '1', '0', '-', null, null);
+INSERT INTO `tbl_dvd` VALUES ('1', '1235', '1', '0', '', '1', '2014-11-04');
+INSERT INTO `tbl_dvd` VALUES ('2', '1234', '1', '0', '', '1', '2014-11-04');
+INSERT INTO `tbl_dvd` VALUES ('4', '1237', '3', '0', 'asdf', '1', '2014-11-04');
+INSERT INTO `tbl_dvd` VALUES ('5', '1238', '4', '0', 'asdf', '1', '2014-11-04');
+INSERT INTO `tbl_dvd` VALUES ('6', '2000', '5', '0', 'asdf', '1', '2014-11-05');
+INSERT INTO `tbl_dvd` VALUES ('7', '1240', '6', '0', 'Update Check', '1', '2014-11-05');
+INSERT INTO `tbl_dvd` VALUES ('8', '1241', '7', '0', 'asdf', '1', '2014-11-04');
+INSERT INTO `tbl_dvd` VALUES ('10', '1242', '4', '0', 'asdf', '1', '2014-11-05');
+INSERT INTO `tbl_dvd` VALUES ('13', '1248', '19', '0', 'dfakjl\nasdfkl\n\ntbvw_filme.getItems().get(selectedFilmID).getFilm()', '1', '2014-11-05');
 
 -- ----------------------------
 -- Table structure for tbl_film
@@ -107,7 +116,7 @@ CREATE TABLE `tbl_film` (
   PRIMARY KEY (`FI_ID`),
   KEY `FSK` (`fsk`),
   CONSTRAINT `FSK` FOREIGN KEY (`fsk`) REFERENCES `tbl_fsk` (`FSK_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_film
@@ -148,10 +157,8 @@ INSERT INTO `tbl_film` VALUES ('34', 'From Dusk Till Dawn', '', 'Die beiden krim
 INSERT INTO `tbl_film` VALUES ('35', 'Fluch der Karibik', '', 'Eine Freizeitparkattraktion als Inspiration für einen Film? Nichts scheint im Land der unbegrenzten Möglichkeiten zu abwegig, um nicht doch realisiert zu werden. So geschehen bei Fluch der Karibik: Pirates of the Caribbean ist ursprünglich nämlich eine Themenfahrt im kalifornischen Disneyland.\r\n\r\nIm Mittelpunkt von Fluch der Karibik steht Will Hunter (Orlando Bloom), der vor Jahren als Schiffbrüchiger auf offener See vom Gouverneur der Insel Port Royal und seiner Tochter Elizabeth Swann (Keira Knightley) gerettet wurde. Will ist im Besitz einer Münze, die aus einem verfluchten Piratenschatz stammt. Hinter dieser Münze sind nicht nur die zum ewigen Leben verdammten Piraten um Captain Barbossa (Geoffrey Rush) her, sondern auch der extravagant-trickreiche Jack Sparrow (Johnny Depp), ehemaliger Captain des Piratenschiffs Black Pearl. Als Elizabeth von Barbossas Schergen entführt wird, um durch ihr Blutopfer den Fluch der Karibik zu brechen, bilden Will und Jack Sparrow eine Zweckgemeinschaft, um Elizabeth und die Black Pearl zu befreien.', '3', '75', 'FluchDerKaribik.jpg', 'http://www.moviepilot.de/movies/fluch-der-karibik/trailer', 'Johnny Depp;\r\nGeoffrey Rush;\r\nOrlando Bloom;\r\nKeira Knightley;\r\nJonathan Pryce;\r\nJack Davenport', 'Gore Verbinski', '2003-09-02', '143', '0.5', '2', '2014-09-21', '0');
 INSERT INTO `tbl_film` VALUES ('36', 'Terminator', '', 'Wir schreiben das Jahr 2029. Intelligente Maschinen haben die Herrschaft über die Erde übernommen, die Menschheit ist nahezu eliminiert. Unter Führung des charismatischen Rebellen John Connor leisten die Überlebenden verzweifelten Widerstand. Um diesen ein für allemal zu brechen, entwickeln die Maschinen einen Erfolg versprechenden Plan:\r\n\r\nEin Cyborg aus der Zukunft (Arnold Schwarzenegger), genannt Terminator, wird auf eine Killer-Mission in die Gegenwart geschickt. Er soll Sarah Connor (Linda Hamilton) töten, die junge Frau, die eine entscheidende Rolle für die Menschheit spielen soll, indem sie dem zukünftigen Rebellenführer Leben schenken wird. D.h. wenn sie nicht vorher von der Killermaschine terminiert wird. Sie hat nur eine Chance zu überleben: Kyle Reese (Michael Biehn), einen Freiheitskämpfer, der ebenfalls aus der Zukunft gesandt wurde, um sie zu beschützen. Gemeinsam müssen sie den schier aussichtslosen Kampf gegen den Terminator aufnehmen, soll die zukünftige Menschheit nicht von den Maschinen endgültig ausgelöscht werden.', '4', '80', 'Terminator.jpg', 'http://www.moviepilot.de/movies/the-terminator/trailer', 'Arnold Schwarzenegger; Linda Hamilton; Michael Biehn; Lance Henriksen; Earl Boen; Paul Winfield', 'James Cameron', '1985-03-15', '108', '0.5', '2', '2014-09-21', '0');
 INSERT INTO `tbl_film` VALUES ('39', 'Crank Vicky', 'sadflkasdjflkasdjflk', 'Das ist nicht Chev Chelios’ (Jason Statham) Tag: Da er sich entschlossen hat, seine Karriere als Auftragskiller an den Nagel zu hängen, wurde ihm von seinem Konkurrenten Victor eine Dosis tödlichen Gifts verabreicht. Alles, was Chev nun tun kann, um seinen sofortigen Tod zu verhindern, ist seinen Adrenalinspiegel auf ausgesprochen hohem Niveau zu halten. Als hilfreich erweist sich hier, dass ihm eine ganze Menge übler Schergen auf den Fersen sind. Seine Freundin Eve (Amy Smart) scheut sich auch vor öffentlichem Sex nicht, um ihm die lebenswichtige Aufregung zu verschaffen. Und schließlich gibt es noch eine Rechnung mit Victor zu begleichen.', '4', '66', 'NoCover.jpg', 'http://www.moviepilot.de/movies/crank/trailer', 'Jason Statham; Efren Ramirez; Amy Smart; Dwight Yoakam; Jose Pablo Cantillo; Carlos Sanz', 'Mark Neveldine;Brian Taylor', '1970-01-01', '88', '0.5', '1', '1970-01-01', '1');
-INSERT INTO `tbl_film` VALUES ('40', 'Pretty Woman', '', 'Der Corporate Raider Edward Lewis, dessen Geliebte ihn gerade verlassen hat, fährt mit dem Lotus Esprit seines Freundes und Anwalts Phil durch Hollywood, um in Beverly Hills im hocheleganten Regent Beverly Wilshire abzusteigen. Da er normalerweise chauffiert wird, und sich daher verfährt, hält er auf dem Hollywood Boulevard an und fragt die Prostituierte Vivian Ward nach dem Weg. Diese glaubt, einen zahlungskräftigen Kunden gefunden zu haben, und weist ihm gegen Geld den Weg. Schließlich lässt Lewis, der mit dem Schaltgetriebe des Sportwagens überfordert ist, sich von Vivian sogar zum Hotel fahren. Dort angekommen, nimmt er sie spontan mit auf sein Zimmer.', '2', '69', '', 'http://www.youtube.de', 'Julia Roberts; Richard Gere; Laura San Giacomo; Hector Elizondo', 'Garry Marshall', '1970-01-01', '119', '0.5', '1', '1970-01-01', '0');
-INSERT INTO `tbl_film` VALUES ('41', 'Fickcasting ', 'Spezial', 'Unsere Castingmädels sind die Referenz in Sachen Ficktest! Sie wissen worauf es ankommt und worauf sie achten müssen. Sie notieren sich alles ganz genau, ihnen entgeht kein Detail und wenn ihre Kandidaten mal \'nen Hänger haben, kennen sie die Lösung!', '5', '42', '', '', 'Miss Sackwarze; Erik Specht-Nippel; Agathe Huber', 'Klaus Lümmel', '1970-01-01', '109', '0.5', '1', '1970-01-01', '0');
-INSERT INTO `tbl_film` VALUES ('46', 'adsfasdf', 'sadfasdfasdf', 'Noch immer spielt Bruce Wayne (Christian Bale) tagsüber den verantwortungslosen Milliardär, während er nachts als Batman das Verbrechen in Gotham city bekämpft. Unterstützt von Lieutenant Jim Gordon (Gary Oldman) und Staatsanwalt Harvey Dent (Aaron Eckhart) setzt Batman sein Vorhaben fort, das organisierte Verbrechen in Gotham endgültig zu zerschlagen. Doch das schlagkräftige Dreiergespann sieht sich bald einem genialen, immer mächtiger werdenden Kriminellen gegenübergestellt, der als Joker (Heath Ledger) bekannt ist: Er stürzt Gotham ins Chaos und zwingt den Dunklen Ritter immer näher an die Grenze zwischen Gerechtigkeit und Rache. Dent, der inzwischen mit Bruce Waynes Jugendliebe Rachel (Maggie Gyllenhaal) liiert ist, rückt in das Fadenkreuz des Jokers…', '4', '84', '', 'http://www.moviepilot.de/movies/the-dark-knight-2/trailer', 'Christian Bale; Heath Ledger; Aaron Eckhart; Michael Caine; Maggie Gyllenhaal; Gary Oldman', 'Christopher Nolan', '1970-01-01', '152', '0.5', '1', '2014-11-03', '0');
-INSERT INTO `tbl_film` VALUES ('48', 'Also ein neuer Film', 'Subtitel', 'asdkjfasdfjöklas', '4', '7', '', 'asdfasdf', 'Erd; Berd; Gollum', 'Jan', '1970-01-01', '123', '0.5', '1', '2014-11-03', '0');
+INSERT INTO `tbl_film` VALUES ('40', 'Pretty Woman', '', 'Der Corporate Raider Edward Lewis, dessen Geliebte ihn gerade verlassen hat, fährt mit dem Lotus Esprit seines Freundes und Anwalts Phil durch Hollywood, um in Beverly Hills im hocheleganten Regent Beverly Wilshire abzusteigen. Da er normalerweise chauffiert wird, und sich daher verfährt, hält er auf dem Hollywood Boulevard an und fragt die Prostituierte Vivian Ward nach dem Weg. Diese glaubt, einen zahlungskräftigen Kunden gefunden zu haben, und weist ihm gegen Geld den Weg. Schließlich lässt Lewis, der mit dem Schaltgetriebe des Sportwagens überfordert ist, sich von Vivian sogar zum Hotel fahren. Dort angekommen, nimmt er sie spontan mit auf sein Zimmer.', '3', '69', 'pretty.jpg', 'https://www.youtube.com/watch?v=3fM39ivfOrY', 'Julia Roberts; Richard Gere; Laura San Giacomo; Hector Elizondo', 'Garry Marshall', '1970-01-01', '119', '0.5', '1', '2014-11-03', '0');
+INSERT INTO `tbl_film` VALUES ('41', 'Fickcasting ', 'Spezial', 'Unsere Castingmädels sind die Referenz in Sachen Ficktest! Sie wissen worauf es ankommt und worauf sie achten müssen. Sie notieren sich alles ganz genau, ihnen entgeht kein Detail und wenn ihre Kandidaten mal \'nen Hänger haben, kennen sie die Lösung!', '5', '42', 'fickcasting.jpg', 'http://www.youporn.com/watch/488988/equal-opportunity-backroom-casting/?from=search_full&pos=3', 'Miss Sackwarze; Erik Specht-Nippel; Agathe Huber', 'Klaus Lümmel', '1970-01-01', '109', '0.5', '1', '2014-11-03', '0');
 
 -- ----------------------------
 -- Table structure for tbl_fsk
@@ -217,7 +224,7 @@ CREATE TABLE `tbl_genre_zuordnung` (
   KEY `GE_ID` (`GE_ID`),
   CONSTRAINT `tbl_genre_zuordnung_ibfk_1` FOREIGN KEY (`FI_ID`) REFERENCES `tbl_film` (`FI_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `tbl_genre_zuordnung_ibfk_2` FOREIGN KEY (`GE_ID`) REFERENCES `tbl_genre` (`GE_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of tbl_genre_zuordnung
@@ -261,8 +268,6 @@ INSERT INTO `tbl_genre_zuordnung` VALUES ('36', '16', '3');
 INSERT INTO `tbl_genre_zuordnung` VALUES ('37', '16', '2');
 INSERT INTO `tbl_genre_zuordnung` VALUES ('38', '17', '2');
 INSERT INTO `tbl_genre_zuordnung` VALUES ('39', '18', '4');
-INSERT INTO `tbl_genre_zuordnung` VALUES ('40', '18', '7');
-INSERT INTO `tbl_genre_zuordnung` VALUES ('41', '19', '2');
 INSERT INTO `tbl_genre_zuordnung` VALUES ('42', '19', '7');
 INSERT INTO `tbl_genre_zuordnung` VALUES ('43', '20', '4');
 INSERT INTO `tbl_genre_zuordnung` VALUES ('44', '20', '8');
@@ -308,34 +313,30 @@ INSERT INTO `tbl_genre_zuordnung` VALUES ('83', '36', '4');
 INSERT INTO `tbl_genre_zuordnung` VALUES ('84', '36', '8');
 INSERT INTO `tbl_genre_zuordnung` VALUES ('85', '40', '1');
 INSERT INTO `tbl_genre_zuordnung` VALUES ('86', '40', '5');
-INSERT INTO `tbl_genre_zuordnung` VALUES ('97', '46', '3');
-INSERT INTO `tbl_genre_zuordnung` VALUES ('98', '46', '2');
-INSERT INTO `tbl_genre_zuordnung` VALUES ('99', '46', '4');
-INSERT INTO `tbl_genre_zuordnung` VALUES ('101', '46', '2');
-INSERT INTO `tbl_genre_zuordnung` VALUES ('103', '48', '10');
-INSERT INTO `tbl_genre_zuordnung` VALUES ('104', '48', '12');
-INSERT INTO `tbl_genre_zuordnung` VALUES ('105', '48', '17');
+INSERT INTO `tbl_genre_zuordnung` VALUES ('114', '40', '5');
+INSERT INTO `tbl_genre_zuordnung` VALUES ('115', '40', '1');
+INSERT INTO `tbl_genre_zuordnung` VALUES ('116', '41', '17');
+INSERT INTO `tbl_genre_zuordnung` VALUES ('117', '41', '18');
 
 -- ----------------------------
 -- Table structure for tbl_kunde
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_kunde`;
 CREATE TABLE `tbl_kunde` (
-  `KU_ID` int(11) NOT NULL,
+  `KU_ID` int(11) NOT NULL AUTO_INCREMENT,
   `U_ID` int(11) DEFAULT NULL,
   `date_of_joining` date DEFAULT NULL,
   `account_balance` double DEFAULT NULL,
   PRIMARY KEY (`KU_ID`),
   KEY `User` (`U_ID`),
   CONSTRAINT `User` FOREIGN KEY (`U_ID`) REFERENCES `tbl_user` (`U_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_kunde
 -- ----------------------------
-INSERT INTO `tbl_kunde` VALUES ('0', '4', '2014-10-27', '0');
 INSERT INTO `tbl_kunde` VALUES ('1', '1', '2010-00-00', '12');
-INSERT INTO `tbl_kunde` VALUES ('2', '5', '2014-11-01', '1000');
+INSERT INTO `tbl_kunde` VALUES ('3', '2', '2014-11-05', '0');
 
 -- ----------------------------
 -- Table structure for tbl_mitarbeiter
@@ -358,7 +359,6 @@ CREATE TABLE `tbl_mitarbeiter` (
 INSERT INTO `tbl_mitarbeiter` VALUES ('1', '1', '3');
 INSERT INTO `tbl_mitarbeiter` VALUES ('2', '2', '2');
 INSERT INTO `tbl_mitarbeiter` VALUES ('3', '4', '2');
-INSERT INTO `tbl_mitarbeiter` VALUES ('4', '5', '2');
 
 -- ----------------------------
 -- Table structure for tbl_permissions
@@ -383,21 +383,33 @@ INSERT INTO `tbl_permissions` VALUES ('3', 'Administrator');
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_reservierung`;
 CREATE TABLE `tbl_reservierung` (
-  `RES_ID` int(11) NOT NULL,
+  `RES_ID` int(11) NOT NULL AUTO_INCREMENT,
   `KU_ID` int(11) NOT NULL,
   `DVD_ID` int(11) NOT NULL,
-  `reservierungsdatum` date DEFAULT NULL,
+  `reservierungsdatum` bigint(11) DEFAULT NULL,
   `gueltig` int(11) DEFAULT NULL,
   PRIMARY KEY (`RES_ID`),
   KEY `reservierungKunde` (`KU_ID`),
   KEY `dieDVD` (`DVD_ID`),
   CONSTRAINT `dieDVD` FOREIGN KEY (`DVD_ID`) REFERENCES `tbl_dvd` (`DVD_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `reservierungKunde` FOREIGN KEY (`KU_ID`) REFERENCES `tbl_kunde` (`KU_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tbl_reservierung
 -- ----------------------------
+INSERT INTO `tbl_reservierung` VALUES ('9', '1', '6', '2147483647', '0');
+INSERT INTO `tbl_reservierung` VALUES ('10', '1', '6', '2147483647', '0');
+INSERT INTO `tbl_reservierung` VALUES ('11', '3', '1', '2147483647', '1');
+INSERT INTO `tbl_reservierung` VALUES ('12', '3', '7', '2147483647', '1');
+INSERT INTO `tbl_reservierung` VALUES ('13', '3', '6', '2147483647', '1');
+INSERT INTO `tbl_reservierung` VALUES ('14', '3', '8', '2147483647', '1');
+INSERT INTO `tbl_reservierung` VALUES ('15', '1', '2', '2147483647', '0');
+INSERT INTO `tbl_reservierung` VALUES ('16', '1', '4', '2147483647', '0');
+INSERT INTO `tbl_reservierung` VALUES ('17', '1', '5', '2147483647', '0');
+INSERT INTO `tbl_reservierung` VALUES ('18', '1', '2', '1415181428488', '1');
+INSERT INTO `tbl_reservierung` VALUES ('19', '1', '4', '1415181429515', '1');
+INSERT INTO `tbl_reservierung` VALUES ('20', '1', '5', '1415181430458', '1');
 
 -- ----------------------------
 -- Table structure for tbl_user
@@ -423,8 +435,7 @@ CREATE TABLE `tbl_user` (
 -- ----------------------------
 -- Records of tbl_user
 -- ----------------------------
-INSERT INTO `tbl_user` VALUES ('1', 'Koschke', 'Jan', 'Erbastraße', '26', '70736', 'Fellbach', 'cc03e747a6afbbcbf8be7668acfebee5', '0000-00-00', 'jan', '0000000027');
-INSERT INTO `tbl_user` VALUES ('2', 'Brambor', 'Heiko', '-', '0', '-', '-', 'cc03e747a6afbbcbf8be7668acfebee5', '0000-00-00', 'heiko.brambor@t-online.de', '0000000028');
-INSERT INTO `tbl_user` VALUES ('3', 'Strobel', 'Simon', '-', '0', '-', '-', 'cc03e747a6afbbcbf8be7668acfebee5', '0000-00-00', 'strobesim@googlemail.com', '0000000029');
-INSERT INTO `tbl_user` VALUES ('4', 'Koschke', 'Susanne', 'Erbastraße', '26', '70736', 'Fellbach', 'cc03e747a6afbbcbf8be7668acfebee5', '1965-10-01', 's-koschke@t-online.de', '0000000030');
-INSERT INTO `tbl_user` VALUES ('5', 'Lohrer', 'Viktoria', 'Nelly-Sachs-Straße', '26', '70736', 'Fellbach', 'cc03e747a6afbbcbf8be7668acfebee5', '1996-12-18', 'vicky', '0000000040');
+INSERT INTO `tbl_user` VALUES ('1', 'Koschke', 'Jan', 'Erbastraße', '26', '70736', 'Fellbach', 'cc03e747a6afbbcbf8be7668acfebee5', '0000-00-00', 'jan', '0000000001');
+INSERT INTO `tbl_user` VALUES ('2', 'Brambor', 'Heiko', '-', '0', '-', '-', 'cc03e747a6afbbcbf8be7668acfebee5', '0000-00-00', 'heiko.brambor@t-online.de', '0000000002');
+INSERT INTO `tbl_user` VALUES ('3', 'Strobel', 'Simon', '-', '0', '-', '-', 'cc03e747a6afbbcbf8be7668acfebee5', '0000-00-00', 'strobesim@googlemail.com', '0000000003');
+INSERT INTO `tbl_user` VALUES ('4', 'Koschke', 'Susanne', 'Erbastraße', '26', '70736', 'Fellbach', 'cc03e747a6afbbcbf8be7668acfebee5', '1965-10-01', 's-koschke@t-online.de', '0000000004');

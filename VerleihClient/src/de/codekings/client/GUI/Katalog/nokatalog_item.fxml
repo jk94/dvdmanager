@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="810.0" maxWidth="1024.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="700.0" styleClass="content-katalog-item-back" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Katalog.NoKatalog_itemController">
+   <center>
+      <AnchorPane prefHeight="260.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="lbl_Anzeige" layoutX="14.0" layoutY="14.0" prefHeight="151.0" prefWidth="677.0" styleClass="content-katalog-title" text="Label" textAlignment="CENTER" wrapText="true" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

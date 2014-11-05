@@ -14,5 +14,5 @@ public enum ContentPageType {
     Katalog_Start, Katalog_Titelsuche, Katalog_Genresuche, Katalog_Neuheiten,
     Kunde_Start, Kunde_Reservierungen, Kunde_EntlieheneArt, Kunde_BewAbg, Kunde_Verwaltung,
     MA_KundeRegistrieren, MA_CreateFilm, MA_MANAGEDVD, MA_Ausleihe, MA_Return, Admin_Kontoverwaltung, Admin_Shutdown,
-    BACK, FORWARD, HOME;
+    BACK, FORWARD, HOME, Katalog_Search;
 }

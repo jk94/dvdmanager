@@ -73,7 +73,7 @@ public class Katalogmanager implements ContentView {
                 pa = fxmlLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Katalog/katalog_item.fxml").openStream());
 
                 Katalog_itemController kic = (Katalog_itemController) fxmlLoader.getController();
-                
+
                 kic.setTitel(f.getS_titel());
 
                 kic.setDescription(f.getS_description());
@@ -91,6 +91,58 @@ public class Katalogmanager implements ContentView {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
+        }
+        content = vboxliste;
+        contentready = true;
+
+        return content;
+    }
+
+    public Parent getContentView(String search) {
+        VBox vboxliste = new VBox();
+
+        for (Film_Client f : datamanager.getFilme()) {
+            Pane pa = null;
+            if (f.getS_titel().contains(search)) {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    pa = fxmlLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Katalog/katalog_item.fxml").openStream());
+
+                    Katalog_itemController kic = (Katalog_itemController) fxmlLoader.getController();
+
+                    kic.setTitel(f.getS_titel());
+
+                    kic.setDescription(f.getS_description());
+                    //kic.setJahr("" + f.getRelease_date().getYear());
+                    kic.setLaufzeit("" + f.getI_duration() + " min");
+                    kic.setSubtitle(f.getS_subtitel());
+
+                    kic.setCover(f.getCover().gibCoverImage());
+
+                    Katalogeintrag k = new Katalogeintrag(pa, kic, f);
+                    addEintrag(k);
+                    kic.loadAfterInit();
+                    vboxliste.getChildren().add(pa);
+
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        if (vboxliste.getChildren().size() < 1) {
+            Pane pa = null;
+            try {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    pa = fxmlLoader.load(getClass().getClassLoader().getResource("de/codekings/client/GUI/Katalog/nokatalog_item.fxml").openStream());
+
+                    NoKatalog_itemController kic = (NoKatalog_itemController) fxmlLoader.getController();
+
+                    kic.setSuchbefehl(search);
+                    vboxliste.getChildren().add(pa);
+
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
         }
         content = vboxliste;
         contentready = true;

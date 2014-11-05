@@ -462,10 +462,18 @@ class ServerThread extends Thread {
         // <editor-fold defaultstate="collapsed" desc="getReservierungen">
         if (m.getCommand().equalsIgnoreCase("getReservierungen")) {
             Message answer = new Message("returnReservierungen");
+            if(m.getAdditionalparameter().containsKey("email")){
             String email = m.getAdditionalparameter().get("email");
             ArrayList<Reservierung> res = DBOperations.getReservierungOfKunde2(DBOperations.getKunde(DBOperations.getUser(email).getU_ID()).getKU_ID());
             for (Reservierung r : res) {
                 answer.addSendable(r);
+            }
+            }else{
+                int accountid = Integer.parseInt(m.getAdditionalparameter().get("accnr"));
+                ArrayList<Reservierung> res = DBOperations.getReservierungOfKunde2(accountid);
+            for (Reservierung r : res) {
+                answer.addSendable(r);
+            }
             }
 
             write(j.parseObjectToString(answer));

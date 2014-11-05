@@ -52,15 +52,6 @@
                                         <Insets />
                                     </HBox.margin>
                                 </Label>
-                                <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="NEVER">
-                                    <HBox.margin>
-                                        <Insets bottom="10.0" top="-20.0" />
-                                    </HBox.margin>
-                                    <children>
-                                        <ImageView fx:id="katalog_img_verfuegbar" fitHeight="20.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" />
-                                        <Label fx:id="katalog_lbl_verfuegbar" styleClass="content-katalog-additional" text="Verfügbar" />
-                                    </children>
-                                </VBox>
                             </children>
                         </HBox>
                     </center>
