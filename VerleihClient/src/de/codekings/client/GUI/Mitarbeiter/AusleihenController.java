@@ -11,9 +11,14 @@ import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
+import de.codekings.common.datacontents.Kunde;
 import de.codekings.common.datacontents.Reservierung;
 import de.codekings.common.datacontents.Sendable;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,8 +58,10 @@ public class AusleihenController implements Initializable, MessageReturn {
     private Button btn_remove;
 
     private ObservableList<Reservierung> reservierungsdata;
-    private boolean reservierungenerhalten = false;
+    private boolean nachrichterhalten = false;
     private String messagereturn = "";
+    private String accnr = "0";
+    private Kunde kunde = null;
 
     /**
      * Initializes the controller class.
@@ -95,8 +102,86 @@ public class AusleihenController implements Initializable, MessageReturn {
         });
         btn_anzeigen.setOnMouseClicked((MouseEvent event) -> {
             ladeReservierungen(Integer.parseInt(txf_accountnr.getText()));
+            accnr = txf_accountnr.getText();
         });
+        btn_submit.setOnMouseClicked((MouseEvent event) -> {
+            if (tbvw_reservierungen.getItems().size() > 0 && Integer.parseInt(accnr) > 0 && datepicker.getValue() != null) {
+                ConfigManager cfgManager = Control.getControl().getCfgManager();
+                String host = cfgManager.getConfigs().getProperty("ip");
+                int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
 
+                Message getkunde = new Message("getKunde");
+                getkunde.addAdditionalParameter("KU_ID", accnr);
+
+                ClientThread c = new ClientThread(this, host, port);
+                c.requestToServer(getkunde);
+                kunde = null;
+                nachrichterhalten = false;
+                int counter = 0;
+                while (counter < 20 && !nachrichterhalten) {
+                    counter++;
+                    try {
+                        Thread.sleep(100l);
+                    } catch (InterruptedException e) {
+                    }
+                }
+                if (kunde != null) {
+                    double kosten = 0.0;
+                    for (Reservierung r : tbvw_reservierungen.getItems()) {
+                        kosten = kosten + r.getKosten();
+                    }
+                    if (kosten > kunde.getAccountbalance()) {
+                        MessageBox mb = new MessageBox("Kosten übersteigen das Guthaben\nBitte zuerst Guthaben aufladen", MessageBoxType.OK_ONLY);
+                        mb.setResizable(false);
+                        mb.setTitle("Warnung!");
+                        mb.setAlwaysOnTop(true);
+                        mb.show();
+                    } else {
+                        submit(kosten);
+                    }
+                }
+            }
+        });
+    }
+
+    public void submit(double kosten) {
+        ConfigManager cfgManager = Control.getControl().getCfgManager();
+        String host = cfgManager.getConfigs().getProperty("ip");
+        int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+        LocalDate date = datepicker.getValue();
+        Instant instant = date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+        Date res = Date.from(instant);
+        Message m = new Message("submitAusleihe");
+        m.addAdditionalParameter("accnr", accnr);
+        m.addAdditionalParameter("date", String.valueOf(res.getTime()));
+        m.addAdditionalParameter("kosten", String.valueOf(kosten));
+
+        ClientThread ct = new ClientThread(this, host, port);
+        ct.requestToServer(m);
+        nachrichterhalten = false;
+        int counter = 0;
+        while (counter < 20 && !nachrichterhalten) {
+            counter++;
+            try {
+                Thread.sleep(100l);
+            } catch (InterruptedException e) {
+            }
+        }
+
+        if (messagereturn.equalsIgnoreCase("success")) {
+            MessageBox mb = new MessageBox("Medien entliehen!", MessageBoxType.OK_ONLY);
+            mb.setAlwaysOnTop(true);
+            mb.setTitle("Information!");
+            mb.setResizable(false);
+            mb.showAndWait();
+        } else {
+            MessageBox mb = new MessageBox("Ausleihen fehlgeschlagen!\n\nBitte überprüfen Sie die Ausleihe.", MessageBoxType.OK_ONLY);
+            mb.setAlwaysOnTop(true);
+            mb.setTitle("Warnung!");
+            mb.setResizable(false);
+            mb.showAndWait();
+        }
     }
 
     @Override
@@ -109,7 +194,20 @@ public class AusleihenController implements Initializable, MessageReturn {
                     reservierungsdata.add(r);
                 }
             }
-            reservierungenerhalten = true;
+            nachrichterhalten = true;
+        }
+        if (m.getCommand().equalsIgnoreCase("returnsubmitAusleihe")) {
+            messagereturn = m.getAdditionalparameter().get("result");
+            nachrichterhalten = true;
+        }
+        if (m.getCommand().equalsIgnoreCase("returnKunde")) {
+            for (Sendable s : m.getContent()) {
+                if (s instanceof Kunde) {
+                    kunde = (Kunde) s;
+                    break;
+                }
+                nachrichterhalten = true;
+            }
         }
     }
 
@@ -124,10 +222,10 @@ public class AusleihenController implements Initializable, MessageReturn {
         ClientThread ct = new ClientThread(this, host, port);
         Message m = new Message("getReservierungen");
         m.addAdditionalParameter("accnr", String.valueOf(accnr));
-        reservierungenerhalten = false;
+        nachrichterhalten = false;
         ct.requestToServer(m);
         int counter = 0;
-        while (!reservierungenerhalten && counter < 20) {
+        while (!nachrichterhalten && counter < 20) {
             try {
                 counter++;
                 Thread.sleep(100l);
@@ -135,13 +233,13 @@ public class AusleihenController implements Initializable, MessageReturn {
                 Logger.getLogger(Kunde_reservierungenController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        reservierungenerhalten = false;
+        nachrichterhalten = false;
         ladeTableView();
         tbvw_reservierungen.getItems().clear();
         tbvw_reservierungen.getItems().addAll(reservierungsdata);
     }
-    
-    private void ladeTableView(){
+
+    private void ladeTableView() {
         String columnname[] = {"#", "Filmname", "Artikelnr.", "gültig bis", "Kosten"};
         String variablename[] = {"listnummer", "filmname", "artikelnr", "gueltigbis", "kosten"};
 
