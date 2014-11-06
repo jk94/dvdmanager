@@ -19,6 +19,5 @@
       </TableView>
       <Label layoutX="35.0" layoutY="55.0" prefHeight="17.0" prefWidth="263.0" styleClass="standard-text" text="Folgende DVDs sind für dich reserviert" />
       <Button fx:id="btn_loeschen" layoutX="498.0" layoutY="447.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="263.0" styleClass="standard-btn" text="Ausgewählte Reservierung löschen" />
-      <Label fx:id="kunde_ausleihen_kosten" layoutX="562.0" layoutY="55.0" prefHeight="17.0" prefWidth="186.0" styleClass="standard-text" text="Dir werden X € berechnet." />
    </children>
 </AnchorPane>

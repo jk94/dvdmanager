@@ -6,13 +6,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="de.codekings.client.GUI.Admin.ShutdownController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.codekings.client.GUI.Admin.ShutdownController">
    <children>
       <Pane fx:id="admin_shutdown_pane" layoutX="299.0" layoutY="132.0" prefHeight="178.0" prefWidth="222.0">
          <children>
             <Button fx:id="admin_destruction" layoutX="76.0" layoutY="139.0" mnemonicParsing="false" styleClass="standard-btn" text="Shutdown" />
-            <Label fx:id="kunde_start_warenkorb" layoutY="111.0" prefHeight="17.0" prefWidth="222.0" styleClass="standard-text" />
+            <Label fx:id="admin_shutdown_text" layoutY="111.0" prefHeight="17.0" prefWidth="222.0" styleClass="standard-text" />
          </children>
       </Pane>
       <Label fx:id="admin_shutdown_label" layoutX="71.0" layoutY="54.0" prefHeight="17.0" prefWidth="267.0" styleClass="standard-text" text="Bist du sicher?" />

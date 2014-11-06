@@ -68,12 +68,6 @@ public class TemplateController implements Initializable {
     @FXML
     private Button btn_katalog_start;
     @FXML
-    private Button btn_katalog_titelsuche;
-    @FXML
-    private Button btn_katalog_genresuche;
-    @FXML
-    private Button btn_katalog_neuheiten;
-    @FXML
     private Button btn_kunde_start;
     @FXML
     private Button btn_kunde_reservierungen;

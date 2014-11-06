@@ -21,9 +21,6 @@
                                 <VBox prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <Button fx:id="btn_katalog_start" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Start" />
-                                        <Button fx:id="btn_katalog_titelsuche" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Titelsuche" />
-                                        <Button fx:id="btn_katalog_genresuche" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Genresuche" />
-                                        <Button fx:id="btn_katalog_neuheiten" mnemonicParsing="false" prefHeight="20.0" prefWidth="190.0" styleClass="menu-btn" text="Neuheiten" />
                                     </children>
                                 </VBox>
                             </children>

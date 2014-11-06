@@ -463,6 +463,28 @@ class ServerThread extends Thread {
 
         }//</editor-fold>
 
+        // <editor-fold defaultstate="collapsed" desc="getAusleihen">
+        if (m.getCommand().equalsIgnoreCase("getAusleihen")) {
+            Message answer = new Message("returnAusleihen");
+            if (m.getAdditionalparameter().containsKey("email")) {
+                String email = m.getAdditionalparameter().get("email");
+                ArrayList<Ausleihe> res = DBOperations.getAusleihen(DBOperations.getKunde(DBOperations.getUser(email).getU_ID()).getKU_ID());
+                for (Ausleihe a : res) {
+                    answer.addSendable(a);
+                }
+            } else {
+                int accountid = Integer.parseInt(m.getAdditionalparameter().get("accnr"));
+                ArrayList<Ausleihe> res = DBOperations.getAusleihen(accountid);
+                for (Ausleihe a : res) {
+                    answer.addSendable(a);
+                }
+            }
+
+            write(j.parseObjectToString(answer));
+            beenden = true;
+
+        }//</editor-fold>
+        
         // <editor-fold defaultstate="collapsed" desc="getReservierungen">
         if (m.getCommand().equalsIgnoreCase("getReservierungen")) {
             Message answer = new Message("returnReservierungen");

@@ -6,13 +6,13 @@
 
 package de.codekings.client.GUI.Kunden;
 
-import de.codekings.client.Controls.ContentControl;
 import de.codekings.client.Controls.Control;
 import de.codekings.client.Enum.ContentPageType;
 import de.codekings.client.connection.ClientThread;
 import de.codekings.client.connection.MessageReturn;
 import de.codekings.common.Connection.Message;
 import de.codekings.common.config.ConfigManager;
+import de.codekings.common.datacontents.Ausleihe;
 import de.codekings.common.datacontents.Kunde;
 import de.codekings.common.datacontents.Reservierung;
 import de.codekings.common.datacontents.Sendable;
@@ -63,6 +63,9 @@ public class Kunde_startController implements Initializable, MessageReturn {
     private ObservableList<Reservierung> reservierungsdata;
     
     private boolean reservierungenerhalten = false;
+    private ObservableList<Ausleihe> ausleihdata;
+    
+    private boolean ausleihenerhalten = false;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -112,9 +115,10 @@ public class Kunde_startController implements Initializable, MessageReturn {
             kunde_start_guthaben.setText("Dein aktuelles Guthaben beträgt " + kundendata.getAccountbalance() + " €.");
             
         }
-            //kunde_start_entl.setText();
-            int anz = getCountReservierungen();
-            kunde_start_warenkorb.setText("Zurzeit sind " + anz + " Artikel von dir reserviert.");
+            int anzA = getCountAusleihe();
+            kunde_start_entl.setText("Du hast momentan " + anzA + " Artikel ausgeliehen.");
+            int anzR = getCountReservierungen();
+            kunde_start_warenkorb.setText("Zurzeit sind " + anzR + " Artikel von dir reserviert.");
     }
 
     @Override
@@ -139,6 +143,17 @@ public class Kunde_startController implements Initializable, MessageReturn {
                 }
             }
             reservierungenerhalten = true;
+        }
+        
+        if (m.getCommand().equalsIgnoreCase("returnAusleihen")) {
+            ausleihdata = FXCollections.observableArrayList();
+            for (Sendable s : m.getContent()) {
+                if (s instanceof Ausleihe) {
+                    Ausleihe a = (Ausleihe) s;
+                    ausleihdata.add(a);
+                }
+            }
+            ausleihenerhalten = true;
         }
     }
 
@@ -168,5 +183,33 @@ public class Kunde_startController implements Initializable, MessageReturn {
         int anzahlReservierungen = reservierungsdata.size();
         
         return anzahlReservierungen;
+    }
+    
+    private int getCountAusleihe() {
+        ausleihdata = FXCollections.observableArrayList();
+
+        //Get here Ausleihen
+        ConfigManager cfgManager = Control.getControl().getCfgManager();
+        String host = cfgManager.getConfigs().getProperty("ip");
+        int port = Integer.parseInt(cfgManager.getConfigs().getProperty("port"));
+
+        ClientThread ct = new ClientThread(this, host, port);
+        Message m = new Message("getAusleihen");
+        m.addAdditionalParameter("email", Control.getControl().getSession().getEmail());
+        ct.requestToServer(m);
+        int counter = 0;
+        while (!ausleihenerhalten && counter < 20) {
+            try {
+                counter++;
+                Thread.sleep(100l);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Kunde_startController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        ausleihenerhalten = false;
+        
+        int anzahlAusleihen = ausleihdata.size();
+        
+        return anzahlAusleihen;
     }
 }

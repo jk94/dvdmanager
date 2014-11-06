@@ -38,8 +38,6 @@ import se.mbaeumer.fxmessagebox.MessageBoxType;
 public class Kunde_reservierungenController implements Initializable, MessageReturn {
 
     @FXML
-    private Label kunde_ausleihen_kosten;
-    @FXML
     private TableView<Reservierung> tbvw_reservierungen;
     @FXML
     private Button btn_loeschen;

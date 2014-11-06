@@ -1101,7 +1101,26 @@ public class DBOperations {
 
         return erfolgreich;
     }
+    public static ArrayList<Ausleihe> getAusleihen(int ku_id) {
+        ArrayList<Ausleihe> erg = new ArrayList<>();
+        String sql = "SELECT * FROM tbl_ausleihe WHERE KU_ID = " + ku_id + " AND gueltig = 1 ORDER BY ausleihdatum ASC";
+        DBController dbc = Control.getInstance().getDbManager();
 
+        ResultSet rs = dbc.executeQuery(sql);
+
+        try {
+            while (rs.next()) {
+                if (isAusgeliehen(rs.getInt("DVD_ID"))) {
+                    //erg.add(getDVD(rs.getInt("DVD_ID")));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBOperations.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return erg;
+    }
+    
     public static ArrayList<DVD> getReservierungOfKunde(int ku_id) {
         ArrayList<DVD> erg = new ArrayList<>();
         String sql = "SELECT * FROM tbl_reservierung WHERE KU_ID = " + ku_id + " AND gueltig = 1 ORDER BY reservierungsdatum ASC";

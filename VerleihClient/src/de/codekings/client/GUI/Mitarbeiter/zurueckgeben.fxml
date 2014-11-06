@@ -11,8 +11,8 @@
    <children>
       <Button fx:id="btn_abschließen" layoutX="503.0" layoutY="425.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" styleClass="standard-btn" text="Abschließen" />
       <TableView fx:id="tbvw_filme" layoutX="55.0" layoutY="100.0" prefHeight="315.0" prefWidth="597.0" />
-      <TextField fx:id="txf_artikelnummer" layoutX="55.0" layoutY="53.0" prefHeight="25.0" prefWidth="195.0" promptText="Artikelnummer" styleClass="katalog-textfield" />
+      <TextField fx:id="txf_artikelnummer" layoutX="55.0" layoutY="53.0" prefHeight="25.0" prefWidth="195.0" promptText="Artikelnummer" />
       <Label fx:id="ma_return_label" layoutX="55.0" layoutY="28.0" styleClass="standard-text" text="Bitte gebe die Artikel-Nummer ein:" />
-      <Button fx:id="btn_suchen" layoutX="259.0" layoutY="53.0" mnemonicParsing="false" styleClass="standard-btn" text="Suchen" />
+      <Button fx:id="btn_suchen" layoutX="260.0" layoutY="50.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="62.0" styleClass="standard-btn" text="Suchen" />
    </children>
 </AnchorPane>
